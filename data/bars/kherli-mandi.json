@@ -1,0 +1,466 @@
+{
+  "bar_name": "KHERLI MANDI",
+  "bar_slug": "kherli-mandi",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 45,
+    "ltm_count": 30,
+    "na_count": 12,
+    "dues_pending_count": 2,
+    "termi_count": 1
+  },
+  "pdf_download_url": "/downloads/bcr-dues-kherli-mandi.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/90/1982",
+      "elc_no": "10523",
+      "name": "SH. MOHAN SINGH RAJPUT",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/287/1989",
+      "elc_no": "14685",
+      "name": "SH. RAJESH KUMAR KHANDELWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/471/1989",
+      "elc_no": "14869",
+      "name": "SH. AJEET SINGH NARUKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/989/2000",
+      "elc_no": "26957",
+      "name": "SH. DEVENDRA SINGH NARUKA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/1074/2000",
+      "elc_no": "27042",
+      "name": "SH. DOLAT RAM SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/1627/2000",
+      "elc_no": "27595",
+      "name": "SH. SUSHEEL KUMAR GOYAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/1693/2000",
+      "elc_no": "27661",
+      "name": "SH. JITENDRA KUMAR GARG",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/1752/2000",
+      "elc_no": "27720",
+      "name": "SH. SANJAY KUMAR AVASTHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/136/2001",
+      "elc_no": "28390",
+      "name": "SH. DHARAM SINGH MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/1321/2001",
+      "elc_no": "29575",
+      "name": "SH. PRAHALAD SINGH MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/1567/2002",
+      "elc_no": "32442",
+      "name": "SH. RATAN SINGH MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/2508/2002",
+      "elc_no": "33383",
+      "name": "SH. LATESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/2620/2002",
+      "elc_no": "33495",
+      "name": "SH. RAVINDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/410/2003",
+      "elc_no": "34243",
+      "name": "SH. SUNIL KUMAR AVASTHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/1121/2003",
+      "elc_no": "34954",
+      "name": "SH. KRIPA SHANKER SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/1346/2003",
+      "elc_no": "35179",
+      "name": "SH. RAJESH KUMAR AVASTHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/1686/2003",
+      "elc_no": "35519",
+      "name": "SH. VIPIN AGRAWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/2295/2003",
+      "elc_no": "36128",
+      "name": "SH. PURUSHOTTAM AVASTHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/2553/2003",
+      "elc_no": "36386",
+      "name": "SH. OM PRAKASH SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/2557/2003",
+      "elc_no": "36390",
+      "name": "SH. OM PRAKASH JAIMAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/2232/2004",
+      "elc_no": "39097",
+      "name": "SH. FATEH SINGH SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/2719/2004",
+      "elc_no": "39584",
+      "name": "SH. PRAKASH CHAND SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/3187/2004",
+      "elc_no": "40052",
+      "name": "SH. HEMENDAR KUMAR GUPTA",
+      "due_subs": "5000 + 294 = 5294",
+      "ltm_subs": "52794",
+      "category": "dues_pending",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/2973/2005",
+      "elc_no": "43290",
+      "name": "SH. HARGOVIND SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/3039/2005",
+      "elc_no": "43356",
+      "name": "SH. BRIJESH KUMAR MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/3333/2005",
+      "elc_no": "43650",
+      "name": "SH. SUMRAT LAL MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/2900/2006",
+      "elc_no": "46732",
+      "name": "SH. NEERAJ AVASTHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/2729/2007",
+      "elc_no": "50255",
+      "name": "SH. LOKESH SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/3962/2007",
+      "elc_no": "51488",
+      "name": "SH. DEEPENDRA SINGH NARUKA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/807/2009",
+      "elc_no": "55925",
+      "name": "SH. CHANDRA PRAKASH SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/1850/2009",
+      "elc_no": "56968",
+      "name": "SH. TRILOK CHAND SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/1477/2010",
+      "elc_no": "59102",
+      "name": "SH. SUBHASH CHAND SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/4344/2010",
+      "elc_no": "61969",
+      "name": "SH. GANGA LAHARI MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/102/2013",
+      "elc_no": "67682",
+      "name": "SH. MANISH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/2704/2016",
+      "elc_no": "78320",
+      "name": "SH. PANKAJ KUMAR KATARA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/7/2017",
+      "elc_no": "78503",
+      "name": "SH. JAI SINGH MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/391/2017",
+      "elc_no": "78887",
+      "name": "SH. AJAY KUMAR AVASTHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/3031/2017",
+      "elc_no": "81527",
+      "name": "SH. AMANDEEP NARUKA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/3986/2018",
+      "elc_no": "86055",
+      "name": "SH. TEJPAL SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/4828/2022",
+      "elc_no": "105007",
+      "name": "KUM. KANAKMALA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/6186/2022",
+      "elc_no": "106365",
+      "name": "SH. AVADHESH KUMAR JATAV",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/4023/2023",
+      "elc_no": "111038",
+      "name": "SH. RAMKESH MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/4288/2023",
+      "elc_no": "111303",
+      "name": "SH. KULDEEP NARA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/5064/2025",
+      "elc_no": "128939",
+      "name": "SH. JATIN UPMANYU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/7417/2025",
+      "elc_no": "131292",
+      "name": "KUM. RADHA KOLI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KHERLI MANDI"
+    }
+  ]
+}

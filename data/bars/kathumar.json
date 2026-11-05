@@ -1,0 +1,746 @@
+{
+  "bar_name": "KATHUMAR",
+  "bar_slug": "kathumar",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 73,
+    "ltm_count": 32,
+    "na_count": 20,
+    "dues_pending_count": 18,
+    "termi_count": 3
+  },
+  "pdf_download_url": "/downloads/bcr-dues-kathumar.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/243/1978",
+      "elc_no": "7919",
+      "name": "SH. RAMJEET SINGH CHAUDHARY",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/486/1979",
+      "elc_no": "8734",
+      "name": "SH. SUBHASH CHANDRA SHARMA",
+      "due_subs": "14997 + 3481 = 18478",
+      "ltm_subs": "65978",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/114/1981",
+      "elc_no": "9699",
+      "name": "SH. MAHENDRA SINGH",
+      "due_subs": "7500 + 703 = 8203",
+      "ltm_subs": "55703",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/192/1981",
+      "elc_no": "9777",
+      "name": "SH. DEVENDRA KUMAR PAREEK",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/205/1983",
+      "elc_no": "11525",
+      "name": "SH. TEJ SINGH RATHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/450/1984",
+      "elc_no": "12397",
+      "name": "SH. RADHA BALLABH SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/14/1987",
+      "elc_no": "13364",
+      "name": "SH. DINESH CHAND JAIN",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/308/1990",
+      "elc_no": "15333",
+      "name": "SH. SUBHASH CHANDRA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/237/1991",
+      "elc_no": "15926",
+      "name": "SH. MOHAN LAL GUPTA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/586/1993",
+      "elc_no": "17612",
+      "name": "SH. ATAR SINGH",
+      "due_subs": "10000 + 1288 = 11288",
+      "ltm_subs": "58788",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/632/1994",
+      "elc_no": "18515",
+      "name": "SH. RADHEY SHYAM",
+      "due_subs": "29250 + 27229 = 56479",
+      "ltm_subs": "103979",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/1052/1994",
+      "elc_no": "18935",
+      "name": "SH. SATISH CHAND SHARMA",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/500/1995",
+      "elc_no": "19697",
+      "name": "SH. NARAYAN SINGH SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/426/1996",
+      "elc_no": "20905",
+      "name": "SH. RAMJI LAL SHARMA",
+      "due_subs": "28500 + 25639 = 54139",
+      "ltm_subs": "101639",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/504/1996",
+      "elc_no": "20983",
+      "name": "SH. CHANDRA SHEKHAR ENDORIA",
+      "due_subs": "29800 + 28394 = 58194",
+      "ltm_subs": "105694",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/291/1998",
+      "elc_no": "23100",
+      "name": "SH. DEVENDRA SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/470/1999",
+      "elc_no": "24580",
+      "name": "SH. RAJENDRA SINGH",
+      "due_subs": "30000 + 28818 = 58818",
+      "ltm_subs": "106318",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/1210/1999",
+      "elc_no": "25320",
+      "name": "SH. BHIM SINGH",
+      "due_subs": "7502 + 704 = 8206",
+      "ltm_subs": "55706",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/693/2000",
+      "elc_no": "26661",
+      "name": "SH. LAL CHAND JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/812/2000",
+      "elc_no": "26780",
+      "name": "SH. KIRPA DAYAL",
+      "due_subs": "27550 + 23626 = 51176",
+      "ltm_subs": "98676",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/1259/2000",
+      "elc_no": "27227",
+      "name": "SH. HITESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/1270/2000",
+      "elc_no": "27238",
+      "name": "SH. SUGAR SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/1322/2000",
+      "elc_no": "27290",
+      "name": "SH. SHYAM SINGH CHAUHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/1363/2000",
+      "elc_no": "27331",
+      "name": "SH. OMBEER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/1480/2000",
+      "elc_no": "27448",
+      "name": "SH. ROOP KISHOR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/2062/2000",
+      "elc_no": "28030",
+      "name": "SH. GIRDHARI LAL SHARMA",
+      "due_subs": "19996 + 9047 = 29043",
+      "ltm_subs": "76543",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/118/2001",
+      "elc_no": "28372",
+      "name": "SH. THAN SINGH KARDAM",
+      "due_subs": "28750 + 26169 = 54919",
+      "ltm_subs": "102419",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/498/2001",
+      "elc_no": "28752",
+      "name": "SH. RAMJEET SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/504/2001",
+      "elc_no": "28758",
+      "name": "SH. LALIT MOHAN SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/1203/2001",
+      "elc_no": "29457",
+      "name": "SH. GAMBHEER SINGH RATHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/2485/2001",
+      "elc_no": "30739",
+      "name": "SH. BALBEER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/1918/2002",
+      "elc_no": "32793",
+      "name": "SH. KHAM CHAND JAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/2831/2002",
+      "elc_no": "33706",
+      "name": "SH. RAJENDRA SINGH BHATRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/2905/2002",
+      "elc_no": "33780",
+      "name": "SH. ROSHAN SINGH JAT",
+      "due_subs": "26250 + 20879 = 47129",
+      "ltm_subs": "94629",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/470/2003",
+      "elc_no": "34303",
+      "name": "SH. BRHAMMA NAND DIXIT",
+      "due_subs": "7500 + 703 = 8203",
+      "ltm_subs": "55703",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/506/2003",
+      "elc_no": "34339",
+      "name": "SH. KISHAN LAL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/1155/2003",
+      "elc_no": "34988",
+      "name": "SH. RAJESH KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/2076/2003",
+      "elc_no": "35909",
+      "name": "SH. GHANSHYAM PRASAD SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/172/2004",
+      "elc_no": "37037",
+      "name": "SH. NEERAJ KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/381/2004",
+      "elc_no": "37246",
+      "name": "SH. RAVINDRA KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/433/2004",
+      "elc_no": "37298",
+      "name": "SH. NARESH KUMAR",
+      "due_subs": "15000 + 3483 = 18483",
+      "ltm_subs": "65983",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/2337/2004",
+      "elc_no": "39202",
+      "name": "SH. RAKESH AGRAWAL",
+      "due_subs": "17500 + 5818 = 23318",
+      "ltm_subs": "70818",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/2592/2004",
+      "elc_no": "39457",
+      "name": "SH. MUKESH CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/3422/2004",
+      "elc_no": "40287",
+      "name": "SH. MAN SINGH JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/376/2006",
+      "elc_no": "44209",
+      "name": "SH. GOREE LAL MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/707/2006",
+      "elc_no": "44540",
+      "name": "SH. RAJESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/808/2006",
+      "elc_no": "44641",
+      "name": "SH. RADHEY SHYAM MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/3431/2006",
+      "elc_no": "47263",
+      "name": "SH. TRIBHUWAN SINGH CHOUDH...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/1344/2007",
+      "elc_no": "48870",
+      "name": "SH. ASHOK SAHU",
+      "due_subs": "23200 + 15346 = 38546",
+      "ltm_subs": "86046",
+      "category": "dues_pending",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/1399/2007",
+      "elc_no": "48925",
+      "name": "SH. MAHAVEER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/1964/2007",
+      "elc_no": "49490",
+      "name": "SH. SATENDRA KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/2487/2007",
+      "elc_no": "50013",
+      "name": "SH. RAMVEER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/3333/2007",
+      "elc_no": "50859",
+      "name": "SH. RAKESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/3935/2007",
+      "elc_no": "51461",
+      "name": "SH. SATYENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/2722/2008",
+      "elc_no": "54704",
+      "name": "SH. SATVEER SINGH RANA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/2728/2008",
+      "elc_no": "54710",
+      "name": "SH. SHYAM SINGH PAREWA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/2921/2008",
+      "elc_no": "54903",
+      "name": "SH. RAKESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/439/2010",
+      "elc_no": "58064",
+      "name": "SH. PUSPENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/2089/2010",
+      "elc_no": "59714",
+      "name": "SH. RAJENDRA PRASAD SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/2253/2010",
+      "elc_no": "59878",
+      "name": "SH. PRAMOD KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/2322/2010",
+      "elc_no": "59947",
+      "name": "SH. SAMANDAR KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/2370/2010",
+      "elc_no": "59995",
+      "name": "SH. SURESH SINGH CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/1028/2011",
+      "elc_no": "63802",
+      "name": "KUM. DIKSHA PARASHAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/1119/2011",
+      "elc_no": "63893",
+      "name": "SH. SURENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/2230/2012",
+      "elc_no": "67289",
+      "name": "SH. MUNESH KUMAR MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/1710/2014",
+      "elc_no": "71476",
+      "name": "SH. BHAWANI SHANKAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/1923/2014",
+      "elc_no": "71689",
+      "name": "KUM. KHUSHBOO GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/1781/2017",
+      "elc_no": "80277",
+      "name": "SH. AKHAY SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/1037/2019",
+      "elc_no": "87546",
+      "name": "KUM. RICHA AWASTHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/956/2021",
+      "elc_no": "95353",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/1154/2021",
+      "elc_no": "95551",
+      "name": "SH. BHUSHAN GOUR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/5654/2022",
+      "elc_no": "105833",
+      "name": "SH. DEVENDRA KUMAR PANCHAU...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/4503/2023",
+      "elc_no": "111518",
+      "name": "SH. RAHUL AVASTHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KATHUMAR"
+    }
+  ]
+}

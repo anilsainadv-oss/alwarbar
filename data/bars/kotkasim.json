@@ -1,0 +1,896 @@
+{
+  "bar_name": "KOTKASIM",
+  "bar_slug": "kotkasim",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 88,
+    "ltm_count": 41,
+    "na_count": 44,
+    "dues_pending_count": 3,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-kotkasim.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/328/1977",
+      "elc_no": "7297",
+      "name": "SH. DULI CHAND YADAV",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/454/1981",
+      "elc_no": "10039",
+      "name": "SH. SUBE SINGH YADAV",
+      "due_subs": "5000 + 294 = 5294",
+      "ltm_subs": "52794",
+      "category": "dues_pending",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/498/1983",
+      "elc_no": "11818",
+      "name": "SH. SHITAL PRASAD",
+      "due_subs": "5000 + 294 = 5294",
+      "ltm_subs": "52794",
+      "category": "dues_pending",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/23/1998",
+      "elc_no": "22832",
+      "name": "SH. ISHWAR SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/181/1998",
+      "elc_no": "22990",
+      "name": "SH. VIKASH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/464/2000",
+      "elc_no": "26432",
+      "name": "SH. YASHPAL SINGH GOTHWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/1158/2000",
+      "elc_no": "27126",
+      "name": "SH. RAMPHAL YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/1336/2001",
+      "elc_no": "29590",
+      "name": "SH. SHRI NIWAS SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/2375/2001",
+      "elc_no": "30629",
+      "name": "SH. MADAN LAL YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/2404/2001",
+      "elc_no": "30658",
+      "name": "SH. BHANWAR SINGH CHOUHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/1356/2002",
+      "elc_no": "32231",
+      "name": "SH. VIJAY KUMAR MATORIA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/2324/2002",
+      "elc_no": "33199",
+      "name": "SH. MAHIPAL KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/1152/2003",
+      "elc_no": "34985",
+      "name": "SH. KAPTAN SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/1710/2003",
+      "elc_no": "35543",
+      "name": "SH. GIRDHARI LAL SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/2389/2003",
+      "elc_no": "36222",
+      "name": "SH. SUNIL KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/2544/2004",
+      "elc_no": "39409",
+      "name": "SH. ANAND RAO",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/2877/2004",
+      "elc_no": "39742",
+      "name": "SH. SIDHANT RATNA CHATURVE...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/698/2005",
+      "elc_no": "41014",
+      "name": "SH. HET RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/940/2005",
+      "elc_no": "41256",
+      "name": "SH. RAKESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/2718/2005",
+      "elc_no": "43035",
+      "name": "SH. SAMAY SIHGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/3232/2005",
+      "elc_no": "43549",
+      "name": "SH. KRISHAN KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/759/2006",
+      "elc_no": "44592",
+      "name": "SH. SUDHIR KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/20/2007",
+      "elc_no": "47546",
+      "name": "SH. KHURSHEED AHMAD KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/790/2007",
+      "elc_no": "48316",
+      "name": "SH. FEROZ KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/491/2008",
+      "elc_no": "52473",
+      "name": "KUM. NARGIS KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/3017/2008",
+      "elc_no": "54999",
+      "name": "KUM. PRATIBHA JHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/602/2009",
+      "elc_no": "55720",
+      "name": "SH. KHUSHEE RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/611/2009",
+      "elc_no": "55729",
+      "name": "SH. SURENDER SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/2086/2009",
+      "elc_no": "57204",
+      "name": "SH. RANVEER SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/831/2010",
+      "elc_no": "58456",
+      "name": "SH. RAJESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/1418/2010",
+      "elc_no": "59043",
+      "name": "SH. SHER SINGH JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/1827/2010",
+      "elc_no": "59452",
+      "name": "SH. KRISHAN KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/2223/2011",
+      "elc_no": "64997",
+      "name": "SH. VIRENDRA KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/315/2014",
+      "elc_no": "70081",
+      "name": "SH. RAKESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/489/2014",
+      "elc_no": "70255",
+      "name": "SH. POORAN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/1108/2015",
+      "elc_no": "73607",
+      "name": "SH. MANOJ KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/2501/2015",
+      "elc_no": "75000",
+      "name": "SH. RAJ KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/2529/2015",
+      "elc_no": "75028",
+      "name": "SH. YOGESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/928/2016",
+      "elc_no": "76544",
+      "name": "SH. ATTER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/1074/2016",
+      "elc_no": "76690",
+      "name": "SH. CHIRANJEEV ANAND RAO",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/2081/2017",
+      "elc_no": "80577",
+      "name": "SH. RAVINDRA YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/2665/2017",
+      "elc_no": "81161",
+      "name": "SH. PAWAN SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/2692/2017",
+      "elc_no": "81188",
+      "name": "SH. AJAY KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/2718/2017",
+      "elc_no": "81214",
+      "name": "SH. RAVINDAR KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/1580/2018",
+      "elc_no": "83649",
+      "name": "SH. JAI PRAKASH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/2656/2018",
+      "elc_no": "84725",
+      "name": "SH. CHARAN SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/3713/2018",
+      "elc_no": "85782",
+      "name": "SH. BHUPENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/250/2019",
+      "elc_no": "86759",
+      "name": "SH. PRADEEP KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/1018/2019",
+      "elc_no": "87527",
+      "name": "SH. PRAKHAR KAUSHIK",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/1093/2019",
+      "elc_no": "87602",
+      "name": "SH. ADHAR RATAN CHATURVEDI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/2535/2019",
+      "elc_no": "89044",
+      "name": "SH. ATUL KUMAR JOSHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/3469/2019",
+      "elc_no": "89978",
+      "name": "SH. SONU SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/1833/2020",
+      "elc_no": "93196",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/347/2021",
+      "elc_no": "94744",
+      "name": "SH. MAHESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/2755/2021",
+      "elc_no": "97152",
+      "name": "SH. SANJAY KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/4589/2021",
+      "elc_no": "98986",
+      "name": "SH. YOGESH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/4975/2021",
+      "elc_no": "99372",
+      "name": "SH. SAURABH SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/5602/2021",
+      "elc_no": "99999",
+      "name": "SH. RAMESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/102/2022",
+      "elc_no": "100281",
+      "name": "SH. NARENDRA KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/1604/2022",
+      "elc_no": "101783",
+      "name": "SH. BALKISHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/2806/2023",
+      "elc_no": "109821",
+      "name": "SH. NAVEEN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/5547/2023",
+      "elc_no": "112562",
+      "name": "SH. SANDEEP SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/5635/2023",
+      "elc_no": "112650",
+      "name": "SH. AKHALESH KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/6414/2023",
+      "elc_no": "113429",
+      "name": "SH. HARI PRASAD",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/839/2024",
+      "elc_no": "115830",
+      "name": "SH. TARUN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/4146/2024",
+      "elc_no": "119137",
+      "name": "SH. GAGAN RAO",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/4745/2024",
+      "elc_no": "119736",
+      "name": "SH. BHAGAT SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/7513/2024",
+      "elc_no": "122504",
+      "name": "SH. BRIJ MOHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/7524/2024",
+      "elc_no": "122515",
+      "name": "SH. PAWAN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/1596/2025",
+      "elc_no": "125471",
+      "name": "SH. ASHOK KUMAR JAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/1871/2025",
+      "elc_no": "125746",
+      "name": "SH. NARENDRA KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/2220/2025",
+      "elc_no": "126095",
+      "name": "SH. BALRAJ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/3460/2025",
+      "elc_no": "127335",
+      "name": "SH. MOHIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/3929/2025",
+      "elc_no": "127804",
+      "name": "SH. SHALENDRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/4406/2025",
+      "elc_no": "128281",
+      "name": "SH. SATYAWAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/6192/2025",
+      "elc_no": "130067",
+      "name": "SH. PAVAN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/7462/2025",
+      "elc_no": "131337",
+      "name": "KUM. DIVYA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/10071/2025",
+      "elc_no": "133946",
+      "name": "KUM. NIKITA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/10913/2025",
+      "elc_no": "134788",
+      "name": "SH. INDER PRAKASH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/11119/2025",
+      "elc_no": "134994",
+      "name": "SH. SURESH KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/736/2026",
+      "elc_no": "135949",
+      "name": "SH. AKHIL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/1370/2026",
+      "elc_no": "136583",
+      "name": "SH. SUNIL KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/1517/2026",
+      "elc_no": "136730",
+      "name": "SH. ASHOK KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/2419/2026",
+      "elc_no": "137632",
+      "name": "SH. AMAR SINGH VERMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/2554/2026",
+      "elc_no": "137767",
+      "name": "SH. SUMIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 87,
+      "enrol_no": "R/3352/2026",
+      "elc_no": "138565",
+      "name": "SH. AJAYPAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 88,
+      "enrol_no": "R/5907/2026",
+      "elc_no": "141120",
+      "name": "SH. SANDEEP KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    },
+    {
+      "s_no": 89,
+      "enrol_no": "R/5956/2026",
+      "elc_no": "141169",
+      "name": "SH. KULDEEP",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KOTKASIM"
+    }
+  ]
+}

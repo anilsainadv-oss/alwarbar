@@ -1,0 +1,1736 @@
+{
+  "bar_name": "BHIWADI",
+  "bar_slug": "bhiwadi",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 172,
+    "ltm_count": 37,
+    "na_count": 129,
+    "dues_pending_count": 6,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-bhiwadi.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/314/1977",
+      "elc_no": "7283",
+      "name": "SH. KALYAN BHAWAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/1232/1997",
+      "elc_no": "22794",
+      "name": "SH. NEERAJ KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/2012/2000",
+      "elc_no": "27980",
+      "name": "SH. BISAMBAR DAYAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/270/2001",
+      "elc_no": "28524",
+      "name": "SH. NIHAL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/806/2001",
+      "elc_no": "29060",
+      "name": "SH. PURAN SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/2345/2001",
+      "elc_no": "30599",
+      "name": "SH. MAHESH CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/2484/2003",
+      "elc_no": "36317",
+      "name": "SH. ASHUTOSH MITTAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/931B/2006",
+      "elc_no": "44764B",
+      "name": "SH. BIJENDER TANWAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/1122/2007",
+      "elc_no": "48648",
+      "name": "SH. DINESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/2829/2007",
+      "elc_no": "50355",
+      "name": "SH. NIWAS KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/4/2008",
+      "elc_no": "51986",
+      "name": "SH. GOVIND PRASAD GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/376/2008",
+      "elc_no": "52358",
+      "name": "KUM. DIVYA BISHNOI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/1067/2008",
+      "elc_no": "53049",
+      "name": "SH. SHAKIL AHMED",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/2427/2008",
+      "elc_no": "54409",
+      "name": "SH. MITHUN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/2622A/2008",
+      "elc_no": "54604A",
+      "name": "SH. VIRENDER KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/2140/2009",
+      "elc_no": "57258",
+      "name": "KUM. MONIKA",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/2241/2010",
+      "elc_no": "59866",
+      "name": "SH. PRITAM SINGH DAIMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/2303/2010",
+      "elc_no": "59928",
+      "name": "SH. RAJESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/297/2011",
+      "elc_no": "63071",
+      "name": "SH. MUKESH BHIDURI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/919/2011",
+      "elc_no": "63693",
+      "name": "SH. ISRAK KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/1757/2011",
+      "elc_no": "64531",
+      "name": "KUM. VARTIKA KARNAWAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/2002/2011",
+      "elc_no": "64776",
+      "name": "SH. ABDUL AZIZ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/580/2012",
+      "elc_no": "65639",
+      "name": "SMT. MOHINI SINGH GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/997A/2012",
+      "elc_no": "66056A",
+      "name": "SH. ASHOK KUMAR IQBAL NARA...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/1176/2012",
+      "elc_no": "66235",
+      "name": "SH. MADAN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/561/2013",
+      "elc_no": "68141",
+      "name": "SH. ABHEY SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/1002/2013",
+      "elc_no": "68582",
+      "name": "SH. RAKESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/1696/2013",
+      "elc_no": "69276",
+      "name": "SH. SAHID HUSSAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/2034/2013",
+      "elc_no": "69614",
+      "name": "SH. RAFIK MOHAMMAD",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/665/2014",
+      "elc_no": "70431",
+      "name": "SH. SUBE SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/2719/2014",
+      "elc_no": "72485",
+      "name": "SH. RAJAT SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/702/2015",
+      "elc_no": "73201",
+      "name": "SH. ALISHER",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/838/2015",
+      "elc_no": "73337",
+      "name": "KUM. SWATI SARASWAT",
+      "due_subs": "11532 + 2698 = 14230",
+      "ltm_subs": "61730",
+      "category": "dues_pending",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/2216/2015",
+      "elc_no": "74715",
+      "name": "KUM. RITU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/2541/2015",
+      "elc_no": "75040",
+      "name": "SH. MUNFEED KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/2614A/2015",
+      "elc_no": "75133A",
+      "name": "SH. MOHD. SHAIYAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/2702/2015",
+      "elc_no": "75201",
+      "name": "SH. RAJENDRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/139/2016",
+      "elc_no": "75755",
+      "name": "SH. JASBIR KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/196/2016",
+      "elc_no": "75812",
+      "name": "SH. JALAL DEEN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/557/2016",
+      "elc_no": "76173",
+      "name": "SH. OM PRAKASH MANDORA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/588/2016",
+      "elc_no": "76204",
+      "name": "SH. DURGESH TANWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/1622/2016",
+      "elc_no": "77238",
+      "name": "SH. NARESH KUMAR JATAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/1832/2016",
+      "elc_no": "77448",
+      "name": "SH. NARDEV SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/1942/2016",
+      "elc_no": "77558",
+      "name": "SH. SUBHASH CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/2607/2016",
+      "elc_no": "78223",
+      "name": "SH. BHUPENDER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/2769/2016",
+      "elc_no": "78385",
+      "name": "SH. HEMANT KUMAR",
+      "due_subs": "8650 + 2082 = 10732",
+      "ltm_subs": "59232",
+      "category": "dues_pending",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/2824/2016",
+      "elc_no": "78440",
+      "name": "SH. DEVENDRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/195/2017",
+      "elc_no": "78691",
+      "name": "SH. RAHUL SHARMA",
+      "due_subs": "8650 + 2082 = 10732",
+      "ltm_subs": "59232",
+      "category": "dues_pending",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/314/2017",
+      "elc_no": "78810",
+      "name": "SH. CHANDAR PAL SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/1067/2017",
+      "elc_no": "79563",
+      "name": "SH. JASVINDER",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/1268/2017",
+      "elc_no": "79764",
+      "name": "SH. NAVODIT TRIPATHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/1398/2017",
+      "elc_no": "79894",
+      "name": "SH. IQBAL KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/1564/2017",
+      "elc_no": "80060",
+      "name": "SH. BIJENDRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/1753/2017",
+      "elc_no": "80249",
+      "name": "SH. PANKAJ KUMAR GOYAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/545/2018",
+      "elc_no": "82614",
+      "name": "SH. SACHIN TANWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/744A/2018",
+      "elc_no": "82813A",
+      "name": "SH. RAMDHAN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/1163/2018",
+      "elc_no": "83232",
+      "name": "SH. PRAVEEN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/3289/2018",
+      "elc_no": "85358",
+      "name": "SH. INDERPAL SINGH TANWAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/3874/2018",
+      "elc_no": "85943",
+      "name": "SH. AJAY AGARWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/292/2019",
+      "elc_no": "86801",
+      "name": "SH. PADAM KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/1453/2019",
+      "elc_no": "87962",
+      "name": "SH. KETAN TANWAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/1772A/2019",
+      "elc_no": "88281A",
+      "name": "SH. VAIBHAV LEKHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/2151/2019",
+      "elc_no": "88660",
+      "name": "SH. RAHUL KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/2739/2019",
+      "elc_no": "89248",
+      "name": "KUM. KRISHNA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/4093/2019",
+      "elc_no": "90602",
+      "name": "SH. AMIT KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/4322/2019",
+      "elc_no": "90831",
+      "name": "SH. ABHAY SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/672/2020",
+      "elc_no": "92035",
+      "name": "SH. UPENDER SINGH BHADAURI...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/1362/2020",
+      "elc_no": "92725",
+      "name": "KUM. SHEETAL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/1537/2020",
+      "elc_no": "92900",
+      "name": "SH. SACHIN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/1852/2020",
+      "elc_no": "93215",
+      "name": "SH. SANJAY CHAUHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/1986/2020",
+      "elc_no": "93349",
+      "name": "SH. BIJENDRA TANWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/2433/2020",
+      "elc_no": "93796",
+      "name": "SH. VEERPAL CHANDELA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/2527/2020",
+      "elc_no": "93890",
+      "name": "SH. NARENDER SINGH GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/2556/2020",
+      "elc_no": "93919",
+      "name": "SMT. NISHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/2647/2020",
+      "elc_no": "94010",
+      "name": "SMT. SHRADDHA MADHAVRA KAL...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/2686/2020",
+      "elc_no": "94049",
+      "name": "SH. SUNIL KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/663/2021",
+      "elc_no": "95060",
+      "name": "SH. GOVINDA SONI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/1416/2021",
+      "elc_no": "95813",
+      "name": "SH. KADIR KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/1843/2021",
+      "elc_no": "96240",
+      "name": "SMT. ANITA FAGNA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/2581/2021",
+      "elc_no": "96978",
+      "name": "SH. PRAMOD KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/2675/2021",
+      "elc_no": "97072",
+      "name": "KUM. ROSHANI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/3623/2021",
+      "elc_no": "98020",
+      "name": "SH. JASWANT SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/3797/2021",
+      "elc_no": "98194",
+      "name": "SH. NASIR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 87,
+      "enrol_no": "R/4159/2021",
+      "elc_no": "98556",
+      "name": "SH. ROHIT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 88,
+      "enrol_no": "R/5271/2021",
+      "elc_no": "99668",
+      "name": "SH. MANISH MUDGAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 89,
+      "enrol_no": "R/5296/2021",
+      "elc_no": "99693",
+      "name": "SH. JAIPAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 90,
+      "enrol_no": "R/5382/2021",
+      "elc_no": "99779",
+      "name": "SH. ANKIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 91,
+      "enrol_no": "R/5673/2021",
+      "elc_no": "100070",
+      "name": "SH. DHEERAJ SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 92,
+      "enrol_no": "R/319/2022",
+      "elc_no": "100498",
+      "name": "SH. YESHBIR SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 93,
+      "enrol_no": "R/653/2022",
+      "elc_no": "100832",
+      "name": "SH. DEEP YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 94,
+      "enrol_no": "R/703/2022",
+      "elc_no": "100882",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 95,
+      "enrol_no": "R/787/2022",
+      "elc_no": "100966",
+      "name": "SH. SANJAY KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 96,
+      "enrol_no": "R/3018/2022",
+      "elc_no": "103197",
+      "name": "SH. LAKHAN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 97,
+      "enrol_no": "R/4133/2022",
+      "elc_no": "104312",
+      "name": "SH. MANISH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 98,
+      "enrol_no": "R/4185/2022",
+      "elc_no": "104364",
+      "name": "SH. PRAMOD PATEL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 99,
+      "enrol_no": "R/5750/2022",
+      "elc_no": "105929",
+      "name": "KUM. GUNJAN GOYAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 100,
+      "enrol_no": "R/6136/2022",
+      "elc_no": "106315",
+      "name": "SH. AABID",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 101,
+      "enrol_no": "R/6232/2022",
+      "elc_no": "106411",
+      "name": "SH. JAY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 102,
+      "enrol_no": "R/6396/2022",
+      "elc_no": "106575",
+      "name": "SH. ANKIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 103,
+      "enrol_no": "R/10/2023",
+      "elc_no": "107025",
+      "name": "SH. JATIN PATEL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 104,
+      "enrol_no": "R/269/2023",
+      "elc_no": "107284",
+      "name": "SH. ATIKKHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 105,
+      "enrol_no": "R/575/2023",
+      "elc_no": "107590",
+      "name": "SH. SURAJ DAYMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 106,
+      "enrol_no": "R/2022/2023",
+      "elc_no": "109037",
+      "name": "SH. ATHAR KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 107,
+      "enrol_no": "R/3460/2023",
+      "elc_no": "110475",
+      "name": "KUM. SHABNAM KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 108,
+      "enrol_no": "R/3643/2023",
+      "elc_no": "110658",
+      "name": "SH. AJAY YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 109,
+      "enrol_no": "R/5520/2023",
+      "elc_no": "112535",
+      "name": "KUM. SUNITA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 110,
+      "enrol_no": "R/5549/2023",
+      "elc_no": "112564",
+      "name": "SH. MANOJ KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 111,
+      "enrol_no": "R/5888/2023",
+      "elc_no": "112903",
+      "name": "KUM. SHEETAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 112,
+      "enrol_no": "R/5994/2023",
+      "elc_no": "113009",
+      "name": "SH. DHARMENDER",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 113,
+      "enrol_no": "R/6918/2023",
+      "elc_no": "113933",
+      "name": "SH. SURENDER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 114,
+      "enrol_no": "R/6973/2023",
+      "elc_no": "113988",
+      "name": "KUM. BHANUPRIYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 115,
+      "enrol_no": "R/7940/2023",
+      "elc_no": "114955",
+      "name": "SH. ANAND KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 116,
+      "enrol_no": "R/218/2024",
+      "elc_no": "115209",
+      "name": "SH. PADAM SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 117,
+      "enrol_no": "R/672/2024",
+      "elc_no": "115663",
+      "name": "SH. KULDEEP SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 118,
+      "enrol_no": "R/699/2024",
+      "elc_no": "115690",
+      "name": "SH. SHOBHIT GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 119,
+      "enrol_no": "R/1709/2024",
+      "elc_no": "116700",
+      "name": "KUM. MOHINEE SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 120,
+      "enrol_no": "R/2809/2024",
+      "elc_no": "117800",
+      "name": "SH. LAXMIKANT SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 121,
+      "enrol_no": "R/2895/2024",
+      "elc_no": "117886",
+      "name": "SH. AMAN BHIDURI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 122,
+      "enrol_no": "R/3300/2024",
+      "elc_no": "118291",
+      "name": "KUM. YADAV SUMAN GAYAPRASAD",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 123,
+      "enrol_no": "R/3341/2024",
+      "elc_no": "118332",
+      "name": "SH. RUPENDER KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 124,
+      "enrol_no": "R/3407/2024",
+      "elc_no": "118398",
+      "name": "SH. ROBIN SINGH PATEL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 125,
+      "enrol_no": "R/3883/2024",
+      "elc_no": "118874",
+      "name": "KUM. KANCHAN KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 126,
+      "enrol_no": "R/4303/2024",
+      "elc_no": "119294",
+      "name": "SH. NITIN TANWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 127,
+      "enrol_no": "R/4839/2024",
+      "elc_no": "119830",
+      "name": "SH. DEVENDER KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 128,
+      "enrol_no": "R/5062/2024",
+      "elc_no": "120053",
+      "name": "SH. BABU LAL SHARMA",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 129,
+      "enrol_no": "R/5221/2024",
+      "elc_no": "120212",
+      "name": "SH. AKSHAT GOYAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 130,
+      "enrol_no": "R/5815/2024",
+      "elc_no": "120806",
+      "name": "SH. PREETAM KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 131,
+      "enrol_no": "R/6456/2024",
+      "elc_no": "121447",
+      "name": "SH. NARESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 132,
+      "enrol_no": "R/8674/2024",
+      "elc_no": "123665",
+      "name": "SH. JAMSHED",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 133,
+      "enrol_no": "R/869/2025",
+      "elc_no": "124744",
+      "name": "SH. AADIL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 134,
+      "enrol_no": "R/1314/2025",
+      "elc_no": "125189",
+      "name": "SMT. ARCHANA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 135,
+      "enrol_no": "R/1805/2025",
+      "elc_no": "125680",
+      "name": "SH. ANIS KUMAR SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 136,
+      "enrol_no": "R/1988/2025",
+      "elc_no": "125863",
+      "name": "SMT. SARITA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 137,
+      "enrol_no": "R/2322/2025",
+      "elc_no": "126197",
+      "name": "SH. SONU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 138,
+      "enrol_no": "R/2810/2025",
+      "elc_no": "126685",
+      "name": "SH. NITIN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 139,
+      "enrol_no": "R/3091/2025",
+      "elc_no": "126966",
+      "name": "SH. SANJAY KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 140,
+      "enrol_no": "R/3100/2025",
+      "elc_no": "126975",
+      "name": "KUM. NEHA AGRAWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 141,
+      "enrol_no": "R/3171/2025",
+      "elc_no": "127046",
+      "name": "KUM. SANGEETA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 142,
+      "enrol_no": "R/3511/2025",
+      "elc_no": "127386",
+      "name": "SH. DILDEEP YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 143,
+      "enrol_no": "R/3986/2025",
+      "elc_no": "127861",
+      "name": "SH. LOKESH DAYMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 144,
+      "enrol_no": "R/4161/2025",
+      "elc_no": "128036",
+      "name": "SH. HARIOM PRAJAPAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 145,
+      "enrol_no": "R/4218/2025",
+      "elc_no": "128093",
+      "name": "SH. GANESH SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 146,
+      "enrol_no": "R/4568/2025",
+      "elc_no": "128443",
+      "name": "SMT. MADHURI GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 147,
+      "enrol_no": "R/4631/2025",
+      "elc_no": "128506",
+      "name": "SH. SURESH RAI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 148,
+      "enrol_no": "R/4933/2025",
+      "elc_no": "128808",
+      "name": "SH. NITIN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 149,
+      "enrol_no": "R/5043/2025",
+      "elc_no": "128918",
+      "name": "SH. UMMED SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 150,
+      "enrol_no": "R/5669/2025",
+      "elc_no": "129544",
+      "name": "SH. ROHIT DAYMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 151,
+      "enrol_no": "R/6164/2025",
+      "elc_no": "130039",
+      "name": "KUM. SWEETY SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 152,
+      "enrol_no": "R/6229/2025",
+      "elc_no": "130104",
+      "name": "SMT. VINITA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 153,
+      "enrol_no": "R/6259/2025",
+      "elc_no": "130134",
+      "name": "SH. RAHUL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 154,
+      "enrol_no": "R/6689/2025",
+      "elc_no": "130564",
+      "name": "SH. HITESH ARORA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 155,
+      "enrol_no": "R/7248/2025",
+      "elc_no": "131123",
+      "name": "SH. DIPUL PANDEY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 156,
+      "enrol_no": "R/7678/2025",
+      "elc_no": "131553",
+      "name": "SH. SHYAM SUNDER",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 157,
+      "enrol_no": "R/7720/2025",
+      "elc_no": "131595",
+      "name": "SH. HOSHIYAR SINGH",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 158,
+      "enrol_no": "R/8272/2025",
+      "elc_no": "132147",
+      "name": "SH. SANJAY KUMAR TRIPATHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 159,
+      "enrol_no": "R/8285/2025",
+      "elc_no": "132160",
+      "name": "SH. RAMESH CHAND",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 160,
+      "enrol_no": "R/9536/2025",
+      "elc_no": "133411",
+      "name": "SH. SHAHZAD",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 161,
+      "enrol_no": "R/9608/2025",
+      "elc_no": "133483",
+      "name": "SH. CHAMAN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 162,
+      "enrol_no": "R/10076/2025",
+      "elc_no": "133951",
+      "name": "SMT. NIKITA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 163,
+      "enrol_no": "R/10180/2025",
+      "elc_no": "134055",
+      "name": "KUM. SONIA BHIDURI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 164,
+      "enrol_no": "R/10214/2025",
+      "elc_no": "134089",
+      "name": "SH. DEEPENDER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 165,
+      "enrol_no": "R/10231/2025",
+      "elc_no": "134106",
+      "name": "SH. RITISH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 166,
+      "enrol_no": "R/10778/2025",
+      "elc_no": "134653",
+      "name": "SH. RASHID KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 167,
+      "enrol_no": "R/1352/2026",
+      "elc_no": "136565",
+      "name": "SH. KANHAIYA LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 168,
+      "enrol_no": "R/2718/2026",
+      "elc_no": "137931",
+      "name": "SMT. SAKSHI SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 169,
+      "enrol_no": "R/3355/2026",
+      "elc_no": "138568",
+      "name": "KUM. SHWETA TANWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 170,
+      "enrol_no": "R/4101/2026",
+      "elc_no": "139314",
+      "name": "SMT. ANJALI NAGAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 171,
+      "enrol_no": "R/5068/2026",
+      "elc_no": "140281",
+      "name": "SH. AKASH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 172,
+      "enrol_no": "R/6127/2026",
+      "elc_no": "141340",
+      "name": "SH. SAHID HUSSAIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 173,
+      "enrol_no": "R/7113/2026",
+      "elc_no": "142326",
+      "name": "SH. BHAGAT SINGH DAYMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 174,
+      "enrol_no": "R/7292/2026",
+      "elc_no": "142505",
+      "name": "SH. SACHIN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    },
+    {
+      "s_no": 175,
+      "enrol_no": "R/7994/2026",
+      "elc_no": "143207",
+      "name": "SH. ROHIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BHIWADI"
+    }
+  ]
+}

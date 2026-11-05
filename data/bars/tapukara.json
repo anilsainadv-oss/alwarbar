@@ -1,0 +1,376 @@
+{
+  "bar_name": "TAPUKARA",
+  "bar_slug": "tapukara",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 36,
+    "ltm_count": 13,
+    "na_count": 18,
+    "dues_pending_count": 5,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-tapukara.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/517/1989",
+      "elc_no": "14915",
+      "name": "SH. BIJENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/2857/2002",
+      "elc_no": "33732",
+      "name": "SH. JAY SINGH",
+      "due_subs": "16250 + 4538 = 20788",
+      "ltm_subs": "68288",
+      "category": "dues_pending",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/1334/2007",
+      "elc_no": "48860",
+      "name": "SH. LALIT KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/245/2008",
+      "elc_no": "52227",
+      "name": "SH. RAVINDRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/711/2008",
+      "elc_no": "52693",
+      "name": "SH. BHAVANI SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/1030/2008",
+      "elc_no": "53012",
+      "name": "SH. DEEPAK MALANI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/1236/2010",
+      "elc_no": "58861",
+      "name": "SH. LAVKESH SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/4850/2010",
+      "elc_no": "62475",
+      "name": "SH. PRADEEP KUMAR LAKHERA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/5018/2010",
+      "elc_no": "62643",
+      "name": "KUM. ANJU BAI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/231/2012",
+      "elc_no": "65290",
+      "name": "KUM. CHANCHAL GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/1415/2012",
+      "elc_no": "66474",
+      "name": "KUM. AKANKSHA AGARWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/1341/2013",
+      "elc_no": "68921",
+      "name": "SH. SANDEEP KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/2550/2014",
+      "elc_no": "72316",
+      "name": "SH. AVDHESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/1234/2015",
+      "elc_no": "73733",
+      "name": "SH. MAHINDER SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/1046/2016",
+      "elc_no": "76662",
+      "name": "SH. VIPIN GARG",
+      "due_subs": "8650 + 2082 = 10732",
+      "ltm_subs": "59232",
+      "category": "dues_pending",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/696/2018",
+      "elc_no": "82765",
+      "name": "SH. KAPIL KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/1571/2018",
+      "elc_no": "83640",
+      "name": "SH. SANDEEP KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/2811/2018",
+      "elc_no": "84880",
+      "name": "SH. JAVED KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/4370/2018",
+      "elc_no": "86439",
+      "name": "SH. DEVENDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/1817/2019",
+      "elc_no": "88326",
+      "name": "SH. GAURAV SONI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/3651/2019",
+      "elc_no": "90160",
+      "name": "SH. DEVINDER",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/2525/2020",
+      "elc_no": "93888",
+      "name": "SH. SATPAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/332/2022",
+      "elc_no": "100511",
+      "name": "SH. SOURABH GOYAL",
+      "due_subs": "49500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/956/2022",
+      "elc_no": "101135",
+      "name": "SH. HARSHIT MITTAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/3423/2022",
+      "elc_no": "103602",
+      "name": "SH. CHIRAG MITTAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/6687/2023",
+      "elc_no": "113702",
+      "name": "SH. ASHISH GOYAL",
+      "due_subs": "49500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/3932/2024",
+      "elc_no": "118923",
+      "name": "SH. RAJ SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/7447/2024",
+      "elc_no": "122438",
+      "name": "SH. KRISHAN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/7466/2024",
+      "elc_no": "122457",
+      "name": "SH. SUBHASH CHAND",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/8425/2024",
+      "elc_no": "123416",
+      "name": "SH. JASVINDER SINGH",
+      "due_subs": "49500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/301/2025",
+      "elc_no": "124176",
+      "name": "SH. NAVIN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/3115/2025",
+      "elc_no": "126990",
+      "name": "SH. UTTAM GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/4208/2025",
+      "elc_no": "128083",
+      "name": "SH. PARAMJEET SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/5558/2025",
+      "elc_no": "129433",
+      "name": "SMT. PRIYANSHEE KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/8747/2025",
+      "elc_no": "132622",
+      "name": "SH. DIPANSHU SINGAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/5124/2026",
+      "elc_no": "140337",
+      "name": "KUM. KOMAL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "TAPUKARA"
+    }
+  ]
+}

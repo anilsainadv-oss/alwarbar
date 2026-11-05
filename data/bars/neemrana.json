@@ -1,0 +1,1546 @@
+{
+  "bar_name": "NEEMRANA",
+  "bar_slug": "neemrana",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 153,
+    "ltm_count": 54,
+    "na_count": 98,
+    "dues_pending_count": 1,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-neemrana.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/642/1999",
+      "elc_no": "24752",
+      "name": "SH. VIR SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/1535/1999",
+      "elc_no": "25645",
+      "name": "SH. PRAHLAD SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/286/2000",
+      "elc_no": "26254",
+      "name": "SH. MAKARDHWAJ",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/425/2000",
+      "elc_no": "26393",
+      "name": "SH. ASHOK KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/1513/2000",
+      "elc_no": "27481",
+      "name": "SH. RAKESH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/1810/2000",
+      "elc_no": "27778",
+      "name": "SH. BHAG SINGH CHOUHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/2123/2001",
+      "elc_no": "30377",
+      "name": "SH. PRAMOD KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/97/2002",
+      "elc_no": "30972",
+      "name": "SH. SANJAY KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/578/2002",
+      "elc_no": "31453",
+      "name": "SH. KRISHAN KANT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/1554/2002",
+      "elc_no": "32429",
+      "name": "SH. DEVANAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/2621/2002",
+      "elc_no": "33496",
+      "name": "SH. UDAI SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/1225/2003",
+      "elc_no": "35058",
+      "name": "SH. SUBHASH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/1406/2003",
+      "elc_no": "35239",
+      "name": "SH. SUNIL KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/2013/2003",
+      "elc_no": "35846",
+      "name": "SH. BASTI RAM YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/1634/2004",
+      "elc_no": "38499",
+      "name": "SH. MUKESH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/2867/2004",
+      "elc_no": "39732",
+      "name": "SH. AJEET KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/3189/2004",
+      "elc_no": "40054",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/3288/2004",
+      "elc_no": "40153",
+      "name": "SH. NAR SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/53/2005",
+      "elc_no": "40369",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/96/2005",
+      "elc_no": "40412",
+      "name": "SH. VIJAY KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/140/2005",
+      "elc_no": "40456",
+      "name": "SH. SATISH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/1882/2005",
+      "elc_no": "42199",
+      "name": "SH. JASWANT KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/2603/2005",
+      "elc_no": "42920",
+      "name": "SH. SATYABIR SINGH CHAUHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/2613/2005",
+      "elc_no": "42930",
+      "name": "SH. MUKESH KUMAR SHIROHEWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/3005/2005",
+      "elc_no": "43322",
+      "name": "SH. MANJEET SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/277/2006",
+      "elc_no": "44110",
+      "name": "SH. PEETAMBAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/386/2006",
+      "elc_no": "44219",
+      "name": "SH. MANJEET KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/2553/2006",
+      "elc_no": "46385",
+      "name": "KUM. REKHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/2941/2006",
+      "elc_no": "46773",
+      "name": "SH. SUBHASH CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/2950/2006",
+      "elc_no": "46782",
+      "name": "SH. JITENDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/2953/2006",
+      "elc_no": "46785",
+      "name": "SH. JITENDER KUMAR SAMRIYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/3327/2006",
+      "elc_no": "47159",
+      "name": "SH. NOPENDER KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/243/2007",
+      "elc_no": "47769",
+      "name": "SH. HITENDER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/2545/2007",
+      "elc_no": "50071",
+      "name": "SH. PRANSUKH SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/2970/2007",
+      "elc_no": "50496",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/2177/2008",
+      "elc_no": "54159",
+      "name": "SH. ASHOK KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/2940/2008",
+      "elc_no": "54922",
+      "name": "SH. HARPRIT YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/275/2010",
+      "elc_no": "57900",
+      "name": "SH. MANISH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/2758/2010",
+      "elc_no": "60383",
+      "name": "SH. INDER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/3393/2010",
+      "elc_no": "61018",
+      "name": "SH. VINOD KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/352/2011",
+      "elc_no": "63126",
+      "name": "SH. RAVINDER KUMAR SAMRIA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/1634/2011",
+      "elc_no": "64408",
+      "name": "SH. RAVI KUMAR BASWALA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/1750/2011",
+      "elc_no": "64524",
+      "name": "SH. VIJAY SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/821/2012",
+      "elc_no": "65880",
+      "name": "SH. ASHOK KUMAR ARYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/1495/2012",
+      "elc_no": "66554",
+      "name": "SH. VISHNU DUTT SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/1783/2012",
+      "elc_no": "66842",
+      "name": "KUM. RENU KHAIRIYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/438/2013",
+      "elc_no": "68018",
+      "name": "SH. AMIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/505/2013",
+      "elc_no": "68085",
+      "name": "SH. RAKESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/2136/2013",
+      "elc_no": "69716",
+      "name": "KUM. POONAM YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/1460/2014",
+      "elc_no": "71226",
+      "name": "SH. HARIOM",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/2095/2014",
+      "elc_no": "71861",
+      "name": "KUM. MEERA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/2130/2014",
+      "elc_no": "71896",
+      "name": "SH. AMIT KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/243/2015",
+      "elc_no": "72742",
+      "name": "SH. JYOTI SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/1652/2015",
+      "elc_no": "74151",
+      "name": "SH. VEER BHANU PRATAP SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/1939/2015",
+      "elc_no": "74438",
+      "name": "SH. ASHOK KUMAR DHINDORIA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/2907/2015",
+      "elc_no": "75406",
+      "name": "SH. RAKESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/127/2016",
+      "elc_no": "75743",
+      "name": "SH. AJAYPAL SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/1334/2016",
+      "elc_no": "76950",
+      "name": "SH. PRAVEEN KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/2689/2016",
+      "elc_no": "78305",
+      "name": "SH. SAMSHER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/119/2017",
+      "elc_no": "78615",
+      "name": "SH. KRISHAN KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/658/2017",
+      "elc_no": "79154",
+      "name": "SH. KESHAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/1259/2017",
+      "elc_no": "79755",
+      "name": "SH. AJAY SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/3128/2017",
+      "elc_no": "81624",
+      "name": "SH. PAWAN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/3170/2017",
+      "elc_no": "81666",
+      "name": "SH. SUNIL KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/835/2018",
+      "elc_no": "82904",
+      "name": "SH. RAJU SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/1532/2018",
+      "elc_no": "83601",
+      "name": "KUM. NAVEEN BALA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/2942/2018",
+      "elc_no": "85011",
+      "name": "SH. HIMMAT SINGH ARAY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/3692/2018",
+      "elc_no": "85761",
+      "name": "SH. NAPHE SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/4399/2018",
+      "elc_no": "86468",
+      "name": "SH. AMIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/2320/2019",
+      "elc_no": "88829",
+      "name": "SMT. RAJ BALA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/4058/2019",
+      "elc_no": "90567",
+      "name": "SH. PURAN SINGH MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/816/2020",
+      "elc_no": "92179",
+      "name": "KUM. KOMAL MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/844/2020",
+      "elc_no": "92207",
+      "name": "SH. DHARMVEER SINGH REWARI...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/1799/2020",
+      "elc_no": "93162",
+      "name": "SH. MUKESH NIRMAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/2111/2020",
+      "elc_no": "93474",
+      "name": "SH. AMIT KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/2235/2020",
+      "elc_no": "93598",
+      "name": "SH. DESHRAJ SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/2445A/2020",
+      "elc_no": "93808A",
+      "name": "SH. NITIN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/2490/2020",
+      "elc_no": "93853",
+      "name": "SH. NARENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/2494/2020",
+      "elc_no": "93857",
+      "name": "SH. SURENDER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/2874A/2020",
+      "elc_no": "94237A",
+      "name": "SH. HARSHIT GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/407A/2021",
+      "elc_no": "94804A",
+      "name": "SH. NARENDER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/2083/2021",
+      "elc_no": "96480",
+      "name": "SH. RAVINDER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/3065/2021",
+      "elc_no": "97462",
+      "name": "SH. PARVESH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/3344/2021",
+      "elc_no": "97741",
+      "name": "SH. AJAY KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/5137/2021",
+      "elc_no": "99534",
+      "name": "SMT. JASMINE",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/2405/2022",
+      "elc_no": "102584",
+      "name": "SH. SUNNY YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 87,
+      "enrol_no": "R/3171/2022",
+      "elc_no": "103350",
+      "name": "SH. SACHIN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 88,
+      "enrol_no": "R/3181/2022",
+      "elc_no": "103360",
+      "name": "KUM. JUGANA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 89,
+      "enrol_no": "R/4195/2022",
+      "elc_no": "104374",
+      "name": "SH. UDAYPAL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 90,
+      "enrol_no": "R/5199/2022",
+      "elc_no": "105378",
+      "name": "SH. SURESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 91,
+      "enrol_no": "R/5215/2022",
+      "elc_no": "105394",
+      "name": "KUM. RUCHI SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 92,
+      "enrol_no": "R/5231/2022",
+      "elc_no": "105410",
+      "name": "SH. YOGENDAR SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 93,
+      "enrol_no": "R/6482/2022",
+      "elc_no": "106661",
+      "name": "SH. KARMVEER SINGH",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 94,
+      "enrol_no": "R/6548/2022",
+      "elc_no": "106727",
+      "name": "SMT. SHWETA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 95,
+      "enrol_no": "R/54/2023",
+      "elc_no": "107069",
+      "name": "SH. JASWANT SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 96,
+      "enrol_no": "R/868/2023",
+      "elc_no": "107883",
+      "name": "SH. SUNIL KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 97,
+      "enrol_no": "R/870/2023",
+      "elc_no": "107885",
+      "name": "SH. VIKASH SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 98,
+      "enrol_no": "R/1014/2023",
+      "elc_no": "108029",
+      "name": "SMT. REKHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 99,
+      "enrol_no": "R/1136/2023",
+      "elc_no": "108151",
+      "name": "SH. VEDPRAKASH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 100,
+      "enrol_no": "R/2607/2023",
+      "elc_no": "109622",
+      "name": "SH. SURESH SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 101,
+      "enrol_no": "R/2625/2023",
+      "elc_no": "109640",
+      "name": "KUM. PRIYANKA TANWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 102,
+      "enrol_no": "R/3387/2023",
+      "elc_no": "110402",
+      "name": "SH. DHANESH KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 103,
+      "enrol_no": "R/3475/2023",
+      "elc_no": "110490",
+      "name": "SH. RAJESH KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 104,
+      "enrol_no": "R/3536/2023",
+      "elc_no": "110551",
+      "name": "SH. JAIKISHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 105,
+      "enrol_no": "R/4077/2023",
+      "elc_no": "111092",
+      "name": "SH. SONU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 106,
+      "enrol_no": "R/5807/2023",
+      "elc_no": "112822",
+      "name": "SH. AJAY KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 107,
+      "enrol_no": "R/6239/2023",
+      "elc_no": "113254",
+      "name": "KUM. MAUSHAM SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 108,
+      "enrol_no": "R/6801/2023",
+      "elc_no": "113816",
+      "name": "KUM. SHEETAL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 109,
+      "enrol_no": "R/7768/2023",
+      "elc_no": "114783",
+      "name": "SH. MANISH KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 110,
+      "enrol_no": "R/7909/2023",
+      "elc_no": "114924",
+      "name": "KUM. SUBHIKA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 111,
+      "enrol_no": "R/1398/2024",
+      "elc_no": "116389",
+      "name": "SH. DHARMENDRA KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 112,
+      "enrol_no": "R/2302/2024",
+      "elc_no": "117293",
+      "name": "SH. SHER SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 113,
+      "enrol_no": "R/3938/2024",
+      "elc_no": "118929",
+      "name": "SH. VIKAS SINGH SHEKHAWAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 114,
+      "enrol_no": "R/3995/2024",
+      "elc_no": "118986",
+      "name": "SH. KAUSHAL KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 115,
+      "enrol_no": "R/4363/2024",
+      "elc_no": "119354",
+      "name": "SH. PAWAN SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 116,
+      "enrol_no": "R/4827/2024",
+      "elc_no": "119818",
+      "name": "SH. AATEESH KUMAR MUDGAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 117,
+      "enrol_no": "R/5917/2024",
+      "elc_no": "120908",
+      "name": "KUM. DEEPA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 118,
+      "enrol_no": "R/6483/2024",
+      "elc_no": "121474",
+      "name": "SMT. NISHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 119,
+      "enrol_no": "R/7080/2024",
+      "elc_no": "122071",
+      "name": "KUM. MONIKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 120,
+      "enrol_no": "R/7511/2024",
+      "elc_no": "122502",
+      "name": "SH. RAVINDRA SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 121,
+      "enrol_no": "R/367/2025",
+      "elc_no": "124242",
+      "name": "SH. JITENDAR SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 122,
+      "enrol_no": "R/533/2025",
+      "elc_no": "124408",
+      "name": "KUM. KUSHAM LATA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 123,
+      "enrol_no": "R/1046/2025",
+      "elc_no": "124921",
+      "name": "SH. SURENDER SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 124,
+      "enrol_no": "R/1827/2025",
+      "elc_no": "125702",
+      "name": "SH. INDRAJEET",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 125,
+      "enrol_no": "R/1912/2025",
+      "elc_no": "125787",
+      "name": "SH. BALBIR SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 126,
+      "enrol_no": "R/2364/2025",
+      "elc_no": "126239",
+      "name": "SH. HANSRAJ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 127,
+      "enrol_no": "R/2539/2025",
+      "elc_no": "126414",
+      "name": "KUM. NAVEEN KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 128,
+      "enrol_no": "R/2629/2025",
+      "elc_no": "126504",
+      "name": "SH. NARENDER SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 129,
+      "enrol_no": "R/2874/2025",
+      "elc_no": "126749",
+      "name": "KUM. REKHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 130,
+      "enrol_no": "R/2983/2025",
+      "elc_no": "126858",
+      "name": "KUM. MONU YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 131,
+      "enrol_no": "R/3743/2025",
+      "elc_no": "127618",
+      "name": "SH. RAKESH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 132,
+      "enrol_no": "R/5371/2025",
+      "elc_no": "129246",
+      "name": "SH. RAHUL KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 133,
+      "enrol_no": "R/5986/2025",
+      "elc_no": "129861",
+      "name": "SH. VIKARAM",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 134,
+      "enrol_no": "R/6978/2025",
+      "elc_no": "130853",
+      "name": "SMT. MONA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 135,
+      "enrol_no": "R/7315/2025",
+      "elc_no": "131190",
+      "name": "SH. DEWANSH MORODIA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 136,
+      "enrol_no": "R/8499/2025",
+      "elc_no": "132374",
+      "name": "SMT. MUNESH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 137,
+      "enrol_no": "R/8730/2025",
+      "elc_no": "132605",
+      "name": "SH. RAVI KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 138,
+      "enrol_no": "R/8914/2025",
+      "elc_no": "132789",
+      "name": "SH. HIMANSHU NIMORIA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 139,
+      "enrol_no": "R/9642/2025",
+      "elc_no": "133517",
+      "name": "KUM. DIVYA SONI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 140,
+      "enrol_no": "R/9907/2025",
+      "elc_no": "133782",
+      "name": "KUM. NEHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 141,
+      "enrol_no": "R/960/2026",
+      "elc_no": "136173",
+      "name": "SH. RAHUL SIROHIWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 142,
+      "enrol_no": "R/1848/2026",
+      "elc_no": "137061",
+      "name": "SMT. KIRAN DEVI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 143,
+      "enrol_no": "R/2169/2026",
+      "elc_no": "137382",
+      "name": "SH. SANDEEP",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 144,
+      "enrol_no": "R/2334/2026",
+      "elc_no": "137547",
+      "name": "KUM. SONU YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 145,
+      "enrol_no": "R/2746/2026",
+      "elc_no": "137959",
+      "name": "SH. MAHESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 146,
+      "enrol_no": "R/3337/2026",
+      "elc_no": "138550",
+      "name": "SMT. NEEKITA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 147,
+      "enrol_no": "R/4991/2026",
+      "elc_no": "140204",
+      "name": "SH. KARAN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 148,
+      "enrol_no": "R/5393/2026",
+      "elc_no": "140606",
+      "name": "SH. BHEEM SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 149,
+      "enrol_no": "R/6052/2026",
+      "elc_no": "141265",
+      "name": "SMT. MAMATA DEVI SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 150,
+      "enrol_no": "R/6378/2026",
+      "elc_no": "141591",
+      "name": "SH. KAPIL CHAUHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 151,
+      "enrol_no": "R/7288/2026",
+      "elc_no": "142501",
+      "name": "SH. ANSHUL KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 152,
+      "enrol_no": "R/7822/2026",
+      "elc_no": "143035",
+      "name": "KUM. VAISHNAVI RAO",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    },
+    {
+      "s_no": 153,
+      "enrol_no": "R/7915/2026",
+      "elc_no": "143128",
+      "name": "KUM. GITIKA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "NEEMRANA"
+    }
+  ]
+}

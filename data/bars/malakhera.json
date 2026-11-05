@@ -1,0 +1,436 @@
+{
+  "bar_name": "MALAKHERA",
+  "bar_slug": "malakhera",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 42,
+    "ltm_count": 20,
+    "na_count": 19,
+    "dues_pending_count": 3,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-malakhera.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/1263/2000",
+      "elc_no": "27231",
+      "name": "SH. RIPUDAMAN SINGH NARUKA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/1411/2000",
+      "elc_no": "27379",
+      "name": "SH. RAJJAN KUMAR SIDDH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/1925/2000",
+      "elc_no": "27893",
+      "name": "SH. PHOOL SINGH CHAUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/58/2001",
+      "elc_no": "28312",
+      "name": "SH. RAMESHWAR DAYAL MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/1974/2001",
+      "elc_no": "30228",
+      "name": "SH. FAKRU KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/2449/2001",
+      "elc_no": "30703",
+      "name": "SH. YOGESH CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/2369/2002",
+      "elc_no": "33244",
+      "name": "SH. SATISH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/1256/2003",
+      "elc_no": "35089",
+      "name": "SH. ARVIND KUMAR DIXIT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/1400/2004",
+      "elc_no": "38265",
+      "name": "SH. JANAK SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/2658/2004",
+      "elc_no": "39523",
+      "name": "SH. MANISH KUMAR SAHU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/826/2006",
+      "elc_no": "44659",
+      "name": "SH. INDRA JEET YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/1773/2007",
+      "elc_no": "49299",
+      "name": "SH. TEJ SINGH JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/1602/2010",
+      "elc_no": "59227",
+      "name": "SH. DEVENDRA PRADHAN",
+      "due_subs": "19350 + 9098 = 28448",
+      "ltm_subs": "75948",
+      "category": "dues_pending",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/2113/2010",
+      "elc_no": "59738",
+      "name": "SH. RAMKISHAN YADAV",
+      "due_subs": "15742 + 4109 = 19851",
+      "ltm_subs": "67351",
+      "category": "dues_pending",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/83/2012",
+      "elc_no": "65142",
+      "name": "SH. PURAN CHAND MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/130/2013",
+      "elc_no": "67710",
+      "name": "SH. VISHNU KUMAR BHADBHUNJA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/689/2015",
+      "elc_no": "73188",
+      "name": "SH. SUNIL KUMAR CHOUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/212/2016",
+      "elc_no": "75828",
+      "name": "SH. RAM BHAROSA JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/3478/2017",
+      "elc_no": "81974",
+      "name": "SH. NEHAL YOGI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/1768/2018",
+      "elc_no": "83837",
+      "name": "SH. IRSHAD AHAMAD",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/3582/2018",
+      "elc_no": "85651",
+      "name": "KUM. GUDDI NAYAK",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/1555/2019",
+      "elc_no": "88064",
+      "name": "SH. RAJENDRA KUMAR MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/4248/2019",
+      "elc_no": "90757",
+      "name": "SH. NOOR DEEN KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/35/2020",
+      "elc_no": "91398",
+      "name": "SH. RAMAKANT GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/1240/2020",
+      "elc_no": "92603",
+      "name": "SH. NIRAKAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/1787/2021",
+      "elc_no": "96184",
+      "name": "SH. VIJAY SINGH MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/3289/2021",
+      "elc_no": "97686",
+      "name": "SH. CHHOTE LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/1980/2022",
+      "elc_no": "102159",
+      "name": "KUM. SUSHMA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/2890/2022",
+      "elc_no": "103069",
+      "name": "SH. MAHENDRA KUMAR JAT",
+      "due_subs": "2000 + 258 = 2258",
+      "ltm_subs": "51758",
+      "category": "dues_pending",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/3717/2022",
+      "elc_no": "103896",
+      "name": "SH. JITENDRA KUMAR SOLANKI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/4766/2022",
+      "elc_no": "104945",
+      "name": "SH. JAI KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/4442/2023",
+      "elc_no": "111457",
+      "name": "SH. MAHESH CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/5272/2023",
+      "elc_no": "112287",
+      "name": "SH. GOURAV KUMAR NAYAK",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/1548/2024",
+      "elc_no": "116539",
+      "name": "SH. VIKRAM",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/2404/2024",
+      "elc_no": "117395",
+      "name": "SH. MANOJ KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/4354/2024",
+      "elc_no": "119345",
+      "name": "SH. BHAGWAT PARSAD SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/5057/2024",
+      "elc_no": "120048",
+      "name": "SH. SANJAY CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/6146/2025",
+      "elc_no": "130021",
+      "name": "SH. ATUL CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/7831/2025",
+      "elc_no": "131706",
+      "name": "KUM. ANITA BAI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/2948/2026",
+      "elc_no": "138161",
+      "name": "SH. DEEPAK KUMAR BAIRWA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/3975/2026",
+      "elc_no": "139188",
+      "name": "SH. MAYANK MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/6310/2026",
+      "elc_no": "141523",
+      "name": "SH. CHANDRA SHEKAR SOLANKI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MALAKHERA"
+    }
+  ]
+}

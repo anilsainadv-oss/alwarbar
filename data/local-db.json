@@ -1,0 +1,1202 @@
+{
+  "users": [
+    {
+      "id": "case-admin-0001",
+      "email": "case.admin@alwaradvocates.org",
+      "password_hash": "4184a10cf12471f072d5e39cd1a5d04cb4f7cbf7f0950495049cc5f14d462815",
+      "full_name": "My Case System Operator",
+      "role": "case_admin",
+      "phone": "0144-2339900",
+      "is_active": true,
+      "created_at": "2026-01-01T10:00:00.000Z",
+      "updated_at": "2026-01-01T10:00:00.000Z"
+    },
+    {
+      "id": "admin-user-alwar-0001",
+      "email": "public.admin@alwaradvocates.org",
+      "password_hash": "a3ec7c15f1dcdd44010e23899e0ccd0fae84903a6a4a2f3e63b5cbae8f433d22",
+      "full_name": "Alwar Bar Admin",
+      "role": "public_admin",
+      "phone": "0144-2334455",
+      "is_active": true,
+      "created_at": "2026-01-01T10:00:00.000Z",
+      "updated_at": "2026-01-01T10:00:00.000Z"
+    },
+    {
+      "id": "advocate-user-alwar-0002",
+      "email": "advocate.rajesh@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Rajesh Sharma",
+      "role": "registered_advocate",
+      "phone": "9829012345",
+      "is_active": true,
+      "created_at": "2026-01-05T11:00:00.000Z",
+      "updated_at": "2026-01-05T11:00:00.000Z"
+    },
+    {
+      "id": "advocate-user-alwar-0003",
+      "email": "advocate.meena@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Sunita Meena",
+      "role": "registered_advocate",
+      "phone": "9829054321",
+      "is_active": true,
+      "created_at": "2026-02-01T10:00:00.000Z",
+      "updated_at": "2026-02-01T10:00:00.000Z"
+    },
+    {
+      "email": "anilsain.adv@gmail.com",
+      "password_hash": "4af7e203fea31e9bdac4754f8e2ffaac10997d3438011059637eda5a22df6561",
+      "full_name": "Advocate Anil Sain",
+      "role": "public_admin",
+      "phone": "9829012268",
+      "is_active": true,
+      "id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "created_at": "2026-10-26T17:41:12.671Z",
+      "updated_at": "2026-10-26T17:41:12.671Z"
+    },
+    {
+      "id": "usr-2841821f-8006-4798-947d-02f22d812500",
+      "email": "rameshwar.adv@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Rameshwar Dayal Sharma",
+      "role": "registered_advocate",
+      "phone": "9829011223",
+      "is_active": true,
+      "created_at": "2026-10-30T16:46:29.225Z",
+      "updated_at": "2026-10-30T16:46:29.228Z"
+    },
+    {
+      "id": "usr-ff28d1af-1ab1-4994-b309-2ed56a8c79c0",
+      "email": "pooja.adv@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Pooja Yadav",
+      "role": "registered_advocate",
+      "phone": "9829044556",
+      "is_active": true,
+      "created_at": "2026-10-30T16:46:29.228Z",
+      "updated_at": "2026-10-30T16:46:29.228Z"
+    },
+    {
+      "id": "usr-0089ae5b-f373-494b-8ee7-72936be1a3a0",
+      "email": "surendra.rathore@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Surendra Singh Rathore",
+      "role": "registered_advocate",
+      "phone": "9414022334",
+      "is_active": true,
+      "created_at": "2026-10-30T16:46:29.228Z",
+      "updated_at": "2026-10-30T16:46:29.228Z"
+    },
+    {
+      "id": "usr-20383e29-3da4-4200-996b-54ecd916ae73",
+      "email": "anita.choudhary@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Anita Choudhary",
+      "role": "registered_advocate",
+      "phone": "9829155667",
+      "is_active": true,
+      "created_at": "2026-10-30T16:46:29.229Z",
+      "updated_at": "2026-10-30T16:46:29.229Z"
+    },
+    {
+      "id": "usr-473a68ae-5de2-4d26-ad01-3fae369e93e5",
+      "email": "vikram.meena@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Vikramaditya Meena",
+      "role": "registered_advocate",
+      "phone": "9784033445",
+      "is_active": true,
+      "created_at": "2026-10-30T16:46:29.229Z",
+      "updated_at": "2026-10-30T16:46:29.229Z"
+    },
+    {
+      "id": "usr-7983ac5f-12e6-41fc-ad61-1f529c4cc690",
+      "email": "bhupendra.adv@alwarbar.in",
+      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "full_name": "Advocate Bhupendra Singh",
+      "role": "registered_advocate",
+      "phone": "9829988776",
+      "is_active": true,
+      "created_at": "2026-10-30T16:49:02.919Z",
+      "updated_at": "2026-10-30T16:49:02.919Z"
+    }
+  ],
+  "advocate_profiles": [
+    {
+      "id": "prof-001",
+      "user_id": "advocate-user-alwar-0002",
+      "bar_council_enrollment_no": "R/1420/2012",
+      "bar_association_name": "District & Sessions Bar Association, Alwar",
+      "chamber_address": "Chamber No. 42, Civil Wing, District Court Campus, Alwar",
+      "court_practice_complex": "District & Sessions Court, Alwar",
+      "practice_areas": [
+        "Criminal Defense",
+        "Civil Writs",
+        "Bail Matters"
+      ],
+      "experience_years": 14,
+      "bio_hindi": "अलवर सत्र न्यायालय एवं अधीनस्थ न्यायालयों में 14 वर्षों से नियमित दांडिक एवं दीवानी वकालत।",
+      "bio_english": "14 years of dedicated practice before District Courts Alwar specializing in Criminal defense, BNSS bail, and trial jurisprudence.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-01-10T12:00:00.000Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-002",
+      "user_id": "advocate-user-alwar-0003",
+      "bar_council_enrollment_no": "R/2890/2018",
+      "bar_association_name": "District Bar Association, Alwar",
+      "chamber_address": "Chamber No. 19, Revenue Bar Section, Alwar",
+      "court_practice_complex": "Revenue Courts & Commercial Court, Alwar",
+      "practice_areas": [
+        "Revenue Law",
+        "Property Partition",
+        "MACT Claims"
+      ],
+      "experience_years": 8,
+      "bio_hindi": "राजस्व न्यायालय, संभागीय आयुक्त एवं वाणिज्यिक न्यायालय अलवर में भूमि विवाद विशेषज्ञ।",
+      "bio_english": "Specialist in Rajasthan Tenancy Act, Land Revenue appeals, and Commercial arbitration in Alwar.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-02-05T14:00:00.000Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-1fe78bb1-1b23-4427-bf8e-d7ea69c009d1",
+      "user_id": "usr-2841821f-8006-4798-947d-02f22d812500",
+      "bar_council_enrollment_no": "R/1122/2008",
+      "bar_association_name": "District & Sessions Bar Association Alwar",
+      "chamber_address": "Chamber No. 12, Civil Wing",
+      "court_practice_complex": "District & Sessions Court Alwar",
+      "practice_areas": [
+        "Criminal Defense",
+        "Regular Bail",
+        "BNSS Trials"
+      ],
+      "experience_years": 17,
+      "bio_hindi": "अलवर सत्र न्यायालय में 17 वर्षों से आपराधिक मामलों के वरिष्ठ अधिवक्ता।",
+      "bio_english": "Senior trial counsel with 17 years practice in Alwar criminal courts.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-10-30T16:46:29.228Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-5a7d0c9b-a0fc-4008-b0f9-ffcc08ef71ff",
+      "user_id": "usr-ff28d1af-1ab1-4994-b309-2ed56a8c79c0",
+      "bar_council_enrollment_no": "R/3451/2018",
+      "bar_association_name": "District Bar Association Alwar",
+      "chamber_address": "Chamber No. 5, Revenue Section",
+      "court_practice_complex": "Revenue Courts & SDO Alwar",
+      "practice_areas": [
+        "Revenue Tenancy",
+        "Agricultural Land Partition",
+        "Civil Writs"
+      ],
+      "experience_years": 8,
+      "bio_hindi": "राजस्व मंडल एवं एसडीओ न्यायालय अलवर में काश्तकारी भूमि विशेषज्ञ।",
+      "bio_english": "Specialist in Rajasthan Tenancy Act, partition and mutation appeals.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-10-30T16:46:29.228Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-0dc0921e-8394-483a-991c-cdbb69bd6955",
+      "user_id": "usr-0089ae5b-f373-494b-8ee7-72936be1a3a0",
+      "bar_council_enrollment_no": "R/982/2012",
+      "bar_association_name": "District & Sessions Bar Association Alwar",
+      "chamber_address": "Chamber No. 27, Sessions Block",
+      "court_practice_complex": "District Court Alwar & Commercial Court",
+      "practice_areas": [
+        "Commercial Disputes",
+        "Section 138 NI Act",
+        "Arbitration"
+      ],
+      "experience_years": 14,
+      "bio_hindi": "चेक अनादर एवं वाणिज्यिक विवादों के अनुभवी अधिवक्ता।",
+      "bio_english": "Extensive practice in negotiable instruments litigation and commercial arbitration.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-10-30T16:46:29.228Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-b4ea15a9-135d-42cf-9973-63bcba9dae43",
+      "user_id": "usr-20383e29-3da4-4200-996b-54ecd916ae73",
+      "bar_council_enrollment_no": "R/4120/2020",
+      "bar_association_name": "District Bar Association Alwar",
+      "chamber_address": "Chamber No. 18, Family Court Section",
+      "court_practice_complex": "Family Court & CJM Court Alwar",
+      "practice_areas": [
+        "Family Law",
+        "Matrimonial Maintenance",
+        "Domestic Violence"
+      ],
+      "experience_years": 6,
+      "bio_hindi": "पारिवारिक एवं भरण-पोषण वादों में विधिक परामर्श एवं पैरवी।",
+      "bio_english": "Counsel for matrimonial matters, maintenance under BNSS, and family disputes.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-10-30T16:46:29.229Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-526b6567-c8c0-4f50-97e6-b4b8b5a29146",
+      "user_id": "usr-473a68ae-5de2-4d26-ad01-3fae369e93e5",
+      "bar_council_enrollment_no": "R/2290/2015",
+      "bar_association_name": "District & Sessions Bar Association Alwar",
+      "chamber_address": "Chamber No. 34, Collectorate Wing",
+      "court_practice_complex": "SDO Court & Revenue Appellate Authority (RAA)",
+      "practice_areas": [
+        "Land Revenue Demarcation",
+        "Section 91 Encroachment",
+        "Boundary Suits"
+      ],
+      "experience_years": 11,
+      "bio_hindi": "भू-राजस्व एवं सिवायचक भूमि सीमांकन मामलों के विशेषज्ञ।",
+      "bio_english": "Specialized in Rajasthan Land Revenue Act and demarcation appeals.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-10-30T16:46:29.229Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-d661f56d-39ea-4b7d-a0ce-67917bdd07ab",
+      "user_id": "usr-7983ac5f-12e6-41fc-ad61-1f529c4cc690",
+      "bar_council_enrollment_no": "R/780/2016",
+      "bar_association_name": "District & Sessions Bar Association, Alwar",
+      "chamber_address": "District Court Complex, Alwar",
+      "court_practice_complex": "District & Sessions Court, Alwar",
+      "practice_areas": [
+        "Criminal Law",
+        "Bail Matters"
+      ],
+      "experience_years": 10,
+      "bio_hindi": "Advocate Bhupendra Singh अलवर न्यायालय में नियमित वकालत कर रहे हैं।",
+      "bio_english": "Practicing advocate at District Courts Alwar specializing in Criminal Law, Bail Matters.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-10-30T16:49:02.919Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-anil-sain-2268",
+      "user_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "bar_council_enrollment_no": "R/2268/2009",
+      "bar_association_name": "District & Sessions Bar Association, Alwar",
+      "chamber_address": "Chamber No. 24, Sessions Court Block, District Court Campus, Alwar - 301001",
+      "court_practice_complex": "District & Sessions Court, Alwar (Civil, Criminal & Revenue Wings)",
+      "practice_areas": [
+        "Civil Litigation & Writs",
+        "Criminal Defense & Bail",
+        "Revenue Law & Land Appeals",
+        "MACT Claims & Consumer Law"
+      ],
+      "experience_years": 17,
+      "bio_hindi": "अलवर जिला एवं सत्र न्यायालय तथा अधीनस्थ न्यायालयों में वर्ष 2009 से निरंतर 17 वर्षों से विधि व्यवसाय। राजस्थान अधिवक्ता कल्याण कोष के आजीवन नियमित सदस्य।",
+      "bio_english": "Senior practicing advocate at District & Sessions Court Alwar since 2009 (17 years of active practice) specializing in Civil writs, Criminal defense, and Revenue litigation. Continuous lifetime member of Rajasthan Advocates Welfare Fund.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-01-15T10:00:00.000Z",
+      "is_publicly_listed": true
+    }
+  ],
+  "welfare_schemes": [
+    {
+      "id": "welfare-001",
+      "title_en": "Rajasthan Advocates Welfare Fund — Retirement & Death Benefit",
+      "title_hi": "राजस्थान अधिवक्ता कल्याण कोष — सेवानिवृत्ति एवं मृत्यु सहायता योजना",
+      "issuing_authority": "Bar Council of Rajasthan (Welfare Fund Trustee Committee)",
+      "official_source_url": "https://barcouncilofrajasthan.org/circular/rajasthan-advocates-welfare-fund",
+      "category": "retirement",
+      "max_benefit_amount": "Up to ₹10,00,000",
+      "status_badge": "Active Statutory Scheme",
+      "eligibility_criteria": "Advocate enrolled with Bar Council of Rajasthan with regular verification stamp adherence.",
+      "benefits_summary": "Lump sum compassionate assistance up to ₹10,00,000 on retirement or demise payable to designated family nominees.",
+      "application_process": "Submit Form A through President/Secretary of Alwar Bar Association to Trustee Committee, Jodhpur.",
+      "document_checklist": [
+        "Enrolment Certificate Copy",
+        "Bar Continuity Certificate",
+        "Nominee Verification",
+        "Cancelled Cheque"
+      ],
+      "deadline": "Annual Renewal: 31st March",
+      "last_verified_date": "2026-08-15",
+      "is_published": true,
+      "created_at": "2026-08-15T00:00:00.000Z"
+    },
+    {
+      "id": "welfare-002",
+      "title_en": "Advocates Group Mediclaim & Health Assistance Scheme",
+      "title_hi": "अधिवक्ता समूह स्वास्थ्य बीमा एवं गंभीर बीमारी सहायता योजना",
+      "issuing_authority": "Bar Council of Rajasthan & State Government of Rajasthan",
+      "official_source_url": "http://barcouncilofrajasthan.org",
+      "category": "medical",
+      "max_benefit_amount": "₹5,00,000 / Year",
+      "status_badge": "Annual Enrollment Active",
+      "eligibility_criteria": "All advocates up to 70 years on the active electoral roll of Bar Council of Rajasthan.",
+      "benefits_summary": "Cashless hospitalization up to ₹5,00,000 per year across empanelled hospitals including SMS Jaipur and District Hospital Alwar.",
+      "application_process": "Online submission through Bar Council portal with Bar Association verification.",
+      "document_checklist": [
+        "Bar Council ID",
+        "Aadhaar Card",
+        "Family details form"
+      ],
+      "deadline": "Annual enrollment by October 31",
+      "last_verified_date": "2026-09-01",
+      "is_published": true,
+      "created_at": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "welfare-003",
+      "title_en": "Young Advocate Monthly Stipend Scheme",
+      "title_hi": "युवा अधिवक्ता मासिक वृत्ति (स्टाइपेंड) योजना",
+      "issuing_authority": "Department of Law & Legal Affairs, Government of Rajasthan",
+      "official_source_url": "https://law.rajasthan.gov.in",
+      "category": "stipend",
+      "max_benefit_amount": "₹5,000 / Month",
+      "status_badge": "Govt Sanctioned",
+      "eligibility_criteria": "Advocates under 30 years within first 3 years of enrollment practicing in District Courts.",
+      "benefits_summary": "Monthly professional development stipend of ₹5,000 for initial 2 years of legal practice.",
+      "application_process": "Apply through District and Sessions Judge office Alwar with Bar Association recommendation.",
+      "document_checklist": [
+        "Enrollment Sanad",
+        "Bar Membership Proof",
+        "Chamber Attachment Undertaking",
+        "Bank Passbook"
+      ],
+      "deadline": "Ongoing departmental windows",
+      "last_verified_date": "2026-07-20",
+      "is_published": true,
+      "created_at": "2026-07-20T00:00:00.000Z"
+    },
+    {
+      "id": "welfare-004",
+      "title_en": "Critical Illness Emergency Compassionate Relief Grant",
+      "title_hi": "गंभीर बीमारी (कैंसर, बायपास, किडनी) आपातकालीन अनुग्रह सहायता",
+      "issuing_authority": "Trustee Committee, Rajasthan Advocates Welfare Fund",
+      "official_source_url": "https://barcouncilofrajasthan.org/circular/rajasthan-advocates-welfare-fund",
+      "category": "emergency",
+      "max_benefit_amount": "Up to ₹2,00,000",
+      "status_badge": "Immediate Priority (14 Days)",
+      "eligibility_criteria": "Any regular member of the Welfare Fund who has completed at least 3 years of continuous membership diagnosed with life-threatening ailments.",
+      "benefits_summary": "Immediate non-refundable ex-gratia financial grant up to ₹2,00,000 for Cancer therapy, Open Heart bypass surgery, Kidney transplantation/dialysis, and Brain surgery.",
+      "application_process": "Submit medical diagnostic reports, hospital admission bills, attending specialist doctor certificate along with Form B through Bar Association Alwar. Sanctioned on fast-track priority within 14 days.",
+      "document_checklist": [
+        "Form B Medical Aid Application",
+        "Original Hospital Discharge Summary",
+        "Doctor Diagnosis Certificate",
+        "Bar Council Verification"
+      ],
+      "deadline": "Immediate upon occurrence of medical crisis",
+      "last_verified_date": "2026-10-22",
+      "is_published": true,
+      "created_at": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "welfare-005",
+      "title_en": "Accidental Death & Permanent Total Disability Insurance",
+      "title_hi": "दुर्घटना मृत्यु एवं पूर्ण स्थाई दिव्यांगता मुआवजा बीमा",
+      "issuing_authority": "Trustee Committee & National Insurance Co-underwriter",
+      "official_source_url": "http://barcouncilofrajasthan.org",
+      "category": "disability",
+      "max_benefit_amount": "₹10,00,000 Lump Sum",
+      "status_badge": "Round-the-Clock Coverage",
+      "eligibility_criteria": "All enrolled practicing advocates in Rajasthan holding valid Welfare Fund membership cards.",
+      "benefits_summary": "Lump sum compensation of ₹10,00,000 in the unfortunate event of accidental demise or 100% permanent disability resulting from vehicular accidents or mishaps while traveling for professional court assignments.",
+      "application_process": "Lodge intimation within 90 days with FIR certified copy, post-mortem / civil surgeon permanent disability certificate, and nominee claim form.",
+      "document_checklist": [
+        "Police FIR Copy",
+        "Post-Mortem / Medical Board Certificate",
+        "Nominee Bank Proof",
+        "Bar Association Certificate"
+      ],
+      "deadline": "Within 90 days of accident",
+      "last_verified_date": "2026-10-10",
+      "is_published": true,
+      "created_at": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "welfare-006",
+      "title_en": "Alwar Bar Association Benevolent Immediate Distress Relief Fund",
+      "title_hi": "अलवर जिला बार एसोसिएशन बेनेवोलेंट आकस्मिक सहायता कोष",
+      "issuing_authority": "Executive Committee, District & Sessions Bar Association, Alwar",
+      "official_source_url": "https://alwarbar.in",
+      "category": "local_benevolent",
+      "max_benefit_amount": "Up to ₹50,000",
+      "status_badge": "Disbursed within 48 Hours",
+      "eligibility_criteria": "Active regular practicing members of District & Sessions Bar Association Alwar facing sudden acute personal distress or funeral exigency.",
+      "benefits_summary": "Direct local emergency grant up to ₹50,000 sanctioned immediately without bureaucratic delay to provide solace during bereavement, accidental trauma, or immediate ICU admission.",
+      "application_process": "Immediate verbal or written requisition submitted by colleagues or family directly to President or General Secretary of Alwar Bar Association.",
+      "document_checklist": [
+        "Alwar Bar Identity Card",
+        "Hospital admission slip or death certificate",
+        "Nominee declaration"
+      ],
+      "deadline": "Immediate emergency relief",
+      "last_verified_date": "2026-10-25",
+      "is_published": true,
+      "created_at": "2026-09-15T00:00:00.000Z"
+    },
+    {
+      "id": "welfare-007",
+      "title_en": "Maternity Financial Assistance for Practicing Women Advocates",
+      "title_hi": "महिला अधिवक्ताओं हेतु मातृत्व विधिक सहायता योजना",
+      "issuing_authority": "Bar Council of Rajasthan (Welfare Fund Trustee Committee)",
+      "official_source_url": "https://barcouncilofrajasthan.org/circular/rajasthan-advocates-welfare-fund",
+      "category": "maternity",
+      "max_benefit_amount": "₹50,000 Lump Sum",
+      "status_badge": "Special Women Advocate Support",
+      "eligibility_criteria": "Enrolled female advocate with minimum 2 years of active practice before Rajasthan subordinate or high courts.",
+      "benefits_summary": "Lump sum compassionate grant of ₹50,00,0 for child delivery (up to two surviving children) to support female advocates during the mandatory rest and maternity recess.",
+      "application_process": "Submit application through Alwar Bar Association with birth certificate and hospital records within 6 months of child birth.",
+      "document_checklist": [
+        "Municipal Birth Certificate",
+        "Hospital Delivery Discharge Card",
+        "BCR Sanad Copy",
+        "Bar Continuity Certificate"
+      ],
+      "deadline": "Within 6 months of delivery",
+      "last_verified_date": "2026-10-20",
+      "is_published": true,
+      "created_at": "2026-09-15T00:00:00.000Z"
+    }
+  ],
+  "welfare_bulletins": [
+    {
+      "id": "wb-001",
+      "title_en": "Mandatory ₹25 Welfare Fund Stamp on every Vakalatnama in Alwar Courts",
+      "title_hi": "अलवर अदालतों में प्रत्येक वकालतनामे पर ₹25 का कल्याण कोष स्टाम्प लगाना अनिवार्य",
+      "date": "2026-10-28",
+      "authority": "Trustee Committee, Bar Council of Rajasthan",
+      "category": "stamp_rate",
+      "important": true,
+      "summary_en": "Strict compliance notification: Vakalatnamas filed before District & Sessions Court, CJM, SDO, and Revenue Courts in Alwar must affix ₹25 Welfare Stamp. Failure impacts nominee eligibility.",
+      "summary_hi": "सख्त निर्देश: जिला एवं सत्र न्यायालय, सीजेएम तथा राजस्व अदालतों में प्रस्तुत वकालतनामे पर ₹25 का स्टाम्प अनिवार्य है ताकि मृत्यु व चिकित्सा हितलाभ सुचारू रहें।",
+      "official_link": "https://barcouncilofrajasthan.org/circular/rajasthan-advocates-welfare-fund"
+    },
+    {
+      "id": "wb-002",
+      "title_en": "Annual Life & Continuity Verification Deadline Extended to November 30",
+      "title_hi": "वार्षिक जीवन एवं निरंतरता सत्यापन की अंतिम तिथि 30 नवंबर तक बढ़ाई गई",
+      "date": "2026-10-25",
+      "authority": "Bar Council of Rajasthan, Jodhpur",
+      "category": "deadline",
+      "important": true,
+      "summary_en": "Trustee Committee has extended the annual continuity certificate window. Advocates who have not submitted their verification stamps may submit through Alwar Bar office without penalty.",
+      "summary_hi": "ट्रस्टी कमेटी द्वारा सत्यापन की तिथि बढ़ाई गई। जिन अधिवक्ताओं ने सत्यापन स्टाम्प जमा नहीं किया है, वे बिना विलंब शुल्क अलवर बार कार्यालय में जमा कर सकते हैं।",
+      "official_link": "http://barcouncilofrajasthan.org"
+    },
+    {
+      "id": "wb-003",
+      "title_en": "Trustee Committee Clears 142 Retirement & Demise Claims Worth ₹4.2 Crore",
+      "title_hi": "ट्रस्टी कमेटी बैठक: 142 सेवानिवृत्ति एवं मृत्यु दावों के ₹4.2 करोड़ स्वीकृत एवं हस्तांतरित",
+      "date": "2026-10-20",
+      "authority": "Welfare Fund Trustee Committee, Rajasthan",
+      "category": "disbursement",
+      "important": false,
+      "summary_en": "Statewide disbursement completed. 8 advocate families from Alwar district received compassionate assistance directly via RTGS into verified nominee bank accounts.",
+      "summary_hi": "अलवर जिले के 8 अधिवक्ता परिवारों को प्रत्यक्ष डीबीटी (RTGS) द्वारा सहायता राशि हस्तांतरित की गई।",
+      "official_link": "https://barcouncilofrajasthan.org/circular/rajasthan-advocates-welfare-fund"
+    },
+    {
+      "id": "wb-004",
+      "title_en": "Digital Cashless Mediclaim E-Card Download Activated",
+      "title_hi": "डिजिटल कैशलेस मेडिक्लेम ई-कार्ड डाउनलोड प्रारंभ",
+      "date": "2026-10-18",
+      "authority": "Health Insurance Nodal Desk",
+      "category": "circular",
+      "important": false,
+      "summary_en": "Advocates enrolled under the 2026-27 Group Mediclaim scheme can now download their digital health card using their BCR enrollment number on the mobile portal.",
+      "summary_hi": "ग्रुप मेडिक्लेम में पंजीकृत अधिवक्ता अब अपनी सनद संख्या दर्ज करके डिजिटल स्वास्थ्य कार्ड तुरंत डाउनलोड कर सकते हैं।",
+      "official_link": "http://barcouncilofrajasthan.org"
+    },
+    {
+      "id": "wb-005",
+      "title_en": "Young Advocate Library & E-Courts Grant Window Announced",
+      "title_hi": "युवा अधिवक्ताओं हेतु ₹10,000 डिजिटल ई-कोर्ट्स एवं विधिक लाइब्रेरी अनुदान",
+      "date": "2026-10-12",
+      "authority": "Law Department, Govt of Rajasthan",
+      "category": "circular",
+      "important": false,
+      "summary_en": "State Government introduces ₹10,000 one-time technological assistance for newly enrolled advocates to procure bare act libraries and e-filing digital signature tokens.",
+      "summary_hi": "नवीन नामांकित अधिवक्ताओं को विधिक पुस्तकें एवं डिजिटल सिग्नेचर टोकन क्रय करने हेतु ₹10,000 का एकमुश्त तकनीकी अनुदान।",
+      "official_link": "https://law.rajasthan.gov.in"
+    }
+  ],
+  "legal_updates": [
+    {
+      "id": "update-001",
+      "title_en": "Bharatiya Nagarik Suraksha Sanhita, 2023 (BNSS) — New Criminal Procedure Code",
+      "title_hi": "भारतीय नागरिक सुरक्षा संहिता, 2023 (बीएनएसएस) — नवीन दांडिक प्रक्रिया संहिता",
+      "category": "central_law",
+      "act_or_case_name": "Bharatiya Nagarik Suraksha Sanhita, 2023 (Act No. 46 of 2023)",
+      "citation": "Act No. 46 of 2023",
+      "court_name": "Parliament of India",
+      "decision_or_commencement_date": "2024-07-01",
+      "summary_en": "Replaces CrPC 1973. Mandates audio-video electronic recording of search and seizure, forensic examination for 7+ year offences, formalizes Zero FIR under Section 173, and defines bail conditions under Sections 480 and 482.",
+      "summary_hi": "दंड प्रक्रिया संहिता 1973 का स्थान लिया। जब्ती की वीडियोग्राफी अनिवार्य, 7 वर्ष से अधिक सजा वाले मामलों में फोरेंसिक परीक्षण, धारा 173 में जीरो एफआईआर तथा धारा 480 (नियमित जमानत) व धारा 482 (अग्रिम जमानत) के नवीन मानक।",
+      "key_sections": [
+        "Section 480 (Bail non-bailable)",
+        "Section 482 (Anticipatory bail)",
+        "Section 173 (Information / Zero FIR)",
+        "Section 105 (Seizure videography)"
+      ],
+      "official_source_url": "https://www.indiacode.nic.in",
+      "is_verified": true,
+      "last_verified_at": "2026-08-01T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "update-002",
+      "title_en": "Bharatiya Nyaya Sanhita, 2023 (BNS) — Substantive Criminal Law",
+      "title_hi": "भारतीय न्याय संहिता, 2023 (बीएनएस) — मौलिक दांडिक विधि",
+      "category": "central_law",
+      "act_or_case_name": "Bharatiya Nyaya Sanhita, 2023 (Act No. 45 of 2023)",
+      "citation": "Act No. 45 of 2023",
+      "court_name": "Parliament of India",
+      "decision_or_commencement_date": "2024-07-01",
+      "summary_en": "Replaces Indian Penal Code 1860. Introduces community service for minor offences, categorizes organized crime, and consolidates child and women protection provisions.",
+      "summary_hi": "भारतीय दंड संहिता 1860 का स्थान लिया। छोटे अपराधों में सामुदायिक सेवा का दंड, संगठित अपराध की परिभाषा एवं महिला अपराधों पर सख्त प्रावधान।",
+      "key_sections": [
+        "Section 103 (Murder)",
+        "Section 115 (Voluntarily causing hurt)",
+        "Section 4 (Community service)"
+      ],
+      "official_source_url": "https://www.indiacode.nic.in",
+      "is_verified": true,
+      "last_verified_at": "2026-08-01T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "update-004",
+      "title_en": "Bharatiya Sakshya Adhiniyam, 2023 (BSA) — New Evidence Law",
+      "title_hi": "भारतीय साक्ष्य अधिनियम, 2023 (बीएसए) — नवीन साक्ष्य विधि",
+      "category": "central_law",
+      "act_or_case_name": "Bharatiya Sakshya Adhiniyam, 2023 (Act No. 47 of 2023)",
+      "citation": "Act No. 47 of 2023",
+      "court_name": "Parliament of India",
+      "decision_or_commencement_date": "2024-07-01",
+      "summary_en": "Replaces Indian Evidence Act 1872. Recognizes electronic and digital records as primary evidence, establishes certificate requirement for digital devices under Section 63, and modernizes secondary evidence rules.",
+      "summary_hi": "भारतीय साक्ष्य अधिनियम 1872 का स्थान लिया। इलेक्ट्रॉनिक और डिजिटल अभिलेखों को प्राथमिक साक्ष्य की मान्यता, धारा 63 के तहत डिजिटल साक्ष्य प्रमाण पत्र तथा द्वितीयक साक्ष्य के आधुनिक नियम।",
+      "key_sections": [
+        "Section 61 (Admissibility of electronic records)",
+        "Section 63 (Certificate for electronic evidence)",
+        "Section 24 (Confessions in custody)",
+        "Section 116 (Presumption dowry death)"
+      ],
+      "official_source_url": "https://www.indiacode.nic.in/handle/123456789/20121",
+      "is_verified": true,
+      "last_verified_at": "2026-08-01T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "update-005",
+      "title_en": "Rajasthan Tenancy Act, 1955 — Primary Agricultural Land Law",
+      "title_hi": "राजस्थान काश्तकारी अधिनियम, 1955 — प्रमुख कृषि भूमि कानून",
+      "category": "rajasthan_act",
+      "act_or_case_name": "Rajasthan Tenancy Act, 1955 (Act No. 3 of 1955)",
+      "citation": "Act No. 3 of 1955 (Raj)",
+      "court_name": "Rajasthan Legislative Assembly",
+      "decision_or_commencement_date": "1955-10-15",
+      "summary_en": "Governs agricultural tenancy, Khatedari title rights, devolution, statutory restrictions on SC/ST land alienation under Section 42, partition of agricultural holdings under Section 53, and temporary injunctions by Revenue Courts under Section 212.",
+      "summary_hi": "राजस्थान में कृषि काश्तकारी, खातेदारी अधिकार, धारा 42 के तहत अ.जा./अ.ज.जा. भूमि विक्रय पर वैधानिक रोक, धारा 53 के तहत कृषि भूमि का सह-खातेदारों में बंटवारा तथा धारा 212 के तहत उपखंड अधिकारी द्वारा स्थगन आदेश।",
+      "key_sections": [
+        "Section 15 (Khatedari rights)",
+        "Section 42 (Protection of SC/ST land)",
+        "Section 53 (Division of holding)",
+        "Section 212 (Injunction by Revenue Court)"
+      ],
+      "official_source_url": "https://law.rajasthan.gov.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-01T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "update-006",
+      "title_en": "Rajasthan Land Revenue Act, 1956 — Revenue Administration & Demarcation",
+      "title_hi": "राजस्थान भू-राजस्व अधिनियम, 1956 — राजस्व प्रशासन एवं सीमा ज्ञान (डिमार्केशन)",
+      "category": "rajasthan_act",
+      "act_or_case_name": "Rajasthan Land Revenue Act, 1956 (Act No. 15 of 1956)",
+      "citation": "Act No. 15 of 1956 (Raj)",
+      "court_name": "Rajasthan Legislative Assembly",
+      "decision_or_commencement_date": "1956-07-01",
+      "summary_en": "Governs revenue authorities, mutation entries, demarcation and boundary dispute settlements under Section 111, summary eviction of unauthorized encroachers on pasture/government land under Section 91, and appellate powers of the Board of Revenue Ajmer.",
+      "summary_hi": "राजस्व प्रशासन, म्यूटेशन (नामांतरण), धारा 111 के तहत तहसीलदार द्वारा सीमा ज्ञान (डिमार्केशन), धारा 91 के तहत चारागाह व सिवायचक भूमि से अतिक्रमणकारियों की बेदखली तथा राजस्व मंडल अजमेर के अपीलीय क्षेत्राधिकार।",
+      "key_sections": [
+        "Section 91 (Encroachment removal)",
+        "Section 111 (Boundary demarcation)",
+        "Section 75 (Appeals to RAA & Board of Revenue)"
+      ],
+      "official_source_url": "https://landrevenue.rajasthan.gov.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-01T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "update-007",
+      "title_en": "Negotiable Instruments Act, 1881 — Section 138 Cheque Dishonour",
+      "title_hi": "परक्राम्य लिखत अधिनियम, 1881 — धारा 138 चेक अनादर (चेक बाउंस)",
+      "category": "central_law",
+      "act_or_case_name": "Negotiable Instruments Act, 1881 (Act No. 26 of 1881)",
+      "citation": "Act No. 26 of 1881",
+      "court_name": "Parliament of India",
+      "decision_or_commencement_date": "1882-03-01",
+      "summary_en": "Regulates criminal liability for dishonour of cheques for insufficiency of funds. Imposes strict 30-day statutory notice requirement, Section 139 statutory presumption of debt, vicarious corporate liability under Section 141, and Section 143A interim compensation.",
+      "summary_hi": "खाते में अपर्याप्त राशि के कारण चेक अनादर पर दांडिक दायित्व। 30 दिवस में विधिक मांग नोटिस की वैधानिक अनिवार्यता, धारा 139 के तहत ऋण की उपधारणा, धारा 141 में कंपनी निदेशकों का दायित्व तथा धारा 143A में 20% तक अंतरिम क्षतिपूर्ति।",
+      "key_sections": [
+        "Section 138 (Dishonour for funds)",
+        "Section 139 (Presumption for holder)",
+        "Section 141 (Company offences)",
+        "Section 143A (Interim compensation)"
+      ],
+      "official_source_url": "https://www.indiacode.nic.in/handle/123456789/2189",
+      "is_verified": true,
+      "last_verified_at": "2026-09-10T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-10T00:00:00.000Z"
+    },
+    {
+      "id": "update-008",
+      "title_en": "Rajasthan Court Fees and Suits Valuation Act, 1961",
+      "title_hi": "राजस्थान न्यायालय फीस एवं वाद मूल्यांकन अधिनियम, 1961",
+      "category": "rajasthan_act",
+      "act_or_case_name": "Rajasthan Court Fees and Suits Valuation Act, 1961",
+      "citation": "Act No. 23 of 1961 (Raj)",
+      "court_name": "Rajasthan Legislative Assembly",
+      "decision_or_commencement_date": "1961-09-01",
+      "summary_en": "Prescribes mandatory ad-valorem and fixed court fees payable on plaints, written statements, injunction applications, partition suits, and appeals instituted before civil and revenue courts in Alwar district.",
+      "summary_hi": "अलवर जिले की दीवानी एवं राजस्व अदालतों में प्रस्तुत वादपत्र, शपथ पत्र, निषेधाज्ञा प्रार्थना पत्र, बंटवारा वाद एवं अपीलों पर देय वैधानिक न्याय शुल्क की दरें एवं गणना विधि।",
+      "key_sections": [
+        "Section 24 (Declaration & injunction fee)",
+        "Section 35 (Partition suit valuation)",
+        "Section 48 (Appeals fee)"
+      ],
+      "official_source_url": "https://law.rajasthan.gov.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-15T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-15T00:00:00.000Z"
+    },
+    {
+      "id": "update-009",
+      "title_en": "Code of Civil Procedure, 1908 (CPC) — Injunctions & Trial Practice",
+      "title_hi": "सिविल प्रक्रिया संहिता, 1908 (सीपीसी) — निषेधाज्ञा एवं दीवानी प्रक्रिया",
+      "category": "central_law",
+      "act_or_case_name": "Code of Civil Procedure, 1908 (Act No. 5 of 1908)",
+      "citation": "Act No. 5 of 1908",
+      "court_name": "Parliament of India",
+      "decision_or_commencement_date": "1909-01-01",
+      "summary_en": "Procedural foundation for civil litigation: Order 39 Rules 1 & 2 for temporary injunctions (prima facie case, balance of convenience, irreparable injury), Order 7 Rule 11 rejection of plaint, Section 9 jurisdiction, and Section 100 Second Appeals.",
+      "summary_hi": "दीवानी वाद प्रक्रिया: आदेश 39 नियम 1 व 2 (अस्थायी निषेधाज्ञा हेतु प्रथम दृष्टया मामला, सुविधा का संतुलन एवं अपूरणीय क्षति), आदेश 7 नियम 11 (वादपत्र निरस्तीकरण) तथा धारा 100 द्वितीय अपील।",
+      "key_sections": [
+        "Order 39 Rules 1 & 2 (Injunctions)",
+        "Order 7 Rule 11 (Plaint rejection)",
+        "Section 9 (Civil court jurisdiction)",
+        "Section 100 (Second appeal)"
+      ],
+      "official_source_url": "https://www.indiacode.nic.in/handle/123456789/2191",
+      "is_verified": true,
+      "last_verified_at": "2026-09-20T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-20T00:00:00.000Z"
+    },
+    {
+      "id": "update-003",
+      "title_en": "Rajasthan High Court: Khatedari Rights and Summary Revenue Partition",
+      "title_hi": "राजस्थान उच्च न्यायालय: खातेदारी अधिकार एवं त्वरित राजस्व बंटवारा वाद",
+      "category": "hc_judgment",
+      "act_or_case_name": "Ramhet & Ors. v. State of Rajasthan & Ors.",
+      "citation": "2025 (1) RLR 342 (HC)",
+      "court_name": "Rajasthan High Court, Jaipur Bench",
+      "decision_or_commencement_date": "2025-02-14",
+      "summary_en": "Division Bench held that continuous recorded agricultural possession prior to 1955 vests protected Khatedari rights under Section 15 of Rajasthan Tenancy Act, and revenue courts must conclude summary partition mandates strictly within 6 months.",
+      "summary_hi": "माननीय खंडपीठ द्वारा निर्णय: 1955 से पूर्व का दर्ज कृषि कब्जा राजस्थान काश्तकारी अधिनियम धारा 15 के तहत वैधानिक खातेदारी अधिकार प्रदान करता है एवं राजस्व अदालतों को 6 माह में बंटवारा वाद का निस्तारण करना होगा।",
+      "key_sections": [
+        "Section 15 Rajasthan Tenancy Act",
+        "Section 53 Partition Rules"
+      ],
+      "official_source_url": "https://hcraj.nic.in",
+      "is_verified": true,
+      "last_verified_at": "2026-02-20T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-02-20T00:00:00.000Z"
+    },
+    {
+      "id": "update-010",
+      "title_en": "Supreme Court of India: Comprehensive Bail Directives under New Criminal Codes",
+      "title_hi": "सर्वोच्च न्यायालय: नवीन दांडिक विधियों में जमानत एवं गिरफ्तारी पर मार्गदर्शक सिद्धांत",
+      "category": "sc_judgment",
+      "act_or_case_name": "Satender Kumar Antil v. Central Bureau of Investigation & Anr.",
+      "citation": "(2022) 10 SCC 51 / 2024 INSC 582",
+      "court_name": "Supreme Court of India",
+      "decision_or_commencement_date": "2024-05-10",
+      "summary_en": "Landmark constitutional bench precedent mandating that for offences punishable with imprisonment of 7 years or less, routine arrest is unlawful without strict compliance with Section 35 BNSS notice. Established Category A-D bail matrix directing trial courts to decide bail applications on the same day or within 2 weeks.",
+      "summary_hi": "सर्वोच्च न्यायालय का ऐतिहासिक फैसला: 7 वर्ष तक की सजा वाले अपराधों में धारा 35 बीएनएसएस (पूर्व धारा 41A) नोटिस का पालन किए बिना गिरफ्तारी वर्जित। ट्रायल कोर्ट्स को उसी दिन अथवा अधिकतम दो सप्ताह में जमानत प्रार्थना पत्रों का निस्तारण करने का आदेश।",
+      "key_sections": [
+        "Section 480 BNSS (Regular bail)",
+        "Section 482 BNSS (Anticipatory bail)",
+        "Section 35 BNSS (Notice of appearance)"
+      ],
+      "official_source_url": "https://sci.gov.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-01T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "update-011",
+      "title_en": "Supreme Court of India: Mandatory Checks Before Remand & Matrimonial Arrests",
+      "title_hi": "सर्वोच्च न्यायालय: न्यायिक रिमांड एवं वैवाहिक विवादों में मनमानी गिरफ्तारी पर रोक",
+      "category": "sc_judgment",
+      "act_or_case_name": "Arnesh Kumar v. State of Bihar & Anr.",
+      "citation": "(2014) 8 SCC 273 (Reaffirmed 2024)",
+      "court_name": "Supreme Court of India",
+      "decision_or_commencement_date": "2014-07-02",
+      "summary_en": "Police officers must not arrest automatically when a case under Section 85 BNS (dowry cruelty / 498A IPC) is registered. Magistrates authorizing detention must record satisfaction with specific objective reasons; failure renders officer and magistrate liable to disciplinary and contempt action.",
+      "summary_hi": "दहेज प्रताड़ना (धारा 85 बीएनएस) मामलों में स्वतः गिरफ्तारी पर पूर्ण रोक। न्यायिक मजिस्ट्रेट को रिमांड देने से पूर्व पुलिस द्वारा प्रस्तुत कारणों की संतुष्टि दर्ज करना अनिवार्य।",
+      "key_sections": [
+        "Section 35 BNSS",
+        "Section 85 BNS",
+        "Section 86 BNS"
+      ],
+      "official_source_url": "https://sci.gov.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-01T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "update-012",
+      "title_en": "Rajasthan High Court: Concurrent Bail Jurisdiction under Section 480/482 BNSS",
+      "title_hi": "राजस्थान उच्च न्यायालय: धारा 480 व 482 बीएनएसएस के तहत समवर्ती क्षेत्राधिकार",
+      "category": "hc_judgment",
+      "act_or_case_name": "Bhanwar Lal & Ors. v. State of Rajasthan",
+      "citation": "2024 (3) WLC (Raj) 489",
+      "court_name": "Rajasthan High Court, Jodhpur Bench",
+      "decision_or_commencement_date": "2024-09-18",
+      "summary_en": "Held that while High Court and Sessions Court have concurrent statutory jurisdiction for bail under Sections 480 and 482 BNSS, established judicial discipline in Rajasthan requires that the litigant must first approach the District & Sessions Judge Alwar before invoking High Court jurisdiction, absent compelling grounds.",
+      "summary_hi": "माननीय उच्च न्यायालय: धारा 480 व 482 बीएनएसएस में सत्र न्यायालय व उच्च न्यायालय को समवर्ती अधिकार प्राप्त हैं, परंतु न्यायिक अनुशासन के तहत पक्षकार को पहले सत्र न्यायालय में ही आवेदन करना आवश्यक है।",
+      "key_sections": [
+        "Section 480 BNSS",
+        "Section 482 BNSS"
+      ],
+      "official_source_url": "https://hcraj.nic.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-20T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-20T00:00:00.000Z"
+    },
+    {
+      "id": "update-013",
+      "title_en": "Rajasthan High Court: Restraining Co-sharer from Unilateral Construction",
+      "title_hi": "राजस्थान उच्च न्यायालय: सह-खातेदार द्वारा बिना बंटवारा पक्के निर्माण पर रोक",
+      "category": "hc_judgment",
+      "act_or_case_name": "Prem Chand v. Jagdish & Ors.",
+      "citation": "2021 (3) RLR 512 (HC)",
+      "court_name": "Rajasthan High Court, Jaipur Bench",
+      "decision_or_commencement_date": "2021-04-12",
+      "summary_en": "Reiterated settled Rajasthan property jurisprudence: An undivided co-sharer in joint agricultural land has no legal authority to raise permanent construction or change land character without partition decree or consent of all recorded co-owners; interim injunction under Order 39 Rules 1 & 2 CPC is warranted.",
+      "summary_hi": "संयुक्त कृषि भूमि में कोई भी सह-खातेदार अन्य सह-खातेदारों की सहमति या सक्षम न्यायालय से अंतिम बंटवारा डिक्री के बिना एकतरफा पक्का निर्माण नहीं कर सकता। आदेश 39 नियम 1 व 2 सीपीसी के तहत स्थगन न्यायोचित है।",
+      "key_sections": [
+        "Section 53 Rajasthan Tenancy Act",
+        "Order 39 Rules 1 & 2 CPC"
+      ],
+      "official_source_url": "https://hcraj.nic.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-25T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-25T00:00:00.000Z"
+    },
+    {
+      "id": "update-014",
+      "title_en": "Supreme Court of India: Mandatory Presumption in Cheque Dishonour under Section 139",
+      "title_hi": "सर्वोच्च न्यायालय: चेक बाउंस में धारा 139 के तहत ऋण दायित्व की वैधानिक उपधारणा",
+      "category": "sc_judgment",
+      "act_or_case_name": "Bir Singh v. Mukesh Kumar",
+      "citation": "(2019) 4 SCC 197",
+      "court_name": "Supreme Court of India",
+      "decision_or_commencement_date": "2019-02-06",
+      "summary_en": "Held that a blank cheque leaf voluntarily signed and handed over by the drawer creates a binding statutory presumption under Section 139 NI Act that it was issued towards discharge of debt or liability. The burden of rebutting this presumption lies squarely on the accused drawer with cogent evidence.",
+      "summary_hi": "सर्वोच्च न्यायालय का निर्णय: यदि खाताधारक ने हस्ताक्षर कर ब्लैंक चेक सौंपा है, तो धारा 139 परक्राम्य लिखत अधिनियम के तहत यह माना जाएगा कि चेक वैध ऋण के भुगतान हेतु दिया गया था। इसे गलत सिद्ध करने का भार अभियुक्त पर होगा।",
+      "key_sections": [
+        "Section 138 NI Act",
+        "Section 139 NI Act"
+      ],
+      "official_source_url": "https://sci.gov.in",
+      "is_verified": true,
+      "last_verified_at": "2026-09-28T00:00:00.000Z",
+      "is_published": true,
+      "created_at": "2026-09-28T00:00:00.000Z"
+    }
+  ],
+  "legal_forms": [
+    {
+      "id": "form-001",
+      "title_en": "Regular Bail Application under Section 480 BNSS, 2023",
+      "title_hi": "नियमित जमानत प्रार्थना पत्र — धारा 480 बीएनएसएस, 2023",
+      "category": "criminal",
+      "description_en": "Standard format for Sessions Court and Judicial Magistrate Alwar for bail in non-bailable cases.",
+      "description_hi": "अलवर सत्र न्यायालय एवं न्यायिक मजिस्ट्रेट हेतु धारा 480 के तहत नियमित जमानत का प्रामाणिक प्रारूप।",
+      "file_format": "docx",
+      "file_path": "/templates/bail_application_sec_480_bnss.docx",
+      "source_name": "District & Sessions Court Alwar Bar Practice",
+      "is_mandatory_prescribed": false,
+      "disclaimer": "This practice template must be adapted to individual case facts and custody dates.",
+      "downloads_count": 246,
+      "created_at": "2026-03-01T00:00:00.000Z"
+    },
+    {
+      "id": "form-002",
+      "title_en": "Temporary Injunction Application under Order 39 Rules 1 & 2 CPC",
+      "title_hi": "अस्थायी निषेधाज्ञा प्रार्थना पत्र — आदेश 39 नियम 1 व 2 सिविल प्रक्रिया संहिता",
+      "category": "civil",
+      "description_en": "Application with supporting affidavit to protect land possession and restrain alienation.",
+      "description_hi": "भूमि विवाद में कब्जा संरक्षण एवं बेचान पर रोक हेतु शपथ पत्र सहित आवेदन।",
+      "file_format": "docx",
+      "file_path": "/templates/injunction_order_39_rules_1_2_cpc.docx",
+      "source_name": "Civil Court Practice Guide",
+      "is_mandatory_prescribed": false,
+      "disclaimer": "Verify prima facie case, balance of convenience, and irreparable injury grounds.",
+      "downloads_count": 190,
+      "created_at": "2026-03-01T00:00:00.000Z"
+    },
+    {
+      "id": "form-003",
+      "title_en": "Statutory Demand Notice under Section 138 NI Act",
+      "title_hi": "वैधानिक मांग सूचना पत्र — धारा 138 परक्राम्य लिखत अधिनियम (चेक बाउंस)",
+      "category": "commercial",
+      "description_en": "15-day statutory demand notice sent via registered post within 30 days of bank return memo.",
+      "description_hi": "चेक अनादर के मामले में बैंक वापसी मेमो के 30 दिवस में भेजी जाने वाली विधिक सूचना।",
+      "file_format": "docx",
+      "file_path": "/templates/legal_notice_sec_138_ni_act.docx",
+      "source_name": "Negotiable Instruments Practice",
+      "is_mandatory_prescribed": false,
+      "disclaimer": "Strict statutory timelines apply. Calculate 30-day notice window accurately.",
+      "downloads_count": 312,
+      "created_at": "2026-03-01T00:00:00.000Z"
+    }
+  ],
+  "notices_events": [
+    {
+      "id": "notice-001",
+      "title_en": "Alwar District Court Annual Winter Recess & Urgent Roster Notice",
+      "title_hi": "जिला एवं सत्र न्यायालय अलवर वार्षिक शीतकालीन अवकाश एवं आवश्यक रोस्टर सूचना",
+      "category": "court_notice",
+      "content_en": "The District & Sessions Court and all subordinate courts in Alwar district will observe scheduled recess. Designated Vacation Judges will hear urgent bail and injunction matters between 10:30 AM to 1:30 PM.",
+      "content_hi": "जिला एवं सत्र न्यायालय अलवर तथा अधीनस्थ न्यायालयों में घोषित अवकाश रहेगा। इस अवधि में आवश्यक जमानत व निषेधाज्ञा प्रार्थना पत्रों की सुनवाई नामित अवकाशकालीन न्यायाधीशों द्वारा प्रातः 10:30 से 1:30 बजे तक की जाएगी।",
+      "event_date": "2026-12-25T10:00:00.000Z",
+      "expiry_date": "2027-01-02T17:00:00.000Z",
+      "venue": "District Court Complex, Alwar",
+      "organizer": "Office of District & Sessions Judge, Alwar",
+      "official_source_url": "https://districts.ecourts.gov.in/alwar",
+      "is_published": true,
+      "created_at": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "notice-002",
+      "title_en": "Workshop on Practical Implementation of BNSS, BNS & BSA for Alwar Advocates",
+      "title_hi": "अलवर अधिवक्ताओं हेतु नवीन दांडिक विधियों (बीएनएसएस, बीएनएस व बीएसए) पर कार्यशाला",
+      "category": "training",
+      "content_en": "One-day Continuing Legal Education workshop focusing on Section 480 bail drafting, digital evidence certificates under Section 63 BSA, and e-summons verification.",
+      "content_hi": "एक दिवसीय सतत विधिक शिक्षा कार्यशाला: धारा 480 जमानत प्रारूपण, धारा 63 बीएसए के तहत डिजिटल साक्ष्य प्रमाण पत्र तथा इलेक्ट्रॉनिक सम्मन की विधिक बारीकियों पर विचार-विमर्श।",
+      "event_date": "2026-11-15T10:00:00.000Z",
+      "expiry_date": "2026-11-15T18:00:00.000Z",
+      "venue": "Bar Association Auditorium, Alwar",
+      "organizer": "Alwar District Bar Association",
+      "official_source_url": "https://alwarbar.in",
+      "is_published": true,
+      "created_at": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "notice-003",
+      "title_en": "Bar Council of Rajasthan: Mandatory Welfare Fund Stamp Compliance Circular",
+      "title_hi": "बार काउंसिल ऑफ राजस्थान: अधिवक्ता कल्याण कोष स्टाम्प अनिवार्यता परिपत्र",
+      "category": "bar_notice",
+      "content_en": "Strict compliance notification issued to all advocates practicing in Alwar: Every Vakalatnama submitted across Civil, Criminal, and Revenue Courts must affix the prescribed ₹25 Rajasthan Advocates Welfare Fund Stamp to maintain active nominee death and medical benefits.",
+      "content_hi": "अलवर के समस्त अधिवक्ताओं हेतु आवश्यक परिपत्र: दीवानी, दांडिक एवं राजस्व अदालतों में प्रस्तुत प्रत्येक वकालतनामे पर ₹25 का राजस्थान अधिवक्ता कल्याण कोष स्टाम्प लगाना अनिवार्य है जिससे अधिवक्ताओं व उनके नामांकित परिजनों को कल्याण कोष की सहायता सुनिश्चित हो सके।",
+      "event_date": "2026-10-18T10:00:00.000Z",
+      "venue": "All Court Wings, District Alwar",
+      "organizer": "Bar Council of Rajasthan, Trustee Committee",
+      "official_source_url": "https://barcouncilofrajasthan.org/circular/rajasthan-advocates-welfare-fund",
+      "is_published": true,
+      "created_at": "2026-10-18T00:00:00.000Z"
+    },
+    {
+      "id": "notice-004",
+      "title_en": "eCourts 3.0: Digital Bail Release Order Transmission via FASTER System",
+      "title_hi": "ई-कोर्ट्स 3.0: फॉस्टर प्रणाली द्वारा डिजिटल जमानत रिहाई आदेश प्रेषण",
+      "category": "tech_update",
+      "content_en": "National e-Committee and Rajasthan High Court have activated the electronic FASTER workflow for Alwar Sessions Court. Digitally signed bail release orders are now transmitted instantly to Alwar Central Jail superintendent, eliminating manual release delays.",
+      "content_hi": "माननीय उच्च न्यायालय एवं ई-कमेटी द्वारा अलवर सत्र न्यायालय में फॉस्टर प्रणाली प्रारंभ। डिजिटल हस्ताक्षरित जमानत रिहाई आदेश अब तुरंत अलवर केंद्रीय कारागृह को ऑनलाइन भेजे जा रहे हैं, जिससे बंदियों की रिहाई में कागजी विलंब समाप्त हो गया है।",
+      "event_date": "2026-10-20T10:00:00.000Z",
+      "venue": "Sessions Court & Central Jail, Alwar",
+      "organizer": "e-Committee Supreme Court of India & High Court of Rajasthan",
+      "official_source_url": "https://districts.ecourts.gov.in/alwar",
+      "is_published": true,
+      "created_at": "2026-10-20T00:00:00.000Z"
+    },
+    {
+      "id": "notice-005",
+      "title_en": "Mandatory Pre-Institution Mediation SOP under Commercial Courts Act",
+      "title_hi": "वाणिज्यिक न्यायालय अधिनियम के तहत वाद-पूर्व मध्यस्थता (PIM) मानक प्रक्रिया",
+      "category": "legal_reform",
+      "content_en": "District Legal Services Authority (DLSA) Alwar notifies standard operating procedure for pre-institution mediation in commercial disputes. Advocates may file mediation requests online without physical visits to initiate the 3-month statutory window.",
+      "content_hi": "जिला विधिक सेवा प्राधिकरण (डीएलएसए) अलवर द्वारा वाणिज्यिक विवादों में वाद-पूर्व मध्यस्थता हेतु मानक संचालन प्रक्रिया जारी। अधिवक्ता अब वाणिज्यिक वाद दायर करने से पूर्व ऑनलाइन आवेदन कर सकते हैं।",
+      "event_date": "2026-10-22T10:00:00.000Z",
+      "venue": "DLSA Office, ADR Centre, District Court Campus, Alwar",
+      "organizer": "District Legal Services Authority, Alwar",
+      "official_source_url": "https://districts.ecourts.gov.in/alwar",
+      "is_published": true,
+      "created_at": "2026-10-22T00:00:00.000Z"
+    },
+    {
+      "id": "notice-006",
+      "title_en": "Rajasthan High Court: Online Certified Copies Portal Activated for Alwar Courts",
+      "title_hi": "राजस्थान उच्च न्यायालय: अलवर अधीनस्थ अदालतों हेतु ऑनलाइन प्रमाणित प्रतिलिपि पोर्टल",
+      "category": "court_notice",
+      "content_en": "Advocates and parties can now apply for certified copies of orders, pleadings, and decree sheets online through the unified Rajasthan Judicial portal, pay statutory copying fees via e-Gras, and receive digitally attested PDFs.",
+      "content_hi": "अलवर जिले की सभी अधीनस्थ अदालतों के आदेशों, प्रार्थना पत्रों व डिक्री शीट की प्रमाणित प्रतिलिपि (सर्टिफाइड कॉपी) हेतु ऑनलाइन पोर्टल प्रारंभ। ई-ग्रास द्वारा कोर्ट फीस का भुगतान कर डिजिटल हस्ताक्षरित प्रतिलिपि प्राप्त की जा सकती है।",
+      "event_date": "2026-10-24T10:00:00.000Z",
+      "venue": "Copying Section, District Court, Alwar",
+      "organizer": "High Court of Rajasthan, Jodhpur",
+      "official_source_url": "https://hcraj.nic.in",
+      "is_published": true,
+      "created_at": "2026-10-24T00:00:00.000Z"
+    }
+  ],
+  "forum_categories": [
+    {
+      "id": "cat-001",
+      "slug": "civil-property",
+      "name_en": "Civil & Property Law",
+      "name_hi": "दीवानी एवं संपत्ति कानून",
+      "description_en": "Title suits, injunctions, specific performance, and property disputes",
+      "description_hi": "स्वामित्व वाद, निषेधाज्ञा, विशिष्ट अनुतोष एवं संपत्ति विवाद",
+      "icon": "scale",
+      "sort_order": 1,
+      "post_count": 1
+    },
+    {
+      "id": "cat-002",
+      "slug": "criminal-practice",
+      "name_en": "Criminal Law & Procedure",
+      "name_hi": "दांडिक विधि एवं प्रक्रिया",
+      "description_en": "BNSS bail, trials, revisions, appeals, and police station procedures",
+      "description_hi": "बीएनएसएस जमानत, विचारण, निगरानी, अपील एवं थाना प्रक्रिया",
+      "icon": "gavel",
+      "sort_order": 2,
+      "post_count": 1
+    },
+    {
+      "id": "cat-003",
+      "slug": "revenue-land",
+      "name_en": "Revenue & Land Matters",
+      "name_hi": "राजस्व एवं भूमि विधि",
+      "description_en": "Rajasthan Tenancy Act, Land Revenue Act, mutation, and partition",
+      "description_hi": "राजस्थान काश्तकारी अधिनियम, भू-राजस्व, नामांतरण एवं विभाजन",
+      "icon": "landmark",
+      "sort_order": 3,
+      "post_count": 0
+    },
+    {
+      "id": "cat-004",
+      "slug": "young-advocates",
+      "name_en": "Young Advocates & Mentoring",
+      "name_hi": "नवप्रवेशी अधिवक्ता एवं मार्गदर्शन",
+      "description_en": "Practice orientation, chamber etiquette, and senior guidance",
+      "description_hi": "वकालत प्रारंभ, चैंबर परंपराएं एवं वरिष्ठ मार्गदर्शन",
+      "icon": "graduation-cap",
+      "sort_order": 4,
+      "post_count": 0
+    }
+  ],
+  "forum_posts": [
+    {
+      "id": "post-001",
+      "category_id": "cat-002",
+      "category_slug": "criminal-practice",
+      "category_name_en": "Criminal Law & Procedure",
+      "category_name_hi": "दांडिक विधि एवं प्रक्रिया",
+      "user_id": "advocate-user-alwar-0002",
+      "author_name": "Advocate Rajesh Sharma",
+      "author_enrollment": "R/1420/2012",
+      "author_verified": true,
+      "title": "Application of Section 480 BNSS vs Old 437 CrPC in pending FIRs registered prior to July 2024",
+      "content": "Colleagues practicing in Alwar Sessions Court, what has been the judicial approach regarding bail applications where the alleged incident/FIR dates back to May 2024 but arrest and remand occurred after July 1, 2024? Under Section 531 of BNSS (repeal and savings), investigations initiated under CrPC continue under the old code, but what caption are the magistrates accepting for bail petitions?",
+      "language": "mixed",
+      "upvotes": 18,
+      "replies_count": 1,
+      "is_pinned": true,
+      "is_hidden": false,
+      "created_at": "2026-09-10T14:30:00.000Z"
+    }
+  ],
+  "forum_replies": [
+    {
+      "id": "reply-001",
+      "post_id": "post-001",
+      "user_id": "advocate-user-alwar-0003",
+      "author_name": "Advocate Sunita Meena",
+      "author_enrollment": "R/2890/2018",
+      "author_verified": true,
+      "content": "In Alwar CJM and Sessions courts, it is standard practice to caption the petition under Section 480 BNSS read with Section 437 CrPC. Sessions courts are emphasizing that procedural law applies from the date of presentation of the bail application, so citing BNSS with reference to old CrPC provides safe practice.",
+      "is_accepted_answer": true,
+      "upvotes": 12,
+      "created_at": "2026-09-10T16:15:00.000Z"
+    }
+  ],
+  "forum_reports": [],
+  "cases": [
+    {
+      "id": "case-001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "case_title": "Rajesh Case 1"
+    },
+    {
+      "id": "case-002",
+      "advocate_id": "advocate-user-alwar-0003",
+      "case_title": "Meena Case 2"
+    }
+  ],
+  "case_documents": [
+    {
+      "id": "doc-001",
+      "case_id": "case-001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "title": "Confidential Pleading A"
+    },
+    {
+      "id": "doc-002",
+      "case_id": "case-002",
+      "advocate_id": "advocate-user-alwar-0003",
+      "title": "Confidential Pleading B"
+    }
+  ],
+  "case_hearings": [
+    {
+      "id": "hearing-001",
+      "case_id": "case-alwar-0001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "hearing_date": "2026-11-04",
+      "court_room": "Court No. 2, SDO Campus, Alwar",
+      "judge_name": "Sub-Divisional Magistrate, Alwar",
+      "business_recorded": "Previous order: Reply to stay application taken on record. Matter posted for final arguments on stay.",
+      "previous_order_summary": "Notices served. Parties directed to maintain status quo on agricultural boundaries till next date.",
+      "next_action": "Prepare citation compilation on co-sharer right to maintain possession before actual partition.",
+      "next_hearing_date": "2026-11-04",
+      "attended": true,
+      "case_title": "Mukesh Kumar Saini v. Rameshwar Dayal & Ors.",
+      "created_at": "2026-10-10T10:00:00.000Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "case_id": "case-alwar-0001",
+      "title": "Submit certified rejoinder and copy of Khasra map in SDO Court",
+      "due_date": "2026-11-02",
+      "priority": "urgent",
+      "status": "pending",
+      "case_title": "Mukesh Kumar Saini v. Rameshwar Dayal & Ors.",
+      "created_at": "2026-10-15T10:00:00.000Z"
+    }
+  ],
+  "clients": [
+    {
+      "id": "client-alwar-0001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "full_name": "Mukesh Kumar Saini",
+      "phone": "9414011223",
+      "email": "mukesh.saini@alwarmail.com",
+      "address": "Ward No. 12, Shivaji Park, Alwar, Rajasthan",
+      "confidential_notes": "Client is an agricultural landowner. Retained for partition suit before SDO Alwar.",
+      "created_at": "2026-02-10T10:00:00.000Z"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "inv-001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "client_id": "client-alwar-0001",
+      "case_id": "case-alwar-0001",
+      "invoice_number": "INV-2026-0042",
+      "total_amount": 15000,
+      "paid_amount": 10000,
+      "status": "partially_paid",
+      "issue_date": "2026-02-12",
+      "due_date": "2026-11-04",
+      "notes": "Initial drafting fee and interim stay argument fee. Balance ₹5,000 payable upon stay order disposal.",
+      "client_name": "Mukesh Kumar Saini",
+      "case_title": "Mukesh Kumar Saini v. Rameshwar Dayal & Ors.",
+      "created_at": "2026-02-12T14:00:00.000Z"
+    }
+  ],
+  "drafts": [
+    {
+      "id": "draft-001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "case_id": "case-alwar-0001",
+      "draft_type": "written_statement",
+      "title": "Rejoinder to Reply in SDO Revenue Partition Suit 88/2025",
+      "content_text": "BEFORE THE COURT OF SUB-DIVISIONAL OFFICER, ALWAR\nRevenue Suit No. 88/2025\n\nMukesh Kumar Saini ...Plaintiff\nVersus\nRameshwar Dayal & Anr. ...Respondents\n\nREJOINDER ON BEHALF OF PLAINTIFF TO THE REPLY OF RESPONDENT NO. 1\n\nMOST RESPECTFULLY SHOWETH:\n1. That the contents of preliminary objection No. 1 are false, fabricated, and emphatically denied.\n2. That the revenue record (Jamabandi Samvat 2081) conclusively establishes that Khasra No. 412/1 is undivided ancestral agricultural land wherein the Plaintiff holds an undisputed 1/2 share.\n3. That the Respondent No. 1 has unlawfully attempted to change the nature of the agricultural land by initiating unpermitted construction without formal metes-and-bounds partition.\n\nPRAYER:\nIt is therefore respectfully prayed that the interim injunction under Section 212 Rajasthan Tenancy Act be confirmed till final disposal of the partition suit.",
+      "language": "en",
+      "version": 1,
+      "created_at": "2026-10-16T15:00:00.000Z",
+      "updated_at": "2026-10-16T15:00:00.000Z"
+    }
+  ],
+  "personal_library": [
+    {
+      "id": "lib-001",
+      "advocate_id": "advocate-user-alwar-0002",
+      "title": "Rajasthan High Court on Co-sharer Partition: Prem Chand v. Jagdish",
+      "category": "Revenue Tenancy",
+      "citation": "2021 (3) RLR 512",
+      "notes": "Supreme principle: No co-sharer in exclusive possession of a portion can raise permanent construction to the detriment of other co-sharers until final decree.",
+      "source_url": "https://hcraj.nic.in",
+      "created_at": "2026-03-01T10:00:00.000Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "actor_id": "admin-user-alwar-0001",
+      "actor_name": "Portal Administrator",
+      "actor_role": "public_admin",
+      "action": "BULK_IMPORT_ADVOCATES",
+      "entity_type": "advocate_profile",
+      "details": {
+        "added": 1,
+        "updated": 0,
+        "total": 1,
+        "errorsCount": 0
+      },
+      "id": "aud-e7af4d2f-9551-429f-aefd-d74100031c8e",
+      "created_at": "2026-10-30T16:49:02.921Z"
+    },
+    {
+      "id": "audit-001",
+      "actor_id": "admin-user-alwar-0001",
+      "actor_name": "Alwar Bar Admin",
+      "actor_role": "public_admin",
+      "action": "VERIFY_ADVOCATE_PROFILE",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-001",
+      "ip_address": "127.0.0.1",
+      "details": {
+        "enrollment_no": "R/1420/2012",
+        "status": "verified"
+      },
+      "created_at": "2026-01-10T12:00:00.000Z"
+    }
+  ]
+}

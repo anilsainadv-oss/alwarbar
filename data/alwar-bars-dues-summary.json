@@ -1,0 +1,182 @@
+{
+  "ALWAR": {
+    "bar_name": "ALWAR",
+    "bar_slug": "alwar",
+    "total_advocates": 3120,
+    "ltm_count": 802,
+    "dues_pending_count": 296,
+    "na_count": 1998,
+    "termi_count": 24,
+    "pdf_download_url": "/downloads/bcr-alwar-rawf-dues-list.pdf"
+  },
+  "BANSUR": {
+    "bar_name": "BANSUR",
+    "bar_slug": "bansur",
+    "total_advocates": 250,
+    "ltm_count": 111,
+    "dues_pending_count": 22,
+    "na_count": 115,
+    "termi_count": 2,
+    "pdf_download_url": "/downloads/bcr-dues-bansur.pdf"
+  },
+  "BEHROR": {
+    "bar_name": "BEHROR",
+    "bar_slug": "behror",
+    "total_advocates": 429,
+    "ltm_count": 134,
+    "dues_pending_count": 23,
+    "na_count": 255,
+    "termi_count": 17,
+    "pdf_download_url": "/downloads/bcr-dues-behror.pdf"
+  },
+  "BEHROR (BAR)": {
+    "bar_name": "BEHROR (BAR)",
+    "bar_slug": "behror-bar",
+    "total_advocates": 54,
+    "ltm_count": 4,
+    "dues_pending_count": 1,
+    "na_count": 49,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-behror-bar.pdf"
+  },
+  "BHIWADI": {
+    "bar_name": "BHIWADI",
+    "bar_slug": "bhiwadi",
+    "total_advocates": 172,
+    "ltm_count": 37,
+    "dues_pending_count": 6,
+    "na_count": 129,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-bhiwadi.pdf"
+  },
+  "KATHUMAR": {
+    "bar_name": "KATHUMAR",
+    "bar_slug": "kathumar",
+    "total_advocates": 73,
+    "ltm_count": 32,
+    "dues_pending_count": 18,
+    "na_count": 20,
+    "termi_count": 3,
+    "pdf_download_url": "/downloads/bcr-dues-kathumar.pdf"
+  },
+  "KHERLI MANDI": {
+    "bar_name": "KHERLI MANDI",
+    "bar_slug": "kherli-mandi",
+    "total_advocates": 45,
+    "ltm_count": 30,
+    "dues_pending_count": 2,
+    "na_count": 12,
+    "termi_count": 1,
+    "pdf_download_url": "/downloads/bcr-dues-kherli-mandi.pdf"
+  },
+  "KISHANGARH BAS": {
+    "bar_name": "KISHANGARH BAS",
+    "bar_slug": "kishangarh-bas",
+    "total_advocates": 305,
+    "ltm_count": 113,
+    "dues_pending_count": 43,
+    "na_count": 147,
+    "termi_count": 2,
+    "pdf_download_url": "/downloads/bcr-dues-kishangarh-bas.pdf"
+  },
+  "KOTKASIM": {
+    "bar_name": "KOTKASIM",
+    "bar_slug": "kotkasim",
+    "total_advocates": 88,
+    "ltm_count": 41,
+    "dues_pending_count": 3,
+    "na_count": 44,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-kotkasim.pdf"
+  },
+  "LAXMANGARH": {
+    "bar_name": "LAXMANGARH",
+    "bar_slug": "laxmangarh",
+    "total_advocates": 143,
+    "ltm_count": 39,
+    "dues_pending_count": 41,
+    "na_count": 62,
+    "termi_count": 1,
+    "pdf_download_url": "/downloads/bcr-dues-laxmangarh.pdf"
+  },
+  "MALAKHERA": {
+    "bar_name": "MALAKHERA",
+    "bar_slug": "malakhera",
+    "total_advocates": 42,
+    "ltm_count": 20,
+    "dues_pending_count": 3,
+    "na_count": 19,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-malakhera.pdf"
+  },
+  "MUNDAWAR": {
+    "bar_name": "MUNDAWAR",
+    "bar_slug": "mundawar",
+    "total_advocates": 128,
+    "ltm_count": 30,
+    "dues_pending_count": 36,
+    "na_count": 62,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-mundawar.pdf"
+  },
+  "NEEMRANA": {
+    "bar_name": "NEEMRANA",
+    "bar_slug": "neemrana",
+    "total_advocates": 153,
+    "ltm_count": 54,
+    "dues_pending_count": 1,
+    "na_count": 98,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-neemrana.pdf"
+  },
+  "RAJGARH": {
+    "bar_name": "RAJGARH",
+    "bar_slug": "rajgarh",
+    "total_advocates": 227,
+    "ltm_count": 98,
+    "dues_pending_count": 20,
+    "na_count": 100,
+    "termi_count": 9,
+    "pdf_download_url": "/downloads/bcr-dues-rajgarh.pdf"
+  },
+  "RAMGARH": {
+    "bar_name": "RAMGARH",
+    "bar_slug": "ramgarh",
+    "total_advocates": 86,
+    "ltm_count": 31,
+    "dues_pending_count": 5,
+    "na_count": 50,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-ramgarh.pdf"
+  },
+  "TAPUKARA": {
+    "bar_name": "TAPUKARA",
+    "bar_slug": "tapukara",
+    "total_advocates": 36,
+    "ltm_count": 13,
+    "dues_pending_count": 5,
+    "na_count": 18,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-tapukara.pdf"
+  },
+  "THANAGAZI": {
+    "bar_name": "THANAGAZI",
+    "bar_slug": "thanagazi",
+    "total_advocates": 91,
+    "ltm_count": 34,
+    "dues_pending_count": 23,
+    "na_count": 34,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-thanagazi.pdf"
+  },
+  "TIJARA": {
+    "bar_name": "TIJARA",
+    "bar_slug": "tijara",
+    "total_advocates": 304,
+    "ltm_count": 114,
+    "dues_pending_count": 45,
+    "na_count": 145,
+    "termi_count": 0,
+    "pdf_download_url": "/downloads/bcr-dues-tijara.pdf"
+  }
+}

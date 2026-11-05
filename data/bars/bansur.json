@@ -1,0 +1,2516 @@
+{
+  "bar_name": "BANSUR",
+  "bar_slug": "bansur",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 250,
+    "ltm_count": 111,
+    "na_count": 115,
+    "dues_pending_count": 22,
+    "termi_count": 2
+  },
+  "pdf_download_url": "/downloads/bcr-dues-bansur.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/12/1971",
+      "elc_no": "4383",
+      "name": "SH. GAURI SHANKER SWAMI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/71/1976",
+      "elc_no": "6236",
+      "name": "SH. VIJAI SINGH JAT",
+      "due_subs": "11288 + 1680 = 12968",
+      "ltm_subs": "60468",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/403/1977",
+      "elc_no": "7372",
+      "name": "SH. RATAN SINGH YADAV",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/441/1981",
+      "elc_no": "10026",
+      "name": "SH. SARJEET SINGH",
+      "due_subs": "11250 + 1668 = 12918",
+      "ltm_subs": "60418",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/237/1982",
+      "elc_no": "10670",
+      "name": "SH. MURARI LAL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/80/1983",
+      "elc_no": "11400",
+      "name": "SH. BANWARI LAL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/120/1986",
+      "elc_no": "13072",
+      "name": "SH. KUNDAN LAL SONI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/351/1986",
+      "elc_no": "13303",
+      "name": "SH. SUBHASH CHANDRA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/247/1987",
+      "elc_no": "13597",
+      "name": "SH. DHANSI RAM GURJAR",
+      "due_subs": "11250 + 1668 = 12918",
+      "ltm_subs": "60418",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/496/1988",
+      "elc_no": "14252",
+      "name": "SH. ROSHAN LAL SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/150/1989",
+      "elc_no": "14548",
+      "name": "SH. SURENDRA SINGH SHEKHAW...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/209/1989",
+      "elc_no": "14607",
+      "name": "SH. GHAN SHYAM DUTT SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/565/1992",
+      "elc_no": "16813",
+      "name": "SH. CHHAJU SINGH TANWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/326/1993",
+      "elc_no": "17352",
+      "name": "SH. ASHOK KUMAR SHARMA",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/798/1993",
+      "elc_no": "17824",
+      "name": "SH. RAM CHANDER",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/711/1994",
+      "elc_no": "18594",
+      "name": "SH. UDAI SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/1093/1995",
+      "elc_no": "20290",
+      "name": "SH. RAKESH KUMAR KAUSHIK",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/265/1997",
+      "elc_no": "21827",
+      "name": "SH. SURENDRA KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/457/1997",
+      "elc_no": "22019",
+      "name": "SH. VISHNU DUTT SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/1141/1997",
+      "elc_no": "22703",
+      "name": "SH. JAGMAL KHOWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/8/1998",
+      "elc_no": "22817",
+      "name": "SH. GAURI SHANKAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/17/1998",
+      "elc_no": "22826",
+      "name": "SH. MUSADDI LAL SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/863/1998",
+      "elc_no": "23672",
+      "name": "SH. JAGRAM RAWAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/1682/1999",
+      "elc_no": "25792",
+      "name": "SH. SHEESH RAM GOTHWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/15/2000",
+      "elc_no": "25983",
+      "name": "SH. RAMESH CHANDRA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/725/2000",
+      "elc_no": "26693",
+      "name": "SH. PAWAN KUMAR KAUSHIK",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/1905/2000",
+      "elc_no": "27873",
+      "name": "SH. RAJENDAR KUMAR ARYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/45/2001",
+      "elc_no": "28299",
+      "name": "SH. MAHESH KUMAR JAKHAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/2163/2001",
+      "elc_no": "30417",
+      "name": "SH. JAG MOHAN SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/19/2002",
+      "elc_no": "30894",
+      "name": "SH. RAMESH CHANDRA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/414/2002",
+      "elc_no": "31289",
+      "name": "SH. PURAN CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/546/2002",
+      "elc_no": "31421",
+      "name": "SH. SANJAY KUMAR CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/1327/2002",
+      "elc_no": "32202",
+      "name": "SH. MOGA RAM JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/1431/2002",
+      "elc_no": "32306",
+      "name": "SH. SHIV RATAN SONI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/1590/2002",
+      "elc_no": "32465",
+      "name": "SH. NET RAM GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/1753/2002",
+      "elc_no": "32628",
+      "name": "SH. RAM KARAN GUJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/2065/2002",
+      "elc_no": "32940",
+      "name": "SH. NAVAL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/2292/2002",
+      "elc_no": "33167",
+      "name": "SH. KISHORE KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/2388/2002",
+      "elc_no": "33263",
+      "name": "SH. PURAN CHAND HARIJAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/2691/2002",
+      "elc_no": "33566",
+      "name": "SH. MADAN LAL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/116/2003",
+      "elc_no": "33949",
+      "name": "SH. PRABHU DAYAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/2144/2003",
+      "elc_no": "35977",
+      "name": "SH. SURESH KUMAR MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/2346/2003",
+      "elc_no": "36179",
+      "name": "SH. SUSHIL KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/2815/2003",
+      "elc_no": "36648",
+      "name": "SH. MANOJ KUMAR SONI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/2903/2003",
+      "elc_no": "36736",
+      "name": "SH. DEVENDRA KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/110/2004",
+      "elc_no": "36975",
+      "name": "SH. KHYALI RAM GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/189/2004",
+      "elc_no": "37054",
+      "name": "SH. JUGAL KISHOR GOSWAMI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/1911/2004",
+      "elc_no": "38776",
+      "name": "SH. GOVIND SINGH GOUD",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/2641/2004",
+      "elc_no": "39506",
+      "name": "SH. ANIL KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/2936/2004",
+      "elc_no": "39801",
+      "name": "SH. ANOOP SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/3003/2004",
+      "elc_no": "39868",
+      "name": "SH. PRAMOD KUMAR MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/70/2005",
+      "elc_no": "40386",
+      "name": "SH. SHISH RAM GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/148/2005",
+      "elc_no": "40464",
+      "name": "SH. LALA RAM YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/374/2005",
+      "elc_no": "40690",
+      "name": "SH. RANVEER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/2275/2005",
+      "elc_no": "42592",
+      "name": "SH. CHET RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/2644/2005",
+      "elc_no": "42961",
+      "name": "SH. VIKRAM SINGH SHEKHAWAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/2659/2005",
+      "elc_no": "42976",
+      "name": "SH. HAR FOOL SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/2950/2005",
+      "elc_no": "43267",
+      "name": "SH. RAVINDAR KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/317/2006",
+      "elc_no": "44150",
+      "name": "SH. PURAN CHAND JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/1781/2006",
+      "elc_no": "45613",
+      "name": "SH. MAHESH KUMAR MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/1956/2006",
+      "elc_no": "45788",
+      "name": "SH. SHASHI KUMAR NAHARWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/1976/2006",
+      "elc_no": "45808",
+      "name": "SMT. RENU SHARMA",
+      "due_subs": "21000 + 10842 = 31842",
+      "ltm_subs": "79342",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/2349/2006",
+      "elc_no": "46181",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/2396/2006",
+      "elc_no": "46228",
+      "name": "SH. MUKESH SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/2938/2006",
+      "elc_no": "46770",
+      "name": "SH. BALBIR SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/3213/2006",
+      "elc_no": "47045",
+      "name": "SH. TRILOK CHANDRA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/3559/2006",
+      "elc_no": "47391",
+      "name": "SH. VIJAY KUMAR",
+      "due_subs": "18750 + 7323 = 26073",
+      "ltm_subs": "73573",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/233/2007",
+      "elc_no": "47759",
+      "name": "SH. JASWANT SINGH JAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/395/2007",
+      "elc_no": "47921",
+      "name": "SH. SANDEEP SHARMA",
+      "due_subs": "17500 + 5818 = 23318",
+      "ltm_subs": "70818",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/536/2007",
+      "elc_no": "48062",
+      "name": "SH. RAM SINGH SOLANKI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/1255/2007",
+      "elc_no": "48781",
+      "name": "SH. RAKESH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/1337/2007",
+      "elc_no": "48863",
+      "name": "SH. VIJAY SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/2843/2007",
+      "elc_no": "50369",
+      "name": "SH. SHANKAR LAL SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/2850/2007",
+      "elc_no": "50376",
+      "name": "SH. GOPAL CHAND SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/3337/2007",
+      "elc_no": "50863",
+      "name": "KUM. NISHA MISHRA",
+      "due_subs": "20500 + 10240 = 30740",
+      "ltm_subs": "78240",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/3344/2007",
+      "elc_no": "50870",
+      "name": "SH. NEERAJ KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/3617/2007",
+      "elc_no": "51143",
+      "name": "SH. NARENDRA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/3690/2007",
+      "elc_no": "51216",
+      "name": "SH. RAKESH KUMAR BARKODIA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/3828/2007",
+      "elc_no": "51354",
+      "name": "SH. SHANTI SWAROOP SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/3874/2007",
+      "elc_no": "51400",
+      "name": "SH. RAJESH KUMAR VERMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/3990/2007",
+      "elc_no": "51516",
+      "name": "SH. GAJANAND SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/613/2008",
+      "elc_no": "52595",
+      "name": "SH. JAGDISH PRASAD MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/867/2008",
+      "elc_no": "52849",
+      "name": "SH. BABU LAL YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/1075/2008",
+      "elc_no": "53057",
+      "name": "SMT. SEEMA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/1869/2008",
+      "elc_no": "53851",
+      "name": "SH. ANIL KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/2225/2008",
+      "elc_no": "54207",
+      "name": "SH. HARI RAM MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 87,
+      "enrol_no": "R/2607/2008",
+      "elc_no": "54589",
+      "name": "SH. HARISH SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 88,
+      "enrol_no": "R/2826/2008",
+      "elc_no": "54808",
+      "name": "SH. VIKRAM SINGH GHILOTIA",
+      "due_subs": "21100 + 11996 = 33096",
+      "ltm_subs": "80596",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 89,
+      "enrol_no": "R/283/2009",
+      "elc_no": "55401",
+      "name": "SH. SHIV CHARAN RAWAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 90,
+      "enrol_no": "R/1035/2009",
+      "elc_no": "56153",
+      "name": "SH. JAYRAM MALI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 91,
+      "enrol_no": "R/1262/2009",
+      "elc_no": "56380",
+      "name": "SH. LAXMAN PRASAD MAWAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 92,
+      "enrol_no": "R/1600/2009",
+      "elc_no": "56718",
+      "name": "SH. ARUN SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 93,
+      "enrol_no": "R/1750/2009",
+      "elc_no": "56868",
+      "name": "SH. ANIL YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 94,
+      "enrol_no": "R/2283/2009",
+      "elc_no": "57401",
+      "name": "SH. ABHISHEK BHARDWAJ",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 95,
+      "enrol_no": "R/444/2010",
+      "elc_no": "58069",
+      "name": "SH. GOVIND KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 96,
+      "enrol_no": "R/778/2010",
+      "elc_no": "58403",
+      "name": "SH. SANDEEP KUMAR HUNDIWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 97,
+      "enrol_no": "R/1453/2010",
+      "elc_no": "59078",
+      "name": "SH. RAMAWTAR SWAMI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 98,
+      "enrol_no": "R/1705/2010",
+      "elc_no": "59330",
+      "name": "SH. BHAIROO SHAY SWAMI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 99,
+      "enrol_no": "R/2111/2010",
+      "elc_no": "59736",
+      "name": "SH. LOKESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 100,
+      "enrol_no": "R/2541/2010",
+      "elc_no": "60166",
+      "name": "SH. DHRAM PAL JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 101,
+      "enrol_no": "R/2635/2010",
+      "elc_no": "60260",
+      "name": "SH. MAHESH CHAND NAHARWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 102,
+      "enrol_no": "R/2795/2010",
+      "elc_no": "60420",
+      "name": "SH. RAKESH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 103,
+      "enrol_no": "R/3520/2010",
+      "elc_no": "61145",
+      "name": "SH. DINESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 104,
+      "enrol_no": "R/4006/2010",
+      "elc_no": "61631",
+      "name": "SH. AJEET SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 105,
+      "enrol_no": "R/4240/2010",
+      "elc_no": "61865",
+      "name": "SH. ANOOP KUMAR SONI",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 106,
+      "enrol_no": "R/4955/2010",
+      "elc_no": "62580",
+      "name": "SH. JITENDRA SINGH SHEKHAW...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 107,
+      "enrol_no": "R/102/2011",
+      "elc_no": "62876",
+      "name": "SH. ASHOK KUMAR YOGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 108,
+      "enrol_no": "R/132/2011",
+      "elc_no": "62906",
+      "name": "SH. DINESH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 109,
+      "enrol_no": "R/389/2011",
+      "elc_no": "63163",
+      "name": "SH. KAILASH CHAND MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 110,
+      "enrol_no": "R/2069/2011",
+      "elc_no": "64843",
+      "name": "SH. ASHOK KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 111,
+      "enrol_no": "R/69/2012",
+      "elc_no": "65128",
+      "name": "SH. BHIM SINGH JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 112,
+      "enrol_no": "R/387/2012",
+      "elc_no": "65446",
+      "name": "SH. NARENDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 113,
+      "enrol_no": "R/430/2012",
+      "elc_no": "65489",
+      "name": "SH. VIKASH MISHRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 114,
+      "enrol_no": "R/514/2012",
+      "elc_no": "65573",
+      "name": "SH. VIKAS LATA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 115,
+      "enrol_no": "R/1313/2012",
+      "elc_no": "66372",
+      "name": "SH. JITENDRA SINGH SHEKHAW...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 116,
+      "enrol_no": "R/1668/2012",
+      "elc_no": "66727",
+      "name": "SH. VIKASH JOSHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 117,
+      "enrol_no": "R/2095/2012",
+      "elc_no": "67154",
+      "name": "SH. MOHAR SINGH KUMHAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 118,
+      "enrol_no": "R/654/2013",
+      "elc_no": "68234",
+      "name": "SH. ASHOK",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 119,
+      "enrol_no": "R/872/2013",
+      "elc_no": "68452",
+      "name": "SH. SITA RAM",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 120,
+      "enrol_no": "R/1482/2013",
+      "elc_no": "69062",
+      "name": "SH. SANKET LATA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 121,
+      "enrol_no": "R/1588/2013",
+      "elc_no": "69168",
+      "name": "SH. RAJENDER PRASAD",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 122,
+      "enrol_no": "R/2161/2013",
+      "elc_no": "69741",
+      "name": "SH. PRADEEP MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 123,
+      "enrol_no": "R/82/2014",
+      "elc_no": "69848",
+      "name": "SH. CHANDU LAL RANGERA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 124,
+      "enrol_no": "R/140/2014",
+      "elc_no": "69906",
+      "name": "SH. VIKRAM SINGH MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 125,
+      "enrol_no": "R/813/2014",
+      "elc_no": "70579",
+      "name": "SH. BAHADUR SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 126,
+      "enrol_no": "R/1213/2014",
+      "elc_no": "70979",
+      "name": "SH. PURASHOTAM KUMAR KAUSH...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 127,
+      "enrol_no": "R/1478/2014",
+      "elc_no": "71244",
+      "name": "SH. BHAVESH VERMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 128,
+      "enrol_no": "R/1754/2014",
+      "elc_no": "71520",
+      "name": "SH. RAJENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 129,
+      "enrol_no": "R/2021/2014",
+      "elc_no": "71787",
+      "name": "KUM. SEEMA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 130,
+      "enrol_no": "R/2428/2014",
+      "elc_no": "72194",
+      "name": "SH. SURESH CHAND YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 131,
+      "enrol_no": "R/2487/2014",
+      "elc_no": "72253",
+      "name": "SH. RAKESH KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 132,
+      "enrol_no": "R/190/2015",
+      "elc_no": "72689",
+      "name": "SH. AKASH SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 133,
+      "enrol_no": "R/321/2015",
+      "elc_no": "72820",
+      "name": "SH. JAINARAYAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 134,
+      "enrol_no": "R/983/2015",
+      "elc_no": "73482",
+      "name": "SH. JITENDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 135,
+      "enrol_no": "R/1946/2015",
+      "elc_no": "74445",
+      "name": "SH. JALAY SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 136,
+      "enrol_no": "R/2304/2015",
+      "elc_no": "74803",
+      "name": "SH. PRAKASH CHAND YOGI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 137,
+      "enrol_no": "R/2668/2015",
+      "elc_no": "75167",
+      "name": "SH. ANIL KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 138,
+      "enrol_no": "R/2784/2015",
+      "elc_no": "75283",
+      "name": "SH. NISHANT VERMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 139,
+      "enrol_no": "R/2898/2015",
+      "elc_no": "75397",
+      "name": "SH. SURESH KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 140,
+      "enrol_no": "R/600/2016",
+      "elc_no": "76216",
+      "name": "SH. NARENDRA SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 141,
+      "enrol_no": "R/852/2016",
+      "elc_no": "76468",
+      "name": "SH. RAM KRISHAN CHOPRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 142,
+      "enrol_no": "R/994/2016",
+      "elc_no": "76610",
+      "name": "SH. BHAGIRATH SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 143,
+      "enrol_no": "R/1045/2016",
+      "elc_no": "76661",
+      "name": "SH. SAHAMAL GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 144,
+      "enrol_no": "R/1117/2016",
+      "elc_no": "76733",
+      "name": "SH. NARENDRA SINGH SHEKHAW...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 145,
+      "enrol_no": "R/1624/2016",
+      "elc_no": "77240",
+      "name": "SH. LOKESH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 146,
+      "enrol_no": "R/2514/2016",
+      "elc_no": "78130",
+      "name": "SH. AMIT JANGIR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 147,
+      "enrol_no": "R/638/2017",
+      "elc_no": "79134",
+      "name": "SH. ANAND MAHARSHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 148,
+      "enrol_no": "R/1460/2017",
+      "elc_no": "79956",
+      "name": "SH. RAJENDRA SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 149,
+      "enrol_no": "R/1497/2017",
+      "elc_no": "79993",
+      "name": "SH. RAVINDRA SINGH CHOUDHA...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 150,
+      "enrol_no": "R/1847/2017",
+      "elc_no": "80343",
+      "name": "SH. JAGAT SINGH RAWAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 151,
+      "enrol_no": "R/2404/2017",
+      "elc_no": "80900",
+      "name": "SH. PUSHKAR DUTT SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 152,
+      "enrol_no": "R/2876/2017",
+      "elc_no": "81372",
+      "name": "SH. HIMANSHU SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 153,
+      "enrol_no": "R/3052/2017",
+      "elc_no": "81548",
+      "name": "SH. JITENDRA SINGH RAWAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 154,
+      "enrol_no": "R/3204/2017",
+      "elc_no": "81700",
+      "name": "SH. SHER SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 155,
+      "enrol_no": "R/1064/2018",
+      "elc_no": "83133",
+      "name": "SH. VIJAY KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 156,
+      "enrol_no": "R/2674/2018",
+      "elc_no": "84743",
+      "name": "SH. CHANDER JEET",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 157,
+      "enrol_no": "R/3302/2018",
+      "elc_no": "85371",
+      "name": "SH. PANKAJ MISHRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 158,
+      "enrol_no": "R/384/2019",
+      "elc_no": "86893",
+      "name": "SH. YOGESH KUMAR YADAV",
+      "due_subs": "1500 + 36 = 1536",
+      "ltm_subs": "50036",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 159,
+      "enrol_no": "R/770/2019",
+      "elc_no": "87279",
+      "name": "SH. GOVIND SINGH SHEKHAWAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 160,
+      "enrol_no": "R/1052/2019",
+      "elc_no": "87561",
+      "name": "SH. TINKU MISHRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 161,
+      "enrol_no": "R/1175/2019",
+      "elc_no": "87684",
+      "name": "SH. ARVIND SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 162,
+      "enrol_no": "R/1190/2019",
+      "elc_no": "87699",
+      "name": "SH. RAHUL SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 163,
+      "enrol_no": "R/2540/2019",
+      "elc_no": "89049",
+      "name": "SH. SANDEEP KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 164,
+      "enrol_no": "R/2782/2019",
+      "elc_no": "89291",
+      "name": "KUM. PRATISHTHA SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 165,
+      "enrol_no": "R/3488/2019",
+      "elc_no": "89997",
+      "name": "SH. ANIL KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 166,
+      "enrol_no": "R/3636/2019",
+      "elc_no": "90145",
+      "name": "SH. JAINA RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 167,
+      "enrol_no": "R/3958/2019",
+      "elc_no": "90467",
+      "name": "SH. SATYAVEER GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 168,
+      "enrol_no": "R/4278/2019",
+      "elc_no": "90787",
+      "name": "SH. KARAN SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 169,
+      "enrol_no": "R/439/2020",
+      "elc_no": "91802",
+      "name": "SH. MUKESH KUMAR PAHADIYA",
+      "due_subs": "3500 + 258 = 3758",
+      "ltm_subs": "52258",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 170,
+      "enrol_no": "R/836/2020",
+      "elc_no": "92199",
+      "name": "SH. KISHORI LAL SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 171,
+      "enrol_no": "R/1591/2020",
+      "elc_no": "92954",
+      "name": "SH. BHEESHM KUMAR SUTHWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 172,
+      "enrol_no": "R/2925/2020",
+      "elc_no": "94288",
+      "name": "SMT. POONAM DEVI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 173,
+      "enrol_no": "R/261/2021",
+      "elc_no": "94658",
+      "name": "SH. SATISH SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 174,
+      "enrol_no": "R/1321/2021",
+      "elc_no": "95718",
+      "name": "SH. JITENDRA SINGH SHEKHAW...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 175,
+      "enrol_no": "R/1717/2021",
+      "elc_no": "96114",
+      "name": "SH. KESHAV KAUSHIK",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 176,
+      "enrol_no": "R/2510/2021",
+      "elc_no": "96907",
+      "name": "SH. LALIT NAHAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 177,
+      "enrol_no": "R/3560/2021",
+      "elc_no": "97957",
+      "name": "SH. HANUMAN SINGH GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 178,
+      "enrol_no": "R/4068/2021",
+      "elc_no": "98465",
+      "name": "SMT. PINKY RANI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 179,
+      "enrol_no": "R/2735/2022",
+      "elc_no": "102914",
+      "name": "KUM. NEHA MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 180,
+      "enrol_no": "R/5333/2022",
+      "elc_no": "105512",
+      "name": "SH. RAVINDRA KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 181,
+      "enrol_no": "R/5825/2022",
+      "elc_no": "106004",
+      "name": "SH. RAVI KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 182,
+      "enrol_no": "R/6495/2022",
+      "elc_no": "106674",
+      "name": "SH. ABHIMANYU SINGH",
+      "due_subs": "1000 + 59 = 1059",
+      "ltm_subs": "50559",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 183,
+      "enrol_no": "R/6789/2022",
+      "elc_no": "106968",
+      "name": "SH. SUNIL KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 184,
+      "enrol_no": "R/420/2023",
+      "elc_no": "107435",
+      "name": "SH. PRADEEP KUMAR YADAV",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 185,
+      "enrol_no": "R/923/2023",
+      "elc_no": "107938",
+      "name": "SH. YASHWANT SINGH GURJAR",
+      "due_subs": "-500",
+      "ltm_subs": "49000",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 186,
+      "enrol_no": "R/944/2023",
+      "elc_no": "107959",
+      "name": "SH. MAHABIR PRASAD SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 187,
+      "enrol_no": "R/2432/2023",
+      "elc_no": "109447",
+      "name": "KUM. NEETU YOGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 188,
+      "enrol_no": "R/2675/2023",
+      "elc_no": "109690",
+      "name": "SH. VIKAS YADAV",
+      "due_subs": "1500 + 141 = 1641",
+      "ltm_subs": "51141",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 189,
+      "enrol_no": "R/2851/2023",
+      "elc_no": "109866",
+      "name": "KUM. KHAMOSH GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 190,
+      "enrol_no": "R/3432/2023",
+      "elc_no": "110447",
+      "name": "SH. PRADEEP KACHHOT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 191,
+      "enrol_no": "R/3544/2023",
+      "elc_no": "110559",
+      "name": "SH. MUKESH KUMAR",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 192,
+      "enrol_no": "R/4028/2023",
+      "elc_no": "111043",
+      "name": "SH. PRADEEP KUMAR YADAV",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 193,
+      "enrol_no": "R/4174/2023",
+      "elc_no": "111189",
+      "name": "KUM. SANJU YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 194,
+      "enrol_no": "R/4232/2023",
+      "elc_no": "111247",
+      "name": "SH. BHOOPENDER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 195,
+      "enrol_no": "R/4327/2023",
+      "elc_no": "111342",
+      "name": "SH. BALRAM CHANEJA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 196,
+      "enrol_no": "R/5299/2023",
+      "elc_no": "112314",
+      "name": "SH. ANKIT GOTHWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 197,
+      "enrol_no": "R/5606/2023",
+      "elc_no": "112621",
+      "name": "SH. NAVEEN KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 198,
+      "enrol_no": "R/5942/2023",
+      "elc_no": "112957",
+      "name": "KUM. KANAK YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 199,
+      "enrol_no": "R/6816/2023",
+      "elc_no": "113831",
+      "name": "SH. SUBESH SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 200,
+      "enrol_no": "R/6932/2023",
+      "elc_no": "113947",
+      "name": "SH. AJIT KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 201,
+      "enrol_no": "R/7334/2023",
+      "elc_no": "114349",
+      "name": "SH. SUMIT KUMAR GANGAWAT",
+      "due_subs": "49500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 202,
+      "enrol_no": "R/7407/2023",
+      "elc_no": "114422",
+      "name": "SH. AJAY GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 203,
+      "enrol_no": "R/7670/2023",
+      "elc_no": "114685",
+      "name": "SH. NITISH KUMAR JOSHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 204,
+      "enrol_no": "R/99/2024",
+      "elc_no": "115090",
+      "name": "SH. SUDESH KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 205,
+      "enrol_no": "R/1125/2024",
+      "elc_no": "116116",
+      "name": "SH. SURENDRA SURELA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 206,
+      "enrol_no": "R/1698/2024",
+      "elc_no": "116689",
+      "name": "SH. YOGESH KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 207,
+      "enrol_no": "R/1830/2024",
+      "elc_no": "116821",
+      "name": "SH. RAHUL KUMAR YADAV",
+      "due_subs": "1000 + 59 = 1059",
+      "ltm_subs": "50559",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 208,
+      "enrol_no": "R/3550/2024",
+      "elc_no": "118541",
+      "name": "KUM. KALPNA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 209,
+      "enrol_no": "R/4175/2024",
+      "elc_no": "119166",
+      "name": "SH. NAVDEEP SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 210,
+      "enrol_no": "R/4240/2024",
+      "elc_no": "119231",
+      "name": "SH. NAVNEET SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 211,
+      "enrol_no": "R/4972/2024",
+      "elc_no": "119963",
+      "name": "SH. TULSHI SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 212,
+      "enrol_no": "R/5712/2024",
+      "elc_no": "120703",
+      "name": "SH. RINKU KUMAR SURELA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 213,
+      "enrol_no": "R/6123/2024",
+      "elc_no": "121114",
+      "name": "SH. VEDRAJ CHHIPI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 214,
+      "enrol_no": "R/6800/2024",
+      "elc_no": "121791",
+      "name": "SH. SONU YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 215,
+      "enrol_no": "R/7364/2024",
+      "elc_no": "122355",
+      "name": "KUM. NIDHI KAUSHIK",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 216,
+      "enrol_no": "R/7535/2024",
+      "elc_no": "122526",
+      "name": "SH. ASHOK KUMAR CHOUKAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 217,
+      "enrol_no": "R/7635/2024",
+      "elc_no": "122626",
+      "name": "KUM. SUMAN BAI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 218,
+      "enrol_no": "R/114/2025",
+      "elc_no": "123989",
+      "name": "SH. SUBHASH CHAND MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 219,
+      "enrol_no": "R/427/2025",
+      "elc_no": "124302",
+      "name": "SH. JITENDRA SINGH SHEKHAW...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 220,
+      "enrol_no": "R/478/2025",
+      "elc_no": "124353",
+      "name": "SH. SATISH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 221,
+      "enrol_no": "R/931/2025",
+      "elc_no": "124806",
+      "name": "SH. RAHUL SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 222,
+      "enrol_no": "R/1502/2025",
+      "elc_no": "125377",
+      "name": "SH. AMIT VERMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 223,
+      "enrol_no": "R/1792/2025",
+      "elc_no": "125667",
+      "name": "SH. JITENDRA KUMAR CHOUDHA...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 224,
+      "enrol_no": "R/2046/2025",
+      "elc_no": "125921",
+      "name": "SH. ANIL KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 225,
+      "enrol_no": "R/2078/2025",
+      "elc_no": "125953",
+      "name": "SH. ANAND KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 226,
+      "enrol_no": "R/2225/2025",
+      "elc_no": "126100",
+      "name": "SH. MANISH JOSHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 227,
+      "enrol_no": "R/3322/2025",
+      "elc_no": "127197",
+      "name": "SH. TINKU SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 228,
+      "enrol_no": "R/5171/2025",
+      "elc_no": "129046",
+      "name": "KUM. POOJA SWAMI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 229,
+      "enrol_no": "R/5403/2025",
+      "elc_no": "129278",
+      "name": "SMT. NIDHI PRAJAPAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 230,
+      "enrol_no": "R/5597/2025",
+      "elc_no": "129472",
+      "name": "SH. DEEPENDRA SINGH SHEKHA...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 231,
+      "enrol_no": "R/5874/2025",
+      "elc_no": "129749",
+      "name": "SH. AMIT KUMAR GANGAWAT",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 232,
+      "enrol_no": "R/5982/2025",
+      "elc_no": "129857",
+      "name": "SH. JITENDRA KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 233,
+      "enrol_no": "R/6696/2025",
+      "elc_no": "130571",
+      "name": "SH. KRISHAN KUMAR SURELA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 234,
+      "enrol_no": "R/7742/2025",
+      "elc_no": "131617",
+      "name": "KUM. SUMAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 235,
+      "enrol_no": "R/8395/2025",
+      "elc_no": "132270",
+      "name": "SH. MUKESH KUMAR",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 236,
+      "enrol_no": "R/9263/2025",
+      "elc_no": "133138",
+      "name": "SH. LALARAM GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 237,
+      "enrol_no": "R/9915/2025",
+      "elc_no": "133790",
+      "name": "KUM. KIRAN MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 238,
+      "enrol_no": "R/11010/2025",
+      "elc_no": "134885",
+      "name": "KUM. POOJA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 239,
+      "enrol_no": "R/771/2026",
+      "elc_no": "135984",
+      "name": "SH. HITESH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 240,
+      "enrol_no": "R/909/2026",
+      "elc_no": "136122",
+      "name": "SH. NEERAJ KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 241,
+      "enrol_no": "R/1154/2026",
+      "elc_no": "136367",
+      "name": "SH. NAHAR SINGH SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 242,
+      "enrol_no": "R/1182/2026",
+      "elc_no": "136395",
+      "name": "SH. YATENDRA SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 243,
+      "enrol_no": "R/1266/2026",
+      "elc_no": "136479",
+      "name": "KUM. KHUSHI MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 244,
+      "enrol_no": "R/1274/2026",
+      "elc_no": "136487",
+      "name": "SH. MONU SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 245,
+      "enrol_no": "R/2118/2026",
+      "elc_no": "137331",
+      "name": "SH. SANDEEP KUMAR MEHRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 246,
+      "enrol_no": "R/2191/2026",
+      "elc_no": "137404",
+      "name": "SH. SANDEEP KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 247,
+      "enrol_no": "R/2709/2026",
+      "elc_no": "137922",
+      "name": "SH. SONU YOGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 248,
+      "enrol_no": "R/5184/2026",
+      "elc_no": "140397",
+      "name": "KUM. NEERAJ SHEKHAWAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 249,
+      "enrol_no": "R/6782/2026",
+      "elc_no": "141995",
+      "name": "SH. BHAGIRATH SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    },
+    {
+      "s_no": 250,
+      "enrol_no": "R/7589/2026",
+      "elc_no": "142802",
+      "name": "SH. AJAY YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BANSUR"
+    }
+  ]
+}

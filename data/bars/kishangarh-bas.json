@@ -1,0 +1,3066 @@
+{
+  "bar_name": "KISHANGARH BAS",
+  "bar_slug": "kishangarh-bas",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 305,
+    "ltm_count": 113,
+    "na_count": 147,
+    "dues_pending_count": 43,
+    "termi_count": 2
+  },
+  "pdf_download_url": "/downloads/bcr-dues-kishangarh-bas.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/81/1963",
+      "elc_no": "1963",
+      "name": "SH. PHAGUN MAL K GURNANI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/296/1963",
+      "elc_no": "2178",
+      "name": "SH. SHIVLAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/108/1964",
+      "elc_no": "2610",
+      "name": "SH. CHOUDHARY MOHD. MEWATI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/216/1964",
+      "elc_no": "2720",
+      "name": "SH. RAM CHANDRA YADAVA",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/30/1968",
+      "elc_no": "3424",
+      "name": "SH. JAI DAYAL TAXAK",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/383/1968",
+      "elc_no": "3777",
+      "name": "SH. RATAN SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/526/1968",
+      "elc_no": "3920",
+      "name": "SH. HARBANS LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/38/1971",
+      "elc_no": "4409",
+      "name": "SH. NAND KISHORE YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/174/1973",
+      "elc_no": "5166",
+      "name": "SH. HARI KISHAN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/47/1974",
+      "elc_no": "5344",
+      "name": "SH. PHOOL SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/119/1975",
+      "elc_no": "5820",
+      "name": "SH. HANUMAN PRASAD SWAMI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/365/1976",
+      "elc_no": "6530",
+      "name": "SH. RADHEY SHYAM YADAV",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/693/1976",
+      "elc_no": "6858",
+      "name": "SH. HANUMAN PRASAD GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/455/1977",
+      "elc_no": "7424",
+      "name": "SH. GURU DAYAL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/613/1977",
+      "elc_no": "7582",
+      "name": "SH. ISHAK MOHAMMED",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/676/1977",
+      "elc_no": "7645",
+      "name": "SH. BALBIR SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/494/1978",
+      "elc_no": "8170",
+      "name": "SH. GULSHAN KUMAR KHURANA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/291/1979",
+      "elc_no": "8539",
+      "name": "SH. LALA RAM YADAV",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/641/1979",
+      "elc_no": "8889",
+      "name": "SH. KAILASH CHANDRA GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/666/1979",
+      "elc_no": "8914",
+      "name": "SH. SURESH CHAND",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/32/1980",
+      "elc_no": "9063",
+      "name": "SH. BHUVNESH KUMAR TIWARI",
+      "due_subs": "5000 + 294 = 5294",
+      "ltm_subs": "52794",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/211/1981",
+      "elc_no": "9796",
+      "name": "SH. PRADEEP KUMAR SONI",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/260/1981",
+      "elc_no": "9845",
+      "name": "SH. RAMJI LAL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/406/1981",
+      "elc_no": "9991",
+      "name": "SH. RATI RAM CHOUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/674/1981",
+      "elc_no": "10259",
+      "name": "SH. GIRRAJ PRASAD GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/141/1982",
+      "elc_no": "10574",
+      "name": "SH. SHIV KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/306/1982",
+      "elc_no": "10739",
+      "name": "SH. JAGAN SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/313/1982",
+      "elc_no": "10746",
+      "name": "SH. SANTOSH KUMAR GUPTA",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/317/1982",
+      "elc_no": "10750",
+      "name": "SH. SATENDRA SINGH CHAUDHA...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/52/1983",
+      "elc_no": "11372",
+      "name": "SH. ASHOK KUMAR DADANI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/169/1983",
+      "elc_no": "11489",
+      "name": "SH. CHANDRA PRAKASH SHARMA",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/85/1984",
+      "elc_no": "12032",
+      "name": "SH. ROHIT CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/225/1984",
+      "elc_no": "12172",
+      "name": "SH. DURGA SHANKER BARETH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/393/1985",
+      "elc_no": "12939",
+      "name": "SH. AJAY KRISHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/117/1986",
+      "elc_no": "13069",
+      "name": "SH. SAPAT KHAN",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/244/1987",
+      "elc_no": "13594",
+      "name": "SH. KALU RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/126/1989",
+      "elc_no": "14524",
+      "name": "SH. MAHAVIR PRASAD",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/133/1989",
+      "elc_no": "14531",
+      "name": "SH. DHEER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/440/1990",
+      "elc_no": "15465",
+      "name": "SH. BHAGWAT SINGH YADAV",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/234/1991",
+      "elc_no": "15923",
+      "name": "SH. AJAY SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/8/1993",
+      "elc_no": "17034",
+      "name": "SH. RAM PRAKASH SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/398/1993",
+      "elc_no": "17424",
+      "name": "SH. ISRAEL KHAN",
+      "due_subs": "24750 + 17697 = 42447",
+      "ltm_subs": "89947",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/402/1993",
+      "elc_no": "17428",
+      "name": "SH. GHAN SHYAM",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/555/1993",
+      "elc_no": "17581",
+      "name": "SH. MAHABIR PRASAD YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/647/1993",
+      "elc_no": "17673",
+      "name": "SH. ANIL GOYAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/84/1994",
+      "elc_no": "17967",
+      "name": "SH. DINESH SINGH YADAV",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/92/1994",
+      "elc_no": "17975",
+      "name": "SH. NAR HARI VYAS",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/548/1994",
+      "elc_no": "18431",
+      "name": "SH. SHER MOHAMMED",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/649/1994",
+      "elc_no": "18532",
+      "name": "SH. SURAJ BHAN BHADANA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/908/1994",
+      "elc_no": "18791",
+      "name": "SH. SANJEEV SINGH PARMAR",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/964/1994",
+      "elc_no": "18847",
+      "name": "SH. DEVENDRA KUMAR KHAIRIYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/276/1995",
+      "elc_no": "19473",
+      "name": "SH. SUNIL GOYAL",
+      "due_subs": "25500 + 19282 = 44782",
+      "ltm_subs": "92282",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/420/1995",
+      "elc_no": "19617",
+      "name": "SH. RAJENDAR KUMAR SINGHAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/1071/1995",
+      "elc_no": "20268",
+      "name": "SH. ROOP CHAND",
+      "due_subs": "27000 + 22461 = 49461",
+      "ltm_subs": "96961",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/1154/1995",
+      "elc_no": "20351",
+      "name": "SH. NARESH KUMAR GOYAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/1170/1995",
+      "elc_no": "20367",
+      "name": "SH. BAL KRISHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/212/1996",
+      "elc_no": "20691",
+      "name": "SH. KHEM CHAND DHAMANI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/378/1996",
+      "elc_no": "20857",
+      "name": "SH. SUNIL KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/658/1996",
+      "elc_no": "21137",
+      "name": "SH. MOHAMMED IMRAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/269/1997",
+      "elc_no": "21831",
+      "name": "SH. RAMAVTAR",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/1079/1997",
+      "elc_no": "22641",
+      "name": "SH. RAMJASS YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/22/1998",
+      "elc_no": "22831",
+      "name": "SH. JASWANT SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/339/1998",
+      "elc_no": "23148",
+      "name": "SH. ASHOK KUMAR BARETH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/704/1998",
+      "elc_no": "23513",
+      "name": "SH. VEER SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/733/1998",
+      "elc_no": "23542",
+      "name": "SH. RAJENDAR PRASAD",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/11/1999",
+      "elc_no": "24121",
+      "name": "SH. AMIT GAUR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/212/1999",
+      "elc_no": "24322",
+      "name": "SH. MUNEER KHAN",
+      "due_subs": "15000 + 3483 = 18483",
+      "ltm_subs": "65983",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/368/1999",
+      "elc_no": "24478",
+      "name": "SH. SURENDRA SINGH NARUKA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/391/1999",
+      "elc_no": "24501",
+      "name": "KUM. JYOTI GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/539/1999",
+      "elc_no": "24649",
+      "name": "SH. DHARAM DAS",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/560/1999",
+      "elc_no": "24670",
+      "name": "SH. SATISH KUMAR",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/1543/1999",
+      "elc_no": "25653",
+      "name": "SH. VIJAY SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/1582/1999",
+      "elc_no": "25692",
+      "name": "SH. RAJESH KUMAR KAVTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/28/2000",
+      "elc_no": "25996",
+      "name": "SH. GHASI RAM YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/426/2000",
+      "elc_no": "26394",
+      "name": "SH. NARESH KUMAR AGARWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/1309/2000",
+      "elc_no": "27277",
+      "name": "KUM. MANISHA DEVI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/1859/2000",
+      "elc_no": "27827",
+      "name": "SH. ASHOK KUMAR CHOUDHARY",
+      "due_subs": "18769 + 7349 = 26118",
+      "ltm_subs": "73618",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/1903/2000",
+      "elc_no": "27871",
+      "name": "SH. AKHALESH KUMAR KAUSHIK",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/2152/2000",
+      "elc_no": "28120",
+      "name": "SH. ANIL KUMAR GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/419/2001",
+      "elc_no": "28673",
+      "name": "SH. MAHAVEER PRASAD GUPTA",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/652/2001",
+      "elc_no": "28906",
+      "name": "SH. RAJESH GIRI GOSWAMI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/832/2001",
+      "elc_no": "29086",
+      "name": "SH. YASHWANT KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/1077/2001",
+      "elc_no": "29331",
+      "name": "KUM. ANAMIKA",
+      "due_subs": "28750 + 26169 = 54919",
+      "ltm_subs": "102419",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/1680/2001",
+      "elc_no": "29934",
+      "name": "SH. NARENDER KUMAR",
+      "due_subs": "20951 + 10540 = 31491",
+      "ltm_subs": "78991",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/1722/2001",
+      "elc_no": "29976",
+      "name": "KUM. JYOTI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/2117/2001",
+      "elc_no": "30371",
+      "name": "SH. ASHISH MALANI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 87,
+      "enrol_no": "R/2224/2001",
+      "elc_no": "30478",
+      "name": "SH. SHYAM LAL",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 88,
+      "enrol_no": "R/31/2002",
+      "elc_no": "30906",
+      "name": "SH. MILAP CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 89,
+      "enrol_no": "R/533/2002",
+      "elc_no": "31408",
+      "name": "SH. MAHENDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 90,
+      "enrol_no": "R/585/2002",
+      "elc_no": "31460",
+      "name": "SH. DINESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 91,
+      "enrol_no": "R/2524/2002",
+      "elc_no": "33399",
+      "name": "SH. KAPIL KANT SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 92,
+      "enrol_no": "R/34/2003",
+      "elc_no": "33867",
+      "name": "SH. MADAN LAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 93,
+      "enrol_no": "R/62/2003",
+      "elc_no": "33895",
+      "name": "SH. MUKESH KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 94,
+      "enrol_no": "R/83/2003",
+      "elc_no": "33916",
+      "name": "SH. DHARMENDER KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 95,
+      "enrol_no": "R/139/2003",
+      "elc_no": "33972",
+      "name": "SH. MUKESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 96,
+      "enrol_no": "R/238/2003",
+      "elc_no": "34071",
+      "name": "SH. MAHESH PRATAP SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 97,
+      "enrol_no": "R/471/2003",
+      "elc_no": "34304",
+      "name": "SH. RAM NIWAS",
+      "due_subs": "26350 + 21091 = 47441",
+      "ltm_subs": "94941",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 98,
+      "enrol_no": "R/481/2003",
+      "elc_no": "34314",
+      "name": "SH. AJEET RAO",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 99,
+      "enrol_no": "R/1602/2003",
+      "elc_no": "35435",
+      "name": "SH. VIKRAM SINGH YADAV",
+      "due_subs": "25950 + 20341 = 46291",
+      "ltm_subs": "93791",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 100,
+      "enrol_no": "R/1976/2003",
+      "elc_no": "35809",
+      "name": "SH. PREM PRAKASH YADAV",
+      "due_subs": "25250 + 18858 = 44108",
+      "ltm_subs": "91608",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 101,
+      "enrol_no": "R/2543/2003",
+      "elc_no": "36376",
+      "name": "SH. KAMRUDDEN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 102,
+      "enrol_no": "R/2596/2003",
+      "elc_no": "36429",
+      "name": "SH. DHARM PAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 103,
+      "enrol_no": "R/2914/2003",
+      "elc_no": "36747",
+      "name": "SH. BAL RAM YADAV",
+      "due_subs": "10000 + 1288 = 11288",
+      "ltm_subs": "58788",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 104,
+      "enrol_no": "R/59/2004",
+      "elc_no": "36924",
+      "name": "SH. BHUPESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 105,
+      "enrol_no": "R/94/2004",
+      "elc_no": "36959",
+      "name": "SH. CHHATAR PAL SINGH",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 106,
+      "enrol_no": "R/1399/2004",
+      "elc_no": "38264",
+      "name": "SH. RAM LAL NIMBHORIA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 107,
+      "enrol_no": "R/1538/2004",
+      "elc_no": "38403",
+      "name": "SH. MAHENDAR SINGH",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 108,
+      "enrol_no": "R/1665/2004",
+      "elc_no": "38530",
+      "name": "SH. AMAR SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 109,
+      "enrol_no": "R/2314/2004",
+      "elc_no": "39179",
+      "name": "SH. SUDHIR KUMAR GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 110,
+      "enrol_no": "R/2359/2004",
+      "elc_no": "39224",
+      "name": "SH. GAJENDRA SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 111,
+      "enrol_no": "R/2953/2004",
+      "elc_no": "39818",
+      "name": "SH. GIRRAJ PRASAD",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 112,
+      "enrol_no": "R/3064/2004",
+      "elc_no": "39929",
+      "name": "SH. VEERENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 113,
+      "enrol_no": "R/3305/2004",
+      "elc_no": "40170",
+      "name": "SH. SARJEET SINGH",
+      "due_subs": "23450 + 15232 = 38682",
+      "ltm_subs": "86182",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 114,
+      "enrol_no": "R/153/2005",
+      "elc_no": "40469",
+      "name": "SH. DHARAM VEER",
+      "due_subs": "5007 + 295 = 5302",
+      "ltm_subs": "52802",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 115,
+      "enrol_no": "R/199/2005",
+      "elc_no": "40515",
+      "name": "SH. SUNDER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 116,
+      "enrol_no": "R/493/2005",
+      "elc_no": "40809",
+      "name": "SH. AJAY CHAUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 117,
+      "enrol_no": "R/626/2005",
+      "elc_no": "40942",
+      "name": "SH. ROSHAN LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 118,
+      "enrol_no": "R/695/2005",
+      "elc_no": "41011",
+      "name": "SH. RATAN SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 119,
+      "enrol_no": "R/699/2005",
+      "elc_no": "41015",
+      "name": "SH. RINKESH KUMAR GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 120,
+      "enrol_no": "R/732/2005",
+      "elc_no": "41048",
+      "name": "SH. GIRIRAJ PRASAD SAMRIA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 121,
+      "enrol_no": "R/866/2005",
+      "elc_no": "41182",
+      "name": "SH. RAMAVTAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 122,
+      "enrol_no": "R/895/2005",
+      "elc_no": "41211",
+      "name": "SH. RAM KRISHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 123,
+      "enrol_no": "R/1806/2005",
+      "elc_no": "42123",
+      "name": "SH. DHARMVEER",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 124,
+      "enrol_no": "R/1841/2005",
+      "elc_no": "42158",
+      "name": "SH. HANS RAJ DAYMA",
+      "due_subs": "23750 + 16144 = 39894",
+      "ltm_subs": "87394",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 125,
+      "enrol_no": "R/2679/2005",
+      "elc_no": "42996",
+      "name": "SH. NIRANJAN LAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 126,
+      "enrol_no": "R/2705/2005",
+      "elc_no": "43022",
+      "name": "SH. AJAY YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 127,
+      "enrol_no": "R/3078/2005",
+      "elc_no": "43395",
+      "name": "SH. SANJAY YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 128,
+      "enrol_no": "R/3136/2005",
+      "elc_no": "43453",
+      "name": "SH. BHANU PRAKASH AGARWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 129,
+      "enrol_no": "R/320/2006",
+      "elc_no": "44153",
+      "name": "SH. UDAI SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 130,
+      "enrol_no": "R/796/2006",
+      "elc_no": "44629",
+      "name": "SH. MANOJ KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 131,
+      "enrol_no": "R/2444/2006",
+      "elc_no": "46276",
+      "name": "SH. PRATAP SINGH SAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 132,
+      "enrol_no": "R/23/2007",
+      "elc_no": "47549",
+      "name": "SH. ANIL KUMAR SINGHAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 133,
+      "enrol_no": "R/460/2007",
+      "elc_no": "47986",
+      "name": "SH. SAMEER CHOUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 134,
+      "enrol_no": "R/805/2007",
+      "elc_no": "48331",
+      "name": "SH. ANIL SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 135,
+      "enrol_no": "R/979/2007",
+      "elc_no": "48505",
+      "name": "SH. ABDUL KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 136,
+      "enrol_no": "R/1087/2007",
+      "elc_no": "48613",
+      "name": "SH. KISHORI LAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 137,
+      "enrol_no": "R/1466/2007",
+      "elc_no": "48992",
+      "name": "SH. SANDEEP KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 138,
+      "enrol_no": "R/1708/2007",
+      "elc_no": "49234",
+      "name": "SH. DHARM SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 139,
+      "enrol_no": "R/2389/2007",
+      "elc_no": "49915",
+      "name": "SH. PRASHANT KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 140,
+      "enrol_no": "R/2842/2007",
+      "elc_no": "50368",
+      "name": "SH. JITENDER KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 141,
+      "enrol_no": "R/3328/2007",
+      "elc_no": "50854",
+      "name": "SH. RAKESH TIWARI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 142,
+      "enrol_no": "R/3583/2007",
+      "elc_no": "51109",
+      "name": "SH. GIRISH DHAMANI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 143,
+      "enrol_no": "R/3719/2007",
+      "elc_no": "51245",
+      "name": "KUM. ANJANA AGARWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 144,
+      "enrol_no": "R/4061/2007",
+      "elc_no": "51587",
+      "name": "KUM. RATNA",
+      "due_subs": "19772 + 8970 = 28742",
+      "ltm_subs": "76242",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 145,
+      "enrol_no": "R/4360/2007",
+      "elc_no": "51886",
+      "name": "SMT. KALPANA KHURANA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 146,
+      "enrol_no": "R/843/2008",
+      "elc_no": "52825",
+      "name": "SH. MOHAMMAD IRFAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 147,
+      "enrol_no": "R/854/2008",
+      "elc_no": "52836",
+      "name": "SH. UMMED KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 148,
+      "enrol_no": "R/926/2008",
+      "elc_no": "52908",
+      "name": "SH. BALWAN SINGH MANAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 149,
+      "enrol_no": "R/1871/2008",
+      "elc_no": "53853",
+      "name": "SMT. SAYRA BEGAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 150,
+      "enrol_no": "R/2349/2008",
+      "elc_no": "54331",
+      "name": "SH. SALEEM MOHAMAD KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 151,
+      "enrol_no": "R/564/2009",
+      "elc_no": "55682",
+      "name": "SH. DAMAN KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 152,
+      "enrol_no": "R/1270/2009",
+      "elc_no": "56388",
+      "name": "SH. TAIYYAB KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 153,
+      "enrol_no": "R/2023/2009",
+      "elc_no": "57141",
+      "name": "SH. NITIN KUMAR VYAS",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 154,
+      "enrol_no": "R/2114/2009",
+      "elc_no": "57232",
+      "name": "SH. VIKRAM SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 155,
+      "enrol_no": "R/109/2010",
+      "elc_no": "57734",
+      "name": "SH. RAJESH MISHRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 156,
+      "enrol_no": "R/156/2010",
+      "elc_no": "57781",
+      "name": "SH. BHIM SINGH SAMBHOR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 157,
+      "enrol_no": "R/190/2010",
+      "elc_no": "57815",
+      "name": "SH. RAM KISHAN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 158,
+      "enrol_no": "R/1409/2010",
+      "elc_no": "59034",
+      "name": "SH. SUBHASH CHAND GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 159,
+      "enrol_no": "R/1495/2010",
+      "elc_no": "59120",
+      "name": "SH. UDAMI RAM",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 160,
+      "enrol_no": "R/1498/2010",
+      "elc_no": "59123",
+      "name": "SH. KULDEEP KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 161,
+      "enrol_no": "R/1718/2010",
+      "elc_no": "59343",
+      "name": "SH. LEKH RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 162,
+      "enrol_no": "R/2516/2010",
+      "elc_no": "60141",
+      "name": "SH. DHARAM CHAND SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 163,
+      "enrol_no": "R/2565/2010",
+      "elc_no": "60190",
+      "name": "SH. PRAKASH GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 164,
+      "enrol_no": "R/2681/2010",
+      "elc_no": "60306",
+      "name": "SH. BHAGENDRA SINGH KHARIYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 165,
+      "enrol_no": "R/2832/2010",
+      "elc_no": "60457",
+      "name": "SH. GAURAV KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 166,
+      "enrol_no": "R/4380/2010",
+      "elc_no": "62005",
+      "name": "SMT. SHIPRA CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 167,
+      "enrol_no": "R/4573/2010",
+      "elc_no": "62198",
+      "name": "SH. VIJAY KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 168,
+      "enrol_no": "R/4582/2010",
+      "elc_no": "62207",
+      "name": "SH. SHAHID",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 169,
+      "enrol_no": "R/4632/2010",
+      "elc_no": "62257",
+      "name": "SH. KHURSHED AHMAD",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 170,
+      "enrol_no": "R/4950/2010",
+      "elc_no": "62575",
+      "name": "SH. MANOJ KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 171,
+      "enrol_no": "R/293/2011",
+      "elc_no": "63067",
+      "name": "SH. NEERAJ GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 172,
+      "enrol_no": "R/374/2011",
+      "elc_no": "63148",
+      "name": "SH. RAVINDRA PAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 173,
+      "enrol_no": "R/484/2011",
+      "elc_no": "63258",
+      "name": "SH. AMIT GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 174,
+      "enrol_no": "R/948/2011",
+      "elc_no": "63722",
+      "name": "SH. RAJESH CHOUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 175,
+      "enrol_no": "R/1055/2011",
+      "elc_no": "63829",
+      "name": "KUM. ANKITA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 176,
+      "enrol_no": "R/1373/2011",
+      "elc_no": "64147",
+      "name": "SH. RAJESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 177,
+      "enrol_no": "R/218/2012",
+      "elc_no": "65277",
+      "name": "KUM. SAROJ BHANDANA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 178,
+      "enrol_no": "R/249/2012",
+      "elc_no": "65308",
+      "name": "KUM. SUSHILA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 179,
+      "enrol_no": "R/644/2012",
+      "elc_no": "65703",
+      "name": "SH. RAJESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 180,
+      "enrol_no": "R/1308/2012",
+      "elc_no": "66367",
+      "name": "KUM. ANURADHA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 181,
+      "enrol_no": "R/1570/2012",
+      "elc_no": "66629",
+      "name": "SH. JAMALUDEEN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 182,
+      "enrol_no": "R/1681/2012",
+      "elc_no": "66740",
+      "name": "SH. HIMANSHU GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 183,
+      "enrol_no": "R/2424/2012",
+      "elc_no": "67483",
+      "name": "SH. TEJPAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 184,
+      "enrol_no": "R/1270/2013",
+      "elc_no": "68850",
+      "name": "SH. PUSHPU KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 185,
+      "enrol_no": "R/1702/2013",
+      "elc_no": "69282",
+      "name": "SH. YADUVENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 186,
+      "enrol_no": "R/1997/2013",
+      "elc_no": "69577",
+      "name": "KUM. MANPRIT KAUR",
+      "due_subs": "13950 + 4557 = 18507",
+      "ltm_subs": "66007",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 187,
+      "enrol_no": "R/2125/2013",
+      "elc_no": "69705",
+      "name": "KUM. NEHA GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 188,
+      "enrol_no": "R/2147/2013",
+      "elc_no": "69727",
+      "name": "SMT. YOGITA GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 189,
+      "enrol_no": "R/216/2014",
+      "elc_no": "69982",
+      "name": "SH. SURESH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 190,
+      "enrol_no": "R/670/2014",
+      "elc_no": "70436",
+      "name": "SH. VIPIN KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 191,
+      "enrol_no": "R/825/2014",
+      "elc_no": "70591",
+      "name": "SH. SHER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 192,
+      "enrol_no": "R/1508/2014",
+      "elc_no": "71274",
+      "name": "KUM. SUMAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 193,
+      "enrol_no": "R/2133/2014",
+      "elc_no": "71899",
+      "name": "SH. JITENDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 194,
+      "enrol_no": "R/2530/2014",
+      "elc_no": "72296",
+      "name": "KUM. BINDU RANI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 195,
+      "enrol_no": "R/81/2015",
+      "elc_no": "72580",
+      "name": "SH. RAJIV SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 196,
+      "enrol_no": "R/355/2015",
+      "elc_no": "72854",
+      "name": "KUM. SANGEETA SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 197,
+      "enrol_no": "R/432/2015",
+      "elc_no": "72931",
+      "name": "KUM. PRERNA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 198,
+      "enrol_no": "R/653/2015",
+      "elc_no": "73152",
+      "name": "SMT. ALKA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 199,
+      "enrol_no": "R/1554/2015",
+      "elc_no": "74053",
+      "name": "SH. RAJKUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 200,
+      "enrol_no": "R/3111/2015",
+      "elc_no": "75610",
+      "name": "SH. RAJKUMAR",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 201,
+      "enrol_no": "R/23/2016",
+      "elc_no": "75639",
+      "name": "SMT. RAJRANI YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 202,
+      "enrol_no": "R/1617/2016",
+      "elc_no": "77233",
+      "name": "SH. SUNIL YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 203,
+      "enrol_no": "R/1980/2016",
+      "elc_no": "77596",
+      "name": "SH. ASGAR HUSSAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 204,
+      "enrol_no": "R/2344/2016",
+      "elc_no": "77960",
+      "name": "SH. NISARG CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 205,
+      "enrol_no": "R/492/2017",
+      "elc_no": "78988",
+      "name": "SH. JANMEJAY SINGH BARETH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 206,
+      "enrol_no": "R/1307/2017",
+      "elc_no": "79803",
+      "name": "SH. PRADEEP KUMAR GOYAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 207,
+      "enrol_no": "R/1644/2017",
+      "elc_no": "80140",
+      "name": "SH. YOGENDRA SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 208,
+      "enrol_no": "R/1997/2017",
+      "elc_no": "80493",
+      "name": "SH. TAPAN RAJ VYAS",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 209,
+      "enrol_no": "R/2599/2017",
+      "elc_no": "81095",
+      "name": "SH. RAVINDRA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 210,
+      "enrol_no": "R/830/2018",
+      "elc_no": "82899",
+      "name": "KUM. SANGEETA DANGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 211,
+      "enrol_no": "R/1388/2018",
+      "elc_no": "83457",
+      "name": "SH. RAJNESH KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 212,
+      "enrol_no": "R/1680/2018",
+      "elc_no": "83749",
+      "name": "SH. CHUNNI LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 213,
+      "enrol_no": "R/1960/2018",
+      "elc_no": "84029",
+      "name": "SH. PRADEEP KUMAR",
+      "due_subs": "3002 + 177 = 3179",
+      "ltm_subs": "51679",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 214,
+      "enrol_no": "R/2772/2018",
+      "elc_no": "84841",
+      "name": "KUM. SURENDER KAUR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 215,
+      "enrol_no": "R/3354/2018",
+      "elc_no": "85423",
+      "name": "SH. MAHENDRA PAL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 216,
+      "enrol_no": "R/4034/2018",
+      "elc_no": "86103",
+      "name": "SH. MUSTAK KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 217,
+      "enrol_no": "R/503/2019",
+      "elc_no": "87012",
+      "name": "SH. VAIBHAV SINGH KHAIRIYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 218,
+      "enrol_no": "R/1658/2019",
+      "elc_no": "88167",
+      "name": "SH. KARAMVEER",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 219,
+      "enrol_no": "R/3670/2019",
+      "elc_no": "90179",
+      "name": "SMT. NIKITA KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 220,
+      "enrol_no": "R/42/2020",
+      "elc_no": "91405",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 221,
+      "enrol_no": "R/163/2020",
+      "elc_no": "91526",
+      "name": "SH. ARPIT SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 222,
+      "enrol_no": "R/558/2020",
+      "elc_no": "91921",
+      "name": "SH. SURESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 223,
+      "enrol_no": "R/1060/2020",
+      "elc_no": "92423",
+      "name": "SH. PHOOL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 224,
+      "enrol_no": "R/3969/2021",
+      "elc_no": "98366",
+      "name": "SH. HARISH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 225,
+      "enrol_no": "R/4555/2021",
+      "elc_no": "98952",
+      "name": "SH. VIKASH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 226,
+      "enrol_no": "R/5238/2021",
+      "elc_no": "99635",
+      "name": "SH. AZAD KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 227,
+      "enrol_no": "R/267/2022",
+      "elc_no": "100446",
+      "name": "SH. RAMBEER",
+      "due_subs": "1500 + 141 = 1641",
+      "ltm_subs": "51141",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 228,
+      "enrol_no": "R/1136/2022",
+      "elc_no": "101315",
+      "name": "SH. MANISH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 229,
+      "enrol_no": "R/3160/2022",
+      "elc_no": "103339",
+      "name": "SH. DIKSHANT KAMDAR",
+      "due_subs": "1002 + 59 = 1061",
+      "ltm_subs": "50561",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 230,
+      "enrol_no": "R/3820/2022",
+      "elc_no": "103999",
+      "name": "SH. JAGMAL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 231,
+      "enrol_no": "R/5191/2022",
+      "elc_no": "105370",
+      "name": "SH. DEVENDAR KUMAR SHARMA",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 232,
+      "enrol_no": "R/5294/2022",
+      "elc_no": "105473",
+      "name": "SH. AASAM DEEN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 233,
+      "enrol_no": "R/6181/2022",
+      "elc_no": "106360",
+      "name": "SH. INDERJEET SINGH YADAV",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 234,
+      "enrol_no": "R/6332/2022",
+      "elc_no": "106511",
+      "name": "KUM. ASMITA MISHRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 235,
+      "enrol_no": "R/321/2023",
+      "elc_no": "107336",
+      "name": "SH. PRADEEP KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 236,
+      "enrol_no": "R/491/2023",
+      "elc_no": "107506",
+      "name": "SMT. VIDHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 237,
+      "enrol_no": "R/566/2023",
+      "elc_no": "107581",
+      "name": "SH. VISHAL KAMDAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 238,
+      "enrol_no": "R/2533/2023",
+      "elc_no": "109548",
+      "name": "SMT. NEERU KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 239,
+      "enrol_no": "R/4943/2023",
+      "elc_no": "111958",
+      "name": "SH. LAKSHYA CHAUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 240,
+      "enrol_no": "R/4997/2023",
+      "elc_no": "112012",
+      "name": "KUM. BHUMIKA GOYAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 241,
+      "enrol_no": "R/5104/2023",
+      "elc_no": "112119",
+      "name": "SH. DEEPAK KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 242,
+      "enrol_no": "R/7405/2023",
+      "elc_no": "114420",
+      "name": "SH. AZARUDDIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 243,
+      "enrol_no": "R/7781/2023",
+      "elc_no": "114796",
+      "name": "SH. HARSHVARDHAN SINGH KHA...",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 244,
+      "enrol_no": "R/114/2024",
+      "elc_no": "115105",
+      "name": "SH. DESHRAJ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 245,
+      "enrol_no": "R/168/2024",
+      "elc_no": "115159",
+      "name": "SH. PRASOON TIWARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 246,
+      "enrol_no": "R/427/2024",
+      "elc_no": "115418",
+      "name": "SH. VINOD KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 247,
+      "enrol_no": "R/1961/2024",
+      "elc_no": "116952",
+      "name": "SH. DEVENDRA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 248,
+      "enrol_no": "R/2273/2024",
+      "elc_no": "117264",
+      "name": "SH. ARMAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 249,
+      "enrol_no": "R/3342/2024",
+      "elc_no": "118333",
+      "name": "SH. RAHUL KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 250,
+      "enrol_no": "R/3554/2024",
+      "elc_no": "118545",
+      "name": "SH. HARJEET SINGH",
+      "due_subs": "49500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 251,
+      "enrol_no": "R/4233/2024",
+      "elc_no": "119224",
+      "name": "SH. LAVKESH KUMAR YOGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 252,
+      "enrol_no": "R/4263/2024",
+      "elc_no": "119254",
+      "name": "SH. SANOJ SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 253,
+      "enrol_no": "R/4537/2024",
+      "elc_no": "119528",
+      "name": "SH. JAIPAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 254,
+      "enrol_no": "R/4769/2024",
+      "elc_no": "119760",
+      "name": "SH. ARJUN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 255,
+      "enrol_no": "R/5294/2024",
+      "elc_no": "120285",
+      "name": "SH. TARUN KUMAR",
+      "due_subs": "1000 + 59 = 1059",
+      "ltm_subs": "50559",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 256,
+      "enrol_no": "R/7554/2024",
+      "elc_no": "122545",
+      "name": "SH. RAVI PRAKASH",
+      "due_subs": "1000 + 59 = 1059",
+      "ltm_subs": "50559",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 257,
+      "enrol_no": "R/408/2025",
+      "elc_no": "124283",
+      "name": "SH. KHUSHIRAM SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 258,
+      "enrol_no": "R/1444/2025",
+      "elc_no": "125319",
+      "name": "SH. SAHIR MOHAMMAD",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 259,
+      "enrol_no": "R/1702/2025",
+      "elc_no": "125577",
+      "name": "KUM. PRIYANKA BHANDARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 260,
+      "enrol_no": "R/1819/2025",
+      "elc_no": "125694",
+      "name": "KUM. DEEPIKA BHANDARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 261,
+      "enrol_no": "R/1953/2025",
+      "elc_no": "125828",
+      "name": "SH. SONU YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 262,
+      "enrol_no": "R/2296/2025",
+      "elc_no": "126171",
+      "name": "SH. NARENDRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 263,
+      "enrol_no": "R/2470/2025",
+      "elc_no": "126345",
+      "name": "SH. KAMAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 264,
+      "enrol_no": "R/2550/2025",
+      "elc_no": "126425",
+      "name": "SMT. GUDDI KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 265,
+      "enrol_no": "R/2642/2025",
+      "elc_no": "126517",
+      "name": "KUM. CHANCHAL NARUKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 266,
+      "enrol_no": "R/2696/2025",
+      "elc_no": "126571",
+      "name": "SH. NEERAJ SAINI",
+      "due_subs": "49500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 267,
+      "enrol_no": "R/2846/2025",
+      "elc_no": "126721",
+      "name": "SH. IKBAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 268,
+      "enrol_no": "R/3062/2025",
+      "elc_no": "126937",
+      "name": "SH. BHARAT SINGH SIROHIWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 269,
+      "enrol_no": "R/4282/2025",
+      "elc_no": "128157",
+      "name": "SH. ANOOP SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 270,
+      "enrol_no": "R/4632/2025",
+      "elc_no": "128507",
+      "name": "SH. RAJBEER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 271,
+      "enrol_no": "R/5084/2025",
+      "elc_no": "128959",
+      "name": "SMT. URMILA BAI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 272,
+      "enrol_no": "R/5220/2025",
+      "elc_no": "129095",
+      "name": "KUM. RAJWANT KAUR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 273,
+      "enrol_no": "R/5273/2025",
+      "elc_no": "129148",
+      "name": "KUM. BIMLA KAUR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 274,
+      "enrol_no": "R/5955/2025",
+      "elc_no": "129830",
+      "name": "KUM. SAPANA KAUR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 275,
+      "enrol_no": "R/6537/2025",
+      "elc_no": "130412",
+      "name": "SH. AJAY CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 276,
+      "enrol_no": "R/6598/2025",
+      "elc_no": "130473",
+      "name": "SH. KUSHAL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 277,
+      "enrol_no": "R/6818/2025",
+      "elc_no": "130693",
+      "name": "SH. KAMAL SINGH",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 278,
+      "enrol_no": "R/6952/2025",
+      "elc_no": "130827",
+      "name": "KUM. SAHINA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 279,
+      "enrol_no": "R/7101/2025",
+      "elc_no": "130976",
+      "name": "SH. HITESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 280,
+      "enrol_no": "R/8267/2025",
+      "elc_no": "132142",
+      "name": "SH. VISHWAS YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 281,
+      "enrol_no": "R/9063/2025",
+      "elc_no": "132938",
+      "name": "KUM. SUJATA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 282,
+      "enrol_no": "R/9588/2025",
+      "elc_no": "133463",
+      "name": "SH. ABHISHEK CHARAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 283,
+      "enrol_no": "R/10643/2025",
+      "elc_no": "134518",
+      "name": "SH. DHARA SINGH SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 284,
+      "enrol_no": "R/10987/2025",
+      "elc_no": "134862",
+      "name": "KUM. LOVELY GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 285,
+      "enrol_no": "R/53/2026",
+      "elc_no": "135266",
+      "name": "SH. JAGBEER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 286,
+      "enrol_no": "R/1302/2026",
+      "elc_no": "136515",
+      "name": "SH. DULICHAND SAIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 287,
+      "enrol_no": "R/1782/2026",
+      "elc_no": "136995",
+      "name": "SH. SANDEEP KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 288,
+      "enrol_no": "R/2952/2026",
+      "elc_no": "138165",
+      "name": "SH. RAMIZ RAJA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 289,
+      "enrol_no": "R/3773/2026",
+      "elc_no": "138986",
+      "name": "SH. RAVI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 290,
+      "enrol_no": "R/4102/2026",
+      "elc_no": "139315",
+      "name": "SH. DEEPAK BANSIWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 291,
+      "enrol_no": "R/4602/2026",
+      "elc_no": "139815",
+      "name": "SH. SANGEET RAJ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 292,
+      "enrol_no": "R/4920/2026",
+      "elc_no": "140133",
+      "name": "SH. MOHIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 293,
+      "enrol_no": "R/5341/2026",
+      "elc_no": "140554",
+      "name": "KUM. ANJU KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 294,
+      "enrol_no": "R/5587/2026",
+      "elc_no": "140800",
+      "name": "SH. HARDIK SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 295,
+      "enrol_no": "R/5840/2026",
+      "elc_no": "141053",
+      "name": "SH. ROHIT KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 296,
+      "enrol_no": "R/5994/2026",
+      "elc_no": "141207",
+      "name": "SH. CHETAN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 297,
+      "enrol_no": "R/6170/2026",
+      "elc_no": "141383",
+      "name": "KUM. NEETU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 298,
+      "enrol_no": "R/6704/2026",
+      "elc_no": "141917",
+      "name": "KUM. SHALU KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 299,
+      "enrol_no": "R/6988/2026",
+      "elc_no": "142201",
+      "name": "SH. SAMYAK JAIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 300,
+      "enrol_no": "R/7514/2026",
+      "elc_no": "142727",
+      "name": "SH. SHAHRUKH KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 301,
+      "enrol_no": "R/7519/2026",
+      "elc_no": "142732",
+      "name": "SH. JAHEER KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 302,
+      "enrol_no": "R/7577/2026",
+      "elc_no": "142790",
+      "name": "SH. YASHDEEP YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 303,
+      "enrol_no": "R/7949/2026",
+      "elc_no": "143162",
+      "name": "SH. AJAY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 304,
+      "enrol_no": "R/7950/2026",
+      "elc_no": "143163",
+      "name": "KUM. BHAWANA SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    },
+    {
+      "s_no": 305,
+      "enrol_no": "R/7962/2026",
+      "elc_no": "143175",
+      "name": "KUM. NIKITA ARYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "KISHANGARH BAS"
+    }
+  ]
+}

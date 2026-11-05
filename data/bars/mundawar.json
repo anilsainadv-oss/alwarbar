@@ -1,0 +1,1296 @@
+{
+  "bar_name": "MUNDAWAR",
+  "bar_slug": "mundawar",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 128,
+    "ltm_count": 30,
+    "na_count": 62,
+    "dues_pending_count": 36,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-mundawar.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/318/1978",
+      "elc_no": "7994",
+      "name": "SH. DAULAT SINGH CHAUHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/298/1979",
+      "elc_no": "8546",
+      "name": "SH. SHREE CHAND CHOUDHARY",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/243/1983",
+      "elc_no": "11563",
+      "name": "SH. ROHITASHVA JAT",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/272/1983",
+      "elc_no": "11592",
+      "name": "SH. SHOBHA RAM",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/219/1987",
+      "elc_no": "13569",
+      "name": "SH. JAGAN NATH YADAV",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/147/1990",
+      "elc_no": "15172",
+      "name": "SH. SHRIPAL SINGH",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/1063/1995",
+      "elc_no": "20260",
+      "name": "SH. GANGA RAM",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/1077/1995",
+      "elc_no": "20274",
+      "name": "SH. BASTI RAM YADAV",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/1204/1995",
+      "elc_no": "20401",
+      "name": "SH. SURESH CHAND YADAV",
+      "due_subs": "2492 + 59 = 2551",
+      "ltm_subs": "50051",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/374/1996",
+      "elc_no": "20853",
+      "name": "SH. VIKRAM SINGH YADAV",
+      "due_subs": "2501 + 60 = 2561",
+      "ltm_subs": "50061",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/341/1997",
+      "elc_no": "21903",
+      "name": "SH. SUBHASH CHANDRA SHARMA",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/926/1998",
+      "elc_no": "23735",
+      "name": "SH. MADAN LAL SANVARIA",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/542/1999",
+      "elc_no": "24652",
+      "name": "SH. SATISH KUMAR YADAV",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/38/2000",
+      "elc_no": "26006",
+      "name": "SH. RANVEER SINGH YADAV",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/971/2000",
+      "elc_no": "26939",
+      "name": "SH. SARJEET SINGH",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/1119/2000",
+      "elc_no": "27087",
+      "name": "SH. MUNSHI RAM",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/2043/2000",
+      "elc_no": "28011",
+      "name": "SH. SATVEER CHOUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/1491/2001",
+      "elc_no": "29745",
+      "name": "SH. NARENDRA KUMAR MANDHAI...",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/2210/2001",
+      "elc_no": "30464",
+      "name": "SH. HANS RAJ YADAV",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/2215/2001",
+      "elc_no": "30469",
+      "name": "SH. PRATHVI SINGH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/2393/2001",
+      "elc_no": "30647",
+      "name": "SH. RAKESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/437/2002",
+      "elc_no": "31312",
+      "name": "SH. SARJEET KUMAR",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/1396/2002",
+      "elc_no": "32271",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/1438/2003",
+      "elc_no": "35271",
+      "name": "SH. SATYAVEER KUMAR YADAV",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/1660/2003",
+      "elc_no": "35493",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/2812/2003",
+      "elc_no": "36645",
+      "name": "SH. SATISH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/605/2004",
+      "elc_no": "37470",
+      "name": "SH. ANIL YADAV",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/1661/2004",
+      "elc_no": "38526",
+      "name": "SH. MUKESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/1797/2004",
+      "elc_no": "38662",
+      "name": "SH. JAGVEER SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/2811/2004",
+      "elc_no": "39676",
+      "name": "SH. NARENDAR KUMAR",
+      "due_subs": "2512 + 61 = 2573",
+      "ltm_subs": "50073",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/663/2005",
+      "elc_no": "40979",
+      "name": "SH. DHARMVEER",
+      "due_subs": "25350 + 19257 = 44607",
+      "ltm_subs": "92107",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/813/2005",
+      "elc_no": "41129",
+      "name": "SH. SARJEET SINGH JAT",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/1374/2005",
+      "elc_no": "41690",
+      "name": "SH. BHUPESH JAT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/1878/2005",
+      "elc_no": "42195",
+      "name": "SH. BADRI PRASAD YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/1980/2005",
+      "elc_no": "42297",
+      "name": "SH. DHARMVEER",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/76/2006",
+      "elc_no": "43909",
+      "name": "SH. MITTHAN LAL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/1057/2006",
+      "elc_no": "44889",
+      "name": "SH. VIJAY PAL",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/1805/2006",
+      "elc_no": "45637",
+      "name": "SH. ANIL KUMAR YADAV",
+      "due_subs": "2480 + 59 = 2539",
+      "ltm_subs": "50039",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/2421/2006",
+      "elc_no": "46253",
+      "name": "SH. MOTI LAL",
+      "due_subs": "2491 + 59 = 2550",
+      "ltm_subs": "50050",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/2874/2006",
+      "elc_no": "46706",
+      "name": "SH. DHARA SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/861/2007",
+      "elc_no": "48387",
+      "name": "SH. SHASHI KANT SHARMA",
+      "due_subs": "2489 + 59 = 2548",
+      "ltm_subs": "50048",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/4166/2007",
+      "elc_no": "51692",
+      "name": "SH. DAYARAM HARIJEN",
+      "due_subs": "2480 + 59 = 2539",
+      "ltm_subs": "50039",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/4286/2007",
+      "elc_no": "51812",
+      "name": "SH. SUNDER LAL SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/665/2008",
+      "elc_no": "52647",
+      "name": "SH. KAMAL SINGH TEKARIYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/1874/2008",
+      "elc_no": "53856",
+      "name": "SH. SHIV  LAL MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/2597/2008",
+      "elc_no": "54579",
+      "name": "SH. ARUN PANDIT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/3002/2008",
+      "elc_no": "54984",
+      "name": "SH. MANOJ KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/357/2010",
+      "elc_no": "57982",
+      "name": "SH. RAJESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/1502/2010",
+      "elc_no": "59127",
+      "name": "SH. CHARAN SINGH",
+      "due_subs": "19050 + 8521 = 27571",
+      "ltm_subs": "75071",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/2277/2010",
+      "elc_no": "59902",
+      "name": "SH. RUPESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/2999/2010",
+      "elc_no": "60624",
+      "name": "SH. KAPOOR CHAND RATHI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/82/2011",
+      "elc_no": "62856",
+      "name": "SMT. TRIPTA DEVI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/364/2012",
+      "elc_no": "65423",
+      "name": "SH. MUKESH KUMAR GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/1604/2012",
+      "elc_no": "66663",
+      "name": "SH. SITA RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/1549/2015",
+      "elc_no": "74048",
+      "name": "KUM. KAVITA BAI YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/1644/2016",
+      "elc_no": "77260",
+      "name": "SH. MAHESH KUMAR GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/2237/2016",
+      "elc_no": "77853",
+      "name": "SH. HEMANT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/2476/2016",
+      "elc_no": "78092",
+      "name": "SH. NARENDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/612/2017",
+      "elc_no": "79108",
+      "name": "SH. BAL KRISHAN BHARDWAJ",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/144/2018",
+      "elc_no": "82213",
+      "name": "KUM. PREMLATA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/1507/2018",
+      "elc_no": "83576",
+      "name": "SH. JAI KISHAN YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/1634/2018",
+      "elc_no": "83703",
+      "name": "SH. KESHAV CHAND",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/2688/2018",
+      "elc_no": "84757",
+      "name": "SH. KHEM CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/394/2019",
+      "elc_no": "86903",
+      "name": "SH. DEEPAK KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/2649/2019",
+      "elc_no": "89158",
+      "name": "SH. DHARMENDRE CHOUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/3346/2019",
+      "elc_no": "89855",
+      "name": "SH. HABI SINGH SHARMA",
+      "due_subs": "4550 + 551 = 5101",
+      "ltm_subs": "53601",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/3656/2019",
+      "elc_no": "90165",
+      "name": "SH. NEERAJ KUMAR JAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/3964/2019",
+      "elc_no": "90473",
+      "name": "SH. ANIL KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/4156/2019",
+      "elc_no": "90665",
+      "name": "SH. DHARMENDAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/4830/2019",
+      "elc_no": "91339",
+      "name": "SH. VISHNU KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/520/2020",
+      "elc_no": "91883",
+      "name": "SH. DEVESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/2241/2020",
+      "elc_no": "93604",
+      "name": "SH. AMIT KUMAR TIWARI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/2464/2020",
+      "elc_no": "93827",
+      "name": "SMT. SUDESH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/2518/2020",
+      "elc_no": "93881",
+      "name": "SH. NEERAJ KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/1099/2021",
+      "elc_no": "95496",
+      "name": "SH. AMIT KUMAR CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/2105/2021",
+      "elc_no": "96502",
+      "name": "SH. PRAVIN KUMAR",
+      "due_subs": "2003 + 83 = 2086",
+      "ltm_subs": "50586",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/3256/2021",
+      "elc_no": "97653",
+      "name": "SH. SUDESH KUMAR YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/4585/2021",
+      "elc_no": "98982",
+      "name": "SH. SEETA RAM BHAWALIYA",
+      "due_subs": "1003 + 59 = 1062",
+      "ltm_subs": "50562",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/5535/2021",
+      "elc_no": "99932",
+      "name": "SH. SUMER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/413/2022",
+      "elc_no": "100592",
+      "name": "SH. BISHAN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/1335/2022",
+      "elc_no": "101514",
+      "name": "SH. KIRSHAN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/1336/2022",
+      "elc_no": "101515",
+      "name": "SH. ABHISHEK CHOUDHARY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/2252/2022",
+      "elc_no": "102431",
+      "name": "SH. CHIRANJI LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/2600/2022",
+      "elc_no": "102779",
+      "name": "SH. PIYUSH CHAUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/3534/2022",
+      "elc_no": "103713",
+      "name": "SMT. ANITA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/4005/2022",
+      "elc_no": "104184",
+      "name": "SH. RINKU CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 87,
+      "enrol_no": "R/4024/2022",
+      "elc_no": "104203",
+      "name": "SH. RAHUL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 88,
+      "enrol_no": "R/4840/2022",
+      "elc_no": "105019",
+      "name": "SH. SHUBHAM SETHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 89,
+      "enrol_no": "R/6584/2022",
+      "elc_no": "106763",
+      "name": "SH. RAHUL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 90,
+      "enrol_no": "R/1589/2023",
+      "elc_no": "108604",
+      "name": "SH. VIVEK KAUSHIK",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 91,
+      "enrol_no": "R/1677/2023",
+      "elc_no": "108692",
+      "name": "SH. AVIRAJ YADAV",
+      "due_subs": "1000 + 59 = 1059",
+      "ltm_subs": "50559",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 92,
+      "enrol_no": "R/2974/2023",
+      "elc_no": "109989",
+      "name": "SH. PRAMOD KUMAR NAHARWARA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 93,
+      "enrol_no": "R/4066/2023",
+      "elc_no": "111081",
+      "name": "SH. DEEPAK KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 94,
+      "enrol_no": "R/5799/2023",
+      "elc_no": "112814",
+      "name": "SH. SARJEET SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 95,
+      "enrol_no": "R/5986/2023",
+      "elc_no": "113001",
+      "name": "SH. MUKESH KUMAR",
+      "due_subs": "1000 + 59 = 1059",
+      "ltm_subs": "50559",
+      "category": "dues_pending",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 96,
+      "enrol_no": "R/6557/2023",
+      "elc_no": "113572",
+      "name": "KUM. TANIYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 97,
+      "enrol_no": "R/7848/2023",
+      "elc_no": "114863",
+      "name": "SH. DEVENDRA KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 98,
+      "enrol_no": "R/1378/2024",
+      "elc_no": "116369",
+      "name": "SH. JITENDER KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 99,
+      "enrol_no": "R/1867/2024",
+      "elc_no": "116858",
+      "name": "SH. ISH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 100,
+      "enrol_no": "R/2179/2024",
+      "elc_no": "117170",
+      "name": "KUM. NIDHI SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 101,
+      "enrol_no": "R/3431/2024",
+      "elc_no": "118422",
+      "name": "SH. HIMANSHU SANWARIA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 102,
+      "enrol_no": "R/3728/2024",
+      "elc_no": "118719",
+      "name": "KUM. SANDHYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 103,
+      "enrol_no": "R/5122/2024",
+      "elc_no": "120113",
+      "name": "SH. ASHVANI KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 104,
+      "enrol_no": "R/5519/2024",
+      "elc_no": "120510",
+      "name": "SH. DEEPAK KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 105,
+      "enrol_no": "R/5822/2024",
+      "elc_no": "120813",
+      "name": "KUM. PRIYANKA SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 106,
+      "enrol_no": "R/6759/2024",
+      "elc_no": "121750",
+      "name": "KUM. SARVESH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 107,
+      "enrol_no": "R/7673/2024",
+      "elc_no": "122664",
+      "name": "SH. NAVEEN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 108,
+      "enrol_no": "R/7698/2024",
+      "elc_no": "122689",
+      "name": "SH. MUKESH KUMAR GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 109,
+      "enrol_no": "R/793/2025",
+      "elc_no": "124668",
+      "name": "SH. BHAWANI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 110,
+      "enrol_no": "R/1415/2025",
+      "elc_no": "125290",
+      "name": "SH. RAMESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 111,
+      "enrol_no": "R/1507/2025",
+      "elc_no": "125382",
+      "name": "SH. RAJESH KUMAR JAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 112,
+      "enrol_no": "R/2314/2025",
+      "elc_no": "126189",
+      "name": "SH. KRISHAN KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 113,
+      "enrol_no": "R/2617/2025",
+      "elc_no": "126492",
+      "name": "KUM. NEETU YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 114,
+      "enrol_no": "R/5562/2025",
+      "elc_no": "129437",
+      "name": "KUM. RITU BAI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 115,
+      "enrol_no": "R/7533/2025",
+      "elc_no": "131408",
+      "name": "SH. OMPRAKASH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 116,
+      "enrol_no": "R/7597/2025",
+      "elc_no": "131472",
+      "name": "SH. JITENDER KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 117,
+      "enrol_no": "R/7840/2025",
+      "elc_no": "131715",
+      "name": "KUM. POOJA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 118,
+      "enrol_no": "R/8602/2025",
+      "elc_no": "132477",
+      "name": "SH. AJAY KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 119,
+      "enrol_no": "R/9307/2025",
+      "elc_no": "133182",
+      "name": "SH. SANDEEP YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 120,
+      "enrol_no": "R/10129/2025",
+      "elc_no": "134004",
+      "name": "SH. PRIYANSHU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 121,
+      "enrol_no": "R/484/2026",
+      "elc_no": "135697",
+      "name": "SH. NAVIN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 122,
+      "enrol_no": "R/516/2026",
+      "elc_no": "135729",
+      "name": "SH. RAJKUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 123,
+      "enrol_no": "R/1544/2026",
+      "elc_no": "136757",
+      "name": "SH. MUKESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 124,
+      "enrol_no": "R/2094/2026",
+      "elc_no": "137307",
+      "name": "SH. VISHVENDRA SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 125,
+      "enrol_no": "R/2691/2026",
+      "elc_no": "137904",
+      "name": "SH. DEVENDRA KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 126,
+      "enrol_no": "R/3099/2026",
+      "elc_no": "138312",
+      "name": "SH. ABHAY SINGH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 127,
+      "enrol_no": "R/3188/2026",
+      "elc_no": "138401",
+      "name": "SH. SANJEEV KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    },
+    {
+      "s_no": 128,
+      "enrol_no": "R/4540/2026",
+      "elc_no": "139753",
+      "name": "SH. NAVEEN KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "MUNDAWAR"
+    }
+  ]
+}

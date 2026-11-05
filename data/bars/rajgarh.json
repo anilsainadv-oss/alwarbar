@@ -1,0 +1,2286 @@
+{
+  "bar_name": "RAJGARH",
+  "bar_slug": "rajgarh",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 227,
+    "ltm_count": 98,
+    "na_count": 100,
+    "dues_pending_count": 20,
+    "termi_count": 9
+  },
+  "pdf_download_url": "/downloads/bcr-dues-rajgarh.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/4/1932",
+      "elc_no": "98",
+      "name": "SH. SRI NARAYAN GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/328/1963",
+      "elc_no": "2210",
+      "name": "SH. INDRA MAUR ARYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/353/1963",
+      "elc_no": "2235",
+      "name": "SH. KANHAYA LAL",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/429/1968",
+      "elc_no": "3823",
+      "name": "SH. RAMJI LAL MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/99/1971",
+      "elc_no": "4470",
+      "name": "SH. HAZARI LAL MEENA",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/162/1972",
+      "elc_no": "4834",
+      "name": "SH. SAMRATH LAL MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/216/1973",
+      "elc_no": "5208",
+      "name": "SH. GIRDHAR SINGH CHOUHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/222/1973",
+      "elc_no": "5214",
+      "name": "SH. MOHAN LAL JAIMAN",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/256/1973",
+      "elc_no": "5248",
+      "name": "SH. SATYA PRAKASH KHUTETA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/114/1975",
+      "elc_no": "5815",
+      "name": "SH. RAMESH CHANDRA SHARMA",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/121/1975",
+      "elc_no": "5822",
+      "name": "SH. GANGA PRASAD PALIWAL",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/380/1975",
+      "elc_no": "6081",
+      "name": "SH. KALYAN SAHAI SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/459/1975",
+      "elc_no": "6160",
+      "name": "SH. SURENDRA KUMAR MATHUR",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/241/1976",
+      "elc_no": "6406",
+      "name": "SH. KALYAN SAHAI DHAKAR",
+      "due_subs": "34500 + 38353 = 72853",
+      "ltm_subs": "120353",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/520/1976",
+      "elc_no": "6685",
+      "name": "SH. SITA RAM GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/601/1976",
+      "elc_no": "6766",
+      "name": "SH. SURESH CHANDRA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/607/1976",
+      "elc_no": "6772",
+      "name": "SH. JAI PRAKASH SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/631/1976",
+      "elc_no": "6796",
+      "name": "SH. KIRAN PRAKASH GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/79/1978",
+      "elc_no": "7755",
+      "name": "SH. RAMJI LAL MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/232/1978",
+      "elc_no": "7908",
+      "name": "SH. HAJARI LAL MEENA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/220/1979",
+      "elc_no": "8468",
+      "name": "SH. VEERANDRA KUMAR SHARMA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/691/1979",
+      "elc_no": "8939",
+      "name": "SH. AJAY KUMAR SHARMA",
+      "due_subs": "5000 + 294 = 5294",
+      "ltm_subs": "52794",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/114/1980",
+      "elc_no": "9145",
+      "name": "SH. KHEM RAJ MEENA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/409/1980",
+      "elc_no": "9440",
+      "name": "SH. KISHAN LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/88/1981",
+      "elc_no": "9673",
+      "name": "SH. MAHAVEER SINGH RAJPUT",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/248/1981",
+      "elc_no": "9833",
+      "name": "SH. BHAGWAT PRASAD SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/510/1981",
+      "elc_no": "10095",
+      "name": "SH. SEETA RAM VASHISHTHA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/386/1982",
+      "elc_no": "10819",
+      "name": "SH. SATISH CHANDRA VIJAY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/387/1982",
+      "elc_no": "10820",
+      "name": "SH. SURAJ BHAN SINGH",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/759/1982",
+      "elc_no": "11192",
+      "name": "SH. CHANDRA DEV MISHARA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/307/1983",
+      "elc_no": "11627",
+      "name": "SH. MAHENDRA KUMAR DIXIT",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/348/1984",
+      "elc_no": "12295",
+      "name": "SH. JAGDISH PRASAD GAUTAM",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/208/1991",
+      "elc_no": "15897",
+      "name": "SH. POONAM CHAND SHARMA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/319/1992",
+      "elc_no": "16567",
+      "name": "SH. MANOJ KUMAR BOHRA",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/232/1992",
+      "elc_no": "16480",
+      "name": "SMT. SHAKUNTLA MEENA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/129/1994",
+      "elc_no": "18012",
+      "name": "SH. DEVENDRA PAL MEENA",
+      "due_subs": "Termi",
+      "ltm_subs": "",
+      "category": "termi",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/355/1994",
+      "elc_no": "18238",
+      "name": "SH. MANISH GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/4/1995",
+      "elc_no": "19201",
+      "name": "SH. SRI KANT JOSHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/6/1995",
+      "elc_no": "19203",
+      "name": "SH. BHAGWAN SAHAI",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/82/1995",
+      "elc_no": "19279",
+      "name": "SH. MAHENDRA PRASAD TIWARI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/173/1995",
+      "elc_no": "19370",
+      "name": "SH. KAILASH CHANDRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/1275/1995",
+      "elc_no": "20472",
+      "name": "SH. BRAJENDRA KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/375/1996",
+      "elc_no": "20854",
+      "name": "SH. RAVINDRA KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/307/1997",
+      "elc_no": "21869",
+      "name": "SH. RAJENDRA KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/326/1997",
+      "elc_no": "21888",
+      "name": "SH. SURENDER SINGH NARUKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/481/1997",
+      "elc_no": "22043",
+      "name": "SH. DULLI CHAND MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/1086/1997",
+      "elc_no": "22648",
+      "name": "SH. RAM KISHAN GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/34/1998",
+      "elc_no": "22843",
+      "name": "SH. BANA RAM MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/108/1998",
+      "elc_no": "22917",
+      "name": "SH. SUBHASH CHAND SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/459/1998",
+      "elc_no": "23268",
+      "name": "SH. KAILASH CHAND VERMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/568/1998",
+      "elc_no": "23377",
+      "name": "SH. RAMAKANT SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/657/1998",
+      "elc_no": "23466",
+      "name": "SH. RAJENDRA PRASAD CHAIRW...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/1173/1998",
+      "elc_no": "23982",
+      "name": "SH. OM PRAKASH KHATIK",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/151/1999",
+      "elc_no": "24261",
+      "name": "SH. SHIV SAHAI MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/429/1999",
+      "elc_no": "24539",
+      "name": "SH. ASHOK KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/471/1999",
+      "elc_no": "24581",
+      "name": "SH. KISHAN LAL BAIRWA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/491/1999",
+      "elc_no": "24601",
+      "name": "KUM. MONU SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/609/1999",
+      "elc_no": "24719",
+      "name": "SH. BHUPENDRA KUMAAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/770/1999",
+      "elc_no": "24880",
+      "name": "SH. DHARMENDAR SINGH JAISA...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/1246/1999",
+      "elc_no": "25356",
+      "name": "SH. RAJESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/1514/1999",
+      "elc_no": "25624",
+      "name": "SH. DULI CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/1846/1999",
+      "elc_no": "25956",
+      "name": "KUM. REENA MATHUR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/970/2000",
+      "elc_no": "26938",
+      "name": "SH. ASHOK KUMAR SHARMA",
+      "due_subs": "22500 + 13188 = 35688",
+      "ltm_subs": "83188",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/1038/2000",
+      "elc_no": "27006",
+      "name": "SH. PANKAJ KUMAR KHANDELWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/1957/2000",
+      "elc_no": "27925",
+      "name": "SH. YOGESH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/1986/2000",
+      "elc_no": "27954",
+      "name": "SH. SUBHASH CHAND SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/2218/2000",
+      "elc_no": "28186",
+      "name": "SH. SHIVA DAYAL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/457/2001",
+      "elc_no": "28711",
+      "name": "SH. MANOHAR LAL YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/1219/2001",
+      "elc_no": "29473",
+      "name": "SH. HANUMAN PRASAD TIWARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/1243/2001",
+      "elc_no": "29497",
+      "name": "SH. MANOJ KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/1983/2001",
+      "elc_no": "30237",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/2288/2001",
+      "elc_no": "30542",
+      "name": "SH. DHARMENDER KUMAR SHARMA",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/2294/2001",
+      "elc_no": "30548",
+      "name": "SH. BHAGWATI PRASAD MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/2348/2001",
+      "elc_no": "30602",
+      "name": "SH. SHRAVAN RAM MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/2370/2001",
+      "elc_no": "30624",
+      "name": "SH. RAM BABU MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/76/2002",
+      "elc_no": "30951",
+      "name": "SH. GIRDHARI LAL JYOTSHI",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/579/2002",
+      "elc_no": "31454",
+      "name": "SH. BHARAT LAL MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/1424/2002",
+      "elc_no": "32299",
+      "name": "SH. HEMANT KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/1608/2002",
+      "elc_no": "32483",
+      "name": "SH. DHARAMANDER KUMAR SHAR...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/1630/2002",
+      "elc_no": "32505",
+      "name": "SH. AVDHESH KUMAR SAHU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/1908/2002",
+      "elc_no": "32783",
+      "name": "KUM. RAJNI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/2008/2002",
+      "elc_no": "32883",
+      "name": "SH. SURESH KUMAR SHARMA",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/2127/2002",
+      "elc_no": "33002",
+      "name": "SH. GIRISH KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/2351/2002",
+      "elc_no": "33226",
+      "name": "SH. SHASHI KUMAR VIJAY",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/2948/2002",
+      "elc_no": "33823",
+      "name": "SH. MANISH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/175/2003",
+      "elc_no": "34008",
+      "name": "SH. RAHUL DIXIT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 87,
+      "enrol_no": "R/361/2003",
+      "elc_no": "34194",
+      "name": "SH. AJAY KUMAR PARASHAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 88,
+      "enrol_no": "R/438/2003",
+      "elc_no": "34271",
+      "name": "SH. SUNIL KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 89,
+      "enrol_no": "R/1449/2003",
+      "elc_no": "35282",
+      "name": "SH. RAKESH JANGID",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 90,
+      "enrol_no": "R/1535/2003",
+      "elc_no": "35368",
+      "name": "SH. JITENDRA KUMAR SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 91,
+      "enrol_no": "R/2438/2003",
+      "elc_no": "36271",
+      "name": "SH. VINOD PALIWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 92,
+      "enrol_no": "R/2933/2003",
+      "elc_no": "36766",
+      "name": "SH. DAVENDRA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 93,
+      "enrol_no": "R/58/2004",
+      "elc_no": "36923",
+      "name": "SH. JITENDRA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 94,
+      "enrol_no": "R/282/2004",
+      "elc_no": "37147",
+      "name": "SH. MAHESH CHAND SAHU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 95,
+      "enrol_no": "R/352/2004",
+      "elc_no": "37217",
+      "name": "SH. SUNIL KUMAR GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 96,
+      "enrol_no": "R/363/2004",
+      "elc_no": "37228",
+      "name": "SH. PRASHANT KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 97,
+      "enrol_no": "R/437/2004",
+      "elc_no": "37302",
+      "name": "SH. RAMESH CHAND SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 98,
+      "enrol_no": "R/728/2004",
+      "elc_no": "37593",
+      "name": "SH. PUNEET KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 99,
+      "enrol_no": "R/1833/2004",
+      "elc_no": "38698",
+      "name": "SH. MUKESH KUMAR JAIMAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 100,
+      "enrol_no": "R/1836/2004",
+      "elc_no": "38701",
+      "name": "SH. DEEPAK KUMAR JAIMAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 101,
+      "enrol_no": "R/2143/2004",
+      "elc_no": "39008",
+      "name": "SH. RAJ KUMAR SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 102,
+      "enrol_no": "R/2618/2004",
+      "elc_no": "39483",
+      "name": "SH. MANOJ KUMAR JAIMAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 103,
+      "enrol_no": "R/2894/2004",
+      "elc_no": "39759",
+      "name": "SH. RAJENDRA KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 104,
+      "enrol_no": "R/269/2005",
+      "elc_no": "40585",
+      "name": "SH. SATISH KUMAR VERMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 105,
+      "enrol_no": "R/371/2005",
+      "elc_no": "40687",
+      "name": "SH. ANIL KUMAR GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 106,
+      "enrol_no": "R/2434/2005",
+      "elc_no": "42751",
+      "name": "SH. PRADEEP KUMAR DIXIT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 107,
+      "enrol_no": "R/3467/2005",
+      "elc_no": "43784",
+      "name": "SH. SANDEEP KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 108,
+      "enrol_no": "R/396/2006",
+      "elc_no": "44229",
+      "name": "SH. NARESH KUMAR DEVRAJ",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 109,
+      "enrol_no": "R/621/2006",
+      "elc_no": "44454",
+      "name": "SH. DILIP  KUMAR VERMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 110,
+      "enrol_no": "R/776/2006",
+      "elc_no": "44609",
+      "name": "SH. RISHERAJ CHAIRWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 111,
+      "enrol_no": "R/782/2006",
+      "elc_no": "44615",
+      "name": "SH. RAM KISHORE MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 112,
+      "enrol_no": "R/923/2006",
+      "elc_no": "44756",
+      "name": "SH. AMIT SHARMA",
+      "due_subs": "23600 + 16194 = 39794",
+      "ltm_subs": "87294",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 114,
+      "enrol_no": "R/981/2006",
+      "elc_no": "44813",
+      "name": "SH. VIJAY SINGH MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 115,
+      "enrol_no": "R/1431/2006",
+      "elc_no": "45263",
+      "name": "SH. MANMAHENDRA SINGH SONG...",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 116,
+      "enrol_no": "R/2296/2006",
+      "elc_no": "46128",
+      "name": "SH. RAMESH CHAND SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 117,
+      "enrol_no": "R/2344/2006",
+      "elc_no": "46176",
+      "name": "SH. MAHENDRA SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 118,
+      "enrol_no": "R/2505/2006",
+      "elc_no": "46337",
+      "name": "SH. SATISH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 119,
+      "enrol_no": "R/3307/2006",
+      "elc_no": "47139",
+      "name": "SH. VISHVAS MITTAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 120,
+      "enrol_no": "R/3365/2006",
+      "elc_no": "47197",
+      "name": "SH. SUNEEL KUMAR JANGIR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 121,
+      "enrol_no": "R/812/2007",
+      "elc_no": "48338",
+      "name": "SH. RAMAWTAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 122,
+      "enrol_no": "R/1202/2007",
+      "elc_no": "48728",
+      "name": "SH. MANISH KUAMR TIWARI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 123,
+      "enrol_no": "R/1247/2007",
+      "elc_no": "48773",
+      "name": "SH. SUNDER LAL BAIRWA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 124,
+      "enrol_no": "R/2385/2007",
+      "elc_no": "49911",
+      "name": "SH. RAM LAL MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 125,
+      "enrol_no": "R/2783/2007",
+      "elc_no": "50309",
+      "name": "SH. MAHESH CHAND MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 126,
+      "enrol_no": "R/2962/2007",
+      "elc_no": "50488",
+      "name": "SH. ASHOK KUMAR PALIWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 127,
+      "enrol_no": "R/3487/2007",
+      "elc_no": "51013",
+      "name": "SH. RAJENDRA PRASAD MAHAWAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 128,
+      "enrol_no": "R/3657/2007",
+      "elc_no": "51183",
+      "name": "SH. TEJVEER SINGH NARUKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 129,
+      "enrol_no": "R/3783/2007",
+      "elc_no": "51309",
+      "name": "SH. SURESH CHAND MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 130,
+      "enrol_no": "R/4391/2007",
+      "elc_no": "51917",
+      "name": "SH. MANISH DIXIT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 131,
+      "enrol_no": "R/664/2008",
+      "elc_no": "52646",
+      "name": "SH. HARDEEP SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 132,
+      "enrol_no": "R/999/2009",
+      "elc_no": "56117",
+      "name": "SH. MAN PRAKASH GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 133,
+      "enrol_no": "R/1101/2009",
+      "elc_no": "56219",
+      "name": "SH. BHARAT SINGH CHAUHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 134,
+      "enrol_no": "R/1131/2009",
+      "elc_no": "56249",
+      "name": "SH. DHARM SINGH GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 135,
+      "enrol_no": "R/1241/2010",
+      "elc_no": "58866",
+      "name": "SH. HARIOM SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 136,
+      "enrol_no": "R/1978/2010",
+      "elc_no": "59603",
+      "name": "KUM. BHAVNA SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 137,
+      "enrol_no": "R/2223/2010",
+      "elc_no": "59848",
+      "name": "SH. BALRAM SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 138,
+      "enrol_no": "R/2950/2010",
+      "elc_no": "60575",
+      "name": "SH. JAY SINGH GURJAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 139,
+      "enrol_no": "R/3465/2010",
+      "elc_no": "61090",
+      "name": "SH. CHANDRA SHEKHAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 140,
+      "enrol_no": "R/4045/2010",
+      "elc_no": "61670",
+      "name": "SH. UMESH KUMAR NANDARIA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 141,
+      "enrol_no": "R/4659/2010",
+      "elc_no": "62284",
+      "name": "KUM. PRIYANKA JAIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 142,
+      "enrol_no": "R/5030/2010",
+      "elc_no": "62655",
+      "name": "SH. MUKESH KUMAR MAHAWAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 143,
+      "enrol_no": "R/304/2012",
+      "elc_no": "65363",
+      "name": "SH. DEVENDRA HARIJAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 144,
+      "enrol_no": "R/779/2012",
+      "elc_no": "65838",
+      "name": "SH. SUNIL KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 145,
+      "enrol_no": "R/1107/2012",
+      "elc_no": "66166",
+      "name": "SH. SURENDRA KUMAR BAIRWA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 146,
+      "enrol_no": "R/1128/2012",
+      "elc_no": "66187",
+      "name": "SH. PRABHU DAYAL MEENA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 147,
+      "enrol_no": "R/1159/2012",
+      "elc_no": "66218",
+      "name": "SH. MAHENDRA SINGH GURJAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 148,
+      "enrol_no": "R/1702/2012",
+      "elc_no": "66761",
+      "name": "SH. MUKESH KUMAR BAIRWA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 149,
+      "enrol_no": "R/1719/2012",
+      "elc_no": "66778",
+      "name": "SH. DHARMENDRA KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 150,
+      "enrol_no": "R/2396/2012",
+      "elc_no": "67455",
+      "name": "SH. RAJESH KUMAR BAIRWA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 151,
+      "enrol_no": "R/68/2013",
+      "elc_no": "67648",
+      "name": "SMT. ALKA DEVI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 152,
+      "enrol_no": "R/1001/2013",
+      "elc_no": "68581",
+      "name": "SH. KAPIL DEV SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 153,
+      "enrol_no": "R/1186/2013",
+      "elc_no": "68766",
+      "name": "SH. BABU LAL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 154,
+      "enrol_no": "R/1307/2013",
+      "elc_no": "68887",
+      "name": "SH. ASHISH VIJAYVARGIYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 155,
+      "enrol_no": "R/361/2014",
+      "elc_no": "70127",
+      "name": "SH. HEMANT KUMAR VASHISHTHA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 156,
+      "enrol_no": "R/2134/2014",
+      "elc_no": "71900",
+      "name": "SH. KEDAR SAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 157,
+      "enrol_no": "R/2661/2014",
+      "elc_no": "72427",
+      "name": "KUM. HIMANI  ARYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 158,
+      "enrol_no": "R/100/2015",
+      "elc_no": "72599",
+      "name": "SH. MADAN MOHAN SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 159,
+      "enrol_no": "R/262/2015",
+      "elc_no": "72761",
+      "name": "SH. BANSHI DHAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 160,
+      "enrol_no": "R/319/2015",
+      "elc_no": "72818",
+      "name": "SH. DEVI PRASAD ANSHU",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 161,
+      "enrol_no": "R/3088/2015",
+      "elc_no": "75587",
+      "name": "SH. SHANKAR LAL SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 162,
+      "enrol_no": "R/482/2016",
+      "elc_no": "76098",
+      "name": "SH. RAM CHARAN SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 163,
+      "enrol_no": "R/483/2016",
+      "elc_no": "76099",
+      "name": "SH. KISHOR KUMAR MUKERJEE",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 164,
+      "enrol_no": "R/592/2016",
+      "elc_no": "76208",
+      "name": "SH. SURENDRA AVASTHI",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 165,
+      "enrol_no": "R/650/2016",
+      "elc_no": "76266",
+      "name": "SH. SHOBHIT PALIWAL",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 166,
+      "enrol_no": "R/1065/2016",
+      "elc_no": "76681",
+      "name": "SH. JITENDRA KUMAR KANDERA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 167,
+      "enrol_no": "R/1684/2016",
+      "elc_no": "77300",
+      "name": "SH. SANDEEP KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 168,
+      "enrol_no": "R/1760/2016",
+      "elc_no": "77376",
+      "name": "SH. SURENDRA KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 169,
+      "enrol_no": "R/1823/2016",
+      "elc_no": "77439",
+      "name": "SH. SUBHASH KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 170,
+      "enrol_no": "R/2574/2016",
+      "elc_no": "78190",
+      "name": "SH. SOMBIR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 171,
+      "enrol_no": "R/570/2017",
+      "elc_no": "79066",
+      "name": "SH. KRISHAN SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 172,
+      "enrol_no": "R/574/2017",
+      "elc_no": "79070",
+      "name": "SH. AJAY KUMAR NIDANIYA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 173,
+      "enrol_no": "R/925/2017",
+      "elc_no": "79421",
+      "name": "SH. NARESH KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 174,
+      "enrol_no": "R/1200/2017",
+      "elc_no": "79696",
+      "name": "SH. PREM CHAND SAINI",
+      "due_subs": "6001 + 773 = 6774",
+      "ltm_subs": "55274",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 175,
+      "enrol_no": "R/1796/2018",
+      "elc_no": "83865",
+      "name": "SH. AMIT GUPTA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 176,
+      "enrol_no": "R/3714/2018",
+      "elc_no": "85783",
+      "name": "SH. MAHENDRA KUMAR SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 177,
+      "enrol_no": "R/3987/2018",
+      "elc_no": "86056",
+      "name": "SH. ABHIMANYU TIWARI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 178,
+      "enrol_no": "R/582/2019",
+      "elc_no": "87091",
+      "name": "SH. NEHPAL SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 179,
+      "enrol_no": "R/1148/2019",
+      "elc_no": "87657",
+      "name": "SH. PREM KISHORE SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 180,
+      "enrol_no": "R/4054/2019",
+      "elc_no": "90563",
+      "name": "SH. PREM PRAKASH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 181,
+      "enrol_no": "R/1768/2020",
+      "elc_no": "93131",
+      "name": "SH. RAJEEV SAIDAWAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 182,
+      "enrol_no": "R/2094/2020",
+      "elc_no": "93457",
+      "name": "SH. RAMRATAN YOGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 183,
+      "enrol_no": "R/1031/2021",
+      "elc_no": "95428",
+      "name": "SH. MANOJ KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 184,
+      "enrol_no": "R/2308/2021",
+      "elc_no": "96705",
+      "name": "SH. YASH SOLANKI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 185,
+      "enrol_no": "R/2793/2021",
+      "elc_no": "97190",
+      "name": "SH. SHEETAL JOGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 186,
+      "enrol_no": "R/4599/2021",
+      "elc_no": "98996",
+      "name": "SH. CHHAGAN SINGH RAJPOOT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 187,
+      "enrol_no": "R/845/2022",
+      "elc_no": "101024",
+      "name": "SH. SANJAY KUMAR SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 188,
+      "enrol_no": "R/1784/2022",
+      "elc_no": "101963",
+      "name": "SH. GAURAV SAHU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 189,
+      "enrol_no": "R/2804/2022",
+      "elc_no": "102983",
+      "name": "SH. BHANUPRATAP MISHRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 190,
+      "enrol_no": "R/3606/2022",
+      "elc_no": "103785",
+      "name": "SH. ASHISH SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 191,
+      "enrol_no": "R/5575/2022",
+      "elc_no": "105754",
+      "name": "SH. KRISHAN KUMAR MEENA",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 192,
+      "enrol_no": "R/6571/2022",
+      "elc_no": "106750",
+      "name": "SH. PANKAJ GANGWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 193,
+      "enrol_no": "R/6597/2022",
+      "elc_no": "106776",
+      "name": "SH. MOHIT KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 194,
+      "enrol_no": "R/313/2023",
+      "elc_no": "107328",
+      "name": "SH. BHUPENDRA KUMAR SAIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 195,
+      "enrol_no": "R/2274/2023",
+      "elc_no": "109289",
+      "name": "SH. SACHIN SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 196,
+      "enrol_no": "R/2515/2023",
+      "elc_no": "109530",
+      "name": "SH. NARENDRA KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 197,
+      "enrol_no": "R/5523/2023",
+      "elc_no": "112538",
+      "name": "KUM. RAKSHA MUDGAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 198,
+      "enrol_no": "R/6807/2023",
+      "elc_no": "113822",
+      "name": "SH. DHARMENDER MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 199,
+      "enrol_no": "R/7727/2023",
+      "elc_no": "114742",
+      "name": "SH. GANGA RAM MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 200,
+      "enrol_no": "R/52/2024",
+      "elc_no": "115043",
+      "name": "SH. PUKHRAJ SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 201,
+      "enrol_no": "R/1076/2024",
+      "elc_no": "116067",
+      "name": "SH. MAHAVEER PRASAD DIXIT",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 202,
+      "enrol_no": "R/2627/2024",
+      "elc_no": "117618",
+      "name": "SH. ASMUDEEN KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 203,
+      "enrol_no": "R/3842/2024",
+      "elc_no": "118833",
+      "name": "SH. JAGMOHAN RAO",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 204,
+      "enrol_no": "R/3953/2024",
+      "elc_no": "118944",
+      "name": "SH. KAMLESH KUMAR VERMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 205,
+      "enrol_no": "R/4860/2024",
+      "elc_no": "119851",
+      "name": "SH. AADITYA PREM CHAIRWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 206,
+      "enrol_no": "R/5171/2024",
+      "elc_no": "120162",
+      "name": "KUM. LAXMI SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 207,
+      "enrol_no": "R/6715/2024",
+      "elc_no": "121706",
+      "name": "SH. RAHUL SONI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 208,
+      "enrol_no": "R/7693/2024",
+      "elc_no": "122684",
+      "name": "SH. KRISHAN AVATAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 209,
+      "enrol_no": "R/7834/2024",
+      "elc_no": "122825",
+      "name": "KUM. LALI BAI SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 210,
+      "enrol_no": "R/305/2025",
+      "elc_no": "124180",
+      "name": "SH. AJEET KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 211,
+      "enrol_no": "R/327/2025",
+      "elc_no": "124202",
+      "name": "SH. MOHIT MAHESHWARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 212,
+      "enrol_no": "R/1573/2025",
+      "elc_no": "125448",
+      "name": "SH. RISHI KUMAR SETHI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 213,
+      "enrol_no": "R/2102/2025",
+      "elc_no": "125977",
+      "name": "SH. BALRAM MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 214,
+      "enrol_no": "R/3917/2025",
+      "elc_no": "127792",
+      "name": "KUM. NAMITA NANDARIA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 215,
+      "enrol_no": "R/4391/2025",
+      "elc_no": "128266",
+      "name": "SH. CHINTAN LAKHERA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 216,
+      "enrol_no": "R/4931/2025",
+      "elc_no": "128806",
+      "name": "SH. KAMLESH KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 217,
+      "enrol_no": "R/6593/2025",
+      "elc_no": "130468",
+      "name": "SMT. GEETA RANI MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 218,
+      "enrol_no": "R/6809/2025",
+      "elc_no": "130684",
+      "name": "SH. NARENDRA KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 219,
+      "enrol_no": "R/7973/2025",
+      "elc_no": "131848",
+      "name": "SH. AKASH MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 220,
+      "enrol_no": "R/8433/2025",
+      "elc_no": "132308",
+      "name": "SH. AJAY KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 221,
+      "enrol_no": "R/9968/2025",
+      "elc_no": "133843",
+      "name": "KUM. RAJ BALA SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 222,
+      "enrol_no": "R/10589/2025",
+      "elc_no": "134464",
+      "name": "SH. DEEPAK KUMAR MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 223,
+      "enrol_no": "R/667/2026",
+      "elc_no": "135880",
+      "name": "SH. HITESH BALOT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 224,
+      "enrol_no": "R/2053/2026",
+      "elc_no": "137266",
+      "name": "SMT. MANISHA MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 225,
+      "enrol_no": "R/2283/2026",
+      "elc_no": "137496",
+      "name": "SH. SHABBER KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 226,
+      "enrol_no": "R/3207/2026",
+      "elc_no": "138420",
+      "name": "SH. JITENDRA KUMAR YOGI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 227,
+      "enrol_no": "R/3801/2026",
+      "elc_no": "139014",
+      "name": "KUM. SHAKSHI PAREWA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    },
+    {
+      "s_no": 228,
+      "enrol_no": "R/5806/2026",
+      "elc_no": "141019",
+      "name": "SH. KUNJBIHARI BIYADWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAJGARH"
+    }
+  ]
+}

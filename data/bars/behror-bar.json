@@ -1,0 +1,556 @@
+{
+  "bar_name": "BEHROR (BAR)",
+  "bar_slug": "behror-bar",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 54,
+    "ltm_count": 4,
+    "na_count": 49,
+    "dues_pending_count": 1,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-behror-bar.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/1198/2012",
+      "elc_no": "66257",
+      "name": "SH. RAVI DUTT YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/1217/2012",
+      "elc_no": "66276",
+      "name": "SH. JAIPAL SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/1451/2013",
+      "elc_no": "69031",
+      "name": "SH. SONU YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/1692/2013",
+      "elc_no": "69272",
+      "name": "SH. ARUN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/1652/2014",
+      "elc_no": "71418",
+      "name": "SMT. SANTOSH BAI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/809/2015",
+      "elc_no": "73308",
+      "name": "SH. GULJARI LAL RANGERA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/1970/2015",
+      "elc_no": "74469",
+      "name": "SH. JAY PRAKASH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/761/2016",
+      "elc_no": "76377",
+      "name": "SH. VINAY KUMAR AHERODIYA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/1513/2016",
+      "elc_no": "77129",
+      "name": "KUM. SUMAN YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/1601/2016",
+      "elc_no": "77217",
+      "name": "SMT. MEENAXI TIWARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/2482/2016",
+      "elc_no": "78098",
+      "name": "SH. SANDEEP KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/1463/2018",
+      "elc_no": "83532",
+      "name": "KUM. ARCHANA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/958/2019",
+      "elc_no": "87467",
+      "name": "SH. KAMLENDER YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/2416/2019",
+      "elc_no": "88925",
+      "name": "SH. SUNIL BHARTI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/3286/2019",
+      "elc_no": "89795",
+      "name": "SH. ABHIMANYU SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/1101/2020",
+      "elc_no": "92464",
+      "name": "SH. NITISH KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/1828/2020",
+      "elc_no": "93191",
+      "name": "SMT. PRIYANKA MISHRA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/847/2021",
+      "elc_no": "95244",
+      "name": "SH. PRAMOD YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/3618/2021",
+      "elc_no": "98015",
+      "name": "SH. YASHVEER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/5586/2021",
+      "elc_no": "99983",
+      "name": "SH. HEMANT SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/1353/2022",
+      "elc_no": "101532",
+      "name": "SH. DAULAT RAM GUPTA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/1778/2022",
+      "elc_no": "101957",
+      "name": "SH. VEDPRAKASH YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/4608/2022",
+      "elc_no": "104787",
+      "name": "SH. DHARAM PAL YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/4958/2022",
+      "elc_no": "105137",
+      "name": "SH. SANISH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/3050/2023",
+      "elc_no": "110065",
+      "name": "KUM. VIMALA PRAJAPAT",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/3349/2023",
+      "elc_no": "110364",
+      "name": "SH. VIRENDER KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/3894/2023",
+      "elc_no": "110909",
+      "name": "KUM. MUSKAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/4601/2023",
+      "elc_no": "111616",
+      "name": "SH. SHIVTAJ KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/4976/2023",
+      "elc_no": "111991",
+      "name": "KUM. NAVEETA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/6267/2023",
+      "elc_no": "113282",
+      "name": "SH. VIPUL CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/2551/2024",
+      "elc_no": "117542",
+      "name": "KUM. MAMTA MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/4440/2024",
+      "elc_no": "119431",
+      "name": "SH. VINOD KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/4740/2024",
+      "elc_no": "119731",
+      "name": "SH. NAVEEN KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/4851/2024",
+      "elc_no": "119842",
+      "name": "KUM. POOJA YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/5475/2024",
+      "elc_no": "120466",
+      "name": "SH. JITENDER KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/6957/2024",
+      "elc_no": "121948",
+      "name": "KUM. ANSHU BAI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/7103/2024",
+      "elc_no": "122094",
+      "name": "KUM. BARKHA CHAUHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/8286/2024",
+      "elc_no": "123277",
+      "name": "SH. SUMIT KANWAT MEENA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/2393/2025",
+      "elc_no": "126268",
+      "name": "SH. BHAGIRATH YADAV",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/2419/2025",
+      "elc_no": "126294",
+      "name": "KUM. BHAVNA BHARDWAJ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/4158/2025",
+      "elc_no": "128033",
+      "name": "KUM. MADHU BALA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/5154/2025",
+      "elc_no": "129029",
+      "name": "SH. DINESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/5845/2025",
+      "elc_no": "129720",
+      "name": "SH. NEERAJ YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/6557/2025",
+      "elc_no": "130432",
+      "name": "KUM. KHUSHBU SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/6663/2025",
+      "elc_no": "130538",
+      "name": "SMT. NEELAM KUMARI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/7738/2025",
+      "elc_no": "131613",
+      "name": "SH. MANISH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/8751/2025",
+      "elc_no": "132626",
+      "name": "KUM. PRIYANKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/1272/2026",
+      "elc_no": "136485",
+      "name": "KUM. PRIYANKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/1601/2026",
+      "elc_no": "136814",
+      "name": "SMT. MEENAKSHI YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/3958/2026",
+      "elc_no": "139171",
+      "name": "SH. AKHIL KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/4998/2026",
+      "elc_no": "140211",
+      "name": "KUM. MONIKA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/5421/2026",
+      "elc_no": "140634",
+      "name": "SH. JATIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/5503/2026",
+      "elc_no": "140716",
+      "name": "KUM. MONIKA BAI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/6138/2026",
+      "elc_no": "141351",
+      "name": "SMT. MANJU YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "BEHROR (BAR)"
+    }
+  ]
+}

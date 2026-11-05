@@ -1,0 +1,876 @@
+{
+  "bar_name": "RAMGARH",
+  "bar_slug": "ramgarh",
+  "judgeship": "ALWAR",
+  "report_date": "01-11-2026",
+  "summary": {
+    "total": 86,
+    "ltm_count": 31,
+    "na_count": 50,
+    "dues_pending_count": 5,
+    "termi_count": 0
+  },
+  "pdf_download_url": "/downloads/bcr-dues-ramgarh.pdf",
+  "records": [
+    {
+      "s_no": 1,
+      "enrol_no": "R/25/1981",
+      "elc_no": "9610",
+      "name": "SH. RAGHUVIR SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 2,
+      "enrol_no": "R/202/1987",
+      "elc_no": "13552",
+      "name": "SH. JUMME KHAN",
+      "due_subs": "2500 + 59 = 2559",
+      "ltm_subs": "50059",
+      "category": "dues_pending",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 3,
+      "enrol_no": "R/284/1987",
+      "elc_no": "13634",
+      "name": "SH. RAGHUVER DAYAL JAIN",
+      "due_subs": "25500 + 19282 = 44782",
+      "ltm_subs": "92282",
+      "category": "dues_pending",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 4,
+      "enrol_no": "R/499/1992",
+      "elc_no": "16747",
+      "name": "SH. RAJESH KUMAR JAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 5,
+      "enrol_no": "R/589/1995",
+      "elc_no": "19786",
+      "name": "SH. RAJ KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 6,
+      "enrol_no": "R/965/2000",
+      "elc_no": "26933",
+      "name": "SH. DINESH KUMAR SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 7,
+      "enrol_no": "R/1898/2000",
+      "elc_no": "27866",
+      "name": "SH. RAM SHAI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 8,
+      "enrol_no": "R/1204/2001",
+      "elc_no": "29458",
+      "name": "SH. JANGIR SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 9,
+      "enrol_no": "R/2438/2002",
+      "elc_no": "33313",
+      "name": "SH. SANAT KUMAR JAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 10,
+      "enrol_no": "R/2820/2002",
+      "elc_no": "33695",
+      "name": "SH. HARMEET SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 11,
+      "enrol_no": "R/2078/2004",
+      "elc_no": "38943",
+      "name": "SH. RAKESH YADAV",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 12,
+      "enrol_no": "R/2546/2004",
+      "elc_no": "39411",
+      "name": "SH. RAHAMAN KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 13,
+      "enrol_no": "R/2913/2004",
+      "elc_no": "39778",
+      "name": "SH. TAIYYAB HUSSAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 14,
+      "enrol_no": "R/280/2005",
+      "elc_no": "40596",
+      "name": "SH. SIYA RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 15,
+      "enrol_no": "R/619/2005",
+      "elc_no": "40935",
+      "name": "SH. LAKHVINDRA KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 16,
+      "enrol_no": "R/2664/2006",
+      "elc_no": "46496",
+      "name": "SH. JAGDISH CHANDRA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 17,
+      "enrol_no": "R/2745/2006",
+      "elc_no": "46577",
+      "name": "SH. LAKHAN DUTT SHARMA",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 18,
+      "enrol_no": "R/385/2007",
+      "elc_no": "47911",
+      "name": "SH. MOHAMMAD SABBER KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 19,
+      "enrol_no": "R/1158/2007",
+      "elc_no": "48684",
+      "name": "SH. AASMOHAMMAD KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 20,
+      "enrol_no": "R/3740/2007",
+      "elc_no": "51266",
+      "name": "SH. RAGHUVEER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 21,
+      "enrol_no": "R/690/2008",
+      "elc_no": "52672",
+      "name": "SH. SUNIL KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 22,
+      "enrol_no": "R/1444/2009",
+      "elc_no": "56562",
+      "name": "SH. FAKRUDEEN KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 23,
+      "enrol_no": "R/1455/2009",
+      "elc_no": "56573",
+      "name": "SH. OM PRAKASH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 24,
+      "enrol_no": "R/2381/2009",
+      "elc_no": "57499",
+      "name": "SH. SANJAY KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 25,
+      "enrol_no": "R/710/2010",
+      "elc_no": "58335",
+      "name": "SH. DILEEP KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 26,
+      "enrol_no": "R/1733/2010",
+      "elc_no": "59358",
+      "name": "SH. RANDHEER SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 27,
+      "enrol_no": "R/1785/2010",
+      "elc_no": "59410",
+      "name": "SH. JAKIR HUSAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 28,
+      "enrol_no": "R/2054/2012",
+      "elc_no": "67113",
+      "name": "SH. BABU LAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 29,
+      "enrol_no": "R/2367/2012",
+      "elc_no": "67426",
+      "name": "SH. CHARANJEET SINGH",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 30,
+      "enrol_no": "R/682/2013",
+      "elc_no": "68262",
+      "name": "SH. DHARMPAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 31,
+      "enrol_no": "R/1658/2014",
+      "elc_no": "71424",
+      "name": "SH. SANJEEV KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 32,
+      "enrol_no": "R/1902/2014",
+      "elc_no": "71668",
+      "name": "SH. MUKESH KUMAR CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 33,
+      "enrol_no": "R/545/2015",
+      "elc_no": "73044",
+      "name": "SH. RAHUL GOYAL",
+      "due_subs": "47500",
+      "ltm_subs": "",
+      "category": "dues_pending",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 34,
+      "enrol_no": "R/602/2015",
+      "elc_no": "73101",
+      "name": "SH. RAJU RAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 35,
+      "enrol_no": "R/605/2015",
+      "elc_no": "73104",
+      "name": "SH. MUKESH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 36,
+      "enrol_no": "R/828/2015",
+      "elc_no": "73327",
+      "name": "SH. KAMAL DEEP BANSAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 37,
+      "enrol_no": "R/2020/2015",
+      "elc_no": "74519",
+      "name": "SH. KAMAL PRKASH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 38,
+      "enrol_no": "R/751/2016",
+      "elc_no": "76367",
+      "name": "SH. MOHAMMED TOFIK KHAN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 39,
+      "enrol_no": "R/2095/2017",
+      "elc_no": "80591",
+      "name": "SH. MAJEED KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 40,
+      "enrol_no": "R/3155/2017",
+      "elc_no": "81651",
+      "name": "SH. DINESH KUMAR BANSAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 41,
+      "enrol_no": "R/494/2018",
+      "elc_no": "82563",
+      "name": "SH. MANISH KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 42,
+      "enrol_no": "R/4209/2018",
+      "elc_no": "86278",
+      "name": "SH. AMAN KUMAR JAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 43,
+      "enrol_no": "R/536/2019",
+      "elc_no": "87045",
+      "name": "SH. RAJESH SAINI",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 44,
+      "enrol_no": "R/772/2019",
+      "elc_no": "87281",
+      "name": "SH. ROHITASH SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 45,
+      "enrol_no": "R/1020/2019",
+      "elc_no": "87529",
+      "name": "SH. MANOJ KUMAR",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 46,
+      "enrol_no": "R/1938/2019",
+      "elc_no": "88447",
+      "name": "SH. MOHIT JAIN",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 47,
+      "enrol_no": "R/885/2020",
+      "elc_no": "92248",
+      "name": "SH. MOHAMMAD ISRAIL KHAN",
+      "due_subs": "4800 + 672 = 5472",
+      "ltm_subs": "53972",
+      "category": "dues_pending",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 48,
+      "enrol_no": "R/3127/2021",
+      "elc_no": "97524",
+      "name": "SH. MEHUL JAIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 49,
+      "enrol_no": "R/4006/2021",
+      "elc_no": "98403",
+      "name": "SH. RAJARAM",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 50,
+      "enrol_no": "R/5682/2021",
+      "elc_no": "100079",
+      "name": "SH. ANWAR HUSSAIN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 51,
+      "enrol_no": "R/3153/2022",
+      "elc_no": "103332",
+      "name": "SH. TARA CHAND",
+      "due_subs": "L.T.M.",
+      "ltm_subs": "",
+      "category": "ltm",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 52,
+      "enrol_no": "R/4053/2022",
+      "elc_no": "104232",
+      "name": "SH. MUKESH KUMAR SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 53,
+      "enrol_no": "R/4687/2022",
+      "elc_no": "104866",
+      "name": "SH. YUSUF KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 54,
+      "enrol_no": "R/5517/2022",
+      "elc_no": "105696",
+      "name": "SH. SURESH CHAND",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 55,
+      "enrol_no": "R/5571/2022",
+      "elc_no": "105750",
+      "name": "SH. ASHOK KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 56,
+      "enrol_no": "R/5576/2022",
+      "elc_no": "105755",
+      "name": "SH. AKASH AHUJA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 57,
+      "enrol_no": "R/2499/2023",
+      "elc_no": "109514",
+      "name": "SH. ASHOK KUMAR SHARMA",
+      "due_subs": "500 + 12 = 512",
+      "ltm_subs": "50012",
+      "category": "dues_pending",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 58,
+      "enrol_no": "R/4343/2023",
+      "elc_no": "111358",
+      "name": "SH. AAS MOHAMMAD",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 59,
+      "enrol_no": "R/5117/2023",
+      "elc_no": "112132",
+      "name": "SH. MOHAN SINGH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 60,
+      "enrol_no": "R/5462/2023",
+      "elc_no": "112477",
+      "name": "SH. MUKESH KUMAR SONI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 61,
+      "enrol_no": "R/6475/2023",
+      "elc_no": "113490",
+      "name": "SH. AMIT KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 62,
+      "enrol_no": "R/7428/2023",
+      "elc_no": "114443",
+      "name": "SH. RAVI KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 63,
+      "enrol_no": "R/578/2024",
+      "elc_no": "115569",
+      "name": "SH. ROHITASH KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 64,
+      "enrol_no": "R/1262/2024",
+      "elc_no": "116253",
+      "name": "SH. TEEKAM POSWAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 65,
+      "enrol_no": "R/2235/2024",
+      "elc_no": "117226",
+      "name": "SH. RINKU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 66,
+      "enrol_no": "R/3792/2024",
+      "elc_no": "118783",
+      "name": "SH. SHAHNAVAJ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 67,
+      "enrol_no": "R/4138/2024",
+      "elc_no": "119129",
+      "name": "SH. SHUBHAM SINGHAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 68,
+      "enrol_no": "R/6416/2024",
+      "elc_no": "121407",
+      "name": "SH. SANDEEP KUMAR",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 69,
+      "enrol_no": "R/254/2025",
+      "elc_no": "124129",
+      "name": "SH. DIPESH KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 70,
+      "enrol_no": "R/522/2025",
+      "elc_no": "124397",
+      "name": "SH. UPDESH KUMAR SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 71,
+      "enrol_no": "R/762/2025",
+      "elc_no": "124637",
+      "name": "KUM. SAKSHI GOYAL",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 72,
+      "enrol_no": "R/1849/2025",
+      "elc_no": "125724",
+      "name": "SH. NEH RAMAN VASISTH",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 73,
+      "enrol_no": "R/2832/2025",
+      "elc_no": "126707",
+      "name": "SH. DINKER PRASAD SAINI",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 74,
+      "enrol_no": "R/3804/2025",
+      "elc_no": "127679",
+      "name": "KUM. NISHU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 75,
+      "enrol_no": "R/7587/2025",
+      "elc_no": "131462",
+      "name": "SH. AMIT KUMAR BHARDWAJ",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 76,
+      "enrol_no": "R/7639/2025",
+      "elc_no": "131514",
+      "name": "SMT. CHANCHAL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 77,
+      "enrol_no": "R/7744/2025",
+      "elc_no": "131619",
+      "name": "SH. HARDEV CHOUDHARY",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 78,
+      "enrol_no": "R/8338/2025",
+      "elc_no": "132213",
+      "name": "SH. SANJAY KUMAR YADAV",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 79,
+      "enrol_no": "R/8522/2025",
+      "elc_no": "132397",
+      "name": "SH. SANJU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 80,
+      "enrol_no": "R/8581/2025",
+      "elc_no": "132456",
+      "name": "SH. SURAJ DUBE",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 81,
+      "enrol_no": "R/8981/2025",
+      "elc_no": "132856",
+      "name": "SH. SAMEER KHAN",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 82,
+      "enrol_no": "R/9090/2025",
+      "elc_no": "132965",
+      "name": "SH. NIKHIL SHARMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 83,
+      "enrol_no": "R/10011/2025",
+      "elc_no": "133886",
+      "name": "SH. VASEEM",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 84,
+      "enrol_no": "R/288/2026",
+      "elc_no": "135501",
+      "name": "SH. ANSHU",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 85,
+      "enrol_no": "R/3153/2026",
+      "elc_no": "138366",
+      "name": "SH. DHEERAJ VERMA",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    },
+    {
+      "s_no": 86,
+      "enrol_no": "R/4541/2026",
+      "elc_no": "139754",
+      "name": "SH. MAHAVEER",
+      "due_subs": "N.A.*",
+      "ltm_subs": "",
+      "category": "na",
+      "bar": "RAMGARH"
+    }
+  ]
+}
