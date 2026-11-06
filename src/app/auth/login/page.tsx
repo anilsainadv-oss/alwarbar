@@ -135,7 +135,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 setEmail('anilsain.adv@gmail.com');
-                setPassword('Password@r1234');
+                setPassword('Password@12345');
               }}
               className="text-left px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded text-amber-900 transition font-medium"
             >

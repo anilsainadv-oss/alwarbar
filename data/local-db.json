@@ -20,7 +20,7 @@
       "phone": "0144-2334455",
       "is_active": true,
       "created_at": "2026-01-01T10:00:00.000Z",
-      "updated_at": "2026-11-06T17:40:11.910Z"
+      "updated_at": "2026-11-06T18:13:01.329Z"
     },
     {
       "id": "advocate-user-alwar-0002",
@@ -46,14 +46,14 @@
     },
     {
       "email": "anilsain.adv@gmail.com",
-      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
+      "password_hash": "d6776b6cc6a12353e7c7479b1736a23b7ecf88d9f9c144a2732d4cf757a74116",
       "full_name": "Advocate Anil Sain",
       "role": "public_admin",
       "phone": "9829012268",
       "is_active": true,
       "id": "usr-d354868f-4df8-4017-8a69-776412906265",
       "created_at": "2026-10-26T17:41:12.671Z",
-      "updated_at": "2026-11-06T17:40:11.910Z"
+      "updated_at": "2026-11-06T18:11:55.185Z"
     },
     {
       "id": "usr-2841821f-8006-4798-947d-02f22d812500",
