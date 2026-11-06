@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { localDb } from '@/lib/db';
 import { verifySession, COOKIE_NAME, hashPassword, verifyPassword } from '@/lib/auth/session';
-import { supabase, isSupabaseConfigured } from '@/lib/db';
+import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/db';
 
 export async function POST(req: Request) {
   try {
@@ -84,13 +84,19 @@ export async function POST(req: Request) {
       );
     }
 
-    // Optionally update in Supabase if configured and reachable
-    if (isSupabaseConfigured && supabase) {
+    // Auto-update in Supabase if configured and reachable
+    const client = supabaseAdmin || supabase;
+    if (client) {
       try {
-        await supabase
+        const { error: sbErr } = await client
           .from('users')
           .update({ password_hash: newHash, updated_at: new Date().toISOString() })
           .eq('email', user.email);
+        if (sbErr) {
+          console.warn('Supabase password sync warning:', sbErr);
+        } else {
+          console.log('Supabase auto-updated password successfully for:', user.email);
+        }
       } catch (sbErr) {
         console.warn('Supabase password sync warning:', sbErr);
       }
