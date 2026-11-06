@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Scale, BookOpen, Shield, Users, FileText, 
-  MessageSquare, Briefcase, Lock, Menu, X, Globe, UserCheck, Bell, ShieldCheck
+  MessageSquare, Briefcase, Lock, Menu, X, Globe, UserCheck, Bell, ShieldCheck, KeyRound
 } from 'lucide-react';
 
 interface CurrentUser {
@@ -151,6 +151,14 @@ export function Navbar() {
                 <span className="text-xs text-slate-300 truncate max-w-[120px]">
                   {currentUser.full_name.split(' ')[0]}
                 </span>
+                <Link
+                  href="/auth/change-password"
+                  className="text-xs text-amber-300 hover:text-amber-200 transition flex items-center space-x-0.5 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-400/20"
+                  title="Change Password / पासवर्ड बदलें"
+                >
+                  <KeyRound className="w-3 h-3" />
+                  <span>पासवर्ड</span>
+                </Link>
                 <button
                   onClick={async () => {
                     await fetch('/api/auth/logout', { method: 'POST' });
@@ -202,6 +210,14 @@ export function Navbar() {
               </Link>
             ))}
             <div className="pt-2 border-t border-white/10 flex flex-col space-y-2">
+              <Link
+                href="/auth/change-password"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-xs text-amber-300 hover:text-white py-1 flex items-center space-x-1.5"
+              >
+                <KeyRound className="w-3.5 h-3.5 text-amber-400" />
+                <span>{locale === 'hi' ? 'पासवर्ड बदलें (Change Password)' : 'Change Password'}</span>
+              </Link>
               <Link
                 href="/public-admin/login"
                 onClick={() => setMobileMenuOpen(false)}

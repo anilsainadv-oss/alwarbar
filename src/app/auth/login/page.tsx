@@ -10,7 +10,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { t } = useLanguage();
   const [email, setEmail] = useState('advocate.rajesh@alwarbar.in');
-  const [password, setPassword] = useState('Advocate@2026');
+  const [password, setPassword] = useState('Password@r1234');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -110,6 +110,21 @@ export default function LoginPage() {
             <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
+
+          <div className="flex items-center justify-between pt-1 text-xs">
+            <Link 
+              href="/auth/change-password" 
+              className="text-amber-800 hover:text-amber-900 hover:underline font-medium flex items-center space-x-1"
+            >
+              <span>🔐 पासवर्ड बदलें (Change Password)</span>
+            </Link>
+            <Link 
+              href="/auth/bootstrap" 
+              className="text-slate-500 hover:text-slate-700 hover:underline text-[11px]"
+            >
+              Bootstrap Admin Token →
+            </Link>
+          </div>
         </form>
 
         {/* Quick Demo Credentials Guide */}
@@ -120,7 +135,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 setEmail('anilsain.adv@gmail.com');
-                setPassword('AdminPass@2026');
+                setPassword('Password@r1234');
               }}
               className="text-left px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded text-amber-900 transition font-medium"
             >
@@ -130,7 +145,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 setEmail('public.admin@alwaradvocates.org');
-                setPassword('AdminPass@2026');
+                setPassword('Password@r1234');
               }}
               className="text-left px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-slate-800 transition font-medium"
             >
@@ -140,7 +155,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 setEmail('advocate.rajesh@alwarbar.in');
-                setPassword('Advocate@2026');
+                setPassword('Password@r1234');
               }}
               className="text-left px-2 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded text-blue-900 transition font-medium"
             >
@@ -150,15 +165,15 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 setEmail('case.admin@alwaradvocates.org');
-                setPassword('CaseAdmin@2026');
+                setPassword('Password@r1234');
               }}
               className="text-left px-2 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded text-emerald-900 transition font-medium"
             >
               🛡️ Case Admin
             </button>
           </div>
-          <div className="mt-2 text-[10px] text-slate-400 text-center font-mono">
-            Default Passwords: AdminPass@2026 | Advocate@2026 | CaseAdmin@2026
+          <div className="mt-2 text-[10px] text-slate-500 text-center font-mono font-medium">
+            वर्तमान पासवर्ड (All Users): <span className="bg-amber-100 text-amber-950 px-1 py-0.5 rounded font-bold">Password@r1234</span>
           </div>
           <div className="mt-2 text-center">
             <Link href="/auth/bootstrap" className="text-amber-700 hover:underline text-[11px]">

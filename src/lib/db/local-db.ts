@@ -1128,6 +1128,26 @@ class LocalDatabase {
     return newUser;
   }
 
+  updateUserPassword(userId: string, newPasswordHash: string): boolean {
+    const s = this.ensureLoaded();
+    const user = s.users.find(u => u.id === userId);
+    if (!user) return false;
+    user.password_hash = newPasswordHash;
+    user.updated_at = new Date().toISOString();
+    this.save();
+    return true;
+  }
+
+  updateUserPasswordByEmail(email: string, newPasswordHash: string): boolean {
+    const s = this.ensureLoaded();
+    const user = s.users.find(u => u.email.toLowerCase() === email.toLowerCase().trim());
+    if (!user) return false;
+    user.password_hash = newPasswordHash;
+    user.updated_at = new Date().toISOString();
+    this.save();
+    return true;
+  }
+
   // --- ADVOCATE PROFILES ---
   getAdvocateProfiles(): AdvocateProfile[] {
     const s = this.ensureLoaded();

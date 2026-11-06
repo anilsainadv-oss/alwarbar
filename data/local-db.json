@@ -3,123 +3,123 @@
     {
       "id": "case-admin-0001",
       "email": "case.admin@alwaradvocates.org",
-      "password_hash": "4184a10cf12471f072d5e39cd1a5d04cb4f7cbf7f0950495049cc5f14d462815",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "My Case System Operator",
       "role": "case_admin",
       "phone": "0144-2339900",
       "is_active": true,
       "created_at": "2026-01-01T10:00:00.000Z",
-      "updated_at": "2026-01-01T10:00:00.000Z"
+      "updated_at": "2026-11-06T17:40:11.899Z"
     },
     {
       "id": "admin-user-alwar-0001",
       "email": "public.admin@alwaradvocates.org",
-      "password_hash": "a3ec7c15f1dcdd44010e23899e0ccd0fae84903a6a4a2f3e63b5cbae8f433d22",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Alwar Bar Admin",
       "role": "public_admin",
       "phone": "0144-2334455",
       "is_active": true,
       "created_at": "2026-01-01T10:00:00.000Z",
-      "updated_at": "2026-01-01T10:00:00.000Z"
+      "updated_at": "2026-11-06T17:40:11.910Z"
     },
     {
       "id": "advocate-user-alwar-0002",
       "email": "advocate.rajesh@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Rajesh Sharma",
       "role": "registered_advocate",
       "phone": "9829012345",
       "is_active": true,
       "created_at": "2026-01-05T11:00:00.000Z",
-      "updated_at": "2026-01-05T11:00:00.000Z"
+      "updated_at": "2026-11-06T17:40:11.910Z"
     },
     {
       "id": "advocate-user-alwar-0003",
       "email": "advocate.meena@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Sunita Meena",
       "role": "registered_advocate",
       "phone": "9829054321",
       "is_active": true,
       "created_at": "2026-02-01T10:00:00.000Z",
-      "updated_at": "2026-02-01T10:00:00.000Z"
+      "updated_at": "2026-11-06T17:40:11.910Z"
     },
     {
       "email": "anilsain.adv@gmail.com",
-      "password_hash": "a3ec7c15f1dcdd44010e23899e0ccd0fae84903a6a4a2f3e63b5cbae8f433d22",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Anil Sain",
       "role": "public_admin",
       "phone": "9829012268",
       "is_active": true,
       "id": "usr-d354868f-4df8-4017-8a69-776412906265",
       "created_at": "2026-10-26T17:41:12.671Z",
-      "updated_at": "2026-10-26T17:41:12.671Z"
+      "updated_at": "2026-11-06T17:40:11.910Z"
     },
     {
       "id": "usr-2841821f-8006-4798-947d-02f22d812500",
       "email": "rameshwar.adv@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Rameshwar Dayal Sharma",
       "role": "registered_advocate",
       "phone": "9829011223",
       "is_active": true,
       "created_at": "2026-10-30T16:46:29.225Z",
-      "updated_at": "2026-10-30T16:46:29.228Z"
+      "updated_at": "2026-11-06T17:40:11.911Z"
     },
     {
       "id": "usr-ff28d1af-1ab1-4994-b309-2ed56a8c79c0",
       "email": "pooja.adv@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Pooja Yadav",
       "role": "registered_advocate",
       "phone": "9829044556",
       "is_active": true,
       "created_at": "2026-10-30T16:46:29.228Z",
-      "updated_at": "2026-10-30T16:46:29.228Z"
+      "updated_at": "2026-11-06T17:40:11.911Z"
     },
     {
       "id": "usr-0089ae5b-f373-494b-8ee7-72936be1a3a0",
       "email": "surendra.rathore@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Surendra Singh Rathore",
       "role": "registered_advocate",
       "phone": "9414022334",
       "is_active": true,
       "created_at": "2026-10-30T16:46:29.228Z",
-      "updated_at": "2026-10-30T16:46:29.228Z"
+      "updated_at": "2026-11-06T17:40:11.911Z"
     },
     {
       "id": "usr-20383e29-3da4-4200-996b-54ecd916ae73",
       "email": "anita.choudhary@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Anita Choudhary",
       "role": "registered_advocate",
       "phone": "9829155667",
       "is_active": true,
       "created_at": "2026-10-30T16:46:29.229Z",
-      "updated_at": "2026-10-30T16:46:29.229Z"
+      "updated_at": "2026-11-06T17:40:11.911Z"
     },
     {
       "id": "usr-473a68ae-5de2-4d26-ad01-3fae369e93e5",
       "email": "vikram.meena@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Vikramaditya Meena",
       "role": "registered_advocate",
       "phone": "9784033445",
       "is_active": true,
       "created_at": "2026-10-30T16:46:29.229Z",
-      "updated_at": "2026-10-30T16:46:29.229Z"
+      "updated_at": "2026-11-06T17:40:11.911Z"
     },
     {
       "id": "usr-7983ac5f-12e6-41fc-ad61-1f529c4cc690",
       "email": "bhupendra.adv@alwarbar.in",
-      "password_hash": "145fd2537298bff984776118eb3d8e76e8f10b08c110228009551ac35f8821b1",
+      "password_hash": "694900cbca5ae2af08fa0d7d194db72eb5712229ca3215246dd462e20771f935",
       "full_name": "Advocate Bhupendra Singh",
       "role": "registered_advocate",
       "phone": "9829988776",
       "is_active": true,
       "created_at": "2026-10-30T16:49:02.919Z",
-      "updated_at": "2026-10-30T16:49:02.919Z"
+      "updated_at": "2026-11-06T17:45:52.839Z"
     }
   ],
   "advocate_profiles": [
@@ -161,6 +161,27 @@
       "is_verified": true,
       "verified_by": "admin-user-alwar-0001",
       "verified_at": "2026-02-05T14:00:00.000Z",
+      "is_publicly_listed": true
+    },
+    {
+      "id": "prof-anil-sain-2268",
+      "user_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "bar_council_enrollment_no": "R/2268/2009",
+      "bar_association_name": "District & Sessions Bar Association, Alwar",
+      "chamber_address": "Chamber No. 24, Sessions Court Block, District Court Campus, Alwar - 301001",
+      "court_practice_complex": "District & Sessions Court, Alwar (Civil, Criminal & Revenue Wings)",
+      "practice_areas": [
+        "Civil Litigation & Writs",
+        "Criminal Defense & Bail",
+        "Revenue Law & Land Appeals",
+        "MACT Claims & Consumer Law"
+      ],
+      "experience_years": 17,
+      "bio_hindi": "अलवर जिला एवं सत्र न्यायालय तथा अधीनस्थ न्यायालयों में वर्ष 2009 से निरंतर 17 वर्षों से विधि व्यवसाय। राजस्थान अधिवक्ता कल्याण कोष के आजीवन नियमित सदस्य।",
+      "bio_english": "Senior practicing advocate at District & Sessions Court Alwar since 2009 (17 years of active practice) specializing in Civil writs, Criminal defense, and Revenue litigation. Continuous lifetime member of Rajasthan Advocates Welfare Fund.",
+      "is_verified": true,
+      "verified_by": "admin-user-alwar-0001",
+      "verified_at": "2026-01-15T10:00:00.000Z",
       "is_publicly_listed": true
     },
     {
@@ -280,27 +301,6 @@
       "is_verified": true,
       "verified_by": "admin-user-alwar-0001",
       "verified_at": "2026-10-30T16:49:02.919Z",
-      "is_publicly_listed": true
-    },
-    {
-      "id": "prof-anil-sain-2268",
-      "user_id": "usr-d354868f-4df8-4017-8a69-776412906265",
-      "bar_council_enrollment_no": "R/2268/2009",
-      "bar_association_name": "District & Sessions Bar Association, Alwar",
-      "chamber_address": "Chamber No. 24, Sessions Court Block, District Court Campus, Alwar - 301001",
-      "court_practice_complex": "District & Sessions Court, Alwar (Civil, Criminal & Revenue Wings)",
-      "practice_areas": [
-        "Civil Litigation & Writs",
-        "Criminal Defense & Bail",
-        "Revenue Law & Land Appeals",
-        "MACT Claims & Consumer Law"
-      ],
-      "experience_years": 17,
-      "bio_hindi": "अलवर जिला एवं सत्र न्यायालय तथा अधीनस्थ न्यायालयों में वर्ष 2009 से निरंतर 17 वर्षों से विधि व्यवसाय। राजस्थान अधिवक्ता कल्याण कोष के आजीवन नियमित सदस्य।",
-      "bio_english": "Senior practicing advocate at District & Sessions Court Alwar since 2009 (17 years of active practice) specializing in Civil writs, Criminal defense, and Revenue litigation. Continuous lifetime member of Rajasthan Advocates Welfare Fund.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-01-15T10:00:00.000Z",
       "is_publicly_listed": true
     }
   ],
