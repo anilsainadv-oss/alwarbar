@@ -49,7 +49,7 @@ INSERT INTO users (id, email, password_hash, full_name, role, phone, is_active) 
 (
   'b735a5f4-31fb-406f-aba7-a86354f798d5'::uuid,
   'anilsain.adv@gmail.com',
-  '4af7e203fea31e9bdac4754f8e2ffaac10997d3438011059637eda5a22df6561',
+  'a3ec7c15f1dcdd44010e23899e0ccd0fae84903a6a4a2f3e63b5cbae8f433d22',
   'Advocate Anil Sain',
   'public_admin'::user_role,
   '9829012268',

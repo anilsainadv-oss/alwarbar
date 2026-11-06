@@ -114,15 +114,55 @@ export default function LoginPage() {
 
         {/* Quick Demo Credentials Guide */}
         <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-          <p className="font-semibold text-slate-700 mb-2">Preset Local Accounts:</p>
-          <div className="space-y-1 text-[11px] font-mono bg-slate-50 p-2.5 rounded border border-slate-200">
-            <div>⚖️ <strong>Advocate:</strong> advocate.rajesh@alwarbar.in / Advocate@2026</div>
-            <div>🏛️ <strong>Public Admin:</strong> public.admin@alwaradvocates.org / AdminPass@2026</div>
-            <div>🛡️ <strong>Case Admin:</strong> case.admin@alwaradvocates.org / CaseAdmin@2026</div>
+          <p className="font-semibold text-slate-700 mb-2">त्वरित लॉगिन (Click to Fill Preset Accounts):</p>
+          <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('anilsain.adv@gmail.com');
+                setPassword('AdminPass@2026');
+              }}
+              className="text-left px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded text-amber-900 transition font-medium"
+            >
+              👑 Anil Sain (Admin)
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('public.admin@alwaradvocates.org');
+                setPassword('AdminPass@2026');
+              }}
+              className="text-left px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-slate-800 transition font-medium"
+            >
+              🏛️ Bar Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('advocate.rajesh@alwarbar.in');
+                setPassword('Advocate@2026');
+              }}
+              className="text-left px-2 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded text-blue-900 transition font-medium"
+            >
+              ⚖️ Adv. Rajesh Sharma
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail('case.admin@alwaradvocates.org');
+                setPassword('CaseAdmin@2026');
+              }}
+              className="text-left px-2 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded text-emerald-900 transition font-medium"
+            >
+              🛡️ Case Admin
+            </button>
           </div>
-          <div className="mt-3 text-center">
-            <Link href="/auth/bootstrap" className="text-amber-700 hover:underline">
-              Bootstrap Initial Super-Admin Token →
+          <div className="mt-2 text-[10px] text-slate-400 text-center font-mono">
+            Default Passwords: AdminPass@2026 | Advocate@2026 | CaseAdmin@2026
+          </div>
+          <div className="mt-2 text-center">
+            <Link href="/auth/bootstrap" className="text-amber-700 hover:underline text-[11px]">
+              Bootstrap Super-Admin Token →
             </Link>
           </div>
         </div>
