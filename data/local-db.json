@@ -158,9 +158,9 @@
       "experience_years": 8,
       "bio_hindi": "राजस्व न्यायालय, संभागीय आयुक्त एवं वाणिज्यिक न्यायालय अलवर में भूमि विवाद विशेषज्ञ।",
       "bio_english": "Specialist in Rajasthan Tenancy Act, Land Revenue appeals, and Commercial arbitration in Alwar.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-02-05T14:00:00.000Z",
+      "is_verified": false,
+      "verified_by": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "verified_at": "2026-11-06T18:26:38.762Z",
       "is_publicly_listed": true
     },
     {
@@ -199,9 +199,9 @@
       "experience_years": 17,
       "bio_hindi": "अलवर सत्र न्यायालय में 17 वर्षों से आपराधिक मामलों के वरिष्ठ अधिवक्ता।",
       "bio_english": "Senior trial counsel with 17 years practice in Alwar criminal courts.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-10-30T16:46:29.228Z",
+      "is_verified": false,
+      "verified_by": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "verified_at": "2026-11-06T18:26:47.488Z",
       "is_publicly_listed": true
     },
     {
@@ -219,9 +219,9 @@
       "experience_years": 8,
       "bio_hindi": "राजस्व मंडल एवं एसडीओ न्यायालय अलवर में काश्तकारी भूमि विशेषज्ञ।",
       "bio_english": "Specialist in Rajasthan Tenancy Act, partition and mutation appeals.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-10-30T16:46:29.228Z",
+      "is_verified": false,
+      "verified_by": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "verified_at": "2026-11-06T18:26:56.032Z",
       "is_publicly_listed": true
     },
     {
@@ -239,9 +239,9 @@
       "experience_years": 14,
       "bio_hindi": "चेक अनादर एवं वाणिज्यिक विवादों के अनुभवी अधिवक्ता।",
       "bio_english": "Extensive practice in negotiable instruments litigation and commercial arbitration.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-10-30T16:46:29.228Z",
+      "is_verified": false,
+      "verified_by": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "verified_at": "2026-11-06T18:27:29.554Z",
       "is_publicly_listed": true
     },
     {
@@ -259,9 +259,9 @@
       "experience_years": 6,
       "bio_hindi": "पारिवारिक एवं भरण-पोषण वादों में विधिक परामर्श एवं पैरवी।",
       "bio_english": "Counsel for matrimonial matters, maintenance under BNSS, and family disputes.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-10-30T16:46:29.229Z",
+      "is_verified": false,
+      "verified_by": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "verified_at": "2026-11-06T18:27:07.108Z",
       "is_publicly_listed": true
     },
     {
@@ -279,9 +279,9 @@
       "experience_years": 11,
       "bio_hindi": "भू-राजस्व एवं सिवायचक भूमि सीमांकन मामलों के विशेषज्ञ।",
       "bio_english": "Specialized in Rajasthan Land Revenue Act and demarcation appeals.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-10-30T16:46:29.229Z",
+      "is_verified": false,
+      "verified_by": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "verified_at": "2026-11-06T18:27:13.886Z",
       "is_publicly_listed": true
     },
     {
@@ -298,9 +298,9 @@
       "experience_years": 10,
       "bio_hindi": "Advocate Bhupendra Singh अलवर न्यायालय में नियमित वकालत कर रहे हैं।",
       "bio_english": "Practicing advocate at District Courts Alwar specializing in Criminal Law, Bail Matters.",
-      "is_verified": true,
-      "verified_by": "admin-user-alwar-0001",
-      "verified_at": "2026-10-30T16:49:02.919Z",
+      "is_verified": false,
+      "verified_by": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "verified_at": "2026-11-06T18:27:17.260Z",
       "is_publicly_listed": true
     }
   ],
@@ -1168,6 +1168,97 @@
     }
   ],
   "audit_logs": [
+    {
+      "actor_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "actor_name": "Advocate Anil Sain",
+      "actor_role": "public_admin",
+      "action": "UNVERIFY_ADVOCATE_ENROLLMENT",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-0dc0921e-8394-483a-991c-cdbb69bd6955",
+      "details": {
+        "verified": false
+      },
+      "id": "aud-02d92278-bd0e-4cbc-9d60-11687efb92db",
+      "created_at": "2026-11-06T18:27:29.561Z"
+    },
+    {
+      "actor_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "actor_name": "Advocate Anil Sain",
+      "actor_role": "public_admin",
+      "action": "UNVERIFY_ADVOCATE_ENROLLMENT",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-d661f56d-39ea-4b7d-a0ce-67917bdd07ab",
+      "details": {
+        "verified": false
+      },
+      "id": "aud-67d9bc80-c27b-41ff-94bb-0a108c72644a",
+      "created_at": "2026-11-06T18:27:17.268Z"
+    },
+    {
+      "actor_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "actor_name": "Advocate Anil Sain",
+      "actor_role": "public_admin",
+      "action": "UNVERIFY_ADVOCATE_ENROLLMENT",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-526b6567-c8c0-4f50-97e6-b4b8b5a29146",
+      "details": {
+        "verified": false
+      },
+      "id": "aud-5a983643-2c04-44b3-81e5-e9ce406a4504",
+      "created_at": "2026-11-06T18:27:13.893Z"
+    },
+    {
+      "actor_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "actor_name": "Advocate Anil Sain",
+      "actor_role": "public_admin",
+      "action": "UNVERIFY_ADVOCATE_ENROLLMENT",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-b4ea15a9-135d-42cf-9973-63bcba9dae43",
+      "details": {
+        "verified": false
+      },
+      "id": "aud-0ed7835b-0c76-47ac-ac9e-7f6b90f7fb9b",
+      "created_at": "2026-11-06T18:27:07.115Z"
+    },
+    {
+      "actor_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "actor_name": "Advocate Anil Sain",
+      "actor_role": "public_admin",
+      "action": "UNVERIFY_ADVOCATE_ENROLLMENT",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-5a7d0c9b-a0fc-4008-b0f9-ffcc08ef71ff",
+      "details": {
+        "verified": false
+      },
+      "id": "aud-8942f4d0-de0e-4bba-8531-6db45a3f6567",
+      "created_at": "2026-11-06T18:26:56.039Z"
+    },
+    {
+      "actor_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "actor_name": "Advocate Anil Sain",
+      "actor_role": "public_admin",
+      "action": "UNVERIFY_ADVOCATE_ENROLLMENT",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-1fe78bb1-1b23-4427-bf8e-d7ea69c009d1",
+      "details": {
+        "verified": false
+      },
+      "id": "aud-a82be762-7694-436c-8a30-33b99558fc23",
+      "created_at": "2026-11-06T18:26:47.496Z"
+    },
+    {
+      "actor_id": "usr-d354868f-4df8-4017-8a69-776412906265",
+      "actor_name": "Advocate Anil Sain",
+      "actor_role": "public_admin",
+      "action": "UNVERIFY_ADVOCATE_ENROLLMENT",
+      "entity_type": "advocate_profile",
+      "entity_id": "prof-002",
+      "details": {
+        "verified": false
+      },
+      "id": "aud-a8e371db-bbe4-4057-bccf-d705a50d3e05",
+      "created_at": "2026-11-06T18:26:38.778Z"
+    },
     {
       "actor_id": "admin-user-alwar-0001",
       "actor_name": "Portal Administrator",
