@@ -285,10 +285,23 @@ const BCR_APPLICATIONS: BCRApplication[] = [
 
 export default function BCRServicesPage() {
   const { locale } = useLanguage();
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'applications' | 'personal' | 'documents' | 'claim' | 'aibe'>('applications');
   const [selectedApp, setSelectedApp] = useState<BCRApplication | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<'all' | 'welfare' | 'certificate' | 'enrolment' | 'admin'>('all');
+
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then(res => res.json())
+      .then(data => {
+        if (data?.user) setCurrentUser(data.user);
+        else setCurrentUser(null);
+      })
+      .catch(() => setCurrentUser(null))
+      .finally(() => setAuthLoading(false));
+  }, []);
 
   // Filter applications
   const filteredApps = BCR_APPLICATIONS.filter(app => {
@@ -342,74 +355,136 @@ export default function BCRServicesPage() {
         </div>
       </div>
 
-      {/* BCR Sub-Navigation Bar (Matches the Official Screenshot) */}
-      <div className="bg-[#0b172a] border-b border-slate-800 sticky top-14 z-40 shadow-md">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center space-x-1 sm:space-x-3 overflow-x-auto text-xs uppercase font-bold tracking-wider py-1 scrollbar-none">
+      {/* Main Container */}
+      {authLoading ? (
+        <div className="container mx-auto px-4 py-20 text-center text-slate-400 text-xs flex items-center justify-center space-x-2">
+          <Clock className="w-4 h-4 animate-spin text-amber-400" />
+          <span>अधिवक्ता क्रेडेंशियल्स सत्यापित किए जा रहे हैं...</span>
+        </div>
+      ) : !currentUser ? (
+        /* If Not Logged In: Show Professional Advocate Login Required Screen */
+        <div className="container mx-auto px-4 py-12 max-w-xl text-center">
+          <div className="bg-slate-800/90 border border-amber-500/30 rounded-2xl p-8 shadow-2xl space-y-6">
+            <div className="w-16 h-16 bg-gradient-to-br from-amber-600 to-amber-700 text-white rounded-2xl flex items-center justify-center mx-auto shadow-lg border border-amber-400/30">
+              <Lock className="w-8 h-8" />
+            </div>
             
-            <button
-              onClick={() => setActiveTab('personal')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'personal'
-                  ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <User className="w-4 h-4 text-amber-400" />
-              <span>PERSONAL INFORMATION</span>
-            </button>
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full border border-amber-400/30">
+                अधिवक्ता सत्यापन आवश्यक (Advocate Authentication Required)
+              </span>
+              <h2 className="font-serif font-bold text-2xl text-white mt-3">
+                बार काउंसिल ऑफ राजस्थान — अधिवक्ता सेवा पोर्टल
+              </h2>
+              <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+                यह अनुभाग केवल राजस्थान बार काउंसिल (BCR) में पंजीकृत अधिवक्ताओं के आधिकारिक व गोपनीय कार्यों (जैसे: नवीनीकरण, पहचान पत्र, कल्याण कोष दावा, सनद आदि) के लिए आरक्षित है।
+              </p>
+            </div>
 
-            <button
-              onClick={() => setActiveTab('documents')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'documents'
-                  ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <FileText className="w-4 h-4 text-amber-400" />
-              <span>DOCUMENTS</span>
-            </button>
+            <div className="p-4 bg-slate-900/80 rounded-xl border border-slate-700 text-left text-xs space-y-2 text-slate-300">
+              <span className="font-semibold text-amber-400 block mb-1">लॉगिन करने के बाद आप प्राप्त कर सकेंगे:</span>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>समस्त 14 आधिकारिक BCR ऑनलाइन आवेदन एवं प्रपत्र</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>व्यक्तिगत सनद, COP एवं कल्याण कोष स्थिति</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>दावा प्रपत्र (Claim Forms) एवं मतदाता सूची</span>
+              </div>
+            </div>
 
-            <button
-              onClick={() => setActiveTab('applications')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'applications'
-                  ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <CheckSquare className="w-4 h-4 text-amber-400" />
-              <span>APPLICATIONS (14 सेवाएं)</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('claim')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'claim'
-                  ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Shield className="w-4 h-4 text-amber-400" />
-              <span>CLAIM (कल्याण दावा)</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('aibe')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'aibe'
-                  ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Award className="w-4 h-4 text-amber-400" />
-              <span>A.I.B.E. STATUS</span>
-            </button>
-
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <Link
+                href="/auth/login"
+                className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold rounded-lg text-xs transition shadow-md flex items-center justify-center space-x-2"
+              >
+                <UserCheck className="w-4 h-4" />
+                <span>अधिवक्ता लॉगिन करें (Sign In)</span>
+              </Link>
+              <Link
+                href="/"
+                className="w-full sm:w-auto px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs font-semibold transition"
+              >
+                मुख्य पृष्ठ पर लौटें
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        /* If Logged In: Full BCR Dashboard with Sub-Nav and Tabs */
+        <>
+          {/* BCR Sub-Navigation Bar (Matches the Official Screenshot) */}
+          <div className="bg-[#0b172a] border-b border-slate-800 sticky top-14 z-40 shadow-md">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center space-x-1 sm:space-x-3 overflow-x-auto text-xs uppercase font-bold tracking-wider py-1 scrollbar-none">
+                
+                <button
+                  onClick={() => setActiveTab('personal')}
+                  className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                    activeTab === 'personal'
+                      ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <User className="w-4 h-4 text-amber-400" />
+                  <span>PERSONAL INFORMATION</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('documents')}
+                  className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                    activeTab === 'documents'
+                      ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <FileText className="w-4 h-4 text-amber-400" />
+                  <span>DOCUMENTS</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('applications')}
+                  className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                    activeTab === 'applications'
+                      ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <CheckSquare className="w-4 h-4 text-amber-400" />
+                  <span>APPLICATIONS (14 सेवाएं)</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('claim')}
+                  className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                    activeTab === 'claim'
+                      ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Shield className="w-4 h-4 text-amber-400" />
+                  <span>CLAIM (कल्याण दावा)</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('aibe')}
+                  className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                    activeTab === 'aibe'
+                      ? 'bg-amber-500/20 text-amber-300 border-b-2 border-amber-400 font-extrabold'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Award className="w-4 h-4 text-amber-400" />
+                  <span>A.I.B.E. STATUS</span>
+                </button>
+
+              </div>
+            </div>
+          </div>
 
       <div className="container mx-auto px-4 py-8">
 
@@ -735,6 +810,8 @@ export default function BCRServicesPage() {
         )}
 
       </div>
+      </>
+      )}
 
       {/* ======================================================== */}
       {/* MODAL: APPLICATION DETAIL & DOWNLOAD WORKFLOW */}

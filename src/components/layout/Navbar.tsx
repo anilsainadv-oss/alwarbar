@@ -70,7 +70,6 @@ export function Navbar() {
   const publicNavLinks: NavLinkItem[] = [
     { href: '/', label: t.navHome, icon: Scale },
     { href: '/advocates', label: locale === 'hi' ? 'वकील खोजें' : 'Find Advocates', icon: Users },
-    { href: '/bcr-services', label: locale === 'hi' ? '🏛️ BCR सेवाएं' : 'BCR Services', icon: Landmark, badge: '14 Apps' },
     { href: '/welfare', label: locale === 'hi' ? '18 बार वेलफेयर' : 'Bar Welfare & Dues', icon: Shield, badge: '18 Bars' },
     { href: '/laws', label: locale === 'hi' ? 'नए कानून' : 'New Laws', icon: BookOpen, badge: 'BNS 2023' },
     { href: '/judgments', label: locale === 'hi' ? 'निर्णय व नज़ीरें' : 'Judgments', icon: Scale },
