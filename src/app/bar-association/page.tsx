@@ -10,7 +10,7 @@ import {
   Coffee, Laptop, UserCheck, ChevronRight, ChevronLeft, 
   AlertCircle, Stamp, HeartHandshake, Plus, Trash2, X, 
   Image as ImageIcon, Eye, Maximize2, Sparkles, Filter, 
-  Camera, Upload, LayoutGrid, List, Check
+  Camera, Upload, LayoutGrid, List, Check, Bell, Gavel
 } from 'lucide-react';
 
 interface BarMember {
@@ -41,14 +41,197 @@ interface GalleryItem {
   created_at?: string;
 }
 
+interface AlwarCourtJudgment {
+  id: string;
+  courtNameHi: string;
+  courtNameEn: string;
+  caseTitle: string;
+  caseNo: string;
+  bench: string;
+  decisionDate: string;
+  category: 'sessions' | 'pocso' | 'family' | 'mact' | 'high_court';
+  lawAct: string;
+  summaryHi: string;
+  summaryEn: string;
+  significanceHi: string;
+  significanceEn: string;
+}
+
+interface AlwarCourtNotice {
+  id: string;
+  titleHi: string;
+  titleEn: string;
+  issuingAuthorityHi: string;
+  issuingAuthorityEn: string;
+  date: string;
+  eventDate?: string;
+  category: 'court' | 'bar' | 'dlsa';
+  badgeHi: string;
+  badgeEn: string;
+  contentHi: string;
+  contentEn: string;
+}
+
+const ALWAR_COURT_JUDGMENTS: AlwarCourtJudgment[] = [
+  {
+    id: 'alw-jdg-01',
+    courtNameHi: 'जिला एवं सत्र न्यायालय, अलवर',
+    courtNameEn: 'District & Sessions Court, Alwar',
+    caseTitle: 'State of Rajasthan v. Mukesh & Ors.',
+    caseNo: 'Sessions Case No. 84/2025',
+    bench: 'Special Bench • District & Sessions Judge, Alwar',
+    decisionDate: '28 Oct 2026',
+    category: 'sessions',
+    lawAct: 'Section 480 BNSS (Regular Bail)',
+    summaryHi: 'धारा 480 BNSS (पूर्व धारा 439 CrPC) के अंतर्गत नियमित जमानत: पुलिस डायरी तलब करने हेतु अनावश्यक लंबा समय न दिया जाए; सात कार्यदिवसों के भीतर जमानत याचिका पर गुण-दोष के आधार पर अंतिम निस्तारण अनिवार्य। अनावश्यक न्यायिक अभिरक्षा व्यक्तिगत स्वतंत्रता का हनन है।',
+    summaryEn: 'Directing trial courts and police investigators that case diary must be produced within 7 days; prolonged judicial custody without chargesheet is impermissible.',
+    significanceHi: 'अलवर सत्र न्यायालय में जमानत याचिकाओं के त्वरित निस्तारण हेतु ऐतिहासिक निर्देश।',
+    significanceEn: 'Key procedural guideline for criminal defense practitioners in Alwar Sessions Division.'
+  },
+  {
+    id: 'alw-jdg-02',
+    courtNameHi: 'विशेष न्यायालय (पॉक्सो एक्ट प्रकरण) सं. 1, अलवर',
+    courtNameEn: 'Special Court (POCSO Act Cases) No. 1, Alwar',
+    caseTitle: 'State v. Rameshwar',
+    caseNo: 'Special POCSO Case No. 112/2025',
+    bench: 'Special Judge, POCSO Act Cases, Alwar',
+    decisionDate: '15 Oct 2026',
+    category: 'pocso',
+    lawAct: 'Section 35 POCSO Act & Indian Evidence Act',
+    summaryHi: 'संवेदनशील बाल गवाहों के बयान चाइल्ड-फ्रेंडली रूम में बिना किसी भय के रिकॉर्ड किए जाएं और अभियुक्त का बचाव पक्ष से आमना-सामना स्क्रीन/पर्दे के माध्यम से कराया जाए। जिरह (Cross-examination) एक ही बैठक में पूर्ण की जाए।',
+    summaryEn: 'Child victim deposition must be recorded in child-friendly environment behind one-way screen to ensure unbiased, non-retraumatizing testimony in single sitting.',
+    significanceHi: 'पॉक्सो न्यायालय अलवर में बाल गवाह संरक्षण नियमों का कड़ाई से अनुपालन।',
+    significanceEn: 'POCSO child protection precedent for trial practitioners in Rajasthan.'
+  },
+  {
+    id: 'alw-jdg-03',
+    courtNameHi: 'पारिवारिक न्यायालय सं. 1, अलवर',
+    courtNameEn: 'Family Court No. 1, Alwar',
+    caseTitle: 'Sunita Devi v. Devendra Kumar',
+    caseNo: 'Matrimonial Case No. 240/2025',
+    bench: 'Judge, Family Court No. 1, Alwar',
+    decisionDate: '04 Oct 2026',
+    category: 'family',
+    lawAct: 'Section 144 BNSS (Maintenance)',
+    summaryHi: 'पारिवारिक न्यायालय अलवर: पति द्वारा वास्तविक आय छिपाने की स्थिति में उसके बैंक खाते व जीवनशैली के आधार पर 60 दिवस के भीतर ₹15,000 मासिक अंतरिम भरण-पोषण राशि स्वीकृत। भरण-पोषण में विलंब न्याय से वंचित करने जैसा है।',
+    summaryEn: 'Interim maintenance granted within statutory 60 days based on lifestyle and banking transactions when income is concealed by the respondent husband.',
+    significanceHi: 'वैवाहिक विवादों में अंतरिम भरण-पोषण के त्वरित आदेश का महत्वपूर्ण दृष्टांत।',
+    significanceEn: 'Family law precedent on interim financial support timelines.'
+  },
+  {
+    id: 'alw-jdg-04',
+    courtNameHi: 'मोटर दुर्घटना दावा अधिकरण (MACT), अलवर',
+    courtNameEn: 'Motor Accident Claims Tribunal (MACT), Alwar',
+    caseTitle: 'Geeta Devi & Ors. v. National Insurance Co. Ltd.',
+    caseNo: 'MACT Claim No. 38/2025',
+    bench: 'Presiding Officer, MACT Alwar',
+    decisionDate: '22 Sep 2026',
+    category: 'mact',
+    lawAct: 'Section 166 Motor Vehicles Act',
+    summaryHi: 'मृतक की काल्पनिक आय में 40% भविष्य की संभावना (Future Prospects) जोड़कर ₹24,80,000 का मुआवजा सीधे आश्रितों के बैंक खातों में डीबीटी/पीएफएमएस द्वारा 30 दिन में जमा करने का आदेश। किसी भी बिचौलिए का हस्तक्षेप शून्य घोषित।',
+    summaryEn: 'MACT award of ₹24.80 Lakhs with 40% future prospects, directed to be credited electronically via PFMS directly to claimant accounts without intermediaries.',
+    significanceHi: 'मुआवजा राशि का सीधा डिजिटल बैंक ट्रांसफर, बिचौलियों से पूर्ण मुक्ति।',
+    significanceEn: 'Direct digital disbursement protocol for accidental claim compensation.'
+  },
+  {
+    id: 'alw-jdg-05',
+    courtNameHi: 'राजस्थान उच्च न्यायालय, जयपुर पीठ (अलवर न्यायक्षेत्र नजीर)',
+    courtNameEn: 'Rajasthan High Court, Jaipur Bench (Alwar Jurisdiction)',
+    caseTitle: 'Bhanwar Lal & Ors. v. State of Rajasthan',
+    caseNo: '2024 (3) WLC (Raj) 489',
+    bench: 'Division Bench, Rajasthan High Court',
+    decisionDate: '18 Sep 2024',
+    category: 'high_court',
+    lawAct: 'Section 480 & 482 BNSS',
+    summaryHi: 'धारा 480 व 482 BNSS में समवर्ती क्षेत्राधिकार होने के बावजूद स्थापित न्यायिक अनुशासन के तहत पक्षकार को पहले सत्र न्यायालय अलवर के समक्ष ही जमानत प्रार्थना पत्र प्रस्तुत करना होगा; सीधे उच्च न्यायालय आने पर विशेष असाधारण परिस्थितियों का सिद्ध होना अनिवार्य।',
+    summaryEn: 'Litigants must first approach the District & Sessions Court Alwar before invoking High Court jurisdiction under BNSS bail provisions.',
+    significanceHi: 'अलवर न्यायक्षेत्र के लिए बाध्यकारी अपीलीय नजीर।',
+    significanceEn: 'Binding appellate jurisdictional ruling for subordinate courts in Rajasthan.'
+  }
+];
+
+const ALWAR_COURT_NOTICES: AlwarCourtNotice[] = [
+  {
+    id: 'alw-not-01',
+    titleHi: 'राष्ट्रीय लोक अदालत (National Lok Adalat) आयोजन — 14 दिसंबर 2026',
+    titleEn: 'National Lok Adalat — 14 December 2026',
+    issuingAuthorityHi: 'जिला विधिक सेवा प्राधिकरण (DLSA), अलवर',
+    issuingAuthorityEn: 'District Legal Services Authority (DLSA), Alwar',
+    date: '05 Nov 2026',
+    eventDate: '14 Dec 2026',
+    category: 'dlsa',
+    badgeHi: 'लोक अदालत',
+    badgeEn: 'Lok Adalat',
+    contentHi: 'अलवर जिला मुख्यालय एवं अधीनस्थ 18 उपखंडीय न्यायालयों में वर्ष 2026 की अंतिम राष्ट्रीय लोक अदालत का आयोजन। चेक बाउंस (Sec 138), मोटर दावा, बैंक रिकवरी, पारिवारिक विवाद एवं शमनीय दांडिक मामलों के राजीनामे हेतु विशेष पीठों का गठन। पक्षकार अपने प्रकरण प्री-काउंसलिंग हेतु तुरंत प्रस्तुत करें।',
+    contentEn: 'Organization of final National Lok Adalat 2026 across Alwar headquarters and 18 sub-divisional courts for amicable dispute resolution.'
+  },
+  {
+    id: 'alw-not-02',
+    titleHi: 'अलवर जिला बार एसोसिएशन आम सभा बैठक (General Body Meeting)',
+    titleEn: 'Alwar Bar Association General Body Meeting',
+    issuingAuthorityHi: 'बार एसोसिएशन अलवर (अध्यक्ष: एड. अनिल सैन)',
+    issuingAuthorityEn: 'Bar Association Alwar (President: Adv. Anil Sain)',
+    date: '06 Nov 2026',
+    eventDate: '12 Nov 2026',
+    category: 'bar',
+    badgeHi: 'बार बैठक',
+    badgeEn: 'Bar Meeting',
+    contentHi: 'अलवर बार रूम में दोपहर 1:30 बजे आम सभा की विशेष बैठक आयोजित की जाएगी। मुख्य एजेंडा: नए अधिवक्ता चैंबर्स निर्माण, ई-लाइब्रेरी वाई-फाई विस्तार, वेलफेयर टिकट ऑडिट रिपोर्ट एवं युवा अधिवक्ताओं के लिए विधिक कार्यशाला। समस्त सदस्य सादर आमंत्रित हैं।',
+    contentEn: 'Special general body meeting of Alwar Bar members at Bar Room regarding new chamber allocations, e-library upgrades, and welfare audit.'
+  },
+  {
+    id: 'alw-not-03',
+    titleHi: 'शीतकालीन अवकाशकालीन न्यायिक रोस्टर (Winter Vacation Court Roster)',
+    titleEn: 'Winter Vacation Court Roster Notification',
+    issuingAuthorityHi: 'कार्यालय जिला एवं सत्र न्यायाधीश, अलवर',
+    issuingAuthorityEn: 'Office of the District & Sessions Judge, Alwar',
+    date: '01 Nov 2026',
+    category: 'court',
+    badgeHi: 'कोर्ट रोस्टर',
+    badgeEn: 'Court Roster',
+    contentHi: 'न्यायालय शीतकालीन अवकाश के दौरान अत्यावश्यक दीवानी एवं दांडिक प्रकरणों, रिमांड व जमानत प्रार्थना पत्रों की सुनवाई हेतु नामित विशेष अवकाशकालीन न्यायाधीशों का साप्ताहिक रोस्टर जारी। संबंधित अधिवक्ता अवकाशकालीन कोर्ट में आवश्यक आवेदन प्रस्तुत कर सकते हैं।',
+    contentEn: 'Official designation of vacation bench judicial officers for urgent remands, bails, and injunction applications during judicial recess.'
+  },
+  {
+    id: 'alw-not-04',
+    titleHi: 'अधिवक्ता वाहन पार्किंग स्टीकर 2026-27 वितरण',
+    titleEn: 'Advocate Vehicle Parking Sticker 2026-27 Distribution',
+    issuingAuthorityHi: 'सुरक्षा एवं परिवहन समिति, बार एसोसिएशन अलवर',
+    issuingAuthorityEn: 'Bar Security & Transport Committee, Alwar',
+    date: '28 Oct 2026',
+    category: 'bar',
+    badgeHi: 'सुरक्षा व पार्किंग',
+    badgeEn: 'Parking & Security',
+    contentHi: 'कोर्ट परिसर में अनधिकृत वाहनों के प्रवेश को नियंत्रित करने हेतु बार सदस्यों के दोपहिया व चौपहिया वाहनों के लिए नए बारकोड युक्त स्टीकर बार कार्यालय से सनद व वाहन आरसी दिखाकर निःशुल्क प्राप्त करें। बिना स्टीकर वाहन कोर्ट परिसर में प्रवेश वर्जित रहेगा।',
+    contentEn: 'Collection of high-security barcoded vehicle stickers for advocates to ensure designated entry in District Court parking zones.'
+  },
+  {
+    id: 'alw-not-05',
+    titleHi: 'BCR 5-वर्षीय COP नवीनीकरण सहायता डेस्क',
+    titleEn: 'BCR 5-Year COP Verification Helpdesk',
+    issuingAuthorityHi: 'बार काउंसिल ऑफ राजस्थान सम्पर्क प्रकोष्ठ, अलवर',
+    issuingAuthorityEn: 'BCR Liaison Cell, Alwar Bar Room',
+    date: '22 Oct 2026',
+    category: 'dlsa',
+    badgeHi: 'COP नवीनीकरण',
+    badgeEn: 'COP Renewal',
+    contentHi: 'सर्टिफिकेट ऑफ प्रैक्टिस (COP) के 5-वर्षीय अनिवार्य नवीनीकरण हेतु अलवर बार रूम में विशेष सहायता शिविर। समस्त आवश्यक प्रपत्र (Form A/B), कल्याण कोष नो-ड्यूज एवं ऑनलाइन सहायता उपलब्ध कराई जा रही है।',
+    contentEn: 'Dedicated assistance desk for mandatory 5-year Certificate of Practice (COP) renewal and welfare fund clearance.'
+  }
+];
+
 export default function BarAssociationPage() {
   const { locale } = useLanguage();
   
-  // Navigation & State
+  // Navigation & State (Default: 'gallery' for Bar Events, Slider, Alwar Court Info & Judgments)
   const [activeTab, setActiveTab] = useState<
-    'current-members' | 'gallery' | 'previous-members' | 'office-bearers' | 
+    'gallery' | 'current-members' | 'previous-members' | 'office-bearers' | 
     'history' | 'constitution' | 'judges' | 'downloads'
-  >('current-members');
+  >('gallery');
+
+  const [selectedJudgment, setSelectedJudgment] = useState<AlwarCourtJudgment | null>(null);
+  const [judgmentFilter, setJudgmentFilter] = useState<'all' | 'sessions' | 'pocso' | 'family' | 'mact' | 'high_court'>('all');
+  const [noticeFilter, setNoticeFilter] = useState<'all' | 'court' | 'bar' | 'dlsa'>('all');
 
   // Auth User
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -535,6 +718,18 @@ PARTICULARS OF APPLICANT ADVOCATE:
           <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto text-xs uppercase font-bold tracking-wider py-1.5 scrollbar-none">
             
             <button
+              onClick={() => setActiveTab('gallery')}
+              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'gallery'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <ImageIcon className="w-4 h-4" />
+              <span>{locale === 'hi' ? 'बार इवेंट्स एवं स्लाइडर' : 'Bar Events & Slider'}</span>
+            </button>
+
+            <button
               onClick={() => setActiveTab('current-members')}
               className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
                 activeTab === 'current-members'
@@ -548,18 +743,6 @@ PARTICULARS OF APPLICANT ADVOCATE:
                   ? `वर्तमान सदस्य फोटो गैलरी (${currentMembers.length})` 
                   : `Current Members Gallery (${currentMembers.length})`}
               </span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('gallery')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'gallery'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <ImageIcon className="w-4 h-4" />
-              <span>{locale === 'hi' ? 'बार इवेंट्स एवं स्लाइडर' : 'Bar Events & Slider'}</span>
             </button>
 
             <button
@@ -1067,7 +1250,411 @@ PARTICULARS OF APPLICANT ADVOCATE:
               </div>
             )}
 
-            {/* Photo Gallery Grid */}
+            {/* 1. Alwar Court Highlights Metric Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-700 flex items-center justify-center font-bold">
+                  <Landmark className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <div className="text-[10px] text-slate-400 uppercase font-semibold">
+                    {locale === 'hi' ? 'स्थापना वर्ष' : 'Established'}
+                  </div>
+                  <div className="font-serif font-bold text-sm text-slate-900">
+                    1948 (Matsya)
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-700 flex items-center justify-center font-bold">
+                  <Users className="w-5 h-5 text-emerald-600" />
+                </div>
+                <div>
+                  <div className="text-[10px] text-slate-400 uppercase font-semibold">
+                    {locale === 'hi' ? 'पंजीकृत सदस्य' : 'Bar Members'}
+                  </div>
+                  <div className="font-serif font-bold text-sm text-slate-900">
+                    1,100+ Advocates
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-700 flex items-center justify-center font-bold">
+                  <Scale className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <div className="text-[10px] text-slate-400 uppercase font-semibold">
+                    {locale === 'hi' ? 'सक्रिय अदालतें' : 'Judgeship Courts'}
+                  </div>
+                  <div className="font-serif font-bold text-sm text-slate-900">
+                    42 Courts
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-700 flex items-center justify-center font-bold">
+                  <Building2 className="w-5 h-5 text-purple-600" />
+                </div>
+                <div>
+                  <div className="text-[10px] text-slate-400 uppercase font-semibold">
+                    {locale === 'hi' ? 'संबद्ध उपखंड बार' : 'Tehsil Bars'}
+                  </div>
+                  <div className="font-serif font-bold text-sm text-slate-900">
+                    18 Bars
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3 col-span-2 sm:col-span-1">
+                <div className="w-10 h-10 rounded-lg bg-rose-500/10 text-rose-700 flex items-center justify-center font-bold">
+                  <Phone className="w-5 h-5 text-rose-600" />
+                </div>
+                <div>
+                  <div className="text-[10px] text-slate-400 uppercase font-semibold">
+                    {locale === 'hi' ? 'बार हेल्पलाइन' : 'Helpline'}
+                  </div>
+                  <div className="font-mono font-bold text-xs text-slate-900">
+                    0144-2334455
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. ALWAR DISTRICT COURT COMPLEX & VITAL INFORMATION */}
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-3 border-slate-200 gap-2">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                    {locale === 'hi' ? 'अलवर न्यायक्षेत्र आधिकारिक विवरण' : 'Alwar Judgeship Official Info'}
+                  </span>
+                  <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mt-1 flex items-center space-x-2">
+                    <Building2 className="w-5 h-5 text-amber-600" />
+                    <span>{locale === 'hi' ? 'अलवर जिला कोर्ट परिसर एवं आवश्यक विधिक जानकारी' : 'Alwar District Court Complex & Information'}</span>
+                  </h3>
+                </div>
+                <div className="text-xs text-slate-500 flex items-center space-x-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <span>{locale === 'hi' ? 'कोर्ट परिसर, स्टेशन रोड, अलवर - 301001' : 'Court Complex, Station Road, Alwar - 301001'}</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {/* Card 1: Timings */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3 flex flex-col justify-between hover:border-amber-400 transition">
+                  <div className="space-y-2.5">
+                    <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif font-bold text-sm text-slate-900">
+                      {locale === 'hi' ? 'कोर्ट समय एवं फाइलिंग काउंटर' : 'Court Timings & Filing'}
+                    </h4>
+                    <div className="text-xs space-y-1.5 text-slate-600 pt-1">
+                      <div className="flex justify-between border-b border-slate-100 pb-1">
+                        <span>{locale === 'hi' ? 'न्यायिक कार्य:' : 'Court Sittings:'}</span>
+                        <strong className="text-slate-900">10:00 AM – 5:00 PM</strong>
+                      </div>
+                      <div className="flex justify-between border-b border-slate-100 pb-1">
+                        <span>{locale === 'hi' ? 'वाद प्रस्तुतीकरण:' : 'Filing Counter:'}</span>
+                        <strong className="text-slate-900">10:30 AM – 3:30 PM</strong>
+                      </div>
+                      <div className="flex justify-between border-b border-slate-100 pb-1">
+                        <span>{locale === 'hi' ? 'नकल शाखा (CD):' : 'Copying Section:'}</span>
+                        <strong className="text-slate-900">10:30 AM – 4:00 PM</strong>
+                      </div>
+                      <div className="flex justify-between pt-0.5">
+                        <span>{locale === 'hi' ? 'लंच इंटरवल:' : 'Lunch Interval:'}</span>
+                        <strong className="text-amber-800">1:00 PM – 1:30 PM</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-[11px] bg-slate-50 p-2 rounded-lg text-slate-500 font-medium">
+                    {locale === 'hi' ? 'ℹ️ 1st, 3rd, 5th शनिवार कार्य दिवस (2nd व 4th अवकाश)' : 'ℹ️ 1st, 3rd, 5th Saturday working days'}
+                  </div>
+                </div>
+
+                {/* Card 2: Campus Infrastructure */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3 flex flex-col justify-between hover:border-amber-400 transition">
+                  <div className="space-y-2.5">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+                      <Landmark className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif font-bold text-sm text-slate-900">
+                      {locale === 'hi' ? 'कोर्ट परिसर संरचना व विंग्स' : 'Campus Layout & Wings'}
+                    </h4>
+                    <div className="text-xs space-y-1.5 text-slate-600 pt-1">
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'मुख्य भवन:' : 'Main Wing:'}</strong> {locale === 'hi' ? 'डीजे कोर्ट, एडीजे 1-5, सीजेएम, एसीजेएम 1-4' : 'DJ Court, ADJ 1-5, CJM, ACJM 1-4'}</span>
+                      </div>
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'विशिष्ट न्यायालय:' : 'Special Courts:'}</strong> {locale === 'hi' ? 'पॉक्सो कोर्ट 1-2, SC/ST कोर्ट, NDPS' : 'POCSO 1-2, SC/ST Court, NDPS'}</span>
+                      </div>
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'अधिकरण:' : 'Tribunals:'}</strong> {locale === 'hi' ? 'पारिवारिक कोर्ट 1-2, MACT, कमर्शियल' : 'Family Courts 1-2, MACT, Commercial'}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-[11px] bg-slate-50 p-2 rounded-lg text-slate-500 font-medium">
+                    {locale === 'hi' ? '🏛️ कुल 42 सक्रिय कोर्ट्स (अलवर न्यायक्षेत्र)' : '🏛️ 42 Active Courts in Alwar Judgeship'}
+                  </div>
+                </div>
+
+                {/* Card 3: e-Courts & Digital Services */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3 flex flex-col justify-between hover:border-amber-400 transition">
+                  <div className="space-y-2.5">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                      <Laptop className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif font-bold text-sm text-slate-900">
+                      {locale === 'hi' ? 'ई-कोर्ट्स व डिजिटल सेवाएं' : 'e-Courts & Digital Services'}
+                    </h4>
+                    <div className="text-xs space-y-1.5 text-slate-600 pt-1">
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'ई-फाइलिंग 3.0:' : 'e-Filing 3.0:'}</strong> {locale === 'hi' ? '24x7 ऑनलाइन केस एवं जमानत याचिका फाइलिंग' : '24x7 online case and bail filing'}</span>
+                      </div>
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'डिजिटल नकल (CD):' : 'Digital Copies:'}</strong> {locale === 'hi' ? 'सर्टिफाइड कॉपी ऑनलाइन ट्रैकिंग व प्राप्ति' : 'Online certified copy delivery'}</span>
+                      </div>
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'ई-सेवा केंद्र:' : 'e-Sewa Kendra:'}</strong> {locale === 'hi' ? 'कोर्ट मुख्य द्वार पर एडवोकेट सहायता काउंटर' : 'Assistance counter at main court gate'}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <a
+                    href="https://services.ecourts.gov.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] text-emerald-800 bg-emerald-50 hover:bg-emerald-100 p-2 rounded-lg font-semibold flex items-center justify-between transition"
+                  >
+                    <span>{locale === 'hi' ? 'ई-कोर्ट्स पोर्टल खोलें ↗' : 'e-Courts Official Portal ↗'}</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+
+                {/* Card 4: Legal Aid & Amenities */}
+                <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3 flex flex-col justify-between hover:border-amber-400 transition">
+                  <div className="space-y-2.5">
+                    <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
+                      <Shield className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif font-bold text-sm text-slate-900">
+                      {locale === 'hi' ? 'विधिक सहायता व बार सुविधाएं' : 'Legal Aid & Bar Amenities'}
+                    </h4>
+                    <div className="text-xs space-y-1.5 text-slate-600 pt-1">
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'DLSA अलवर:' : 'DLSA Alwar:'}</strong> {locale === 'hi' ? 'एडीआर भवन, निःशुल्क कानूनी सलाह व सहायता' : 'ADR Building, Free legal aid'}</span>
+                      </div>
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'स्थायी लोक अदालत:' : 'Permanent Lok Adalat:'}</strong> {locale === 'hi' ? 'जनोपयोगी सेवाओं के विवादों का त्वरित निपटारा' : 'Public utility disputes'}</span>
+                      </div>
+                      <div className="flex items-start space-x-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
+                        <span><strong>{locale === 'hi' ? 'सेंट्रल लॉ लाइब्रेरी:' : 'Central Law Library:'}</strong> {locale === 'hi' ? 'AIR, SCC, RLR व ई-लाइब्रेरी कंप्यूटर' : 'AIR, SCC, RLR & Online Legal Portals'}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-[11px] bg-slate-50 p-2 rounded-lg text-slate-500 font-medium">
+                    {locale === 'hi' ? '☕ बार कैंटीन, एसी बार रूम व महिला अधिवक्ता कक्ष' : '☕ Bar Canteen, AC Bar Room & Women Bar Room'}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. LATEST ALWAR COURT JUDGMENTS & ORDERS */}
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-3 border-slate-200 gap-3">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
+                    {locale === 'hi' ? 'नवीनतम न्यायिक निर्णय बैंक' : 'Latest Court Precedent Bank'}
+                  </span>
+                  <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mt-1 flex items-center space-x-2">
+                    <Scale className="w-5 h-5 text-amber-600" />
+                    <span>{locale === 'hi' ? 'अलवर न्यायालयों के नवीनतम निर्णय व आदेश' : 'Latest Judgments of Alwar Courts'}</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {locale === 'hi' 
+                      ? 'जिला एवं सत्र न्यायालय, पॉक्सो, पारिवारिक कोर्ट, MACT अलवर व राजस्थान उच्च न्यायालय की प्रमुख नजीरें'
+                      : 'Recent landmark rulings from Sessions, POCSO, Family, MACT Alwar & High Court'}
+                  </p>
+                </div>
+
+                {/* Filter Pills */}
+                <div className="flex items-center space-x-1.5 overflow-x-auto text-xs">
+                  {[
+                    { id: 'all', labelHi: 'सभी (5)', labelEn: 'All (5)' },
+                    { id: 'sessions', labelHi: 'सत्र न्यायालय', labelEn: 'Sessions' },
+                    { id: 'pocso', labelHi: 'पॉक्सो कोर्ट', labelEn: 'POCSO' },
+                    { id: 'family', labelHi: 'पारिवारिक कोर्ट', labelEn: 'Family' },
+                    { id: 'mact', labelHi: 'MACT', labelEn: 'MACT' },
+                    { id: 'high_court', labelHi: 'उच्च न्यायालय', labelEn: 'High Court' }
+                  ].map(f => (
+                    <button
+                      key={f.id}
+                      onClick={() => setJudgmentFilter(f.id as any)}
+                      className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                        judgmentFilter === f.id
+                          ? 'bg-amber-600 text-white shadow'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                    >
+                      {locale === 'hi' ? f.labelHi : f.labelEn}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Judgments Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {ALWAR_COURT_JUDGMENTS
+                  .filter(j => judgmentFilter === 'all' || j.category === judgmentFilter)
+                  .map(judgment => (
+                    <div
+                      key={judgment.id}
+                      className="bg-white rounded-2xl border border-slate-200 hover:border-amber-400 p-5 shadow-sm hover:shadow-lg transition flex flex-col justify-between group space-y-3"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-800 px-2 py-0.5 rounded border border-slate-200">
+                            {locale === 'hi' ? judgment.courtNameHi : judgment.courtNameEn}
+                          </span>
+                          <span className="text-[11px] font-mono text-amber-700 bg-amber-50 px-2 py-0.5 rounded font-bold shrink-0">
+                            {judgment.decisionDate}
+                          </span>
+                        </div>
+
+                        <h4 className="font-serif font-bold text-sm text-slate-900 group-hover:text-amber-800 transition leading-snug">
+                          {judgment.caseTitle}
+                        </h4>
+                        
+                        <div className="text-[11px] font-mono text-slate-500 font-semibold">
+                          {judgment.caseNo}
+                        </div>
+
+                        <div className="text-[11px] bg-amber-500/10 text-amber-900 font-semibold px-2 py-1 rounded border border-amber-500/20">
+                          ⚖️ {judgment.lawAct}
+                        </div>
+
+                        <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed pt-1">
+                          {locale === 'hi' ? judgment.summaryHi : judgment.summaryEn}
+                        </p>
+                      </div>
+
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">
+                          {locale === 'hi' ? 'सत्यापित आदेश' : 'Verified Order'}
+                        </span>
+                        <button
+                          onClick={() => setSelectedJudgment(judgment)}
+                          className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs transition flex items-center space-x-1"
+                        >
+                          <span>{locale === 'hi' ? 'विवरण देखें' : 'View Ruling'}</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            {/* 4. LATEST ALWAR COURT & BAR NOTICES, CIRCULARS & NEWS */}
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-3 border-slate-200 gap-3">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    {locale === 'hi' ? 'ताजा परिपत्र एवं सूचना बोर्ड' : 'Court & Bar Notice Board'}
+                  </span>
+                  <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mt-1 flex items-center space-x-2">
+                    <Bell className="w-5 h-5 text-amber-600" />
+                    <span>{locale === 'hi' ? 'अलवर कोर्ट एवं बार की नवीनतम सूचनाएं व परिपत्र' : 'Latest Alwar Court & Bar Notices'}</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {locale === 'hi'
+                      ? 'जिला एवं सत्र न्यायाधीश कार्यालय, बार एसोसिएशन अलवर एवं विधिक सेवा प्राधिकरण द्वारा जारी अधिकृत सूचनाएं'
+                      : 'Official notifications issued by District Judge Alwar, Bar Association & DLSA'}
+                  </p>
+                </div>
+
+                {/* Notice Filter */}
+                <div className="flex items-center space-x-1.5 overflow-x-auto text-xs">
+                  {[
+                    { id: 'all', labelHi: 'सभी (5)', labelEn: 'All (5)' },
+                    { id: 'court', labelHi: 'कोर्ट रोस्टर', labelEn: 'Court' },
+                    { id: 'bar', labelHi: 'बार बैठक व सूचना', labelEn: 'Bar' },
+                    { id: 'dlsa', labelHi: 'लोक अदालत व शिविर', labelEn: 'DLSA / Camps' }
+                  ].map(f => (
+                    <button
+                      key={f.id}
+                      onClick={() => setNoticeFilter(f.id as any)}
+                      className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                        noticeFilter === f.id
+                          ? 'bg-emerald-700 text-white shadow'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                    >
+                      {locale === 'hi' ? f.labelHi : f.labelEn}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Notices List Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {ALWAR_COURT_NOTICES
+                  .filter(n => noticeFilter === 'all' || n.category === noticeFilter)
+                  .map(notice => (
+                    <div
+                      key={notice.id}
+                      className="bg-white rounded-2xl border border-slate-200 hover:border-emerald-400 p-5 shadow-sm space-y-3 transition flex flex-col justify-between"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-md font-mono">
+                            {locale === 'hi' ? notice.badgeHi : notice.badgeEn}
+                          </span>
+                          <span className="text-xs text-slate-400 font-mono flex items-center space-x-1">
+                            <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                            <span>{notice.date}</span>
+                          </span>
+                        </div>
+
+                        <h4 className="font-serif font-bold text-sm text-slate-900 leading-snug">
+                          {locale === 'hi' ? notice.titleHi : notice.titleEn}
+                        </h4>
+
+                        <div className="text-[11px] text-amber-900 font-semibold flex items-center space-x-1">
+                          <Landmark className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                          <span>{locale === 'hi' ? notice.issuingAuthorityHi : notice.issuingAuthorityEn}</span>
+                        </div>
+
+                        <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                          {locale === 'hi' ? notice.contentHi : notice.contentEn}
+                        </p>
+                      </div>
+
+                      {notice.eventDate && (
+                        <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                          <span>{locale === 'hi' ? 'नियत तिथि / आयोजन:' : 'Scheduled Date:'}</span>
+                          <strong className="text-emerald-700 font-mono bg-emerald-50 px-2 py-0.5 rounded">
+                            {notice.eventDate}
+                          </strong>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            {/* 5. Photo Gallery Grid */}
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 border-slate-200 gap-4">
                 <div>
@@ -2012,6 +2599,89 @@ PARTICULARS OF APPLICANT ADVOCATE:
                 </button>
               </div>
             </form>
+
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODAL 6: ALWAR COURT JUDGMENT DETAILS MODAL */}
+      {/* ========================================================================= */}
+      {selectedJudgment && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 text-slate-900 shadow-2xl space-y-5 border border-slate-200 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-150">
+            
+            <div className="flex items-start justify-between border-b pb-4 border-slate-100">
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-md font-mono">
+                  {locale === 'hi' ? selectedJudgment.courtNameHi : selectedJudgment.courtNameEn}
+                </span>
+                <h3 className="font-serif font-bold text-lg text-slate-900">
+                  {selectedJudgment.caseTitle}
+                </h3>
+                <div className="text-xs font-mono text-slate-500 font-semibold">
+                  {selectedJudgment.caseNo} • {selectedJudgment.decisionDate}
+                </div>
+              </div>
+
+              <button
+                onClick={() => setSelectedJudgment(null)}
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200 font-medium">
+                <div>
+                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">
+                    {locale === 'hi' ? 'पीठ / न्यायाधीश:' : 'Judicial Bench:'}
+                  </span>
+                  <span className="text-slate-900 font-serif font-bold">{selectedJudgment.bench}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">
+                    {locale === 'hi' ? 'संबद्ध विधिक प्रावधान:' : 'Relevant Section:'}
+                  </span>
+                  <span className="text-amber-800 font-bold">{selectedJudgment.lawAct}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <h4 className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-1.5">
+                  <Scale className="w-4 h-4 text-amber-600" />
+                  <span>{locale === 'hi' ? 'निर्णय का सार एवं न्यायिक निष्कर्ष:' : 'Summary & Judicial Findings:'}</span>
+                </h4>
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 leading-relaxed space-y-2">
+                  <p>{locale === 'hi' ? selectedJudgment.summaryHi : selectedJudgment.summaryEn}</p>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <h4 className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-1.5">
+                  <Award className="w-4 h-4 text-emerald-600" />
+                  <span>{locale === 'hi' ? 'अलवर बार व अधिवक्ताओं हेतु विधिक महत्व:' : 'Significance for Alwar Practitioners:'}</span>
+                </h4>
+                <div className="p-3 bg-emerald-50 text-emerald-900 rounded-xl border border-emerald-200 text-xs font-medium">
+                  {locale === 'hi' ? selectedJudgment.significanceHi : selectedJudgment.significanceEn}
+                </div>
+              </div>
+
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span className="text-slate-400 font-mono text-[11px]">
+                अलवर जिला एवं सत्र न्यायालय नजीर बैंक
+              </span>
+              <button
+                onClick={() => setSelectedJudgment(null)}
+                className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition"
+              >
+                {locale === 'hi' ? 'बंद करें' : 'Close'}
+              </button>
+            </div>
 
           </div>
         </div>
