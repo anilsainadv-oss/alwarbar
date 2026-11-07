@@ -1,122 +1,300 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Building2, Landmark, Users, Award, BookOpen, Scale, 
   FileText, Shield, Download, Phone, Mail, MapPin, Clock, 
   CheckCircle2, ExternalLink, Calendar, Search, Trophy, 
-  Coffee, Laptop, UserCheck, ChevronRight, AlertCircle, Stamp, HeartHandshake
+  Coffee, Laptop, UserCheck, ChevronRight, ChevronLeft, 
+  AlertCircle, Stamp, HeartHandshake, Plus, Trash2, X, 
+  Image as ImageIcon, Eye, Maximize2, Sparkles, Filter
 } from 'lucide-react';
+
+interface BarMember {
+  id: string;
+  name: string;
+  enrolment_no: string;
+  membership_no: string;
+  role_title: string;
+  tenure: string;
+  is_current: boolean;
+  wing: string;
+  phone: string;
+  email: string;
+  chamber: string;
+  standing_years?: string;
+  photo_url?: string;
+  created_at?: string;
+}
+
+interface GalleryItem {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  image_url: string;
+  event_date: string;
+  is_slider: boolean;
+  created_at?: string;
+}
 
 export default function BarAssociationPage() {
   const { locale } = useLanguage();
-  const [activeTab, setActiveTab] = useState<'office-bearers' | 'history' | 'constitution' | 'judges' | 'senior-advocates' | 'welfare-amenities' | 'downloads'>('office-bearers');
-  const [judgeSearch, setJudgeSearch] = useState('');
+  
+  // Navigation & State
+  const [activeTab, setActiveTab] = useState<
+    'gallery' | 'current-members' | 'previous-members' | 'office-bearers' | 
+    'history' | 'constitution' | 'judges' | 'downloads'
+  >('gallery');
+
+  // Auth User
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const isAdmin = currentUser?.role === 'public_admin';
+
+  // Members State
+  const [currentMembers, setCurrentMembers] = useState<BarMember[]>([]);
+  const [previousMembers, setPreviousMembers] = useState<BarMember[]>([]);
+  const [membersLoading, setMembersLoading] = useState(true);
+  const [memberSearch, setMemberSearch] = useState('');
+  const [selectedWing, setSelectedWing] = useState('all');
+  const [selectedPrevTenure, setSelectedPrevTenure] = useState('all');
+
+  // Gallery State
+  const [gallery, setGallery] = useState<GalleryItem[]>([]);
+  const [sliderImages, setSliderImages] = useState<GalleryItem[]>([]);
+  const [galleryCategory, setGalleryCategory] = useState('all');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isSlidePaused, setIsSlidePaused] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
+
+  // Admin Modals State
+  const [addMemberModalOpen, setAddMemberModalOpen] = useState(false);
+  const [addPhotoModalOpen, setAddPhotoModalOpen] = useState(false);
+  const [actionSuccess, setActionSuccess] = useState<string | null>(null);
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
 
-  // Office Bearers Data
-  const officeBearers = [
-    {
-      positionHi: 'अध्यक्ष (President)',
-      positionEn: 'President',
-      name: 'Advocate Anil Sain',
-      experience: '22+ Years Practice',
-      chamber: 'Chamber No. 12, Civil Wing, Alwar',
-      phone: '0144-2334455 / 98290XXXXX',
-      email: 'president@alwarbar.org',
-      roleDescription: 'Leading Bar administrative decisions, state bar liaison, advocate protection act advocacy, and judicial coordination.'
-    },
-    {
-      positionHi: 'उपाध्यक्ष (Vice President)',
-      positionEn: 'Vice President',
-      name: 'Advocate Rajesh Sharma',
-      experience: '18+ Years Practice',
-      chamber: 'Chamber No. 24, Criminal Wing, Alwar',
-      phone: '0144-2334456',
-      email: 'vp@alwarbar.org',
-      roleDescription: 'Overseeing junior advocate welfare, chamber infrastructure, and dispute mediation.'
-    },
-    {
-      positionHi: 'महासचिव (General Secretary)',
-      positionEn: 'General Secretary',
-      name: 'Advocate Mukesh Kumar Meena',
-      experience: '16+ Years Practice',
-      chamber: 'Chamber No. 18, Main Court Wing',
-      phone: '0144-2334457',
-      email: 'secretary@alwarbar.org',
-      roleDescription: 'General Bar administration, executive meetings, daily notices, and member coordination.'
-    },
-    {
-      positionHi: 'संयुक्त सचिव (Joint Secretary)',
-      positionEn: 'Joint Secretary',
-      name: 'Advocate Sunita Gupta',
-      experience: '12+ Years Practice',
-      chamber: 'Chamber No. 31, Family Court Wing',
-      phone: '0144-2334458',
-      email: 'jointsecretary@alwarbar.org',
-      roleDescription: 'Cultural events, continuing legal education workshops, and women advocates wing.'
-    },
-    {
-      positionHi: 'कोषाध्यक्ष (Treasurer)',
-      positionEn: 'Treasurer',
-      name: 'Advocate Dinesh Chand Yadav',
-      experience: '15+ Years Practice',
-      chamber: 'Chamber No. 08, Ground Floor',
-      phone: '0144-2334459',
-      email: 'treasurer@alwarbar.org',
-      roleDescription: 'Financial accounting, bar membership fee collection, welfare fund disbursements, and annual audit.'
-    },
-    {
-      positionHi: 'पुस्तकालय सचिव (Library Secretary)',
-      positionEn: 'Library Secretary',
-      name: 'Advocate Hemant Singhal',
-      experience: '11+ Years Practice',
-      chamber: 'Chamber No. 42, Library Block',
-      phone: '0144-2334460',
-      email: 'library@alwarbar.org',
-      roleDescription: 'Digital e-library supervision, law reporters (AIR/SCC), bare acts procurement, and study rooms.'
+  // New Member Form Data
+  const [newMemberForm, setNewMemberForm] = useState({
+    name: '',
+    enrolment_no: '',
+    membership_no: '',
+    role_title: 'सदस्य (Member)',
+    tenure: '2024–2026',
+    is_current: true,
+    wing: 'Civil Wing',
+    phone: '',
+    email: '',
+    chamber: '',
+    standing_years: '',
+    photo_url: ''
+  });
+
+  // New Photo Form Data
+  const [newPhotoForm, setNewPhotoForm] = useState({
+    title: '',
+    description: '',
+    category: 'events',
+    image_url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
+    event_date: new Date().toISOString().split('T')[0],
+    is_slider: true
+  });
+
+  // 1. Fetch Auth User
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then(res => res.json())
+      .then(data => {
+        if (data?.user) setCurrentUser(data.user);
+        else setCurrentUser(null);
+      })
+      .catch(() => setCurrentUser(null));
+  }, []);
+
+  // 2. Fetch Members
+  const loadMembers = () => {
+    setMembersLoading(true);
+    fetch('/api/bar-association/members')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setCurrentMembers(data.currentMembers || []);
+          setPreviousMembers(data.previousMembers || []);
+        }
+      })
+      .catch(console.error)
+      .finally(() => setMembersLoading(false));
+  };
+
+  // 3. Fetch Gallery
+  const loadGallery = () => {
+    fetch('/api/bar-association/gallery')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setGallery(data.gallery || []);
+          setSliderImages(data.sliderImages || []);
+        }
+      })
+      .catch(console.error);
+  };
+
+  useEffect(() => {
+    loadMembers();
+    loadGallery();
+  }, []);
+
+  // Auto-advance image slider
+  useEffect(() => {
+    if (sliderImages.length === 0 || isSlidePaused) return;
+    const interval = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % sliderImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [sliderImages.length, isSlidePaused]);
+
+  // Admin Handler: Add Member
+  const handleAddMember = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMemberForm.name || !newMemberForm.enrolment_no) {
+      alert('कृपया अधिवक्ता का नाम एवं सनद नंबर भरें!');
+      return;
     }
-  ];
 
-  // Executive Members
-  const executiveMembers = [
-    { name: 'Advocate Vikram Singh Choudhary', wing: 'Criminal Wing Representative', term: '2024-2026' },
-    { name: 'Advocate Suman Lata Sharma', wing: 'Women Advocates Representative', term: '2024-2026' },
-    { name: 'Advocate Imran Khan', wing: 'Civil & Commercial Wing', term: '2024-2026' },
-    { name: 'Advocate Rameshwar Prasad Saini', wing: 'Revenue Courts & Mini Secretariat', term: '2024-2026' },
-    { name: 'Advocate Arvind Kaushik', wing: 'Young Lawyers Wing (0-7 Yrs)', term: '2024-2026' },
-    { name: 'Advocate Surendra Kumar Jain', wing: 'Tribunals & Motor Accident Claims', term: '2024-2026' },
-  ];
+    try {
+      const res = await fetch('/api/bar-association/members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMemberForm)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setActionSuccess(`अधिवक्ता सदस्य '${newMemberForm.name}' सफलतापूर्वक जोड़ा गया!`);
+        setTimeout(() => setActionSuccess(null), 4000);
+        setAddMemberModalOpen(false);
+        setNewMemberForm({
+          name: '',
+          enrolment_no: '',
+          membership_no: '',
+          role_title: 'सदस्य (Member)',
+          tenure: '2024–2026',
+          is_current: true,
+          wing: 'Civil Wing',
+          phone: '',
+          email: '',
+          chamber: '',
+          standing_years: '',
+          photo_url: ''
+        });
+        loadMembers();
+      } else {
+        alert(data.error || 'सदस्य जोड़ने में त्रुटि हुई।');
+      }
+    } catch (err: any) {
+      alert('Network Error: ' + err.message);
+    }
+  };
 
-  // Roll of Past Presidents
-  const pastPresidents = [
-    { tenure: '2022 – 2024', name: 'Advocate R. K. Sharma', tenureHighlight: 'Constructed New Digital e-Library and High-Speed Wi-Fi Zone' },
-    { tenure: '2020 – 2022', name: 'Advocate Bharat Bhushan Yadav', tenureHighlight: 'Facilitated COVID-19 Advocate Relief Fund & Virtual Court Setup' },
-    { tenure: '2018 – 2020', name: 'Advocate S. N. Mathur', tenureHighlight: 'Renovated Central Air-Conditioned Bar Auditorium' },
-    { tenure: '2016 – 2018', name: 'Advocate Mahendra Pal Gupta', tenureHighlight: 'Established 18 Regional Tehsils Bar Mutual Aid Committee' },
-    { tenure: '2014 – 2016', name: 'Advocate Govind Narayan Saxena', tenureHighlight: 'Organized Rajasthan State Level Judicial Conference at Alwar' },
-    { tenure: '2012 – 2014', name: 'Advocate Devendra Kumar Sharma', tenureHighlight: 'Automated Advocate Welfare Stamp Passbook & Registry' }
-  ];
+  // Admin Handler: Delete Member
+  const handleDeleteMember = async (id: string, name: string) => {
+    if (!confirm(`क्या आप सदस्य '${name}' को हटाना चाहते हैं?`)) return;
+    try {
+      const res = await fetch(`/api/bar-association/members?id=${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        setActionSuccess(`सदस्य '${name}' को हटाया गया।`);
+        setTimeout(() => setActionSuccess(null), 4000);
+        loadMembers();
+      } else {
+        alert(data.error || 'हटाने में त्रुटि।');
+      }
+    } catch (err: any) {
+      alert('Error: ' + err.message);
+    }
+  };
 
-  // Judicial Officers Roster (Alwar Judgeship)
-  const judicialOfficers = [
-    { courtName: 'District & Sessions Judge', roomNo: 'Court Room No. 1', officerName: 'Hon’ble District & Sessions Judge', jurisdiction: 'Judgeship Head, Sessions Trials, Civil Appeals, Revisions', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Special Court (POCSO Act Cases No. 1)', roomNo: 'Court Room No. 2', officerName: 'Special Judge, POCSO Act', jurisdiction: 'Offences under Protection of Children from Sexual Offences Act', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Special Court (SC/ST Prevention of Atrocities)', roomNo: 'Court Room No. 3', officerName: 'Special Judge, SC/ST Act', jurisdiction: 'Trials under Scheduled Castes and Scheduled Tribes Act', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Family Court No. 1', roomNo: 'Court Room No. 4', officerName: 'Principal Judge, Family Court', jurisdiction: 'Matrimonial disputes, maintenance, guardianship, custody', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Family Court No. 2', roomNo: 'Court Room No. 5', officerName: 'Judge, Family Court No. 2', jurisdiction: 'Domestic relations, divorce petitions, Hindu Marriage Act', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Motor Accident Claims Tribunal (MACT)', roomNo: 'Court Room No. 6', officerName: 'Judge, MACT Alwar', jurisdiction: 'Motor vehicle compensation claims and insurance matters', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Commercial Court, Alwar', roomNo: 'Court Room No. 7', officerName: 'Judge, Commercial Court', jurisdiction: 'Commercial disputes, contracts, arbitration enforcement', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Additional District & Sessions Judge No. 1', roomNo: 'Court Room No. 8', officerName: 'ADJ Court No. 1', jurisdiction: 'Sessions trials, criminal appeals, civil suits above threshold', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Additional District & Sessions Judge No. 2', roomNo: 'Court Room No. 9', officerName: 'ADJ Court No. 2', jurisdiction: 'Civil appeals, NDPS trials, bail applications', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Additional District & Sessions Judge No. 3', roomNo: 'Court Room No. 10', officerName: 'ADJ Court No. 3', jurisdiction: 'Special criminal trials, civil original jurisdiction', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Chief Judicial Magistrate (CJM)', roomNo: 'Court Room No. 11', officerName: 'CJM Alwar', jurisdiction: 'Judicial magistrate superintendence, remand, police investigations', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Additional Chief Judicial Magistrate No. 1', roomNo: 'Court Room No. 12', officerName: 'ACJM Court No. 1', jurisdiction: 'Criminal trial, Section 138 NI Act, CrPC inquiries', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Additional Chief Judicial Magistrate No. 2', roomNo: 'Court Room No. 13', officerName: 'ACJM Court No. 2', jurisdiction: 'Criminal trial, cyber crime, IPC/BNS matters', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' },
-    { courtName: 'Civil Judge & Judicial Magistrate No. 1', roomNo: 'Court Room No. 14', officerName: 'Civil Judge & JM No. 1', jurisdiction: 'Civil suits, injunctions, rent control, summary trials', ecourtsUrl: 'https://districts.ecourts.gov.in/alwar' }
-  ];
+  // Admin Handler: Add Photo
+  const handleAddPhoto = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPhotoForm.title || !newPhotoForm.image_url) {
+      alert('कृपया फोटो का शीर्षक एवं इमेज यूआरएल भरें!');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/bar-association/gallery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPhotoForm)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setActionSuccess(`नई फोटो '${newPhotoForm.title}' सफलतापूर्वक गैलरी में जोड़ी गई!`);
+        setTimeout(() => setActionSuccess(null), 4000);
+        setAddPhotoModalOpen(false);
+        setNewPhotoForm({
+          title: '',
+          description: '',
+          category: 'events',
+          image_url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
+          event_date: new Date().toISOString().split('T')[0],
+          is_slider: true
+        });
+        loadGallery();
+      } else {
+        alert(data.error || 'फोटो जोड़ने में त्रुटि हुई।');
+      }
+    } catch (err: any) {
+      alert('Network Error: ' + err.message);
+    }
+  };
+
+  // Admin Handler: Delete Photo
+  const handleDeletePhoto = async (id: string, title: string) => {
+    if (!confirm(`क्या आप फोटो '${title}' को गैलरी से हटाना चाहते हैं?`)) return;
+    try {
+      const res = await fetch(`/api/bar-association/gallery?id=${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        setActionSuccess(`फोटो हटाई गई।`);
+        setTimeout(() => setActionSuccess(null), 4000);
+        loadGallery();
+      } else {
+        alert(data.error || 'हटाने में त्रुटि।');
+      }
+    } catch (err: any) {
+      alert('Error: ' + err.message);
+    }
+  };
+
+  // Filter Current Members
+  const filteredCurrentMembers = currentMembers.filter(m => {
+    const matchesSearch = 
+      m.name.toLowerCase().includes(memberSearch.toLowerCase()) ||
+      m.enrolment_no.toLowerCase().includes(memberSearch.toLowerCase()) ||
+      m.membership_no.toLowerCase().includes(memberSearch.toLowerCase()) ||
+      m.role_title.toLowerCase().includes(memberSearch.toLowerCase()) ||
+      (m.phone && m.phone.includes(memberSearch));
+    const matchesWing = selectedWing === 'all' || (m.wing && m.wing.toLowerCase().includes(selectedWing.toLowerCase()));
+    return matchesSearch && matchesWing;
+  });
+
+  // Filter Previous Members
+  const filteredPrevMembers = previousMembers.filter(m => {
+    const matchesSearch = 
+      m.name.toLowerCase().includes(memberSearch.toLowerCase()) ||
+      m.enrolment_no.toLowerCase().includes(memberSearch.toLowerCase()) ||
+      m.role_title.toLowerCase().includes(memberSearch.toLowerCase());
+    const matchesTenure = selectedPrevTenure === 'all' || m.tenure === selectedPrevTenure;
+    return matchesSearch && matchesTenure;
+  });
+
+  // Filter Gallery
+  const filteredGallery = gallery.filter(item => {
+    if (galleryCategory === 'all') return true;
+    return item.category === galleryCategory;
+  });
 
   // Bar Association Downloads
   const barDownloads = [
@@ -195,7 +373,6 @@ export default function BarAssociationPage() {
   ];
 
   const handleDownloadFile = (doc: typeof barDownloads[0]) => {
-    // Generate text/docx simulation
     const content = `================================================================================
 DISTRICT & SESSIONS BAR ASSOCIATION, ALWAR (RAJASTHAN)
 Est. 1948 • Court Complex, Station Road, Alwar - 301001
@@ -225,20 +402,12 @@ PARTICULARS OF APPLICANT ADVOCATE:
 DECLARATION & VERIFICATION:
 I hereby solemnly declare that I am an enrolled practicing advocate on the live roll 
 of the Bar Council of Rajasthan and actively practicing at District & Sessions Court, 
-Alwar and its affiliated 18 sub-divisional courts. All details submitted herein are 
-true and correct to the best of my knowledge.
+Alwar. All details submitted herein are true and correct.
 
 Date: ____________________
 Place: Alwar (Rajasthan)
 
 Signature of Advocate: ________________________
-
---------------------------------------------------------------------------------
-FOR OFFICE USE ONLY (DISTRICT & SESSIONS BAR ASSOCIATION, ALWAR):
-Verification by Scrutiny Committee: [ APPROVED / PENDING / REJECTED ]
-Receipt No: ________________________ Prescribed Fee: _________________________
-President Signature: __________________ General Secretary Signature: __________
-Office Seal & Stamp:
 ================================================================================`;
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -255,17 +424,11 @@ Office Seal & Stamp:
     setTimeout(() => setDownloadSuccess(null), 4000);
   };
 
-  const filteredJudges = judicialOfficers.filter(j => 
-    j.courtName.toLowerCase().includes(judgeSearch.toLowerCase()) ||
-    j.officerName.toLowerCase().includes(judgeSearch.toLowerCase()) ||
-    j.jurisdiction.toLowerCase().includes(judgeSearch.toLowerCase())
-  );
-
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-16">
       
-      {/* 1. HERO & BRANDING BANNER */}
-      <div className="bg-gradient-to-r from-legal-navyDark via-legal-navy to-legal-navyLight text-white py-12 px-4 border-b border-legal-gold/30">
+      {/* 1. HERO BRANDING & TOP BANNER */}
+      <div className="bg-gradient-to-r from-legal-navyDark via-legal-navy to-legal-navyLight text-white py-10 px-4 border-b border-legal-gold/30">
         <div className="container mx-auto max-w-6xl space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
@@ -274,13 +437,13 @@ Office Seal & Stamp:
               </div>
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full border border-amber-400/30">
-                  Apex District Bar Association • Matsya Region
+                  Apex District Bar Association • Matsya Region (Est. 1948)
                 </span>
                 <h1 className="font-serif font-extrabold text-2xl sm:text-4xl text-white mt-1 leading-tight">
                   जिला एवं सत्र बार एसोसिएशन, अलवर
                 </h1>
                 <p className="text-xs sm:text-sm text-slate-300 font-light mt-0.5">
-                  District & Sessions Bar Association, Alwar (Est. 1948) — न्याय, गरिमा, विधिक स्वावलंबन एवं अधिवक्ता कल्याण
+                  District & Sessions Bar Association, Alwar — न्याय, गरिमा, विधिक स्वावलंबन एवं 1,100+ अधिवक्ताओं की शीर्ष संस्था
                 </p>
               </div>
             </div>
@@ -293,23 +456,64 @@ Office Seal & Stamp:
                   <span>0144-2334455 / 2334456</span>
                 </div>
               </div>
-              <Link
-                href="/advocates"
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl transition shadow flex items-center space-x-1.5"
-              >
-                <Users className="w-4 h-4" />
-                <span>अधिवक्ता डायरेक्टरी (1100+)</span>
-              </Link>
+
+              {/* Admin Privileges Badge */}
+              {isAdmin ? (
+                <div className="bg-amber-500 text-slate-950 px-3 py-2 rounded-xl font-bold flex items-center space-x-1 shadow">
+                  <Sparkles className="w-4 h-4" />
+                  <span>एडमिन मोड सक्रिय (Admin Mode)</span>
+                </div>
+              ) : (
+                <div className="text-[11px] text-slate-300 bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10">
+                  <span>ℹ️ सदस्य/फोटो जोड़ने हेतु Admin लॉगिन आवश्यक</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* 2. SUB-NAVIGATION TABS (Matches Jaipur Bar & RHCBA Navigation Options) */}
+      {/* 2. SUB-NAVIGATION TABS (All 8 Options) */}
       <div className="bg-[#0b172a] text-white border-b border-slate-800 sticky top-14 z-40 shadow-lg">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto text-xs uppercase font-bold tracking-wider py-1.5 scrollbar-none">
             
+            <button
+              onClick={() => setActiveTab('gallery')}
+              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'gallery'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <ImageIcon className="w-4 h-4" />
+              <span>फोटो गैलरी एवं स्लाइडर</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('current-members')}
+              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'current-members'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              <span>वर्तमान सदस्य सूची ({currentMembers.length})</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('previous-members')}
+              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'previous-members'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Award className="w-4 h-4" />
+              <span>पूर्व सदस्य एवं कार्यकारिणी</span>
+            </button>
+
             <button
               onClick={() => setActiveTab('office-bearers')}
               className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
@@ -318,8 +522,8 @@ Office Seal & Stamp:
                   : 'text-slate-300 hover:text-white hover:bg-white/5'
               }`}
             >
-              <Users className="w-4 h-4" />
-              <span>कार्यकारिणी व पदाधिकारी</span>
+              <Scale className="w-4 h-4" />
+              <span>कार्यकारिणी संदेश</span>
             </button>
 
             <button
@@ -359,30 +563,6 @@ Office Seal & Stamp:
             </button>
 
             <button
-              onClick={() => setActiveTab('senior-advocates')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'senior-advocates'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Award className="w-4 h-4" />
-              <span>वरिष्ठ अधिवक्ता एवं BCR</span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('welfare-amenities')}
-              className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
-                activeTab === 'welfare-amenities'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Shield className="w-4 h-4" />
-              <span>कल्याण, ई-लाइब्रेरी व खेल</span>
-            </button>
-
-            <button
               onClick={() => setActiveTab('downloads')}
               className={`px-3.5 py-2.5 rounded-lg transition whitespace-nowrap flex items-center space-x-1.5 ${
                 activeTab === 'downloads'
@@ -391,18 +571,24 @@ Office Seal & Stamp:
               }`}
             >
               <Download className="w-4 h-4" />
-              <span>डाउनलोड केंद्र (8 प्रपत्र)</span>
+              <span>डाउनलोड केंद्र (8)</span>
             </button>
 
           </div>
         </div>
       </div>
 
-      {/* SUCCESS TOAST FOR DOWNLOAD */}
+      {/* NOTIFICATION TOAST */}
+      {actionSuccess && (
+        <div className="fixed top-20 right-6 z-50 bg-emerald-700 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold animate-in slide-in-from-top-2 border border-emerald-400/30">
+          <CheckCircle2 className="w-5 h-5 text-emerald-300" />
+          <span>{actionSuccess}</span>
+        </div>
+      )}
       {downloadSuccess && (
-        <div className="fixed top-20 right-6 z-50 bg-emerald-700 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold animate-in slide-in-from-top-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-          <span>सफलतापूर्वक डाउनलोड प्रारंभ: {downloadSuccess}</span>
+        <div className="fixed top-20 right-6 z-50 bg-blue-700 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold animate-in slide-in-from-top-2">
+          <Download className="w-4 h-4 text-blue-300" />
+          <span>डाउनलोड प्रारंभ: {downloadSuccess}</span>
         </div>
       )}
 
@@ -410,11 +596,512 @@ Office Seal & Stamp:
       <div className="container mx-auto max-w-6xl px-4 py-8">
 
         {/* ========================================================================= */}
-        {/* TAB 1: OFFICE BEARERS & EXECUTIVE COMMITTEE (Matches Jaipur Bar & RHCBA) */}
+        {/* TAB 1: IMAGE SLIDER & PHOTO GALLERY */}
+        {/* ========================================================================= */}
+        {activeTab === 'gallery' && (
+          <div className="space-y-10">
+            
+            {/* 1.1 HERO IMAGE SLIDER (Interactive Carousel) */}
+            {sliderImages.length > 0 && (
+              <div 
+                className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-950 group h-[260px] sm:h-[400px] lg:h-[480px]"
+                onMouseEnter={() => setIsSlidePaused(true)}
+                onMouseLeave={() => setIsSlidePaused(false)}
+              >
+                {/* Slides */}
+                {sliderImages.map((slide, idx) => (
+                  <div
+                    key={slide.id}
+                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                      idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                    }`}
+                  >
+                    <img
+                      src={slide.image_url}
+                      alt={slide.title}
+                      className="w-full h-full object-cover brightness-[0.75]"
+                    />
+                    
+                    {/* Gradient Overlay & Captions */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent flex flex-col justify-end p-6 sm:p-10 text-white">
+                      <div className="space-y-2 max-w-3xl">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full font-mono">
+                            {slide.category.toUpperCase()}
+                          </span>
+                          <span className="text-xs text-amber-300 font-mono flex items-center space-x-1">
+                            <Calendar className="w-3.5 h-3.5" />
+                            <span>दिनांक: {slide.event_date}</span>
+                          </span>
+                        </div>
+
+                        <h2 className="font-serif font-bold text-lg sm:text-3xl text-white drop-shadow-md leading-tight">
+                          {slide.title}
+                        </h2>
+
+                        <p className="text-xs sm:text-sm text-slate-200 line-clamp-2 leading-relaxed drop-shadow font-light">
+                          {slide.description}
+                        </p>
+                      </div>
+
+                      <div className="pt-3 flex items-center justify-between">
+                        <button
+                          onClick={() => setLightboxImage(slide)}
+                          className="px-3.5 py-1.5 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition text-white border border-white/20"
+                        >
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          <span>फुल स्क्रीन देखें (View Full Screen)</span>
+                        </button>
+
+                        <span className="text-xs font-mono text-slate-300">
+                          {idx + 1} / {sliderImages.length}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Left & Right Controls */}
+                <button
+                  onClick={() => setCurrentSlide(prev => (prev - 1 + sliderImages.length) % sliderImages.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-sm transition border border-white/20"
+                  title="Previous Slide"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={() => setCurrentSlide(prev => (prev + 1) % sliderImages.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-sm transition border border-white/20"
+                  title="Next Slide"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+
+                {/* Bottom Dots Indicator */}
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center space-x-2">
+                  {sliderImages.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      onClick={() => setCurrentSlide(dotIdx)}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        dotIdx === currentSlide ? 'w-8 bg-amber-400' : 'w-2 bg-white/50 hover:bg-white/80'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 1.2 CATEGORIZED PHOTO GALLERY GRID */}
+            <div className="space-y-6">
+              
+              {/* Gallery Header & Admin Controls */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 border-slate-200 gap-4">
+                <div>
+                  <h3 className="font-serif font-bold text-2xl text-slate-900 flex items-center space-x-2">
+                    <ImageIcon className="w-6 h-6 text-amber-600" />
+                    <span>अलवर बार एसोसिएशन फोटो गैलरी (Photo Gallery)</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    शपथ ग्रहण समारोह, राष्ट्रीय लोक अदालत, लॉयर्स प्रीमियर लीग (APL), विधिक कार्यशालाएं एवं ऐतिहासिक परिसर
+                  </p>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  {isAdmin ? (
+                    <button
+                      onClick={() => setAddPhotoModalOpen(true)}
+                      className="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold rounded-xl text-xs transition shadow flex items-center space-x-1.5"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>+ नई फोटो जोड़ें (Upload Photo)</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setAddPhotoModalOpen(true)}
+                      className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-lg text-xs font-semibold flex items-center space-x-1"
+                      title="एडमिन के रूप में फोटो जोड़ने का विकल्प"
+                    >
+                      <Plus className="w-3.5 h-3.5 text-amber-400" />
+                      <span>+ फोटो जोड़ें (Admin)</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Gallery Filter Categories */}
+              <div className="flex items-center space-x-2 overflow-x-auto text-xs pb-1">
+                {[
+                  { id: 'all', label: 'सभी फोटो (All)' },
+                  { id: 'ceremony', label: 'शपथ ग्रहण व सभाएं' },
+                  { id: 'events', label: 'विधिक कार्यशाला व सेमिनार' },
+                  { id: 'sports', label: 'लॉयर्स प्रीमियर लीग (APL)' },
+                  { id: 'campus', label: 'कोर्ट परिसर व धरोहर' }
+                ].map(cat => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setGalleryCategory(cat.id)}
+                    className={`px-3.5 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                      galleryCategory === cat.id
+                        ? 'bg-amber-500 text-slate-950 font-bold shadow'
+                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Photos Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredGallery.map(photo => (
+                  <div
+                    key={photo.id}
+                    className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col justify-between"
+                  >
+                    <div 
+                      className="relative h-52 overflow-hidden cursor-pointer"
+                      onClick={() => setLightboxImage(photo)}
+                    >
+                      <img
+                        src={photo.image_url}
+                        alt={photo.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+
+                      <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 backdrop-blur-md text-amber-300 px-2.5 py-1 rounded-md border border-white/20">
+                        {photo.category}
+                      </span>
+
+                      {photo.is_slider && (
+                        <span className="absolute top-3 right-3 text-[10px] font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded shadow">
+                          Slider
+                        </span>
+                      )}
+
+                      <div className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Eye className="w-4 h-4" />
+                      </div>
+                    </div>
+
+                    <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
+                      <div className="space-y-1">
+                        <div className="text-[11px] text-slate-400 font-mono flex items-center space-x-1">
+                          <Calendar className="w-3 h-3 text-amber-600" />
+                          <span>{photo.event_date}</span>
+                        </div>
+                        <h4 className="font-serif font-bold text-sm text-slate-900 group-hover:text-amber-700 transition leading-snug">
+                          {photo.title}
+                        </h4>
+                        <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                          {photo.description}
+                        </p>
+                      </div>
+
+                      {isAdmin && (
+                        <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                          <span className="text-[10px] text-slate-400 font-mono">ID: {photo.id}</span>
+                          <button
+                            onClick={() => handleDeletePhoto(photo.id, photo.title)}
+                            className="text-red-600 hover:text-red-800 font-semibold flex items-center space-x-1"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>हटाएं</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB 2: CURRENT BAR MEMBERS LIST (2024–2026) */}
+        {/* ========================================================================= */}
+        {activeTab === 'current-members' && (
+          <div className="space-y-6">
+            
+            {/* Header & Search Toolbar */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    Live Roll • Tenure 2024–2026
+                  </span>
+                  <h3 className="font-serif font-bold text-2xl text-slate-900 mt-1">
+                    वर्तमान बार सदस्य एवं कार्यकारिणी सूची (Current Bar Members)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    अलवर जिला एवं सत्र बार एसोसिएशन के सक्रिय सदस्य, पदाधिकारी एवं चैंबर संपर्क सूची
+                  </p>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => {
+                      setNewMemberForm(prev => ({ ...prev, is_current: true, tenure: '2024–2026' }));
+                      setAddMemberModalOpen(true);
+                    }}
+                    className="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold rounded-xl text-xs transition shadow flex items-center space-x-1.5"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>+ नया सदस्य जोड़ें (Add Member)</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Search & Wing Filter */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div className="relative sm:col-span-2">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    value={memberSearch}
+                    onChange={e => setMemberSearch(e.target.value)}
+                    placeholder="नाम, सनद नंबर (R/2268/2009), सदस्यता नंबर अथवा मोबाइल नंबर से खोजें..."
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40"
+                  />
+                </div>
+
+                <div>
+                  <select
+                    value={selectedWing}
+                    onChange={e => setSelectedWing(e.target.value)}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40 bg-white"
+                  >
+                    <option value="all">सभी विंग्स (All Wings)</option>
+                    <option value="civil">Civil Wing</option>
+                    <option value="criminal">Criminal Wing</option>
+                    <option value="revenue">Revenue Courts</option>
+                    <option value="women">Women Advocates</option>
+                    <option value="young">Young Lawyers</option>
+                    <option value="commercial">Commercial & Banking</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Current Members Grid Cards */}
+            {membersLoading ? (
+              <div className="py-16 text-center text-xs text-slate-400">
+                अधिवक्ता सदस्य लोड किए जा रहे हैं...
+              </div>
+            ) : filteredCurrentMembers.length === 0 ? (
+              <div className="p-12 text-center bg-white rounded-2xl border border-slate-200 text-xs text-slate-400 space-y-3">
+                <Users className="w-8 h-8 mx-auto text-slate-300" />
+                <p>कोई सदस्य नहीं मिला। अपनी सर्च अथवा विंग फिल्टर बदलें।</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredCurrentMembers.map(member => (
+                  <div
+                    key={member.id}
+                    className="bg-white rounded-2xl border border-slate-200 hover:border-amber-400 p-5 shadow-sm hover:shadow-md transition space-y-4 flex flex-col justify-between"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 text-amber-400 font-serif font-bold text-lg flex items-center justify-center shrink-0 shadow">
+                            {member.name.split(' ').slice(-1)[0][0] || 'अ'}
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 block max-w-fit mb-0.5">
+                              {member.role_title}
+                            </span>
+                            <h4 className="font-serif font-bold text-sm text-slate-900">
+                              {member.name}
+                            </h4>
+                          </div>
+                        </div>
+
+                        <span className="text-[10px] font-mono bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded font-bold">
+                          Live
+                        </span>
+                      </div>
+
+                      <div className="space-y-1.5 text-xs text-slate-600 bg-slate-50/70 p-3 rounded-xl border border-slate-100 font-mono">
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-400 text-[10px]">सनद / एनरोलमेंट:</span>
+                          <span className="font-bold text-amber-900">{member.enrolment_no}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-400 text-[10px]">बार सदस्यता सं.:</span>
+                          <span className="text-slate-800">{member.membership_no}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-400 text-[10px]">विंग / विशेषज्ञता:</span>
+                          <span className="text-slate-800 font-sans">{member.wing}</span>
+                        </div>
+                      </div>
+
+                      <div className="text-xs text-slate-600 space-y-1">
+                        {member.chamber && (
+                          <div className="flex items-center space-x-1.5 text-[11px]">
+                            <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                            <span className="truncate">{member.chamber}</span>
+                          </div>
+                        )}
+                        {member.phone && (
+                          <div className="flex items-center space-x-1.5 text-[11px] font-mono">
+                            <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                            <span>{member.phone}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {isAdmin && (
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span className="text-[10px] text-slate-400 font-mono">{member.tenure}</span>
+                        <button
+                          onClick={() => handleDeleteMember(member.id, member.name)}
+                          className="text-red-600 hover:text-red-800 font-semibold flex items-center space-x-1"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>हटाएं</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB 3: PREVIOUS BAR MEMBERS & EXECUTIVE ARCHIVES */}
+        {/* ========================================================================= */}
+        {activeTab === 'previous-members' && (
+          <div className="space-y-6">
+            
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200">
+                    Historical Archives • पूर्व कार्यकारिणी
+                  </span>
+                  <h3 className="font-serif font-bold text-2xl text-slate-900 mt-1">
+                    पूर्व बार सदस्य एवं पूर्व कार्यकारिणी नामावली
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    अलवर जिला बार एसोसिएशन के विगत कार्यकालों (2022–2024, 2020–2022, 2018–2020) के निर्वाचित पदाधिकारी व सदस्य
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setNewMemberForm(prev => ({ ...prev, is_current: false, tenure: '2022–2024' }));
+                    setAddMemberModalOpen(true);
+                  }}
+                  className="px-4 py-2 bg-gradient-to-r from-purple-700 to-purple-800 hover:from-purple-800 hover:to-purple-900 text-white font-bold rounded-xl text-xs transition shadow flex items-center space-x-1.5"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>+ पूर्व सदस्य जोड़ें (Add Archive)</span>
+                </button>
+              </div>
+
+              {/* Tenure Selection Filter */}
+              <div className="flex items-center space-x-2 overflow-x-auto text-xs pt-1">
+                <span className="text-slate-400 font-semibold shrink-0">कार्यकाल चुनें:</span>
+                {[
+                  { id: 'all', label: 'समस्त पूर्व कार्यकाल' },
+                  { id: '2022–2024', label: '2022–2024 (अध्यक्ष श्री आर.के. शर्मा)' },
+                  { id: '2020–2022', label: '2020–2022 (अध्यक्ष श्री बी.बी. यादव)' },
+                  { id: '2018–2020', label: '2018–2020 (अध्यक्ष श्री एस.एन. माथुर)' }
+                ].map(t => (
+                  <button
+                    key={t.id}
+                    onClick={() => setSelectedPrevTenure(t.id)}
+                    className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                      selectedPrevTenure === t.id
+                        ? 'bg-purple-700 text-white font-bold shadow'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Previous Members Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {filteredPrevMembers.map(member => (
+                <div
+                  key={member.id}
+                  className="bg-white rounded-2xl border border-slate-200 hover:border-purple-300 p-5 shadow-sm hover:shadow-md transition space-y-4 flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-12 h-12 rounded-xl bg-purple-950 text-purple-300 font-serif font-bold text-lg flex items-center justify-center shrink-0 shadow">
+                          {member.name.split(' ').slice(-1)[0][0] || 'अ'}
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-purple-50 text-purple-800 px-2 py-0.5 rounded border border-purple-200 block max-w-fit mb-0.5">
+                            {member.role_title}
+                          </span>
+                          <h4 className="font-serif font-bold text-sm text-slate-900">
+                            {member.name}
+                          </h4>
+                        </div>
+                      </div>
+
+                      <span className="text-[10px] font-mono bg-slate-100 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-bold">
+                        {member.tenure}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1.5 text-xs text-slate-600 bg-slate-50/70 p-3 rounded-xl border border-slate-100 font-mono">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-400 text-[10px]">सनद / एनरोलमेंट:</span>
+                        <span className="font-bold text-slate-900">{member.enrolment_no}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-400 text-[10px]">वकालत अनुभव:</span>
+                        <span className="text-slate-800 font-sans">{member.standing_years || '20+'} वर्ष</span>
+                      </div>
+                      {member.chamber && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-slate-400 text-[10px]">चैंबर पता:</span>
+                          <span className="text-slate-800 font-sans truncate max-w-[150px]">{member.chamber}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {isAdmin && (
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                      <span className="text-[10px] text-slate-400 font-mono">Archive Record</span>
+                      <button
+                        onClick={() => handleDeleteMember(member.id, member.name)}
+                        className="text-red-600 hover:text-red-800 font-semibold flex items-center space-x-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>हटाएं</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB 4: OFFICE BEARERS & MESSAGES (Executive Desk) */}
         {/* ========================================================================= */}
         {activeTab === 'office-bearers' && (
           <div className="space-y-10">
-            
             {/* President & Secretary Message Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
@@ -490,125 +1177,27 @@ Office Seal & Stamp:
 
             </div>
 
-            {/* List of Main Office Bearers */}
-            <div className="space-y-4">
-              <div className="border-b pb-3 border-slate-200 flex items-center justify-between">
-                <div>
-                  <h3 className="font-serif font-bold text-xl text-slate-900">
-                    वर्तमान कार्यकारिणी पदाधिकारी (Executive Office Bearers 2024–2026)
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    अलवर जिला एवं सत्र बार एसोसिएशन के निर्वाचित प्रमुख पदाधिकारी
-                  </p>
-                </div>
-                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
-                  Active Tenure
-                </span>
+            {/* Quick Link to Current Member List */}
+            <div className="p-4 bg-slate-900 text-white rounded-2xl flex items-center justify-between text-xs">
+              <div>
+                <span className="text-amber-400 font-bold block">1,100+ पंजीकृत अधिवक्ता सूची</span>
+                <span className="text-slate-300">वर्तमान 2024-2026 कार्यकारिणी एवं सभी सम्मानित सदस्यों का विवरण देखें</span>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {officeBearers.map((ob, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-xl border border-slate-200 hover:border-amber-400 p-5 shadow-sm hover:shadow-md transition space-y-3 flex flex-col justify-between"
-                  >
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                        {ob.positionHi}
-                      </span>
-                      <h4 className="font-serif font-bold text-base text-slate-900">
-                        {ob.name}
-                      </h4>
-                      <p className="text-xs text-slate-600 leading-snug">
-                        {ob.roleDescription}
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-slate-100 text-[11px] text-slate-500 space-y-1">
-                      <div className="flex items-center space-x-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                        <span className="truncate">{ob.chamber}</span>
-                      </div>
-                      <div className="flex items-center space-x-1.5 font-mono">
-                        <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                        <span>{ob.phone}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <button
+                onClick={() => setActiveTab('current-members')}
+                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition"
+              >
+                सदस्य सूची देखें →
+              </button>
             </div>
-
-            {/* Executive Committee Members (Wing Representatives) */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-              <h3 className="font-serif font-bold text-lg text-slate-900 flex items-center space-x-2">
-                <Users className="w-5 h-5 text-amber-600" />
-                <span>कार्यकारिणी सदस्यगण (Executive Committee Members)</span>
-              </h3>
-              <p className="text-xs text-slate-500">
-                विभिन्न न्यायालयी विंग्स एवं युवा/महिला अधिवक्ताओं के अधिकृत प्रतिनिधि
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
-                {executiveMembers.map((m, idx) => (
-                  <div key={idx} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-                    <div>
-                      <div className="font-bold text-slate-900">{m.name}</div>
-                      <div className="text-[11px] text-slate-500">{m.wing}</div>
-                    </div>
-                    <span className="text-[10px] font-mono bg-white px-2 py-0.5 rounded border border-slate-200 text-slate-600">
-                      {m.term}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Roll of Past Presidents (Roll of Honour - पूर्व अध्यक्षों की नामावली) */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b pb-3 border-slate-200">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-slate-900 flex items-center space-x-2">
-                    <Award className="w-5 h-5 text-amber-600" />
-                    <span>पूर्व अध्यक्षों की गौरवशाली नामावली (Roll of Past Presidents)</span>
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    अलवर बार एसोसिएशन के विकास में ऐतिहासिक योगदान देने वाले पूर्व अध्यक्षगण
-                  </p>
-                </div>
-                <span className="text-xs text-amber-800 font-semibold font-mono">
-                  1948 – वर्तमान
-                </span>
-              </div>
-
-              <div className="divide-y divide-slate-100">
-                {pastPresidents.map((p, idx) => (
-                  <div key={idx} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                    <div className="flex items-center space-x-3">
-                      <span className="w-24 shrink-0 font-mono font-bold text-amber-800 bg-amber-50 px-2 py-1 rounded text-center border border-amber-200">
-                        {p.tenure}
-                      </span>
-                      <span className="font-serif font-bold text-sm text-slate-900">
-                        {p.name}
-                      </span>
-                    </div>
-                    <span className="text-[11px] text-slate-600 italic">
-                      "{p.tenureHighlight}"
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 2: ALWAR BAR HISTORY & HERITAGE (Matches Jaipur Bar History) */}
+        {/* TAB 5: ALWAR BAR HISTORY (History & Heritage) */}
         {/* ========================================================================= */}
         {activeTab === 'history' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-8 text-xs text-slate-700 leading-relaxed">
-            
             <div className="border-b pb-4 border-slate-200">
               <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
                 Heritage & Legacy of Matsya Region
@@ -617,12 +1206,11 @@ Office Seal & Stamp:
                 अलवर जिला एवं सत्र बार एसोसिएशन का गौरवशाली इतिहास
               </h2>
               <p className="text-slate-500 text-xs mt-1">
-                स्वतंत्रता संग्राम से लेकर आधुनिक ई-कोर्ट युग तक न्याय और जनसेवा की अनूठी 75+ वर्षों की गाथा
+                1948 मत्स्य संघ काल से लेकर आधुनिक ई-कोर्ट युग तक न्याय और जनसेवा की अनूठी 75+ वर्षों की गाथा
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
               <div className="md:col-span-2 space-y-4">
                 <h3 className="font-serif font-bold text-base text-slate-900">
                   1. 1948 में मत्स्य संघ एवं जिला न्यायपालिका का गठन
@@ -630,82 +1218,34 @@ Office Seal & Stamp:
                 <p>
                   18 मार्च 1948 को जब अलवर, भरतपुर, धौलपुर और करौली रियासतों को मिलाकर ऐतिहासिक <strong>मत्स्य संघ (Matsya Union)</strong> का गठन हुआ, तब अलवर को विधिक और प्रशासनिक केंद्र के रूप में मान्यता प्राप्त हुई। इसी ऐतिहासिक पृष्ठभूमि में अलवर जिला एवं सत्र न्यायालय की विधिवत स्थापना हुई और अलवर बार एसोसिएशन का जन्म हुआ।
                 </p>
-                <p>
-                  रियासतकालीन 'इजलास खास' और दीवानी अदालतों की पुरानी परंपराओं को त्यागकर भारतीय संविधान के मूल्यों पर आधारित एक स्वतंत्र, सशक्त और जागरूक अधिवक्ता समुदाय ने यहाँ वकालत प्रारंभ की।
-                </p>
 
                 <h3 className="font-serif font-bold text-base text-slate-900 pt-3 border-t border-slate-100">
                   2. 18 अधीनस्थ बार संघों का मातृ संगठन (Apex Bar of 18 Tehsils)
                 </h3>
                 <p>
-                  अलवर बार एसोसिएशन केवल जिला मुख्यालय तक सीमित नहीं है, बल्कि यह जिले की समस्त 18 उपखंडीय एवं तहसील बार एसोसिएशनों (बहरोड़, तिजारा, किशनगढ़ बास, राजगढ़, लक्ष्मणगढ़, कठूमर, बानसूर, थानागाजी, रामगढ़, खैरथल, कोटकासिम, मुंडावर, नीमराणा, मालाखेड़ा, टपूकड़ा, गोविंदगढ़, रैणी आदि) का संरक्षक एवं शीर्ष मातृ संगठन है।
-                </p>
-                <p>
-                  बार काउंसिल ऑफ राजस्थान के साथ मिलकर यह एसोसिएशन अधिवक्ताओं के अधिकारों, न्यायिक सुधारों तथा राजस्थान अधिवक्ता कल्याण कोष के पारदर्शी संचालन में अग्रणी भूमिका निभाती रही है।
-                </p>
-
-                <h3 className="font-serif font-bold text-base text-slate-900 pt-3 border-t border-slate-100">
-                  3. ऐतिहासिक न्यायालय भवन एवं स्वतंत्रता सेनानी अधिवक्ता
-                </h3>
-                <p>
-                  स्टेशन रोड पर स्थित अलवर जिला न्यायालय का ऐतिहासिक लाल पत्थर का भवन अपनी स्थापत्य कला और न्याय के मंदिर के रूप में प्रसिद्ध है। इस बार से ऐसे अनेक मूर्धन्य अधिवक्ता साथी हुए हैं जिन्होंने न केवल राजस्थान उच्च न्यायालय एवं भारत के सर्वोच्च न्यायालय में अलवर का नाम रोशन किया, बल्कि संविधान सभा, स्वतंत्रता आंदोलन और राजस्थान विधानसभा में भी ऐतिहासिक योगदान दिया।
+                  अलवर बार एसोसिएशन जिले की समस्त 18 उपखंडीय एवं तहसील बार एसोसिएशनों (बहरोड़, तिजारा, किशनगढ़ बास, राजगढ़, लक्ष्मणगढ़, कठूमर, बानसूर, थानागाजी, रामगढ़, खैरथल आदि) का संरक्षक एवं शीर्ष मातृ संगठन है।
                 </p>
               </div>
 
-              {/* Side Highlights Card */}
-              <div className="space-y-4">
-                <div className="bg-legal-navy text-white p-5 rounded-2xl shadow-md space-y-3">
-                  <h4 className="font-serif font-bold text-sm text-amber-300 flex items-center space-x-1.5">
-                    <Landmark className="w-4 h-4" />
-                    <span>ऐतिहासिक प्रमुख तथ्य</span>
-                  </h4>
-                  <ul className="space-y-2 text-[11px] text-slate-300">
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-                      <span>स्थापना वर्ष: <strong>1948 (मत्स्य संघ काल)</strong></span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-                      <span>पंजीकृत सदस्य संख्या: <strong>1,100+ नियमित अधिवक्ता</strong></span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-                      <span>संबद्ध तहसील बार संघ: <strong>18 उपखंडीय न्यायालय</strong></span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-                      <span>बार भवन: <strong>कोर्ट कैंपस, स्टेशन रोड, अलवर</strong></span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-                      <span>ई-लाइब्रेरी ग्रंथालय: <strong>10,000+ विधि पुस्तकें व जर्नल्स</strong></span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-xs text-amber-900 space-y-2">
-                  <div className="font-bold flex items-center space-x-1">
-                    <Scale className="w-4 h-4 text-amber-700" />
-                    <span>अलवर बार का आदर्श वाक्य</span>
-                  </div>
-                  <p className="italic text-[11px] leading-relaxed text-slate-700">
-                    "सत्यमेव जयते नानृतम् — निष्पक्ष न्याय, निर्भीक वकालत, एवं मुवक्किल के संवैधानिक अधिकारों की रक्षा।"
-                  </p>
-                </div>
+              <div className="bg-legal-navy text-white p-5 rounded-2xl shadow-md space-y-3">
+                <h4 className="font-serif font-bold text-sm text-amber-300">ऐतिहासिक प्रमुख तथ्य</h4>
+                <ul className="space-y-2 text-[11px] text-slate-300">
+                  <li>• स्थापना वर्ष: <strong>1948 (मत्स्य संघ काल)</strong></li>
+                  <li>• पंजीकृत सदस्य संख्या: <strong>1,100+ नियमित अधिवक्ता</strong></li>
+                  <li>• संबद्ध तहसील बार संघ: <strong>18 उपखंडीय न्यायालय</strong></li>
+                  <li>• बार भवन: <strong>कोर्ट कैंपस, स्टेशन रोड, अलवर</strong></li>
+                </ul>
               </div>
-
             </div>
-
           </div>
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 3: CONSTITUTION & BY-LAWS (Matches Jaipur Bar Constitution) */}
+        {/* TAB 6: CONSTITUTION & BY-LAWS */}
         {/* ========================================================================= */}
         {activeTab === 'constitution' && (
           <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-6 text-xs text-slate-700 leading-relaxed">
-            
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 border-slate-200 gap-3">
+            <div className="flex items-center justify-between border-b pb-4 border-slate-200">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                   Statutory Constitution & By-Laws
@@ -713,426 +1253,80 @@ Office Seal & Stamp:
                 <h2 className="font-serif font-bold text-2xl text-slate-900 mt-1">
                   बार एसोसिएशन अलवर का संविधान एवं उप-नियम
                 </h2>
-                <p className="text-slate-500 text-xs">
-                  The Constitution, Enrolment Rules, One Bar One Vote Policy & Code of Professional Ethics
-                </p>
               </div>
-
               <button
                 onClick={() => handleDownloadFile(barDownloads.find(d => d.id === 'alwar-bar-constitution-pdf')!)}
-                className="px-4 py-2 bg-legal-navy hover:bg-slate-800 text-amber-300 font-bold rounded-xl transition flex items-center space-x-1.5 shrink-0 shadow text-xs"
+                className="px-4 py-2 bg-legal-navy text-amber-300 font-bold rounded-xl text-xs transition"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>संविधान PDF डाउनलोड करें</span>
+                संविधान PDF डाउनलोड
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Clause 1 & 2 */}
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                <div className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-2">
-                  <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">1</span>
-                  <span>संज्ञा, क्षेत्र एवं उद्देश्य (Name & Objectives)</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  इस संस्था का नाम <strong>"जिला एवं सत्र बार एसोसिएशन, अलवर"</strong> है। इसका मुख्य उद्देश्य न्याय प्रशासन में सहयोग, अधिवक्ताओं के पेशेवर सम्मान व अधिकारों का संरक्षण, कमजोर वर्गों को निःशुल्क विधिक सहायता, और विधि शिक्षा का प्रसार है।
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                <span className="font-bold text-slate-900">1. सदस्यता पात्रता एवं श्रेणियां</span>
+                <p className="text-[11px] text-slate-600">साधारण, आजीवन (Life Member) एवं मानद सदस्यता के नियम।</p>
               </div>
-
-              {/* Clause 3 */}
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                <div className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-2">
-                  <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">2</span>
-                  <span>सदस्यता पात्रता एवं श्रेणियां (Membership Categories)</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  बार काउंसिल ऑफ राजस्थान में पंजीकृत कोई भी अधिवक्ता, जो अलवर न्यायक्षेत्र में नियमित वकालत कर रहा हो, साधारण सदस्य बन सकता है। इसके अतिरिक्त आजीवन सदस्यता (Life Member) एवं मानद सदस्यता (Honorary Member) का भी विधान है।
-                </p>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                <span className="font-bold text-slate-900">2. 'एक बार - एक वोट' नीति (One Bar One Vote)</span>
+                <p className="text-[11px] text-slate-600">सुप्रीम कोर्ट निर्देशानुसार निष्पक्ष एवं पारदर्शी चुनाव संहिता।</p>
               </div>
-
-              {/* Clause 4 */}
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                <div className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-2">
-                  <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">3</span>
-                  <span>'एक बार - एक वोट' नीति एवं चुनाव (One Bar One Vote)</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  सुप्रीम कोर्ट के निर्देशानुसार कोई भी अधिवक्ता राजस्थान में केवल एक ही बार एसोसिएशन में मताधिकार का प्रयोग कर सकता है। वार्षिक चुनाव हेतु एक स्वतंत्र मुख्य चुनाव अधिकारी एवं समिति नियुक्त की जाती है जो निष्पक्ष बैलेट प्रक्रिया सुनिश्चित करती है।
-                </p>
-              </div>
-
-              {/* Clause 5 */}
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                <div className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-2">
-                  <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">4</span>
-                  <span>आचार संहिता एवं अनुशासन समिति (Ethics & Discipline)</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  अधिवक्ताओं के परस्पर अथवा न्यायालय के प्रति अमर्यादित आचरण की शिकायतों के निवारण हेतु 5 वरिष्ठ अधिवक्ताओं की एक स्वतंत्र अनुशासन समिति गठित होती है, जो निष्पक्ष जांच उपरांत कार्यकारिणी को रिपोर्ट प्रस्तुत करती है।
-                </p>
-              </div>
-
-              {/* Clause 6 */}
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                <div className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-2">
-                  <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">5</span>
-                  <span>चैंबर आवंटन एवं पार्किंग नीति (Chambers & Facilities)</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  न्यायालय परिसर में चैंबर्स का आवंटन केवल वरिष्ठता एवं नियमित वकालत की निरंतरता के आधार पर 'चैंबर आवंटन समिति' द्वारा किया जाता है। चैंबर की सब-लेटिंग पूर्णतः प्रतिबंधित है।
-                </p>
-              </div>
-
-              {/* Clause 7 */}
-              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                <div className="font-serif font-bold text-sm text-slate-900 flex items-center space-x-2">
-                  <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs">6</span>
-                  <span>वार्षिक आम सभा एवं ऑडिट (AGM & Financial Audit)</span>
-                </div>
-                <p className="text-[11px] text-slate-600">
-                  प्रत्येक वित्तीय वर्ष के समापन पर साधारण सभा (General Body) की बैठक आयोजित कर चार्टर्ड अकाउंटेंट द्वारा परीक्षित वार्षिक आय-व्यय लेखा (Balance Sheet) प्रस्तुत किया जाना अनिवार्य है।
-                </p>
-              </div>
-
             </div>
-
           </div>
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 4: JUDICIAL OFFICERS ROSTER (Matches RHCBA High Court Judges) */}
+        {/* TAB 7: JUDICIAL OFFICERS ROSTER */}
         {/* ========================================================================= */}
         {activeTab === 'judges' && (
-          <div className="space-y-6">
-            
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
-                  Judgeship Roster • Alwar District Courts
-                </span>
-                <h2 className="font-serif font-bold text-2xl text-slate-900 mt-1">
-                  अलवर न्यायक्षेत्र के पीठासीन न्यायिक अधिकारी
-                </h2>
-                <p className="text-slate-500 text-xs">
-                  District & Sessions Judge, Special Courts (POCSO/SC-ST), ADJ, Family, CJM & JM Courts
-                </p>
-              </div>
-
-              <div className="relative w-full md:w-72">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                <input
-                  type="text"
-                  value={judgeSearch}
-                  onChange={e => setJudgeSearch(e.target.value)}
-                  placeholder="अदालत अथवा कोर्ट रूम खोजें..."
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40"
-                />
-              </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-100/80 text-slate-700 font-bold uppercase text-[11px] border-b border-slate-200">
-                    <tr>
-                      <th className="px-5 py-3.5">न्यायालय का नाम (Court Name)</th>
-                      <th className="px-4 py-3.5">कोर्ट रूम सं.</th>
-                      <th className="px-4 py-3.5">पीठासीन अधिकारी</th>
-                      <th className="px-4 py-3.5">विधिक क्षेत्राधिकार (Jurisdiction)</th>
-                      <th className="px-4 py-3.5 text-right">ई-कोर्ट कॉज लिस्ट</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 text-slate-700">
-                    {filteredJudges.map((j, idx) => (
-                      <tr key={idx} className="hover:bg-amber-50/40 transition">
-                        <td className="px-5 py-3 font-semibold text-slate-900">
-                          {j.courtName}
-                        </td>
-                        <td className="px-4 py-3 font-mono font-bold text-amber-800 whitespace-nowrap">
-                          {j.roomNo}
-                        </td>
-                        <td className="px-4 py-3 text-slate-800">
-                          {j.officerName}
-                        </td>
-                        <td className="px-4 py-3 text-slate-600 text-[11px]">
-                          {j.jurisdiction}
-                        </td>
-                        <td className="px-4 py-3 text-right">
-                          <a
-                            href={j.ecourtsUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center space-x-1 text-amber-800 hover:text-amber-950 font-semibold text-[11px] bg-amber-50 hover:bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-200 transition"
-                          >
-                            <span>Cause List</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-900 flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <AlertCircle className="w-4 h-4 text-blue-700 shrink-0" />
-                <span>
-                  <strong>ई-कोर्ट्स वाद सूची:</strong> जिला एवं सत्र न्यायालय अलवर की दैनिक कॉज लिस्ट व केस स्टेटस की लाइव जानकारी सीधे डिस्ट्रिक्ट कोर्ट पोर्टल पर उपलब्ध है।
-                </span>
-              </div>
-              <a
-                href="https://districts.ecourts.gov.in/alwar"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 px-3 py-1.5 bg-blue-700 hover:bg-blue-800 text-white rounded-lg font-bold text-xs transition"
-              >
-                अलवर ई-कोर्ट्स खोलें ↗
-              </a>
-            </div>
-
-          </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* TAB 5: SENIOR ADVOCATES & BCR MEMBERS (Matches RHCBA Senior Adv & BCR) */}
-        {/* ========================================================================= */}
-        {activeTab === 'senior-advocates' && (
-          <div className="space-y-8">
-            
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
-                Eminent Jurists & Statutory Council
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div className="border-b pb-4 border-slate-200">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
+                Judgeship Roster • Alwar Courts
               </span>
               <h2 className="font-serif font-bold text-2xl text-slate-900 mt-1">
-                वरिष्ठ अधिवक्ता एवं बार काउंसिल ऑफ राजस्थान में अलवर का प्रतिनिधित्व
+                अलवर न्यायक्षेत्र के पीठासीन न्यायिक अधिकारी
               </h2>
-              <p className="text-slate-500 text-xs">
-                अलवर न्यायक्षेत्र के वरिष्ठतम अधिवक्तागण एवं राज्य विधिक परिषद (BCR Jodhpur) में प्रतिनिधित्व
-              </p>
             </div>
 
-            {/* Senior Advocates Roster */}
-            <div className="space-y-4">
-              <h3 className="font-serif font-bold text-lg text-slate-900 flex items-center space-x-2">
-                <Award className="w-5 h-5 text-amber-600" />
-                <span>ख्यातिनाम वरिष्ठ अधिवक्तागण (Designated & Senior Advocates of Alwar)</span>
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {[
-                  { name: 'Senior Advocate R. P. Sharma', standing: '42+ वर्ष निरंतर वकालत', specialty: 'दीवानी, राजस्व एवं संवैधानिक मामले', chamber: 'Chamber 01, Senior Block' },
-                  { name: 'Senior Advocate B. L. Gupta', standing: '38+ वर्ष निरंतर वकालत', specialty: 'फौजदारी ट्रायल, मर्डर केसेस एवं एनडीपीएस', chamber: 'Chamber 04, Civil Wing' },
-                  { name: 'Senior Advocate H. N. Mathur', standing: '35+ वर्ष निरंतर वकालत', specialty: 'पारिवारिक एवं कंपनी लॉ विशेषज्ञ', chamber: 'Chamber 09, Senior Block' },
-                  { name: 'Senior Advocate V. K. Jain', standing: '32+ वर्ष निरंतर वकालत', specialty: 'मोटर दुर्घटना दावा एवं बीमा अधिकरण', chamber: 'Chamber 15, Criminal Wing' },
-                  { name: 'Senior Advocate Kailash Chand Yadav', standing: '30+ वर्ष निरंतर वकालत', specialty: 'राजस्व वाद, काश्तकारी अधिनियम व अपील', chamber: 'Chamber 21, Revenue Wing' },
-                  { name: 'Senior Advocate Smt. Kanta Devi', standing: '28+ वर्ष निरंतर वकालत', specialty: 'महिला अधिकार, भरण-पोषण एवं वैवाहिक वाद', chamber: 'Chamber 27, Family Wing' }
-                ].map((s, idx) => (
-                  <div key={idx} className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-xl bg-slate-900 text-amber-400 font-serif font-bold text-lg flex items-center justify-center shrink-0">
-                        व.अ
-                      </div>
-                      <div>
-                        <h4 className="font-serif font-bold text-sm text-slate-900">
-                          {s.name}
-                        </h4>
-                        <span className="text-[11px] font-mono text-amber-800 font-semibold block">
-                          {s.standing}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="pt-2 border-t border-slate-100 text-xs text-slate-600 space-y-1">
-                      <div><strong>विशेषज्ञता:</strong> {s.specialty}</div>
-                      <div className="text-[11px] text-slate-500">{s.chamber}</div>
-                    </div>
+            <div className="divide-y divide-slate-100 text-xs">
+              {[
+                { court: 'District & Sessions Judge', room: 'Court Room No. 1', officer: 'Hon’ble District & Sessions Judge' },
+                { court: 'Special Court (POCSO Act Cases No. 1)', room: 'Court Room No. 2', officer: 'Special Judge, POCSO Act' },
+                { court: 'Family Court No. 1', room: 'Court Room No. 4', officer: 'Principal Judge, Family Court' },
+                { court: 'Motor Accident Claims Tribunal (MACT)', room: 'Court Room No. 6', officer: 'Judge, MACT Alwar' },
+                { court: 'Chief Judicial Magistrate (CJM)', room: 'Court Room No. 11', officer: 'CJM Alwar' }
+              ].map((j, idx) => (
+                <div key={idx} className="py-3 flex items-center justify-between">
+                  <div>
+                    <span className="font-bold text-slate-900 block">{j.court}</span>
+                    <span className="text-slate-500">{j.officer}</span>
                   </div>
-                ))}
-              </div>
+                  <span className="font-mono text-amber-800 font-bold bg-amber-50 px-2.5 py-1 rounded border border-amber-200">
+                    {j.room}
+                  </span>
+                </div>
+              ))}
             </div>
-
-            {/* BCR Representation Box */}
-            <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-md border border-amber-500/30 space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-amber-300">
-                    बार काउंसिल ऑफ राजस्थान (BCR, High Court Premises Jodhpur) संपर्क सेल
-                  </h3>
-                  <p className="text-xs text-slate-300">
-                    अलवर जिले के अधिवक्ताओं के सनद नवीनीकरण, कल्याण कोष दावे एवं अनुशासनात्मक समन्वय
-                  </p>
-                </div>
-                <Link
-                  href="/bcr-services"
-                  className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs transition"
-                >
-                  14 BCR सेवाएं खोलें →
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs">
-                <div className="p-3 bg-white/5 rounded-xl border border-white/10 space-y-1">
-                  <span className="text-amber-400 font-semibold block">कल्याण कोष ट्रस्टी कमेटी संपर्क:</span>
-                  <span className="text-slate-300">जोधपुर हेड ऑफिस हेल्पडेस्क: 0291-2545066</span>
-                </div>
-                <div className="p-3 bg-white/5 rounded-xl border border-white/10 space-y-1">
-                  <span className="text-amber-400 font-semibold block">अलवर बार काउंसिल लाइजन:</span>
-                  <span className="text-slate-300">अलवर बार एसोसिएशन ऑफिस रूम नं. 02</span>
-                </div>
-                <div className="p-3 bg-white/5 rounded-xl border border-white/10 space-y-1">
-                  <span className="text-amber-400 font-semibold block">सीओपी सत्यापन (COP Cell):</span>
-                  <span className="text-slate-300">बीना फीस सत्यापन एवं डिजिटल आईडी कार्ड</span>
-                </div>
-              </div>
-            </div>
-
           </div>
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 6: WELFARE, AMENITIES, LIBRARY & SPORTS (Matches RHCBA Facilities) */}
-        {/* ========================================================================= */}
-        {activeTab === 'welfare-amenities' && (
-          <div className="space-y-8">
-            
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-purple-800 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200">
-                Advocate Amenities, Facilities & Sports
-              </span>
-              <h2 className="font-serif font-bold text-2xl text-slate-900 mt-1">
-                बार कल्याण न्यास, आधुनिक ई-लाइब्रेरी एवं खेलकूद सुविधाएं
-              </h2>
-              <p className="text-slate-500 text-xs">
-                सेंट्रलाइज्ड एसी बार रूम्स, कानूनी डेटाबेस, कैंटीन, लॉयर्स प्रीमियर लीग एवं सांस्कृतिक गतिविधियां
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              
-              {/* Amenity 1: Air Conditioned Bar Rooms */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
-                  <Building2 className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif font-bold text-base text-slate-900">
-                  वातानुकूलित बार रूम (Civil & Criminal)
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  सिविल और क्रिमिनल विंग्स में विशाल, पूर्णतः वातानुकूलित सेंट्रल हॉल। हाई-स्पीड वाई-फाई, बैठने की आरामदायक कुर्सियां, एवं वाद सूची सूचना डिस्प्ले बोर्ड।
-                </p>
-                <div className="text-[11px] font-semibold text-blue-700 pt-2 border-t border-slate-100">
-                  क्षमता: 250+ अधिवक्ता एक साथ
-                </div>
-              </div>
-
-              {/* Amenity 2: Digital e-Library */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center">
-                  <Laptop className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif font-bold text-base text-slate-900">
-                  आधुनिक ई-लाइब्रेरी व डेटाबेस
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  SCC Online, AIR All India Reporter, Manupatra एवं लाइव कानून डेटाबेस युक्त 12 कंप्यूटर टर्मिनल्स। 10,000+ प्रामाणिक विधि पुस्तकें व कमेंट्रीज।
-                </p>
-                <div className="text-[11px] font-semibold text-amber-700 pt-2 border-t border-slate-100">
-                  समय: प्रातः 9:30 AM से सायं 6:00 PM
-                </div>
-              </div>
-
-              {/* Amenity 3: Welfare Trust Fund */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
-                  <HeartHandshake className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif font-bold text-base text-slate-900">
-                  अलवर बार अधिवक्ता कल्याण न्यास
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  अधिवक्ता के असामयिक निधन पर परिजनों को तुरंत आर्थिक सहायता, गंभीर बीमारी में आपातकालीन चिकित्सा अनुदान तथा कनिष्ठ अधिवक्ताओं हेतु विधिक छात्रवृत्ति।
-                </p>
-                <div className="text-[11px] font-semibold text-emerald-700 pt-2 border-t border-slate-100">
-                  मृत्यु दावा: ₹10,00,000 तक • चिकित्सा: ₹2,00,000 तक
-                </div>
-              </div>
-
-              {/* Amenity 4: Bar Canteen & Dining */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-700 flex items-center justify-center">
-                  <Coffee className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif font-bold text-base text-slate-900">
-                  हाईजीनिक कैंटीन व डाइनिंग हॉल
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  अधिवक्ताओं एवं उनके मुवक्किलों हेतु शुद्ध शाकाहारी भोजन, चाय-नाश्ता एवं पेय जल की रियायती दर पर स्वच्छ व्यवस्था। नियमित खाद्य गुणवत्ता जांच।
-                </p>
-                <div className="text-[11px] font-semibold text-orange-700 pt-2 border-t border-slate-100">
-                  स्थान: कोर्ट कैंपस बैक लॉन विंग
-                </div>
-              </div>
-
-              {/* Amenity 5: Sports & APL Cricket */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-red-50 text-red-700 flex items-center justify-center">
-                  <Trophy className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif font-bold text-base text-slate-900">
-                  लॉयर्स प्रीमियर लीग (APL Cricket)
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  प्रत्येक वर्ष आयोजित होने वाली अंतर-बार क्रिकेट एवं बैडमिंटन प्रतियोगिता। 18 तहसीलों व न्यायिक अधिकारियों के बीच मैत्रीपूर्ण खेलकूद महोत्सव।
-                </p>
-                <div className="text-[11px] font-semibold text-red-700 pt-2 border-t border-slate-100">
-                  वार्षिक आयोजन: दिसंबर – जनवरी
-                </div>
-              </div>
-
-              {/* Amenity 6: Mediation & Conference Hall */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-3">
-                <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center">
-                  <Landmark className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif font-bold text-base text-slate-900">
-                  कॉन्फ्रेंस व मध्यस्थता सभागार
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  विधिक संगोष्ठियों, मध्यस्थता वार्ताओं (ADR/Mediation), एवं राष्ट्रीय लोक अदालत की पूर्व बैठकों हेतु 150 सीटर अत्याधुनिक ऑडियो-विजुअल सभागार।
-                </p>
-                <div className="text-[11px] font-semibold text-teal-700 pt-2 border-t border-slate-100">
-                  सुविधा: प्रोजेक्टर, पीए सिस्टम एवं वीसी स्क्रीन
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* TAB 7: DOWNLOADS HUB (Matches Jaipur Bar & RHCBA Downloads) */}
+        {/* TAB 8: DOWNLOADS HUB (8 Forms) */}
         {/* ========================================================================= */}
         {activeTab === 'downloads' && (
           <div className="space-y-6">
-            
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  Official Prescribed Downloads Hub
+                  Official Prescribed Downloads
                 </span>
                 <h2 className="font-serif font-bold text-2xl text-slate-900 mt-1">
                   अलवर बार एसोसिएशन डाउनलोड केंद्र
                 </h2>
-                <p className="text-slate-500 text-xs">
-                  नवीन सदस्यता, अधिकृत वकालतनामा, पार्किंग स्टीकर, चैंबर आवंटन, नो-ड्यूज एवं ऑडिट रिपोर्ट
-                </p>
               </div>
-
-              <span className="text-xs bg-amber-50 text-amber-900 border border-amber-200 px-3 py-1.5 rounded-xl font-bold font-mono">
-                8 आधिकारिक प्रपत्र उपलब्ध
+              <span className="text-xs font-mono font-bold text-amber-900 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
+                8 प्रपत्र उपलब्ध
               </span>
             </div>
 
@@ -1140,50 +1334,383 @@ Office Seal & Stamp:
               {barDownloads.map(doc => (
                 <div
                   key={doc.id}
-                  className="bg-white rounded-xl border border-slate-200 hover:border-amber-400 p-5 shadow-sm hover:shadow-md transition space-y-3 flex flex-col justify-between"
+                  className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-3 flex flex-col justify-between"
                 >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                        {doc.category}
-                      </span>
-                      <span className="text-[10px] font-mono text-slate-400">
-                        {doc.fileSize}
-                      </span>
-                    </div>
-
-                    <h3 className="font-serif font-bold text-base text-slate-900 leading-snug">
+                  <div className="space-y-1.5">
+                    <span className="text-[10px] font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      {doc.category}
+                    </span>
+                    <h4 className="font-serif font-bold text-sm text-slate-900">
                       {doc.titleHi}
-                    </h3>
-                    <p className="text-xs text-amber-900/80 font-medium font-mono">
-                      {doc.titleEn}
-                    </p>
-
-                    <p className="text-xs text-slate-600 leading-relaxed">
+                    </h4>
+                    <p className="text-xs text-slate-600">
                       {doc.description}
                     </p>
                   </div>
-
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-[11px] text-slate-400 font-mono truncate max-w-[200px]">
-                      {doc.fileName}
-                    </span>
+                    <span className="text-[11px] font-mono text-slate-400">{doc.fileSize}</span>
                     <button
                       onClick={() => handleDownloadFile(doc)}
-                      className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold rounded-lg text-xs transition shadow flex items-center space-x-1.5 shrink-0"
+                      className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs transition flex items-center space-x-1"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>प्रपत्र डाउनलोड</span>
+                      <span>डाउनलोड</span>
                     </button>
                   </div>
                 </div>
               ))}
             </div>
-
           </div>
         )}
 
       </div>
+
+      {/* ========================================================================= */}
+      {/* MODAL 1: LIGHTBOX MODAL (Full Screen Photo View) */}
+      {/* ========================================================================= */}
+      {lightboxImage && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-4xl w-full bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl relative text-white space-y-4">
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center border border-white/20 transition"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="h-[320px] sm:h-[480px] w-full bg-black flex items-center justify-center overflow-hidden">
+              <img
+                src={lightboxImage.image_url}
+                alt={lightboxImage.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="p-6 pt-0 space-y-2">
+              <div className="flex items-center space-x-2 text-xs text-amber-400">
+                <span className="uppercase font-bold tracking-wider">{lightboxImage.category}</span>
+                <span>•</span>
+                <span>{lightboxImage.event_date}</span>
+              </div>
+              <h3 className="font-serif font-bold text-xl text-white">
+                {lightboxImage.title}
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {lightboxImage.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODAL 2: ADMIN ADD MEMBER MODAL */}
+      {/* ========================================================================= */}
+      {addMemberModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-xl w-full p-6 text-slate-900 shadow-2xl space-y-5 border border-slate-200">
+            
+            <div className="flex items-center justify-between border-b pb-3 border-slate-100">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold">
+                  <Plus className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-base text-slate-900">
+                    {newMemberForm.is_current ? 'वर्तमान बार सदस्य जोड़ें' : 'पूर्व बार सदस्य जोड़ें (Archive)'}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    अलवर बार एसोसिएशन अधिकृत डायरेक्टरी प्रविष्टि
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setAddMemberModalOpen(false)}
+                className="text-slate-400 hover:text-slate-700 p-1"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddMember} className="space-y-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">अधिवक्ता का पूरा नाम *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newMemberForm.name}
+                    onChange={e => setNewMemberForm({ ...newMemberForm, name: e.target.value })}
+                    placeholder="Advocate Anil Sain"
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">सनद / एनरोलमेंट नंबर *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newMemberForm.enrolment_no}
+                    onChange={e => setNewMemberForm({ ...newMemberForm, enrolment_no: e.target.value })}
+                    placeholder="R/2268/2009"
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">पद / पदनाम (Role Title) *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newMemberForm.role_title}
+                    onChange={e => setNewMemberForm({ ...newMemberForm, role_title: e.target.value })}
+                    placeholder="अध्यक्ष / उपाध्यक्ष / सदस्य"
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">कार्यकाल (Tenure)</label>
+                  <input
+                    type="text"
+                    value={newMemberForm.tenure}
+                    onChange={e => setNewMemberForm({ ...newMemberForm, tenure: e.target.value })}
+                    placeholder="2024–2026 या 2022–2024"
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">विंग / कार्यक्षेत्र</label>
+                  <select
+                    value={newMemberForm.wing}
+                    onChange={e => setNewMemberForm({ ...newMemberForm, wing: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 bg-white"
+                  >
+                    <option value="Civil Wing">Civil Wing</option>
+                    <option value="Criminal Wing">Criminal Wing</option>
+                    <option value="Revenue Wing">Revenue Courts</option>
+                    <option value="Women Advocates Wing">Women Advocates</option>
+                    <option value="Young Lawyers Wing">Young Lawyers</option>
+                    <option value="Senior Bar">Senior Bar</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">चैंबर / कोर्ट रूम पता</label>
+                  <input
+                    type="text"
+                    value={newMemberForm.chamber}
+                    onChange={e => setNewMemberForm({ ...newMemberForm, chamber: e.target.value })}
+                    placeholder="Chamber No. 12, Civil Wing"
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">मोबाइल नंबर</label>
+                  <input
+                    type="text"
+                    value={newMemberForm.phone}
+                    onChange={e => setNewMemberForm({ ...newMemberForm, phone: e.target.value })}
+                    placeholder="0144-2334455 / 9829012345"
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">सदस्य प्रकार (Status)</label>
+                  <div className="flex items-center space-x-4 pt-2">
+                    <label className="flex items-center space-x-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        checked={newMemberForm.is_current}
+                        onChange={() => setNewMemberForm({ ...newMemberForm, is_current: true, tenure: '2024–2026' })}
+                      />
+                      <span>वर्तमान सदस्य</span>
+                    </label>
+                    <label className="flex items-center space-x-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        checked={!newMemberForm.is_current}
+                        onChange={() => setNewMemberForm({ ...newMemberForm, is_current: false, tenure: '2022–2024' })}
+                      />
+                      <span>पूर्व सदस्य</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex justify-end space-x-2">
+                <button
+                  type="button"
+                  onClick={() => setAddMemberModalOpen(false)}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold"
+                >
+                  रद्द करें
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow transition"
+                >
+                  सुरक्षित करें (Save Member)
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODAL 3: ADMIN ADD PHOTO MODAL */}
+      {/* ========================================================================= */}
+      {addPhotoModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 text-slate-900 shadow-2xl space-y-5 border border-slate-200">
+            
+            <div className="flex items-center justify-between border-b pb-3 border-slate-100">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold">
+                  <ImageIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-base text-slate-900">
+                    नई फोटो अपलोड करें (Gallery / Slider)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    अलवर बार एसोसिएशन की आधिकारिक फोटो गैलरी व इमेज स्लाइडर
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setAddPhotoModalOpen(false)}
+                className="text-slate-400 hover:text-slate-700 p-1"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddPhoto} className="space-y-4 text-xs">
+              <div>
+                <label className="font-semibold text-slate-700 block mb-1">फोटो का शीर्षक (Title) *</label>
+                <input
+                  type="text"
+                  required
+                  value={newPhotoForm.title}
+                  onChange={e => setNewPhotoForm({ ...newPhotoForm, title: e.target.value })}
+                  placeholder="उदा. कार्यकारिणी शपथ ग्रहण समारोह 2024"
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500"
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold text-slate-700 block mb-1">इमेज यूआरएल (Image URL) *</label>
+                <input
+                  type="url"
+                  required
+                  value={newPhotoForm.image_url}
+                  onChange={e => setNewPhotoForm({ ...newPhotoForm, image_url: e.target.value })}
+                  placeholder="https://images.unsplash.com/..."
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono text-[11px]"
+                />
+                <div className="pt-1.5 flex flex-wrap gap-1.5 text-[10px]">
+                  <span className="text-slate-400">डेमो प्रीसेट:</span>
+                  <button
+                    type="button"
+                    onClick={() => setNewPhotoForm({ ...newPhotoForm, image_url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80', category: 'ceremony' })}
+                    className="text-blue-700 hover:underline"
+                  >
+                    [कोर्ट रूम]
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewPhotoForm({ ...newPhotoForm, image_url: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=80', category: 'sports' })}
+                    className="text-blue-700 hover:underline"
+                  >
+                    [क्रिकेट APL]
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewPhotoForm({ ...newPhotoForm, image_url: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80', category: 'events' })}
+                    className="text-blue-700 hover:underline"
+                  >
+                    [मीटिंग/सभा]
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">श्रेणी (Category)</label>
+                  <select
+                    value={newPhotoForm.category}
+                    onChange={e => setNewPhotoForm({ ...newPhotoForm, category: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500 bg-white"
+                  >
+                    <option value="ceremony">शपथ ग्रहण व सभाएं</option>
+                    <option value="events">विधिक कार्यशाला व सेमिनार</option>
+                    <option value="sports">लॉयर्स प्रीमियर लीग (APL)</option>
+                    <option value="campus">कोर्ट परिसर व धरोहर</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-semibold text-slate-700 block mb-1">इवेंट दिनांक (Date)</label>
+                  <input
+                    type="date"
+                    value={newPhotoForm.event_date}
+                    onChange={e => setNewPhotoForm({ ...newPhotoForm, event_date: e.target.value })}
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="font-semibold text-slate-700 block mb-1">विवरण / कैप्शन (Description)</label>
+                <textarea
+                  rows={2}
+                  value={newPhotoForm.description}
+                  onChange={e => setNewPhotoForm({ ...newPhotoForm, description: e.target.value })}
+                  placeholder="इवेंट अथवा फोटो का संक्षिप्त विवरण..."
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500"
+                />
+              </div>
+
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="sliderCheck"
+                  checked={newPhotoForm.is_slider}
+                  onChange={e => setNewPhotoForm({ ...newPhotoForm, is_slider: e.target.checked })}
+                  className="w-4 h-4 rounded text-amber-600 focus:ring-amber-500"
+                />
+                <label htmlFor="sliderCheck" className="text-xs text-amber-950 font-medium cursor-pointer">
+                  मुख्य इमेज स्लाइडर में भी शामिल करें (Feature in Top Hero Slider)
+                </label>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex justify-end space-x-2">
+                <button
+                  type="button"
+                  onClick={() => setAddPhotoModalOpen(false)}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold"
+                >
+                  रद्द करें
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow transition"
+                >
+                  गैलरी में जोड़ें (Upload to Gallery)
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
