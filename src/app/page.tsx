@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Search, Shield, BookOpen, FileText, ArrowRight, CheckCircle, 
-  ExternalLink, Calendar, MapPin, Download, Lock, Bell, Scale
+  ExternalLink, Calendar, MapPin, Download, Lock, Bell, Scale,
+  Landmark, Users, Phone, Award, Laptop, ChevronRight
 } from 'lucide-react';
 import type { WelfareScheme, LegalUpdate, LegalForm, NoticeEvent } from '@/types/database';
 
@@ -115,6 +116,118 @@ export default function HomePage() {
       </section>
 
       <div className="container mx-auto px-4 max-w-6xl space-y-16">
+
+        {/* 1.5 DISTRICT & SESSIONS BAR ASSOCIATION ALWAR SPOTLIGHT */}
+        <section className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 border-slate-100 gap-3">
+            <div className="flex items-center space-x-3.5">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white shadow font-serif font-bold text-xl border border-amber-400/30 shrink-0">
+                अ
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                  Apex District Bar Association • Matsya Region
+                </span>
+                <h2 className="font-serif font-bold text-xl sm:text-2xl text-slate-900 mt-0.5">
+                  जिला एवं सत्र बार एसोसिएशन, अलवर (स्थापना 1948)
+                </h2>
+                <p className="text-xs text-slate-500">
+                  District & Sessions Bar Association, Alwar — 18 उपखंडीय बार संघों का शीर्ष मातृ संगठन (1,100+ पंजीकृत अधिवक्ता)
+                </p>
+              </div>
+            </div>
+
+            <Link
+              href="/bar-association"
+              className="px-4 py-2 bg-legal-navy hover:bg-slate-800 text-amber-300 font-bold rounded-xl text-xs transition shadow flex items-center space-x-1.5 shrink-0 self-start md:self-auto"
+            >
+              <Landmark className="w-3.5 h-3.5" />
+              <span>बार एसोसिएशन पूरा पोर्टल खोलें →</span>
+            </Link>
+          </div>
+
+          {/* Quick Action Tiles (Matching Jaipur Bar & RHCBA) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
+            <Link
+              href="/bar-association"
+              className="p-3 bg-slate-50 hover:bg-amber-50/60 rounded-xl border border-slate-200 hover:border-amber-400 transition text-center group flex flex-col items-center justify-center min-h-[95px]"
+            >
+              <Users className="w-5 h-5 text-amber-700 group-hover:scale-110 transition" />
+              <div className="font-bold text-xs text-slate-900 mt-2">कार्यकारिणी</div>
+              <div className="text-[10px] text-slate-500">Office Bearers</div>
+            </Link>
+
+            <Link
+              href="/bar-association"
+              className="p-3 bg-slate-50 hover:bg-amber-50/60 rounded-xl border border-slate-200 hover:border-amber-400 transition text-center group flex flex-col items-center justify-center min-h-[95px]"
+            >
+              <Landmark className="w-5 h-5 text-amber-700 group-hover:scale-110 transition" />
+              <div className="font-bold text-xs text-slate-900 mt-2">बार का इतिहास</div>
+              <div className="text-[10px] text-slate-500">History 1948</div>
+            </Link>
+
+            <Link
+              href="/bar-association"
+              className="p-3 bg-slate-50 hover:bg-amber-50/60 rounded-xl border border-slate-200 hover:border-amber-400 transition text-center group flex flex-col items-center justify-center min-h-[95px]"
+            >
+              <BookOpen className="w-5 h-5 text-amber-700 group-hover:scale-110 transition" />
+              <div className="font-bold text-xs text-slate-900 mt-2">संविधान व नियम</div>
+              <div className="text-[10px] text-slate-500">Constitution</div>
+            </Link>
+
+            <Link
+              href="/bar-association"
+              className="p-3 bg-slate-50 hover:bg-amber-50/60 rounded-xl border border-slate-200 hover:border-amber-400 transition text-center group flex flex-col items-center justify-center min-h-[95px]"
+            >
+              <Scale className="w-5 h-5 text-amber-700 group-hover:scale-110 transition" />
+              <div className="font-bold text-xs text-slate-900 mt-2">न्यायिक रोस्टर</div>
+              <div className="text-[10px] text-slate-500">Judges Roster</div>
+            </Link>
+
+            <Link
+              href="/bar-association"
+              className="p-3 bg-slate-50 hover:bg-amber-50/60 rounded-xl border border-slate-200 hover:border-amber-400 transition text-center group flex flex-col items-center justify-center min-h-[95px]"
+            >
+              <Award className="w-5 h-5 text-amber-700 group-hover:scale-110 transition" />
+              <div className="font-bold text-xs text-slate-900 mt-2">वरिष्ठ अधिवक्ता</div>
+              <div className="text-[10px] text-slate-500">Senior Advocates</div>
+            </Link>
+
+            <Link
+              href="/bar-association"
+              className="p-3 bg-slate-50 hover:bg-amber-50/60 rounded-xl border border-slate-200 hover:border-amber-400 transition text-center group flex flex-col items-center justify-center min-h-[95px]"
+            >
+              <Download className="w-5 h-5 text-amber-700 group-hover:scale-110 transition" />
+              <div className="font-bold text-xs text-slate-900 mt-2">डाउनलोड केंद्र</div>
+              <div className="text-[10px] text-slate-500">8 Bar Forms</div>
+            </Link>
+          </div>
+
+          {/* President & Secretary Quick Contact Banner */}
+          <div className="p-4 bg-slate-900 text-white rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div className="flex items-center space-x-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+              <span className="text-slate-300">
+                <strong>बार कार्यालय (कोर्ट परिसर, स्टेशन रोड, अलवर):</strong> दूरभाष 0144-2334455 • समय: 10:00 AM – 5:00 PM
+              </span>
+            </div>
+            <div className="flex items-center space-x-2 shrink-0">
+              <Link
+                href="/advocates"
+                className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-xs font-semibold transition"
+              >
+                सदस्य डायरेक्टरी
+              </Link>
+              <Link
+                href="/bar-association"
+                className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-xs font-bold transition shadow"
+              >
+                विस्तृत जानकारी
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* 2. ADVOCATE WELFARE HIGHLIGHTS */}
         <section className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b pb-4 border-slate-200">

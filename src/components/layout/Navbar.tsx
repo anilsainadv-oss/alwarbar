@@ -69,6 +69,7 @@ export function Navbar() {
   // 1. PUBLIC VISITOR TABS (जब कोई लॉग इन नहीं है / आम जनता व मुवक्किल)
   const publicNavLinks: NavLinkItem[] = [
     { href: '/', label: t.navHome, icon: Scale },
+    { href: '/bar-association', label: locale === 'hi' ? '🏛️ बार एसोसिएशन' : 'Bar Association', icon: Landmark, badge: 'Alwar Bar' },
     { href: '/advocates', label: locale === 'hi' ? 'वकील खोजें' : 'Find Advocates', icon: Users },
     { href: '/welfare', label: locale === 'hi' ? '18 बार वेलफेयर' : 'Bar Welfare & Dues', icon: Shield, badge: '18 Bars' },
     { href: '/laws', label: locale === 'hi' ? 'नए कानून' : 'New Laws', icon: BookOpen, badge: 'BNS 2023' },
