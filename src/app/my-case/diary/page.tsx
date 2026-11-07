@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
-import { Calendar, Plus, Clock, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
+import { Calendar, Plus, Clock, MapPin, CheckCircle, ChevronRight, ExternalLink } from 'lucide-react';
 import type { CaseHearing, CaseRecord } from '@/types/mycase';
 
 export default function HearingDiaryPage() {
@@ -90,6 +90,46 @@ export default function HearingDiaryPage() {
           <Plus className="w-3.5 h-3.5" />
           <span>Record Hearing Outcome</span>
         </button>
+      </div>
+
+      {/* Official Alwar e-Courts Quick Access Strip */}
+      <div className="bg-gradient-to-r from-blue-900 via-slate-900 to-slate-900 text-white rounded-xl p-4 border border-blue-400/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
+        <div className="flex items-center space-x-3 text-xs">
+          <div className="w-9 h-9 rounded-lg bg-blue-500/20 text-blue-300 flex items-center justify-center shrink-0 border border-blue-400/30">
+            <Calendar className="w-5 h-5 text-blue-400" />
+          </div>
+          <div>
+            <div className="font-bold text-sm text-white flex items-center space-x-2">
+              <span>अलवर जिला न्यायालय e-Courts लाइव केस स्टेटस</span>
+              <span className="text-[10px] bg-blue-400/20 text-blue-300 px-2 py-0.5 rounded border border-blue-400/30 font-mono">
+                Live Server
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-300 mt-0.5">
+              अपने नाम अथवा सनद नंबर से अलवर कोर्ट में लिस्टेड सभी मुकदमों की आज की कॉज लिस्ट, पेशी तारीख व केस स्टेटस देखें।
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-2 shrink-0">
+          <a
+            href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition shadow flex items-center space-x-1.5"
+          >
+            <span>Search by Advocate ↗</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href="https://alwar.dcourts.gov.in/cause-list/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-xs font-semibold transition"
+          >
+            दैनिक कॉज लिस्ट
+          </a>
+        </div>
       </div>
 
       {/* Hearing Diary List */}

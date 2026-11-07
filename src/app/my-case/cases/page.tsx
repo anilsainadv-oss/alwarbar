@@ -133,6 +133,47 @@ export default function CasesManagementPage() {
         </button>
       </div>
 
+      {/* Official Alwar District Court e-Courts Advocate Search Banner */}
+      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 border border-blue-500/30 text-white rounded-xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-md">
+        <div className="flex items-start sm:items-center space-x-3.5">
+          <div className="w-11 h-11 rounded-xl bg-blue-500/20 text-blue-300 flex items-center justify-center shrink-0 border border-blue-400/30 shadow-inner">
+            <Search className="w-5 h-5 text-blue-300" />
+          </div>
+          <div>
+            <div className="font-bold text-sm text-white flex items-center space-x-2">
+              <span>{locale === 'hi' ? 'अलवर जिला कोर्ट e-Courts — अधिवक्ता अनुसार केस खोजें' : 'Alwar District Court e-Courts — Case Status by Advocate'}</span>
+              <span className="text-[10px] bg-blue-500/30 text-blue-200 px-2 py-0.5 rounded border border-blue-400/40 font-mono tracking-wide">
+                GOV.IN OFFICIAL
+              </span>
+            </div>
+            <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              {locale === 'hi'
+                ? 'अलवर जिला एवं सत्र न्यायालय, विशिष्ट न्यायालयों (POCSO, SC/ST, ACJM, MACT) व उपखंड अदालतों में अपने नाम/सनद से लाइव केस सर्च करें।'
+                : 'Directly search all your active and disposed cases across District & Sessions Court Alwar and subordinate courts via official e-Courts portal.'}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-2 shrink-0 w-full md:w-auto">
+          <a
+            href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full md:w-auto px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition shadow-sm flex items-center justify-center space-x-1.5"
+          >
+            <span>{locale === 'hi' ? 'e-Courts में खोजें ↗' : 'Search by Advocate ↗'}</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+          <a
+            href="https://alwar.dcourts.gov.in/cause-list/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full md:w-auto px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg text-xs font-medium transition flex items-center justify-center space-x-1"
+          >
+            <span>{locale === 'hi' ? 'कॉज लिस्ट ↗' : 'Cause List ↗'}</span>
+          </a>
+        </div>
+      </div>
+
       {/* Filter and Search Bar */}
       <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="relative w-full md:w-96">
@@ -209,18 +250,29 @@ export default function CasesManagementPage() {
                 </div>
               </div>
 
-              <div className="flex flex-col md:items-end space-y-1 shrink-0 text-xs">
+              <div className="flex flex-col md:items-end space-y-1.5 shrink-0 text-xs">
                 {c.next_hearing_date && (
                   <span className="bg-blue-50 text-blue-900 font-bold px-2.5 py-1 rounded border border-blue-200">
                     Next Hearing: {c.next_hearing_date}
                   </span>
                 )}
-                <Link
-                  href={`/my-case/cases/${c.id}`}
-                  className="text-amber-800 font-semibold hover:underline flex items-center space-x-1 pt-1"
-                >
-                  <span>Open Full Dossier →</span>
-                </Link>
+                <div className="flex items-center space-x-3 pt-1">
+                  <a
+                    href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 hover:text-blue-900 hover:underline flex items-center space-x-1 text-[11px] font-medium"
+                    title="Check case live status on Alwar District Court e-Courts portal"
+                  >
+                    <span>e-Courts Status ↗</span>
+                  </a>
+                  <Link
+                    href={`/my-case/cases/${c.id}`}
+                    className="text-amber-800 font-semibold hover:underline flex items-center space-x-1"
+                  >
+                    <span>Open Full Dossier →</span>
+                  </Link>
+                </div>
               </div>
             </div>
           ))}

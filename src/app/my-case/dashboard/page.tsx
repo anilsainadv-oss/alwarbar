@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Folder, Calendar, CheckSquare, Sparkles, Plus, Clock, 
-  ArrowRight, FileText, AlertCircle, CheckCircle, ExternalLink, ShieldCheck, Globe 
+  ArrowRight, FileText, AlertCircle, CheckCircle, ExternalLink, ShieldCheck, Globe, Landmark, Search 
 } from 'lucide-react';
 import type { CaseRecord, CaseHearing, CaseTask, LegalDraft } from '@/types/mycase';
 
@@ -296,6 +296,52 @@ export default function MyCaseDashboardPage() {
               >
                 📑 Analyze Case File & Chronology →
               </Link>
+            </div>
+          </div>
+
+          {/* Official District Court Alwar e-Courts Advocate Search Card */}
+          <div className="bg-slate-900 border border-blue-500/40 text-white rounded-xl p-5 space-y-3 shadow-lg">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif font-bold text-sm text-blue-300 flex items-center space-x-1.5">
+                <Landmark className="w-4 h-4 text-blue-400" />
+                <span>जिला न्यायालय अलवर — e-Courts केस स्टेटस</span>
+              </h3>
+              <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded border border-blue-400/30 font-bold">
+                e-Courts Alwar
+              </span>
+            </div>
+            <p className="text-xs text-slate-300 leading-snug">
+              ई-कोर्ट्स जिला एवं सत्र न्यायालय अलवर आधिकारिक पोर्टल — अपने नाम अथवा सनद नंबर से सभी पेंडिंग व डिस्पोज्ड केसों की लाइव स्थिति, अगली तारीख पेशी, और ऑर्डर शीट्स सीधे आधिकारिक सर्वर पर खोजें।
+            </p>
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <a
+                href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition shadow"
+              >
+                <Search className="w-3.5 h-3.5" />
+                <span>अधिवक्ता अनुसार केस खोजें (Search by Advocate) ↗</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <a
+                href="https://alwar.dcourts.gov.in/cause-list/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-blue-300 border border-slate-700 rounded-lg text-xs font-semibold transition"
+              >
+                <span>दैनिक कॉज लिस्ट ↗</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <a
+                href="https://alwar.dcourts.gov.in/court-orders/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-lg text-xs font-semibold transition"
+              >
+                <span>कोर्ट ऑर्डर्स ↗</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             </div>
           </div>
 
