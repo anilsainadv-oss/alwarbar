@@ -311,15 +311,24 @@ export default function MyCaseDashboardPage() {
             <p className="text-xs text-slate-300 leading-snug">
               बार काउंसिल ऑफ राजस्थान (जोधपुर) ऑफिशियल पोर्टल — पहचान पत्र, COP रिन्यूअल, निरंतरता प्रमाण पत्र, कल्याण कोष दावा सहित 14 ऑनलाइन सेवाओं हेतु सीधा आधिकारिक लॉगिन।
             </p>
-            <a
-              href="https://barcouncilofrajasthan.org/Advocate/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-xs font-bold transition shadow"
-            >
-              <span>ऑफिशियल BCR लॉगिन खोलें</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <Link
+                href="/bcr-services"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-xs font-bold transition shadow"
+              >
+                <span>14 सेवाएं व प्रपत्र देखें</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <a
+                href="https://barcouncilofrajasthan.org/Advocate/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 rounded-lg text-xs font-semibold transition"
+              >
+                <span>BCR लॉगिन ↗</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import {
   Award, Download, ExternalLink, Search, Clock, 
   CreditCard, AlertCircle, X, ChevronRight, CheckSquare, 
   HelpCircle, ArrowRight, Stamp, Landmark, Phone, Mail, 
-  UserCheck, ShieldCheck, FileSpreadsheet, Lock
+  UserCheck, ShieldCheck, FileSpreadsheet, Lock, ChevronUp
 } from 'lucide-react';
 
 interface BCRApplication {
@@ -230,8 +230,8 @@ const BCR_APPLICATIONS: BCRApplication[] = [
   },
   {
     id: 'bcr-clep',
-    titleEn: 'APPLICATION FOR CONTINUING LEGAL EDUCATION PROGRAMME',
-    titleHi: 'सतत विधि प्रशिक्षण कार्यक्रम हेतु आवेदन (ग्रीष्मकालीन शिविर / विधिक कार्यशाला)',
+    titleEn: 'APPLICATION FOR CONTINUING LEGAL EDUCATION PROGRAMME (SUMMER CAMP-2023)',
+    titleHi: 'सतत विधि प्रशिक्षण कार्यक्रम हेतु आवेदन (ग्रीष्मकालीन शिविर - 2023)',
     category: 'admin',
     fee: 'निःशुल्क / नाममात्र पंजीकरण',
     processingTime: 'तात्कालिक स्वीकृति',
@@ -552,28 +552,23 @@ export default function BCRServicesPage() {
             </div>
 
             {/* The 14 Applications Grid (Exact Look of the BCR Official Screenshot) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
               {filteredApps.map(app => (
                 <div
                   key={app.id}
                   onClick={() => setSelectedApp(app)}
-                  className="bg-[#0f1f38] hover:bg-[#152a4d] border border-slate-700/80 hover:border-amber-400/60 rounded-xl p-5 shadow-lg transition duration-200 cursor-pointer flex flex-col justify-between group min-h-[140px]"
+                  className="bg-[#0b1c36] hover:bg-[#112952] border border-white/20 hover:border-amber-400/90 rounded-xl p-6 shadow-md hover:shadow-2xl transition-all duration-200 cursor-pointer flex flex-col items-center justify-center text-center group min-h-[145px] relative"
                 >
-                  <div>
-                    <h3 className="font-serif font-bold text-sm tracking-wide text-white group-hover:text-amber-300 transition text-center leading-snug">
-                      {app.titleEn}
-                    </h3>
-                    <p className="text-xs text-amber-200/90 text-center font-medium mt-1">
-                      ({app.titleHi})
-                    </p>
-                  </div>
+                  <h3 className="font-bold text-sm lg:text-[15px] tracking-wide text-white group-hover:text-amber-300 transition leading-snug">
+                    {app.titleEn}
+                  </h3>
+                  <p className="text-xs lg:text-[13px] text-slate-200 group-hover:text-slate-100 transition mt-2 font-normal leading-relaxed">
+                    ({app.titleHi})
+                  </p>
 
-                  <div className="mt-4 pt-3 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
-                    <span className="font-mono text-amber-400">शुल्क: {app.fee}</span>
-                    <span className="text-amber-300 group-hover:translate-x-1 transition font-semibold flex items-center space-x-1">
-                      <span>विवरण व आवेदन</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </span>
+                  <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1.5 text-[11px] text-amber-400 font-semibold">
+                    <span>प्रपत्र व आवेदन देखें</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </div>
                 </div>
               ))}
@@ -907,6 +902,15 @@ export default function BCRServicesPage() {
           </div>
         </div>
       )}
+
+      {/* Floating Scroll To Top Button (Matches BCR Official Yellow Floating Button) */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed bottom-6 right-6 w-11 h-11 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-full shadow-2xl flex items-center justify-center transition hover:scale-105 z-40 border border-amber-300"
+        title="Scroll to Top (ऊपर जाएं)"
+      >
+        <ChevronUp className="w-6 h-6 stroke-[2.5]" />
+      </button>
 
     </div>
   );
