@@ -8,7 +8,7 @@ import {
   Scale, BookOpen, Shield, Users, FileText, 
   MessageSquare, Briefcase, Lock, Menu, X, Globe, UserCheck, 
   Bell, ShieldCheck, KeyRound, Sparkles, Calendar, DollarSign, 
-  Settings, FolderKanban, Database, LogOut, Landmark
+  Settings, FolderKanban, Database, LogOut, Landmark, ExternalLink
 } from 'lucide-react';
 
 interface CurrentUser {
@@ -85,7 +85,6 @@ export function Navbar() {
     { href: '/my-case/diary', label: locale === 'hi' ? '📅 केस डायरी' : 'Cause List / Diary', icon: Calendar, badge: 'Daily' },
     { href: '/my-case/cases', label: locale === 'hi' ? '📂 सक्रिय केस' : 'Active Cases', icon: FolderKanban },
     { href: '/my-case/clients', label: locale === 'hi' ? '👥 मुवक्किल' : 'Clients Roster', icon: Users },
-    { href: '/bcr-services', label: locale === 'hi' ? '🏛️ BCR सेवाएं' : 'BCR Portal', icon: Landmark, badge: '14 Apps' },
     { href: '/my-case/ai-assistant', label: locale === 'hi' ? '🤖 AI असिस्टेंट' : 'AI Assistant', icon: Sparkles, badge: 'AI' },
     { href: '/my-case/drafting', label: locale === 'hi' ? '📝 ड्राफ्टिंग' : 'Bail & Pleadings', icon: FileText },
     { href: '/my-case/billing', label: locale === 'hi' ? '💰 फीस व बिलिंग' : 'Fee Billing', icon: DollarSign },
@@ -97,7 +96,6 @@ export function Navbar() {
   // 3. PUBLIC ADMIN TABS (बार एसोसिएशन प्रशासन - अनिल सैन एवं बार एडमिन)
   const publicAdminNavLinks: NavLinkItem[] = [
     { href: '/public-admin/dashboard', label: locale === 'hi' ? '🏛️ एडमिन डैशबोर्ड' : 'Admin Overview', icon: Shield, badge: 'Admin' },
-    { href: '/bcr-services', label: locale === 'hi' ? '🏛️ BCR सेवाएं' : 'BCR Portal', icon: Landmark, badge: '14 Apps' },
     { href: '/public-admin/advocates', label: locale === 'hi' ? '👥 अधिवक्ता सत्यापन' : 'Verify Advocates', icon: UserCheck },
     { href: '/public-admin/welfare', label: locale === 'hi' ? '🛡️ 18 बार वेलफेयर' : '18 Bars Dues', icon: ShieldCheck, badge: 'RAWF' },
     { href: '/public-admin/laws', label: locale === 'hi' ? '📜 कानून व परिपत्र' : 'Laws & Circulars', icon: BookOpen },
@@ -150,6 +148,17 @@ export function Navbar() {
             ⚖️ {t.disclaimerBar}
           </p>
           <div className="flex items-center space-x-2 sm:space-x-3 shrink-0 ml-2">
+            <a
+              href="https://barcouncilofrajasthan.org/Advocate/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30 transition flex items-center space-x-1 font-semibold"
+              title="Bar Council of Rajasthan Official Advocate Portal (Login)"
+            >
+              <ExternalLink className="w-3 h-3 text-amber-400" />
+              <span className="hidden sm:inline">BCR Login (जोधपुर) ↗</span>
+            </a>
+
             <Link
               href="/verify?enrollment=R/2268/2009"
               className="text-[11px] bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30 transition flex items-center space-x-1"

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Folder, Calendar, CheckSquare, Sparkles, Plus, Clock, 
-  ArrowRight, FileText, AlertCircle, CheckCircle, ExternalLink, ShieldCheck 
+  ArrowRight, FileText, AlertCircle, CheckCircle, ExternalLink, ShieldCheck, Globe 
 } from 'lucide-react';
 import type { CaseRecord, CaseHearing, CaseTask, LegalDraft } from '@/types/mycase';
 
@@ -297,6 +297,29 @@ export default function MyCaseDashboardPage() {
                 📑 Analyze Case File & Chronology →
               </Link>
             </div>
+          </div>
+
+          {/* Official BCR Advocate Portal Card */}
+          <div className="bg-slate-900 border border-amber-500/30 text-white rounded-xl p-5 space-y-3 shadow">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif font-bold text-sm text-amber-300 flex items-center space-x-1.5">
+                <Globe className="w-4 h-4 text-amber-400" />
+                <span>Bar Council of Rajasthan Portal</span>
+              </h3>
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-400/30 font-bold">14 सेवाएं</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-snug">
+              बार काउंसिल ऑफ राजस्थान (जोधपुर) ऑफिशियल पोर्टल — पहचान पत्र, COP रिन्यूअल, निरंतरता प्रमाण पत्र, कल्याण कोष दावा सहित 14 ऑनलाइन सेवाओं हेतु सीधा आधिकारिक लॉगिन।
+            </p>
+            <a
+              href="https://barcouncilofrajasthan.org/Advocate/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-xs font-bold transition shadow"
+            >
+              <span>ऑफिशियल BCR लॉगिन खोलें</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
       </div>

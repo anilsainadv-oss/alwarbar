@@ -510,13 +510,16 @@ function WelfareContent() {
               <Globe className="w-5 h-5 text-amber-600" />
               <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600 transition" />
             </div>
-            <h3 className="font-bold text-xs text-slate-900">BCR Advocate Portal (Login)</h3>
+            <h3 className="font-bold text-xs text-slate-900 flex items-center space-x-1.5">
+              <span>BCR Advocate Portal (Login)</span>
+              <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">14 ऑनलाइन सेवाएं</span>
+            </h3>
             <p className="text-[11px] text-slate-500 mt-1 leading-snug">
-              Apply online for RAWF Membership, Ex-Gratia claims, Death claims & Retirement.
+              बार काउंसिल ऑफ राजस्थान आधिकारिक लॉगिन — पहचान पत्र, COP नवीनीकरण, निरंतरता प्रमाण पत्र, वेलफेयर क्लेम सहित समस्त 14 सेवाएं।
             </p>
           </div>
           <span className="text-[10px] font-semibold text-amber-700 mt-3 block">
-            Online Apply Portal →
+            ऑफिशियल BCR लॉगिन खोलें ↗
           </span>
         </a>
 
