@@ -359,7 +359,7 @@ export default function BCRServicesPage() {
       {authLoading ? (
         <div className="container mx-auto px-4 py-20 text-center text-slate-400 text-xs flex items-center justify-center space-x-2">
           <Clock className="w-4 h-4 animate-spin text-amber-400" />
-          <span>अधिवक्ता क्रेडेंशियल्स सत्यापित किए जा रहे हैं...</span>
+          <span>{locale === 'hi' ? 'अधिवक्ता क्रेडेंशियल्स सत्यापित किए जा रहे हैं...' : 'Verifying advocate credentials...'}</span>
         </div>
       ) : !currentUser ? (
         /* If Not Logged In: Show Professional Advocate Login Required Screen */
@@ -371,46 +371,77 @@ export default function BCRServicesPage() {
             
             <div>
               <span className="text-[11px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full border border-amber-400/30">
-                अधिवक्ता सत्यापन आवश्यक (Advocate Authentication Required)
+                {locale === 'hi' ? 'अधिवक्ता सत्यापन आवश्यक (Advocate Authentication Required)' : 'Advocate Authentication Required'}
               </span>
               <h2 className="font-serif font-bold text-2xl text-white mt-3">
-                बार काउंसिल ऑफ राजस्थान — अधिवक्ता सेवा पोर्टल
+                {locale === 'hi' ? 'बार काउंसिल ऑफ राजस्थान — अधिवक्ता सेवा पोर्टल' : 'Bar Council of Rajasthan — Advocate Portal'}
               </h2>
               <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                यह अनुभाग केवल राजस्थान बार काउंसिल (BCR) में पंजीकृत अधिवक्ताओं के आधिकारिक व गोपनीय कार्यों (जैसे: नवीनीकरण, पहचान पत्र, कल्याण कोष दावा, सनद आदि) के लिए आरक्षित है।
+                {locale === 'hi'
+                  ? 'यह अनुभाग केवल राजस्थान बार काउंसिल (BCR) में पंजीकृत अधिवक्ताओं के आधिकारिक व गोपनीय कार्यों (जैसे: नवीनीकरण, पहचान पत्र, कल्याण कोष दावा, सनद आदि) के लिए आरक्षित है।'
+                  : 'This section is reserved exclusively for advocates enrolled with the Bar Council of Rajasthan (BCR) for official statutory procedures.'}
               </p>
             </div>
 
             <div className="p-4 bg-slate-900/80 rounded-xl border border-slate-700 text-left text-xs space-y-2 text-slate-300">
-              <span className="font-semibold text-amber-400 block mb-1">लॉगिन करने के बाद आप प्राप्त कर सकेंगे:</span>
+              <span className="font-semibold text-amber-400 block mb-1">
+                {locale === 'hi' ? 'लॉगिन करने के बाद आप प्राप्त कर सकेंगे:' : 'Available upon advocate login:'}
+              </span>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>समस्त 14 आधिकारिक BCR ऑनलाइन आवेदन एवं प्रपत्र</span>
+                <span>{locale === 'hi' ? 'समस्त 14 आधिकारिक BCR ऑनलाइन आवेदन एवं प्रपत्र' : 'All 14 official BCR online applications and forms'}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>व्यक्तिगत सनद, COP एवं कल्याण कोष स्थिति</span>
+                <span>{locale === 'hi' ? 'व्यक्तिगत सनद, COP एवं कल्याण कोष स्थिति' : 'Personal Sanad, COP, and welfare fund status'}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>दावा प्रपत्र (Claim Forms) एवं मतदाता सूची</span>
+                <span>{locale === 'hi' ? 'दावा प्रपत्र (Claim Forms) एवं मतदाता सूची' : 'Claim forms and electoral voter list'}</span>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <a
+                href="https://barcouncilofrajasthan.org/Advocate/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold rounded-lg text-xs transition shadow-md flex items-center justify-center space-x-1.5"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>{locale === 'hi' ? 'ऑफिशियल BCR लॉगिन (जोधपुर) ↗' : 'Official BCR Login (Jodhpur) ↗'}</span>
+              </a>
               <Link
                 href="/auth/login"
-                className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold rounded-lg text-xs transition shadow-md flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-semibold rounded-lg text-xs transition flex items-center justify-center space-x-1.5"
               >
-                <UserCheck className="w-4 h-4" />
-                <span>अधिवक्ता लॉगिन करें (Sign In)</span>
+                <UserCheck className="w-4 h-4 text-amber-400" />
+                <span>{locale === 'hi' ? 'अलवर अधिवक्ता लॉगिन' : 'Alwar Advocate Login'}</span>
               </Link>
               <Link
                 href="/"
-                className="w-full sm:w-auto px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs font-semibold transition"
+                className="w-full sm:w-auto px-4 py-2.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 rounded-lg text-xs transition"
               >
-                मुख्य पृष्ठ पर लौटें
+                {locale === 'hi' ? 'मुख्य पृष्ठ पर लौटें' : 'Back to Home'}
               </Link>
+            </div>
+
+            <div className="pt-2 border-t border-slate-700/60 flex items-center justify-center space-x-2 text-[11px] text-slate-400">
+              <span>{locale === 'hi' ? 'डेमो टेस्ट के लिए:' : 'For Demo Testing:'}</span>
+              <button
+                type="button"
+                onClick={async () => {
+                  await fetch('/api/auth/demo-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: 'advocate.rajesh@alwarbar.in' })
+                  });
+                  window.location.reload();
+                }}
+                className="text-amber-400 hover:underline font-medium"
+              >
+                {locale === 'hi' ? 'अधिवक्ता राजेश शर्मा के रूप में खोलें →' : 'Preview as Advocate Rajesh Sharma →'}
+              </button>
             </div>
           </div>
         </div>
@@ -455,7 +486,7 @@ export default function BCRServicesPage() {
                   }`}
                 >
                   <CheckSquare className="w-4 h-4 text-amber-400" />
-                  <span>APPLICATIONS (14 सेवाएं)</span>
+                  <span>{locale === 'hi' ? 'APPLICATIONS (14 सेवाएं)' : 'APPLICATIONS (14 Services)'}</span>
                 </button>
 
                 <button
@@ -467,7 +498,7 @@ export default function BCRServicesPage() {
                   }`}
                 >
                   <Shield className="w-4 h-4 text-amber-400" />
-                  <span>CLAIM (कल्याण दावा)</span>
+                  <span>{locale === 'hi' ? 'CLAIM (कल्याण दावा)' : 'CLAIM (Welfare Ex-Gratia)'}</span>
                 </button>
 
                 <button
@@ -502,7 +533,7 @@ export default function BCRServicesPage() {
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="आवेदन खोजें (Search 14 BCR Applications)..."
+                  placeholder={locale === 'hi' ? 'आवेदन खोजें (Search 14 BCR Applications)...' : 'Search 14 BCR Applications...'}
                   className="w-full pl-9 pr-3 py-2 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 />
               </div>
@@ -516,7 +547,7 @@ export default function BCRServicesPage() {
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
                 >
-                  सभी (14)
+                  {locale === 'hi' ? 'सभी (14)' : 'All (14)'}
                 </button>
                 <button
                   onClick={() => setCategoryFilter('welfare')}
@@ -526,7 +557,7 @@ export default function BCRServicesPage() {
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
                 >
-                  कल्याण कोष
+                  {locale === 'hi' ? 'कल्याण कोष' : 'Welfare Fund'}
                 </button>
                 <button
                   onClick={() => setCategoryFilter('certificate')}
@@ -536,7 +567,7 @@ export default function BCRServicesPage() {
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
                 >
-                  प्रमाण पत्र
+                  {locale === 'hi' ? 'प्रमाण पत्र' : 'Certificates'}
                 </button>
                 <button
                   onClick={() => setCategoryFilter('enrolment')}
@@ -546,7 +577,7 @@ export default function BCRServicesPage() {
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
                 >
-                  नामांकन व नवीनीकरण
+                  {locale === 'hi' ? 'नामांकन व नवीनीकरण' : 'Enrolment & Renewal'}
                 </button>
               </div>
             </div>

@@ -19,18 +19,33 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('hi');
 
   useEffect(() => {
-    const saved = localStorage.getItem('alwar_locale') as Locale;
-    if (saved === 'hi' || saved === 'en') {
-      setLocaleState(saved);
+    try {
+      const saved = localStorage.getItem('alwar_locale') as Locale;
+      if (saved === 'hi' || saved === 'en') {
+        setLocaleState(saved);
+        if (typeof document !== 'undefined') {
+          document.documentElement.lang = saved;
+        }
+      }
+    } catch {
+      // ignore
     }
   }, []);
 
   const setLocale = (loc: Locale) => {
     setLocaleState(loc);
-    localStorage.setItem('alwar_locale', loc);
+    try {
+      localStorage.setItem('alwar_locale', loc);
+      if (typeof document !== 'undefined') {
+        document.cookie = `alwar_locale=${loc}; path=/; max-age=31536000`;
+        document.documentElement.lang = loc;
+      }
+    } catch {
+      // ignore
+    }
   };
 
-  const t = translations[locale];
+  const t = translations[locale] || translations.hi;
 
   return (
     <LanguageContext.Provider value={{ locale, setLocale, t }}>

@@ -492,17 +492,21 @@ PARTICULARS OF APPLICANT ADVOCATE:
                   Apex District Bar Association • Matsya Region (Est. 1948)
                 </span>
                 <h1 className="font-serif font-extrabold text-2xl sm:text-4xl text-white mt-1 leading-tight">
-                  जिला एवं सत्र बार एसोसिएशन, अलवर
+                  {locale === 'hi' ? 'जिला एवं सत्र बार एसोसिएशन, अलवर' : 'District & Sessions Bar Association, Alwar'}
                 </h1>
                 <p className="text-xs sm:text-sm text-slate-300 font-light mt-0.5">
-                  District & Sessions Bar Association, Alwar — न्याय, गरिमा, विधिक स्वावलंबन एवं 1,100+ अधिवक्ताओं की शीर्ष संस्था
+                  {locale === 'hi' 
+                    ? 'District & Sessions Bar Association, Alwar — न्याय, गरिमा, विधिक स्वावलंबन एवं 1,100+ अधिवक्ताओं की शीर्ष संस्था'
+                    : 'District & Sessions Bar Association, Alwar — Apex statutory body upholding justice, dignity, and 1,100+ advocates'}
                 </p>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2 text-xs">
               <div className="bg-white/10 px-3.5 py-2 rounded-xl border border-white/20 text-slate-200 space-y-0.5 text-right sm:text-left">
-                <div className="text-[10px] text-amber-300 uppercase font-semibold">बार कार्यालय हेल्पलाइन:</div>
+                <div className="text-[10px] text-amber-300 uppercase font-semibold">
+                  {locale === 'hi' ? 'बार कार्यालय हेल्पलाइन:' : 'Bar Helpline:'}
+                </div>
                 <div className="font-mono font-bold text-white flex items-center space-x-1.5">
                   <Phone className="w-3.5 h-3.5 text-amber-400" />
                   <span>0144-2334455 / 2334456</span>
@@ -513,11 +517,11 @@ PARTICULARS OF APPLICANT ADVOCATE:
               {isAdmin ? (
                 <div className="bg-amber-500 text-slate-950 px-3 py-2 rounded-xl font-bold flex items-center space-x-1 shadow">
                   <Sparkles className="w-4 h-4" />
-                  <span>एडमिन मोड सक्रिय (Admin Mode)</span>
+                  <span>{locale === 'hi' ? 'एडमिन मोड सक्रिय (Admin Mode)' : 'Admin Mode Active'}</span>
                 </div>
               ) : (
                 <div className="text-[11px] text-slate-300 bg-white/5 px-2.5 py-1.5 rounded-lg border border-white/10">
-                  <span>ℹ️ फोटो/सदस्य जोड़ने हेतु Bar Admin से लॉगिन करें</span>
+                  <span>{locale === 'hi' ? 'ℹ️ फोटो/सदस्य जोड़ने हेतु Bar Admin से लॉगिन करें' : 'ℹ️ Sign in as Bar Admin to add members & photos'}</span>
                 </div>
               )}
             </div>
@@ -539,7 +543,11 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <Users className="w-4 h-4" />
-              <span>वर्तमान सदस्य फोटो गैलरी ({currentMembers.length})</span>
+              <span>
+                {locale === 'hi' 
+                  ? `वर्तमान सदस्य फोटो गैलरी (${currentMembers.length})` 
+                  : `Current Members Gallery (${currentMembers.length})`}
+              </span>
             </button>
 
             <button
@@ -551,7 +559,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <ImageIcon className="w-4 h-4" />
-              <span>बार इवेंट्स एवं स्लाइडर</span>
+              <span>{locale === 'hi' ? 'बार इवेंट्स एवं स्लाइडर' : 'Bar Events & Slider'}</span>
             </button>
 
             <button
@@ -563,7 +571,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <Award className="w-4 h-4" />
-              <span>पूर्व सदस्य एवं कार्यकारिणी</span>
+              <span>{locale === 'hi' ? 'पूर्व सदस्य एवं कार्यकारिणी' : 'Past Members & Archives'}</span>
             </button>
 
             <button
@@ -575,7 +583,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <Scale className="w-4 h-4" />
-              <span>कार्यकारिणी संदेश</span>
+              <span>{locale === 'hi' ? 'कार्यकारिणी संदेश' : 'Executive Messages'}</span>
             </button>
 
             <button
@@ -587,7 +595,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <Landmark className="w-4 h-4" />
-              <span>अलवर बार का इतिहास</span>
+              <span>{locale === 'hi' ? 'अलवर बार का इतिहास' : 'Alwar Bar History'}</span>
             </button>
 
             <button
@@ -599,7 +607,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <BookOpen className="w-4 h-4" />
-              <span>संविधान एवं नियमावली</span>
+              <span>{locale === 'hi' ? 'संविधान एवं नियमावली' : 'Constitution & By-Laws'}</span>
             </button>
 
             <button
@@ -611,7 +619,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <Scale className="w-4 h-4" />
-              <span>न्यायिक अधिकारी रोस्टर</span>
+              <span>{locale === 'hi' ? 'न्यायिक अधिकारी रोस्टर' : 'Judges Roster'}</span>
             </button>
 
             <button
@@ -623,7 +631,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
               }`}
             >
               <Download className="w-4 h-4" />
-              <span>डाउनलोड केंद्र (8)</span>
+              <span>{locale === 'hi' ? 'डाउनलोड केंद्र (8)' : 'Downloads Hub (8)'}</span>
             </button>
 
           </div>
@@ -662,10 +670,12 @@ PARTICULARS OF APPLICANT ADVOCATE:
                   </span>
                   <h3 className="font-serif font-bold text-2xl text-slate-900 mt-1 flex items-center space-x-2">
                     <Users className="w-6 h-6 text-amber-600" />
-                    <span>वर्तमान बार सदस्य फोटो गैलरी (Current Bar Members)</span>
+                    <span>{locale === 'hi' ? 'वर्तमान बार सदस्य फोटो गैलरी (Current Bar Members)' : 'Current Bar Members Photo Gallery'}</span>
                   </h3>
                   <p className="text-xs text-slate-500">
-                    अलवर जिला एवं सत्र बार एसोसिएशन के समस्त सम्मानित सदस्यों की सचित्र फोटो गैलरी व पद विवरण
+                    {locale === 'hi' 
+                      ? 'अलवर जिला एवं सत्र बार एसोसिएशन के समस्त सम्मानित सदस्यों की सचित्र फोटो गैलरी व पद विवरण'
+                      : 'Pictorial directory and credentials of members of Alwar District & Sessions Bar Association'}
                   </p>
                 </div>
 
@@ -679,10 +689,10 @@ PARTICULARS OF APPLICANT ADVOCATE:
                           ? 'bg-white text-slate-900 shadow'
                           : 'text-slate-600 hover:text-slate-900'
                       }`}
-                      title="फोटो कार्ड ग्रिड व्यू"
+                      title={locale === 'hi' ? 'फोटो कार्ड ग्रिड व्यू' : 'Photo Card Grid View'}
                     >
                       <LayoutGrid className="w-4 h-4" />
-                      <span className="hidden sm:inline">फोटो ग्रिड</span>
+                      <span className="hidden sm:inline">{locale === 'hi' ? 'फोटो ग्रिड' : 'Photo Grid'}</span>
                     </button>
                     <button
                       onClick={() => setMemberViewMode('table')}
@@ -691,10 +701,10 @@ PARTICULARS OF APPLICANT ADVOCATE:
                           ? 'bg-white text-slate-900 shadow'
                           : 'text-slate-600 hover:text-slate-900'
                       }`}
-                      title="सूचीबद्ध डायरेक्टरी व्यू"
+                      title={locale === 'hi' ? 'सूचीबद्ध डायरेक्टरी व्यू' : 'List Directory View'}
                     >
                       <List className="w-4 h-4" />
-                      <span className="hidden sm:inline">सूची</span>
+                      <span className="hidden sm:inline">{locale === 'hi' ? 'सूची' : 'List'}</span>
                     </button>
                   </div>
 
@@ -707,7 +717,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                     className="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold rounded-xl text-xs transition shadow flex items-center space-x-1.5 shrink-0"
                   >
                     <Plus className="w-4 h-4" />
-                    <span>+ नया सदस्य जोड़ें</span>
+                    <span>{locale === 'hi' ? '+ नया सदस्य जोड़ें' : '+ Add Member'}</span>
                   </button>
                 </div>
               </div>
@@ -720,7 +730,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                     type="text"
                     value={memberSearch}
                     onChange={e => setMemberSearch(e.target.value)}
-                    placeholder="अधिवक्ता का नाम, सनद (R/2268/2009), सदस्यता नंबर अथवा मोबाइल नंबर से खोजें..."
+                    placeholder={locale === 'hi' ? 'अधिवक्ता का नाम, सनद (R/2268/2009), सदस्यता नंबर अथवा मोबाइल नंबर से खोजें...' : 'Search by Advocate Name, Sanad (R/2268/2009), Membership No, or Mobile...'}
                     className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40"
                   />
                 </div>
@@ -731,7 +741,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                     onChange={e => setSelectedWing(e.target.value)}
                     className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40 bg-white"
                   >
-                    <option value="all">सभी विंग्स (All Wings)</option>
+                    <option value="all">{locale === 'hi' ? 'सभी विंग्स (All Wings)' : 'All Wings'}</option>
                     <option value="civil">Civil & Constitutional</option>
                     <option value="criminal">Criminal Wing</option>
                     <option value="revenue">Revenue Courts</option>
@@ -807,10 +817,10 @@ PARTICULARS OF APPLICANT ADVOCATE:
                         <button
                           onClick={() => setLightboxMember(member)}
                           className="px-3 py-1.5 bg-white/90 hover:bg-white text-slate-950 rounded-lg text-xs font-bold shadow-lg transition flex items-center space-x-1"
-                          title="फोटो बड़ा करके देखें"
+                          title={locale === 'hi' ? 'फोटो बड़ा करके देखें' : 'View full size photo'}
                         >
                           <Eye className="w-3.5 h-3.5 text-amber-700" />
-                          <span>फोटो देखें</span>
+                          <span>{locale === 'hi' ? 'फोटो देखें' : 'View Photo'}</span>
                         </button>
 
                         {/* Change Photo (Admin) */}
@@ -820,10 +830,10 @@ PARTICULARS OF APPLICANT ADVOCATE:
                             setEditingPhotoUrl(member.photo_url || '');
                           }}
                           className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-xs font-bold shadow-lg transition flex items-center space-x-1"
-                          title="फोटो बदलें अथवा अपलोड करें"
+                          title={locale === 'hi' ? 'फोटो बदलें अथवा अपलोड करें' : 'Change or upload photo'}
                         >
                           <Camera className="w-3.5 h-3.5" />
-                          <span>फोटो बदलें</span>
+                          <span>{locale === 'hi' ? 'फोटो बदलें' : 'Change Photo'}</span>
                         </button>
                       </div>
                     </div>
@@ -850,7 +860,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                           {member.standing_years && (
                             <div className="flex items-center space-x-1.5 text-[11px] text-slate-500">
                               <Scale className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                              <span>वकालत अनुभव: {member.standing_years}+ वर्ष</span>
+                              <span>{locale === 'hi' ? `वकालत अनुभव: ${member.standing_years}+ वर्ष` : `Experience: ${member.standing_years}+ yrs`}</span>
                             </div>
                           )}
                         </div>
@@ -863,7 +873,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                             <a
                               href={`tel:${member.phone.split('/')[0].trim()}`}
                               className="px-2.5 py-1 bg-slate-100 hover:bg-amber-50 hover:text-amber-800 rounded-lg text-[11px] font-mono text-slate-700 transition flex items-center space-x-1"
-                              title="फोन करें"
+                              title={locale === 'hi' ? 'फोन करें' : 'Call'}
                             >
                               <Phone className="w-3 h-3 text-amber-600" />
                               <span>{member.phone.split('/')[0].trim()}</span>
@@ -873,7 +883,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                             <a
                               href={`mailto:${member.email}`}
                               className="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg transition"
-                              title="ईमेल भेजें"
+                              title={locale === 'hi' ? 'ईमेल भेजें' : 'Send Email'}
                             >
                               <Mail className="w-3.5 h-3.5" />
                             </a>
@@ -884,10 +894,10 @@ PARTICULARS OF APPLICANT ADVOCATE:
                           <button
                             onClick={() => handleDeleteMember(member.id, member.name)}
                             className="text-red-600 hover:text-red-800 text-[11px] font-semibold flex items-center space-x-1"
-                            title="सदस्य हटाएं"
+                            title={locale === 'hi' ? 'सदस्य हटाएं' : 'Delete Member'}
                           >
                             <Trash2 className="w-3 h-3" />
-                            <span>हटाएं</span>
+                            <span>{locale === 'hi' ? 'हटाएं' : 'Delete'}</span>
                           </button>
                         )}
                       </div>
@@ -902,13 +912,13 @@ PARTICULARS OF APPLICANT ADVOCATE:
                   <table className="w-full text-left text-xs">
                     <thead className="bg-slate-100/80 text-slate-700 font-bold uppercase text-[11px] border-b border-slate-200">
                       <tr>
-                        <th className="px-5 py-3.5">फोटो व नाम</th>
-                        <th className="px-4 py-3.5">पद / पदनाम</th>
-                        <th className="px-4 py-3.5">सनद / एनरोलमेंट</th>
-                        <th className="px-4 py-3.5">विंग / कार्यक्षेत्र</th>
-                        <th className="px-4 py-3.5">चैंबर</th>
-                        <th className="px-4 py-3.5">मोबाइल</th>
-                        <th className="px-4 py-3.5 text-right">फोटो विकल्प</th>
+                        <th className="px-5 py-3.5">{locale === 'hi' ? 'फोटो व नाम' : 'Photo & Name'}</th>
+                        <th className="px-4 py-3.5">{locale === 'hi' ? 'पद / पदनाम' : 'Role / Designation'}</th>
+                        <th className="px-4 py-3.5">{locale === 'hi' ? 'सनद / एनरोलमेंट' : 'Sanad / Enrolment'}</th>
+                        <th className="px-4 py-3.5">{locale === 'hi' ? 'विंग / कार्यक्षेत्र' : 'Wing / Practice'}</th>
+                        <th className="px-4 py-3.5">{locale === 'hi' ? 'चैंबर' : 'Chamber'}</th>
+                        <th className="px-4 py-3.5">{locale === 'hi' ? 'मोबाइल' : 'Mobile'}</th>
+                        <th className="px-4 py-3.5 text-right">{locale === 'hi' ? 'फोटो विकल्प' : 'Actions'}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -952,9 +962,9 @@ PARTICULARS OF APPLICANT ADVOCATE:
                               <button
                                 onClick={() => setLightboxMember(member)}
                                 className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-semibold"
-                                title="फोटो देखें"
+                                title={locale === 'hi' ? 'फोटो देखें' : 'View Photo'}
                               >
-                                देखें
+                                {locale === 'hi' ? 'देखें' : 'View'}
                               </button>
                               <button
                                 onClick={() => {
@@ -962,9 +972,9 @@ PARTICULARS OF APPLICANT ADVOCATE:
                                   setEditingPhotoUrl(member.photo_url || '');
                                 }}
                                 className="px-2 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded text-[11px] font-bold"
-                                title="फोटो बदलें"
+                                title={locale === 'hi' ? 'फोटो बदलें' : 'Change Photo'}
                               >
-                                बदलें
+                                {locale === 'hi' ? 'बदलें' : 'Change'}
                               </button>
                             </div>
                           </td>
@@ -1144,10 +1154,12 @@ PARTICULARS OF APPLICANT ADVOCATE:
                     Historical Archives • पूर्व कार्यकारिणी
                   </span>
                   <h3 className="font-serif font-bold text-2xl text-slate-900 mt-1">
-                    पूर्व बार सदस्य एवं पूर्व कार्यकारिणी नामावली
+                    {locale === 'hi' ? 'पूर्व बार सदस्य एवं पूर्व कार्यकारिणी नामावली' : 'Past Members & Executive Council Archives'}
                   </h3>
                   <p className="text-xs text-slate-500">
-                    अलवर जिला बार एसोसिएशन के विगत कार्यकालों (2022–2024, 2020–2022, 2018–2020) के निर्वाचित पदाधिकारी व सदस्य
+                    {locale === 'hi' 
+                      ? 'अलवर जिला बार एसोसिएशन के विगत कार्यकालों (2022–2024, 2020–2022, 2018–2020) के निर्वाचित पदाधिकारी व सदस्य'
+                      : 'Elected office bearers and members of previous tenures (2022–2024, 2020–2022, 2018–2020) of Alwar District Bar Association'}
                   </p>
                 </div>
 
@@ -1159,18 +1171,20 @@ PARTICULARS OF APPLICANT ADVOCATE:
                   className="px-4 py-2 bg-gradient-to-r from-purple-700 to-purple-800 hover:from-purple-800 hover:to-purple-900 text-white font-bold rounded-xl text-xs transition shadow flex items-center space-x-1.5"
                 >
                   <Plus className="w-4 h-4" />
-                  <span>+ पूर्व सदस्य जोड़ें (Archive)</span>
+                  <span>{locale === 'hi' ? '+ पूर्व सदस्य जोड़ें (Archive)' : '+ Add Past Member'}</span>
                 </button>
               </div>
 
               {/* Tenure Selection */}
               <div className="flex items-center space-x-2 overflow-x-auto text-xs pt-1">
-                <span className="text-slate-400 font-semibold shrink-0">कार्यकाल चुनें:</span>
+                <span className="text-slate-400 font-semibold shrink-0">
+                  {locale === 'hi' ? 'कार्यकाल चुनें:' : 'Select Tenure:'}
+                </span>
                 {[
-                  { id: 'all', label: 'समस्त पूर्व कार्यकाल' },
-                  { id: '2022–2024', label: '2022–2024 (अध्यक्ष श्री आर.के. शर्मा)' },
-                  { id: '2020–2022', label: '2020–2022 (अध्यक्ष श्री बी.बी. यादव)' },
-                  { id: '2018–2020', label: '2018–2020 (अध्यक्ष श्री एस.एन. माथुर)' }
+                  { id: 'all', label: locale === 'hi' ? 'समस्त पूर्व कार्यकाल' : 'All Past Tenures' },
+                  { id: '2022–2024', label: '2022–2024 (R.K. Sharma)' },
+                  { id: '2020–2022', label: '2020–2022 (B.B. Yadav)' },
+                  { id: '2018–2020', label: '2018–2020 (S.N. Mathur)' }
                 ].map(t => (
                   <button
                     key={t.id}
@@ -1333,10 +1347,10 @@ PARTICULARS OF APPLICANT ADVOCATE:
           <div className="space-y-6">
             <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
               <h2 className="font-serif font-bold text-2xl text-slate-900">
-                अलवर बार एसोसिएशन डाउनलोड केंद्र
+                {locale === 'hi' ? 'अलवर बार एसोसिएशन डाउनलोड केंद्र' : 'Alwar Bar Association Downloads Hub'}
               </h2>
               <span className="text-xs font-mono font-bold text-amber-900 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
-                8 प्रपत्र उपलब्ध
+                {locale === 'hi' ? '8 प्रपत्र उपलब्ध' : '8 Prescribed Forms'}
               </span>
             </div>
 
@@ -1345,7 +1359,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                 <div key={doc.id} className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-3 flex flex-col justify-between">
                   <div>
                     <span className="text-[10px] font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">{doc.category}</span>
-                    <h4 className="font-serif font-bold text-sm text-slate-900 mt-1">{doc.titleHi}</h4>
+                    <h4 className="font-serif font-bold text-sm text-slate-900 mt-1">{locale === 'hi' ? doc.titleHi : doc.titleEn}</h4>
                     <p className="text-xs text-slate-600 mt-1">{doc.description}</p>
                   </div>
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
@@ -1355,7 +1369,7 @@ PARTICULARS OF APPLICANT ADVOCATE:
                       className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs transition flex items-center space-x-1"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>डाउनलोड</span>
+                      <span>{locale === 'hi' ? 'डाउनलोड' : 'Download'}</span>
                     </button>
                   </div>
                 </div>
