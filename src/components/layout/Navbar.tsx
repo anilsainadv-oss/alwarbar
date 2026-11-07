@@ -8,7 +8,7 @@ import {
   Scale, BookOpen, Shield, Users, FileText, 
   MessageSquare, Briefcase, Lock, Menu, X, Globe, UserCheck, 
   Bell, ShieldCheck, KeyRound, Sparkles, Calendar, DollarSign, 
-  Settings, FolderKanban, Database, LogOut
+  Settings, FolderKanban, Database, LogOut, Landmark
 } from 'lucide-react';
 
 interface CurrentUser {
@@ -70,6 +70,7 @@ export function Navbar() {
   const publicNavLinks: NavLinkItem[] = [
     { href: '/', label: t.navHome, icon: Scale },
     { href: '/advocates', label: locale === 'hi' ? 'वकील खोजें' : 'Find Advocates', icon: Users },
+    { href: '/bcr-services', label: locale === 'hi' ? '🏛️ BCR सेवाएं' : 'BCR Services', icon: Landmark, badge: '14 Apps' },
     { href: '/welfare', label: locale === 'hi' ? '18 बार वेलफेयर' : 'Bar Welfare & Dues', icon: Shield, badge: '18 Bars' },
     { href: '/laws', label: locale === 'hi' ? 'नए कानून' : 'New Laws', icon: BookOpen, badge: 'BNS 2023' },
     { href: '/judgments', label: locale === 'hi' ? 'निर्णय व नज़ीरें' : 'Judgments', icon: Scale },
@@ -85,6 +86,7 @@ export function Navbar() {
     { href: '/my-case/diary', label: locale === 'hi' ? '📅 केस डायरी' : 'Cause List / Diary', icon: Calendar, badge: 'Daily' },
     { href: '/my-case/cases', label: locale === 'hi' ? '📂 सक्रिय केस' : 'Active Cases', icon: FolderKanban },
     { href: '/my-case/clients', label: locale === 'hi' ? '👥 मुवक्किल' : 'Clients Roster', icon: Users },
+    { href: '/bcr-services', label: locale === 'hi' ? '🏛️ BCR सेवाएं' : 'BCR Portal', icon: Landmark, badge: '14 Apps' },
     { href: '/my-case/ai-assistant', label: locale === 'hi' ? '🤖 AI असिस्टेंट' : 'AI Assistant', icon: Sparkles, badge: 'AI' },
     { href: '/my-case/drafting', label: locale === 'hi' ? '📝 ड्राफ्टिंग' : 'Bail & Pleadings', icon: FileText },
     { href: '/my-case/billing', label: locale === 'hi' ? '💰 फीस व बिलिंग' : 'Fee Billing', icon: DollarSign },
@@ -96,6 +98,7 @@ export function Navbar() {
   // 3. PUBLIC ADMIN TABS (बार एसोसिएशन प्रशासन - अनिल सैन एवं बार एडमिन)
   const publicAdminNavLinks: NavLinkItem[] = [
     { href: '/public-admin/dashboard', label: locale === 'hi' ? '🏛️ एडमिन डैशबोर्ड' : 'Admin Overview', icon: Shield, badge: 'Admin' },
+    { href: '/bcr-services', label: locale === 'hi' ? '🏛️ BCR सेवाएं' : 'BCR Portal', icon: Landmark, badge: '14 Apps' },
     { href: '/public-admin/advocates', label: locale === 'hi' ? '👥 अधिवक्ता सत्यापन' : 'Verify Advocates', icon: UserCheck },
     { href: '/public-admin/welfare', label: locale === 'hi' ? '🛡️ 18 बार वेलफेयर' : '18 Bars Dues', icon: ShieldCheck, badge: 'RAWF' },
     { href: '/public-admin/laws', label: locale === 'hi' ? '📜 कानून व परिपत्र' : 'Laws & Circulars', icon: BookOpen },
