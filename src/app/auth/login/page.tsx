@@ -9,13 +9,12 @@ import { useLanguage } from '@/lib/i18n/context';
 export default function LoginPage() {
   const router = useRouter();
   const { t } = useLanguage();
-  const [email, setEmail] = useState('advocate.rajesh@alwarbar.in');
+  const [email, setEmail] = useState('rohitashwa.adv@alwarbar.in');
   const [password, setPassword] = useState('Password@r1234');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const performLogin = async (loginEmail: string, loginPassword: string) => {
     setLoading(true);
     setError('');
 
@@ -23,7 +22,7 @@ export default function LoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email: loginEmail.trim(), password: loginPassword.trim() })
       });
 
       const data = await res.json();
@@ -32,17 +31,22 @@ export default function LoginPage() {
       }
 
       if (data.user?.role === 'public_admin') {
-        router.push('/public-admin/dashboard');
+        window.location.href = '/public-admin/dashboard';
       } else if (data.user?.role === 'case_admin') {
-        router.push('/case-admin/dashboard');
+        window.location.href = '/case-admin/dashboard';
       } else {
-        router.push('/my-case/dashboard');
+        window.location.href = '/my-case/dashboard';
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    performLogin(email, password);
   };
 
   return (
@@ -70,24 +74,24 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Registered Email Address
+              ईमेल अथवा सनद संख्या (Email / Enrollment No.)
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
-                type="email"
+                type="text"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
                 className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-                placeholder="name@alwarbar.in"
+                placeholder="rohitashwa.adv@alwarbar.in अथवा R/331/1977"
               />
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Password
+              पासवर्ड (Password)
             </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
@@ -97,7 +101,7 @@ export default function LoginPage() {
                 onChange={e => setPassword(e.target.value)}
                 required
                 className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-                placeholder="••••••••"
+                placeholder="Password@r1234"
               />
             </div>
           </div>
@@ -107,7 +111,7 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full py-2.5 px-4 rounded-lg bg-legal-navy hover:bg-slate-800 text-amber-300 font-semibold text-sm transition flex items-center justify-center space-x-2 shadow"
           >
-            <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
+            <span>{loading ? 'लॉगिन हो रहा है...' : 'साइन इन करें (Sign In) →'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
@@ -129,24 +133,29 @@ export default function LoginPage() {
 
         {/* Quick Demo Credentials Guide */}
         <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-          <p className="font-semibold text-slate-700 mb-2">त्वरित लॉगिन (Click to Fill Preset Accounts):</p>
+          <p className="font-semibold text-slate-700 mb-2">1-क्लिक त्वरित लॉगिन (Click to Instant Login):</p>
           <div className="grid grid-cols-2 gap-1.5 text-[11px]">
             <button
               type="button"
               onClick={() => {
                 setEmail('rohitashwa.adv@alwarbar.in');
                 setPassword('Password@r1234');
+                performLogin('rohitashwa.adv@alwarbar.in', 'Password@r1234');
               }}
-              className="text-left px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-300 rounded text-blue-950 transition font-semibold col-span-2 flex items-center justify-between shadow-sm"
+              className="text-left px-2.5 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-400 rounded-lg text-blue-950 transition font-bold col-span-2 flex items-center justify-between shadow-sm"
             >
-              <span>⚖️ Sh. Rohitashwa Sain (R/331/1977) — e-Courts Active Docket</span>
-              <span className="text-[9px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-mono">49 Yrs Practice</span>
+              <div className="space-y-0.5">
+                <div>⚖️ Sh. Rohitashwa Sain (R/331/1977)</div>
+                <div className="text-[10px] text-blue-700 font-normal">Click to 1-Click Instant Login (e-Courts Docket)</div>
+              </div>
+              <span className="text-[10px] bg-blue-600 text-white px-2 py-1 rounded font-mono font-bold">1-Click Login →</span>
             </button>
             <button
               type="button"
               onClick={() => {
                 setEmail('anilsain.adv@gmail.com');
                 setPassword('Password@12345');
+                performLogin('anilsain.adv@gmail.com', 'Password@12345');
               }}
               className="text-left px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded text-amber-900 transition font-medium"
             >
@@ -157,6 +166,7 @@ export default function LoginPage() {
               onClick={() => {
                 setEmail('public.admin@alwaradvocates.org');
                 setPassword('Password@r1234');
+                performLogin('public.admin@alwaradvocates.org', 'Password@r1234');
               }}
               className="text-left px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-slate-800 transition font-medium"
             >
@@ -167,6 +177,7 @@ export default function LoginPage() {
               onClick={() => {
                 setEmail('advocate.rajesh@alwarbar.in');
                 setPassword('Password@r1234');
+                performLogin('advocate.rajesh@alwarbar.in', 'Password@r1234');
               }}
               className="text-left px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-slate-800 transition font-medium"
             >
@@ -177,11 +188,16 @@ export default function LoginPage() {
               onClick={() => {
                 setEmail('case.admin@alwaradvocates.org');
                 setPassword('Password@r1234');
+                performLogin('case.admin@alwaradvocates.org', 'Password@r1234');
               }}
               className="text-left px-2 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded text-emerald-900 transition font-medium"
             >
               🛡️ Case Admin
             </button>
+          </div>
+          <div className="mt-2.5 p-2 bg-slate-100/80 rounded-lg text-[10px] text-slate-600 font-mono space-y-0.5">
+            <div>• उपयोगकर्ता: <span className="font-bold text-slate-900">rohitashwa.adv@alwarbar.in</span> अथवा <span className="font-bold text-blue-800">R/331/1977</span></div>
+            <div>• पासवर्ड: <span className="bg-amber-100 text-amber-950 px-1.5 py-0.5 rounded font-bold">Password@r1234</span></div>
           </div>
           <div className="mt-2 text-[10px] text-slate-500 text-center font-mono font-medium">
             वर्तमान पासवर्ड (All Users): <span className="bg-amber-100 text-amber-950 px-1 py-0.5 rounded font-bold">Password@r1234</span>

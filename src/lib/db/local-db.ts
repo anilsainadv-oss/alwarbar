@@ -1435,7 +1435,39 @@ class LocalDatabase {
   }
 
   getUserByEmail(email: string): User | undefined {
-    return this.ensureLoaded().users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    return this.getUserByIdentifier(email);
+  }
+
+  getUserByIdentifier(identifier: string): User | undefined {
+    const s = this.ensureLoaded();
+    const clean = (identifier || '').trim().toLowerCase();
+    if (!clean) return undefined;
+
+    // 1. Direct email match
+    const byEmail = s.users.find(u => u.email.toLowerCase() === clean);
+    if (byEmail) return byEmail;
+
+    // 2. Bar Council enrollment match (e.g. R/331/1977, 331/1977, R-331-1977)
+    const norm = clean.replace(/[\s\-_]/g, '/').replace(/^r\//, '');
+    const profile = s.advocate_profiles.find(p => {
+      if (!p.bar_council_enrollment_no) return false;
+      const pNorm = p.bar_council_enrollment_no.toLowerCase().replace(/[\s\-_]/g, '/').replace(/^r\//, '');
+      return pNorm === norm || pNorm === clean;
+    });
+    if (profile) {
+      const u = s.users.find(x => x.id === profile.user_id);
+      if (u) return u;
+    }
+
+    // 3. Username prefix (e.g. 'rohitashwa')
+    const byPrefix = s.users.find(u => u.email.toLowerCase().startsWith(clean));
+    if (byPrefix) return byPrefix;
+
+    // 4. Name match
+    const byName = s.users.find(u => u.full_name.toLowerCase().includes(clean));
+    if (byName) return byName;
+
+    return undefined;
   }
 
   createUser(user: Omit<User, 'id' | 'created_at' | 'updated_at'>): User {
