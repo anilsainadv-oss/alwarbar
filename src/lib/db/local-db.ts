@@ -92,9 +92,36 @@ function getInitialState(): DatabaseState {
         is_active: true,
         created_at: '2026-02-01T10:00:00.000Z',
         updated_at: '2026-02-01T10:00:00.000Z'
+      },
+      {
+        id: 'usr-rohitashwa-sain-331-1977',
+        email: 'rohitashwa.adv@alwarbar.in',
+        password_hash: hashPassword('Password@r1234'),
+        full_name: 'Sh. Rohitashwa Sain',
+        role: 'registered_advocate',
+        phone: '0144-2334455',
+        is_active: true,
+        created_at: '2026-01-01T10:00:00.000Z',
+        updated_at: '2026-01-01T10:00:00.000Z'
       }
     ],
     advocate_profiles: [
+      {
+        id: 'prof-rohitashwa-sain-331',
+        user_id: 'usr-rohitashwa-sain-331-1977',
+        bar_council_enrollment_no: 'R/331/1977',
+        bar_association_name: 'District & Sessions Bar Association, Alwar (Judgeship: ALWAR)',
+        chamber_address: 'Chamber No. 15, Senior Advocates Wing, District Court Campus, Alwar - 301001',
+        court_practice_complex: 'District & Sessions Court, ADJ Courts, POCSO & Subordinate Courts, Alwar',
+        practice_areas: ['Civil Original Suits & Appeals', 'Criminal Defense & Sessions Trials', 'Revenue Litigation (RTA/RLRA)', 'MACT Claims & Consumer Law'],
+        experience_years: 49,
+        bio_hindi: 'अलवर जिला एवं सत्र न्यायालय तथा अधीनस्थ न्यायालयों में वर्ष 1977 से निरंतर 49 वर्षों से वरिष्ठतम विधिक व्यवसाय। बार काउंसिल ऑफ राजस्थान एवं अधिवक्ता कल्याण कोष के सम्मानित सदस्य।',
+        bio_english: 'Senior practicing advocate at District & Sessions Court Alwar since 1977 (49 years of esteemed legal standing). Specializing in Civil Suits, Sessions Criminal Defense, Revenue Land Law, and Appellate Practice.',
+        is_verified: true,
+        verified_by: initialAdminId,
+        verified_at: '2026-01-10T10:00:00.000Z',
+        is_publicly_listed: true
+      },
       {
         id: 'prof-001',
         user_id: demoAdvocateId,
@@ -816,6 +843,46 @@ function getInitialState(): DatabaseState {
         address: 'Ward No. 12, Shivaji Park, Alwar, Rajasthan',
         confidential_notes: 'Client is an agricultural landowner. Retained for partition suit before SDO Alwar.',
         created_at: '2026-02-10T10:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Smt. Bhagwati Devi',
+        phone: '9829112233',
+        email: 'bhagwati.alwar@gmail.com',
+        address: 'Ward No. 8, Scheme No. 2, Alwar, Rajasthan',
+        confidential_notes: 'Retained for Civil Suit against Nagar Parishad Alwar regarding ancestral house boundary.',
+        created_at: '2026-01-10T10:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Dharmendra Singh',
+        phone: '9414223344',
+        email: 'dharmendra.singh@alwarmail.com',
+        address: 'Village Malakhera, Tehsil Malakhera, Alwar',
+        confidential_notes: 'Sessions trial defense matter before Sessions Judge Alwar.',
+        created_at: '2026-02-05T11:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Ramji Lal Gurjar',
+        phone: '9829334455',
+        email: 'ramjilal.gurjar@alwarmail.com',
+        address: 'Village Toda, Tehsil Laxmangarh, Alwar',
+        confidential_notes: 'Revenue appeal regarding agricultural land mutation before RAA Alwar.',
+        created_at: '2026-03-01T10:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Smt. Sunita Devi',
+        phone: '9414445566',
+        email: 'sunita.devi.mact@gmail.com',
+        address: 'Kala Kuan, Housing Board Colony, Alwar',
+        confidential_notes: 'Fatal highway accident compensation claim petition before MACT Alwar.',
+        created_at: '2026-03-15T12:00:00.000Z'
       }
     ],
     cases: [
@@ -837,6 +904,154 @@ function getInitialState(): DatabaseState {
         private_notes: 'Respondents filed reply. Need to emphasize revenue jamabandi showing undivided co-sharer status.',
         created_at: '2026-02-10T11:00:00.000Z',
         updated_at: '2026-10-15T09:30:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-001',
+        case_title: 'Smt. Bhagwati Devi & Ors. v. Nagar Parishad Alwar & Anr.',
+        case_number: 'Civil Suit No. 142/2023',
+        cnr_number: 'RJAL01-003412-2023',
+        court_name: 'Court of Additional District & Sessions Judge No. 1, Alwar',
+        case_type: 'Civil Suit for Declaration & Permanent Injunction',
+        petitioner_parties: 'Smt. Bhagwati Devi w/o Late Rameshwar Dayal',
+        respondent_parties: 'Nagar Parishad Alwar through Commissioner & State of Rajasthan',
+        filing_date: '2023-03-15',
+        next_hearing_date: '2026-11-18',
+        stage_of_case: 'Plaintiff Evidence (P.W. Statements)',
+        status: 'active',
+        private_notes: 'Plaint admitted. Interim stay granted under Order 39 CPC. Next date fixed for cross-examination of Plaintiff Witness No. 1.',
+        created_at: '2023-03-15T11:00:00.000Z',
+        updated_at: '2026-10-20T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-002',
+        case_title: 'State of Rajasthan v. Dharmendra Singh & 3 Ors.',
+        case_number: 'Sessions Case No. 89/2024 (FIR 412/2023 PS Kotwali)',
+        cnr_number: 'RJAL01-001844-2024',
+        court_name: 'District & Sessions Court, Alwar',
+        case_type: 'Sessions Trial (U/s 302, 307, 149 IPC / 103, 109 BNS)',
+        petitioner_parties: 'State of Rajasthan through Public Prosecutor',
+        respondent_parties: 'Dharmendra Singh s/o Ram Singh & 3 Ors.',
+        filing_date: '2024-02-10',
+        next_hearing_date: '2026-11-24',
+        stage_of_case: 'Final Arguments on Charge (Sec 251 BNSS)',
+        status: 'active',
+        private_notes: 'Appeared for accused No. 1 & 2. Raised objection regarding delayed FIR and contradictory medical report.',
+        created_at: '2024-02-10T10:00:00.000Z',
+        updated_at: '2026-10-22T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-003',
+        case_title: 'Ramji Lal & 4 Ors. v. Tehsildar Laxmangarh & 6 Ors.',
+        case_number: 'Revenue Appeal No. 45/2024',
+        cnr_number: 'RJAL01-007821-2024',
+        court_name: 'Court of Revenue Appellate Authority (RAA), Alwar',
+        case_type: 'Revenue Appeal under Sec 75 Rajasthan Land Revenue Act, 1956',
+        petitioner_parties: 'Ramji Lal s/o Hardev Gurjar & 4 Ors.',
+        respondent_parties: 'Tehsildar Laxmangarh & Prabhu Dayal & Ors.',
+        filing_date: '2024-05-19',
+        next_hearing_date: '2026-11-28',
+        stage_of_case: 'Arguments on Interim Injunction (Sec 212 Rajasthan Tenancy Act)',
+        status: 'active',
+        private_notes: 'Challenged mutation entry No. 512. Status quo ordered on possession of agricultural Khasra No. 340.',
+        created_at: '2024-05-19T10:00:00.000Z',
+        updated_at: '2026-10-25T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-004',
+        case_title: 'Smt. Sunita Devi & 3 Minor Children v. New India Assurance Co. Ltd. & Ors.',
+        case_number: 'MACT Claim Petition No. 210/2023',
+        cnr_number: 'RJAL01-004590-2023',
+        court_name: 'Motor Accident Claims Tribunal (MACT), Alwar',
+        case_type: 'Fatal Accident Compensation Claim (Sec 166 Motor Vehicles Act)',
+        petitioner_parties: 'Smt. Sunita Devi w/o Late Rajesh Kumar & 3 Minors',
+        respondent_parties: 'Driver, Owner (Truck RJ-02-GB-4112) & The New India Assurance Co. Ltd.',
+        filing_date: '2023-07-22',
+        next_hearing_date: '2026-12-02',
+        stage_of_case: 'Cross Examination of NA No. 3 Insurance Investigator',
+        status: 'active',
+        private_notes: 'Income of deceased established via Sarpanch certificate & salary register. Claim prayed: ₹48,50,000.',
+        created_at: '2023-07-22T10:00:00.000Z',
+        updated_at: '2026-10-25T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-005',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Harish Chandra Sharma v. Kailash Chand Sharma & Ors.',
+        case_number: 'Civil Regular First Appeal (RFA) No. 18/2022',
+        cnr_number: 'RJAL01-000912-2022',
+        court_name: 'Court of District Judge, Alwar',
+        case_type: 'First Appeal against Decree in Ancestral Partition Suit (Order 41 CPC)',
+        petitioner_parties: 'Harish Chandra Sharma s/o Lt. Pandit Madan Lal',
+        respondent_parties: 'Kailash Chand Sharma & 5 Ors.',
+        filing_date: '2022-04-08',
+        next_hearing_date: '2026-12-05',
+        stage_of_case: 'Final Arguments on Appeal (Order 41 Rule 1 CPC)',
+        status: 'active',
+        private_notes: 'Trial court judgment challenged on improper preliminary decree division. Lower court records summoned.',
+        created_at: '2022-04-08T10:00:00.000Z',
+        updated_at: '2026-10-26T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-006',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Mohan Lal v. State of Rajasthan',
+        case_number: 'Bail Application No. 1840/2026 (FIR 312/2026 PS Aravali Vihar)',
+        cnr_number: 'RJAL01-009144-2026',
+        court_name: 'Special Court (POCSO Act Cases No. 1), Alwar',
+        case_type: 'Regular Bail Application under Section 483 BNSS (Old Sec 439 CrPC)',
+        petitioner_parties: 'Mohan Lal s/o Chhaju Ram Meena',
+        respondent_parties: 'State of Rajasthan through Public Prosecutor',
+        filing_date: '2026-10-25',
+        next_hearing_date: '2026-11-15',
+        stage_of_case: 'Perusal of Case Diary & Arguments on Bail',
+        status: 'active',
+        private_notes: 'Applicant in judicial custody since 45 days. Statement of prosecutrix under Sec 183 BNSS reveals mutual dispute.',
+        created_at: '2026-10-25T10:00:00.000Z',
+        updated_at: '2026-10-28T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-007',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Girraj Prasad Saini v. Alwar Urban Improvement Trust (UIT)',
+        case_number: 'Civil Original Suit No. 67/2025',
+        cnr_number: 'RJAL01-005118-2025',
+        court_name: 'Court of Civil Judge & Senior Division, Alwar',
+        case_type: 'Specific Performance of Contract & Patta Title Declaration',
+        petitioner_parties: 'Girraj Prasad Saini s/o Narayan Lal Saini',
+        respondent_parties: 'Alwar Urban Improvement Trust (UIT) through Secretary',
+        filing_date: '2025-06-14',
+        next_hearing_date: '2026-12-10',
+        stage_of_case: 'Framing of Issues (Order 14 Rule 1 CPC)',
+        status: 'active',
+        private_notes: 'Written statement submitted by UIT. Proposed issues drafted and filed before Honble Bench.',
+        created_at: '2025-06-14T10:00:00.000Z',
+        updated_at: '2026-10-28T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-008',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Radhey Shyam Yadav v. Smt. Kanta Devi',
+        case_number: 'Criminal Revision No. 34/2025',
+        cnr_number: 'RJAL01-002305-2025',
+        court_name: 'Court of Additional Sessions Judge No. 2, Alwar',
+        case_type: 'Criminal Revision against Interim Maintenance (Sec 438/442 BNSS)',
+        petitioner_parties: 'Radhey Shyam Yadav s/o Ramotar Yadav',
+        respondent_parties: 'Smt. Kanta Devi w/o Radhey Shyam Yadav',
+        filing_date: '2025-03-11',
+        next_hearing_date: '2026-12-12',
+        stage_of_case: 'Arguments on Revision & Record Call',
+        status: 'active',
+        private_notes: 'Challenged exorbitant ex-parte interim maintenance award passed without assessing actual agricultural income.',
+        created_at: '2025-03-11T10:00:00.000Z',
+        updated_at: '2026-10-28T10:00:00.000Z'
       }
     ],
     case_documents: [
@@ -870,6 +1085,66 @@ function getInitialState(): DatabaseState {
         attended: true,
         case_title: 'Mukesh Kumar Saini v. Rameshwar Dayal & Ors.',
         created_at: '2026-10-10T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-001',
+        case_id: 'case-rohitashwa-006',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-15',
+        court_room: 'Special Court (POCSO Cases No. 1), Sessions Wing Alwar',
+        judge_name: 'Special Judge (POCSO Act), Alwar',
+        business_recorded: 'Case diary summoned from Investigating Officer, PS Aravali Vihar. Bail arguments listed.',
+        previous_order_summary: 'Notices issued to complainant. Case diary called.',
+        next_action: 'Advance arguments on Section 483 BNSS citing bail precedents.',
+        next_hearing_date: '2026-11-15',
+        attended: true,
+        case_title: 'Mohan Lal v. State of Rajasthan (Bail App 1840/2026)',
+        created_at: '2026-10-26T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-002',
+        case_id: 'case-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-18',
+        court_room: 'Court No. 3, ADJ No. 1, Alwar',
+        judge_name: 'Additional District & Sessions Judge No. 1, Alwar',
+        business_recorded: 'Plaintiff Witness No. 1 (Bhagwati Devi) in attendance. Cross-examination by Municipal Council counsel.',
+        previous_order_summary: 'Affidavit of examination-in-chief filed. Adjourned for cross-examination.',
+        next_action: 'Conduct re-examination if necessary; tender documentary site receipts.',
+        next_hearing_date: '2026-11-18',
+        attended: true,
+        case_title: 'Smt. Bhagwati Devi & Ors. v. Nagar Parishad Alwar & Anr.',
+        created_at: '2026-10-20T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-003',
+        case_id: 'case-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-24',
+        court_room: 'Court No. 1, District & Sessions Judge, Alwar',
+        judge_name: 'District & Sessions Judge, Alwar',
+        business_recorded: 'Arguments on charge heard in part. Remaining co-accused defense counsel to conclude.',
+        previous_order_summary: 'Accused produced through VC. Police charge-sheet verified.',
+        next_action: 'Conclude discharge submissions under Sec 250 BNSS.',
+        next_hearing_date: '2026-11-24',
+        attended: true,
+        case_title: 'State of Rajasthan v. Dharmendra Singh & 3 Ors.',
+        created_at: '2026-10-22T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-004',
+        case_id: 'case-rohitashwa-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-28',
+        court_room: 'Court of Revenue Appellate Authority, Collectorate, Alwar',
+        judge_name: 'Revenue Appellate Authority (RAA), Alwar',
+        business_recorded: 'Record of Tehsildar Laxmangarh perused. Stay application under Sec 212 RTA for consideration.',
+        previous_order_summary: 'Status quo ordered on possession till next date.',
+        next_action: 'Argue on confirmation of status quo pending final appeal decision.',
+        next_hearing_date: '2026-11-28',
+        attended: true,
+        case_title: 'Ramji Lal & 4 Ors. v. Tehsildar Laxmangarh & 6 Ors.',
+        created_at: '2026-10-25T10:00:00.000Z'
       }
     ],
     tasks: [
@@ -883,6 +1158,28 @@ function getInitialState(): DatabaseState {
         status: 'pending',
         case_title: 'Mukesh Kumar Saini v. Rameshwar Dayal & Ors.',
         created_at: '2026-10-15T10:00:00.000Z'
+      },
+      {
+        id: 'task-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_id: 'case-rohitashwa-002',
+        title: 'Obtain certified copies of injured MLC and supplementary statement in Sessions Case 89/2024',
+        due_date: '2026-11-20',
+        priority: 'urgent',
+        status: 'pending',
+        case_title: 'State of Rajasthan v. Dharmendra Singh & 3 Ors.',
+        created_at: '2026-10-26T10:00:00.000Z'
+      },
+      {
+        id: 'task-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_id: 'case-rohitashwa-001',
+        title: 'Prepare cross-examination points on Nagar Parishad master plan map in Civil Suit 142/2023',
+        due_date: '2026-11-17',
+        priority: 'high',
+        status: 'pending',
+        case_title: 'Smt. Bhagwati Devi & Ors. v. Nagar Parishad Alwar & Anr.',
+        created_at: '2026-10-27T10:00:00.000Z'
       }
     ],
     invoices: [
@@ -1076,6 +1373,32 @@ class LocalDatabase {
             role: defaultUser.role,
             is_active: true
           };
+          changed = true;
+        }
+      }
+
+      // Ensure initial cases exist
+      for (const defaultCase of initial.cases) {
+        if (!merged.cases.some(c => c.id === defaultCase.id)) {
+          merged.cases.push(defaultCase);
+          changed = true;
+        }
+      }
+      for (const defaultClient of initial.clients) {
+        if (!merged.clients.some(c => c.id === defaultClient.id)) {
+          merged.clients.push(defaultClient);
+          changed = true;
+        }
+      }
+      for (const defaultHearing of initial.case_hearings) {
+        if (!merged.case_hearings.some(h => h.id === defaultHearing.id)) {
+          merged.case_hearings.push(defaultHearing);
+          changed = true;
+        }
+      }
+      for (const defaultTask of initial.tasks) {
+        if (!merged.tasks.some(t => t.id === defaultTask.id)) {
+          merged.tasks.push(defaultTask);
           changed = true;
         }
       }
@@ -1530,6 +1853,20 @@ class LocalDatabase {
     const s = this.ensureLoaded();
     return s.cases
       .filter(c => c.advocate_id === advocateId)
+      .map(c => ({
+        ...c,
+        client: s.clients.find(cl => cl.id === c.client_id)
+      }));
+  }
+
+  getCasesByEnrollment(enrollment: string): CaseRecord[] {
+    const s = this.ensureLoaded();
+    const normalize = (e: string) => e.toLowerCase().replace(/[\s\-_]/g, '/');
+    const target = normalize(enrollment);
+    const profile = s.advocate_profiles.find(p => p.bar_council_enrollment_no && normalize(p.bar_council_enrollment_no) === target);
+    if (!profile) return [];
+    return s.cases
+      .filter(c => c.advocate_id === profile.user_id)
       .map(c => ({
         ...c,
         client: s.clients.find(cl => cl.id === c.client_id)

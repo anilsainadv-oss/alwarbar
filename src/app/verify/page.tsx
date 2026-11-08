@@ -7,8 +7,24 @@ import {
   ShieldCheck, CheckCircle2, UserCheck, Stethoscope, Award, 
   MapPin, Briefcase, Phone, Mail, FileText, Download, Printer, 
   Share2, ExternalLink, ArrowLeft, ArrowUpRight, Check, AlertCircle,
-  Building2, Calendar, FileSpreadsheet, Loader2, Sparkles, Scale
+  Building2, Calendar, FileSpreadsheet, Loader2, Sparkles, Scale,
+  Folder, Search, Copy, Landmark
 } from 'lucide-react';
+
+interface ECourtCaseItem {
+  id: string;
+  case_title: string;
+  case_number?: string;
+  cnr_number?: string;
+  court_name: string;
+  case_type: string;
+  petitioner_parties?: string;
+  respondent_parties?: string;
+  filing_date?: string;
+  next_hearing_date?: string;
+  stage_of_case?: string;
+  status?: string;
+}
 
 interface AdvocateVerificationData {
   found: boolean;
@@ -32,6 +48,7 @@ interface AdvocateVerificationData {
   nominee_status?: string;
   bcr_dues_link?: string;
   bcr_portal_link?: string;
+  ecourts_cases?: ECourtCaseItem[];
   sync_note?: string;
   message?: string;
   samples?: string[];
@@ -41,12 +58,20 @@ function VerifyAdvocateContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const queryEnrollment = searchParams.get('enrollment') || searchParams.get('check') || 'R/2268/2009';
+  const queryEnrollment = searchParams.get('enrollment') || searchParams.get('check') || 'R/331/1977';
   const [inputVal, setInputVal] = useState(queryEnrollment);
   const [data, setData] = useState<AdvocateVerificationData | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copiedCnr, setCopiedCnr] = useState<string | null>(null);
+  const [caseFilter, setCaseFilter] = useState('ALL');
   const [verifyDate, setVerifyDate] = useState('01 November 2026');
+
+  const handleCopyCnr = (cnr: string) => {
+    navigator.clipboard.writeText(cnr);
+    setCopiedCnr(cnr);
+    setTimeout(() => setCopiedCnr(null), 2000);
+  };
 
   useEffect(() => {
     setVerifyDate(new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }));
@@ -475,6 +500,198 @@ function VerifyAdvocateContent() {
                     <Download className="w-4 h-4 text-emerald-700" />
                   </a>
                 </div>
+              </div>
+
+              {/* Official Alwar District Court e-Courts Case Dossier */}
+              <div className="space-y-4 pt-6 border-t border-slate-200">
+                <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 text-white rounded-2xl p-5 border border-blue-500/30 shadow-lg space-y-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center space-x-3.5">
+                      <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-300 flex items-center justify-center shrink-0 border border-blue-400/30">
+                        <Landmark className="w-6 h-6 text-blue-400" />
+                      </div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <span className="font-serif font-bold text-lg text-white">
+                            अलवर जिला न्यायालय e-Courts केस पंजिका
+                          </span>
+                          <span className="text-[10px] bg-blue-500/30 text-blue-200 px-2 py-0.5 rounded border border-blue-400/40 font-mono">
+                            LIVE DOCKET
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-300 mt-0.5">
+                          वरिष्ठ अधिवक्ता {data.name} (सनद संख्या: {data.enrollment}) — जिला एवं सत्र न्यायालय अलवर तथा अधीनस्थ न्यायालयों में विचाराधीन एवं निस्तारित वाद।
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2 shrink-0">
+                      <a
+                        href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition shadow flex items-center space-x-1.5"
+                      >
+                        <Search className="w-3.5 h-3.5" />
+                        <span>e-Courts में खोजें ↗</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                      <a
+                        href="https://alwar.dcourts.gov.in/cause-list/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-medium border border-slate-700 transition"
+                      >
+                        दैनिक कॉज लिस्ट ↗
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Filter chips */}
+                  {data.ecourts_cases && data.ecourts_cases.length > 0 && (
+                    <div className="flex items-center gap-1.5 overflow-x-auto pt-2 border-t border-white/10 text-xs">
+                      {[
+                        { id: 'ALL', label: `सभी वाद (${data.ecourts_cases.length})` },
+                        { id: 'civil', label: 'दीवानी (Civil)' },
+                        { id: 'criminal', label: 'सत्र / दांडिक (Criminal)' },
+                        { id: 'revenue', label: 'राजस्व (Revenue)' },
+                        { id: 'mact', label: 'मोटर दावा (MACT)' },
+                        { id: 'pocso', label: 'विशिष्ट (POCSO)' }
+                      ].map(tab => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setCaseFilter(tab.id)}
+                          className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
+                            caseFilter === tab.id
+                              ? 'bg-blue-500 text-white shadow-sm'
+                              : 'bg-white/10 text-slate-300 hover:bg-white/20'
+                          }`}
+                        >
+                          {tab.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Case Cards */}
+                {data.ecourts_cases && data.ecourts_cases.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-3">
+                    {data.ecourts_cases
+                      .filter(c => {
+                        if (caseFilter === 'ALL') return true;
+                        const text = (c.case_type + ' ' + c.court_name + ' ' + c.case_title).toLowerCase();
+                        if (caseFilter === 'civil') return text.includes('civil') || text.includes('suit') || text.includes('rfa');
+                        if (caseFilter === 'criminal') return text.includes('session') || text.includes('revision') || text.includes('bail') || text.includes('bnss');
+                        if (caseFilter === 'revenue') return text.includes('revenue') || text.includes('tenancy') || text.includes('sdo') || text.includes('raa');
+                        if (caseFilter === 'mact') return text.includes('mact') || text.includes('accident') || text.includes('compensation');
+                        if (caseFilter === 'pocso') return text.includes('pocso') || text.includes('special');
+                        return true;
+                      })
+                      .map(c => {
+                        const cleanCnr = c.cnr_number?.replace(/-/g, '') || '';
+                        const cnrUrl = cleanCnr
+                          ? `https://services.ecourts.gov.in/ecourtindia_v6/?p=casestatus/cnr_search&cnr=${encodeURIComponent(cleanCnr)}`
+                          : 'https://alwar.dcourts.gov.in/case-status-search-by-advocate/';
+                        return (
+                          <div
+                            key={c.id}
+                            className="bg-white rounded-xl border border-slate-200 p-4 hover:border-blue-400 hover:shadow-md transition space-y-2.5"
+                          >
+                            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                              <div className="space-y-1">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="text-xs font-bold text-slate-900 bg-slate-100 px-2.5 py-0.5 rounded border border-slate-300">
+                                    {c.case_number || 'Case File'}
+                                  </span>
+                                  {c.cnr_number && (
+                                    <div className="inline-flex items-center space-x-1 bg-blue-50 text-blue-900 border border-blue-200 px-2 py-0.5 rounded text-[11px] font-mono">
+                                      <span>CNR: {c.cnr_number}</span>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleCopyCnr(c.cnr_number || '')}
+                                        className="text-blue-600 hover:text-blue-800 ml-1"
+                                        title="Copy CNR Number"
+                                      >
+                                        {copiedCnr === c.cnr_number ? (
+                                          <Check className="w-3 h-3 text-emerald-600" />
+                                        ) : (
+                                          <Copy className="w-3 h-3" />
+                                        )}
+                                      </button>
+                                    </div>
+                                  )}
+                                  <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                    {c.status || 'Active'}
+                                  </span>
+                                </div>
+
+                                <h4 className="font-serif font-bold text-base text-slate-900">
+                                  {c.case_title}
+                                </h4>
+
+                                <div className="text-xs text-slate-600 space-y-0.5">
+                                  <div className="flex items-center space-x-1">
+                                    <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                    <span><strong>न्यायालय (Court):</strong> {c.court_name}</span>
+                                  </div>
+                                  <div className="flex items-center space-x-1">
+                                    <FileText className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                    <span><strong>प्रकार (Nature):</strong> {c.case_type}</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="flex flex-col sm:items-end gap-1.5 shrink-0 pt-1">
+                                {c.next_hearing_date && (
+                                  <div className="bg-amber-50 border border-amber-200 text-amber-900 px-2.5 py-1 rounded text-xs font-bold flex items-center space-x-1">
+                                    <Calendar className="w-3.5 h-3.5 text-amber-700" />
+                                    <span>अगली पेशी: {c.next_hearing_date}</span>
+                                  </div>
+                                )}
+                                <a
+                                  href={cnrUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs font-bold text-blue-700 hover:text-blue-900 hover:underline flex items-center space-x-1"
+                                >
+                                  <span>e-Courts लाइव स्टेटस जांचें ↗</span>
+                                </a>
+                              </div>
+                            </div>
+
+                            {c.stage_of_case && (
+                              <div className="bg-slate-50 rounded-lg p-2 text-xs text-slate-700 border border-slate-150 flex items-center justify-between">
+                                <div>
+                                  <span className="font-semibold text-slate-800">वर्तमान कार्यवाही चरण (Stage):</span>{' '}
+                                  <span className="text-slate-600">{c.stage_of_case}</span>
+                                </div>
+                                <span className="text-[10px] text-slate-400 font-mono">
+                                  दर्ज तारीख: {c.filing_date || 'N/A'}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 text-center space-y-3">
+                    <Landmark className="w-8 h-8 text-slate-400 mx-auto" />
+                    <p className="text-xs text-slate-600 max-w-md mx-auto">
+                      इस अधिवक्ता पंजीकरण ({data.enrollment}) के लिए सीधे जिला न्यायालय अलवर के आधिकारिक ई-कोर्ट्स सर्वर पर लाइव केस खोजें।
+                    </p>
+                    <a
+                      href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold shadow"
+                    >
+                      <Search className="w-3.5 h-3.5" />
+                      <span>Search on alwar.dcourts.gov.in ↗</span>
+                    </a>
+                  </div>
+                )}
               </div>
 
               {/* Official Seal Footer */}

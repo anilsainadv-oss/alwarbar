@@ -16,6 +16,8 @@ export default function CasesManagementPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [newModalOpen, setNewModalOpen] = useState(false);
+  const [ecourtSyncModalOpen, setEcourtSyncModalOpen] = useState(false);
+  const [syncEnrollment, setSyncEnrollment] = useState('R/331/1977');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -124,13 +126,22 @@ export default function CasesManagementPage() {
           </p>
         </div>
 
-        <button
-          onClick={() => setNewModalOpen(true)}
-          className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-semibold rounded-lg shadow-sm transition flex items-center space-x-1.5 shrink-0"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Record New Case File</span>
-        </button>
+        <div className="flex items-center space-x-2 shrink-0">
+          <button
+            onClick={() => setEcourtSyncModalOpen(true)}
+            className="px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-lg shadow-sm transition flex items-center space-x-1.5"
+          >
+            <Search className="w-4 h-4" />
+            <span>e-Courts Case Sync</span>
+          </button>
+          <button
+            onClick={() => setNewModalOpen(true)}
+            className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-semibold rounded-lg shadow-sm transition flex items-center space-x-1.5"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Record New Case File</span>
+          </button>
+        </div>
       </div>
 
       {/* Official Alwar District Court e-Courts Advocate Search Banner */}
@@ -433,6 +444,200 @@ export default function CasesManagementPage() {
                   className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-amber-300 font-semibold rounded-lg shadow-sm"
                 >
                   {submitting ? 'Recording Case...' : 'Save Case File'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* e-Courts Case Synchronizer Modal */}
+      {ecourtSyncModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-slate-900 border border-slate-200 max-h-[90vh] overflow-y-auto space-y-5">
+            <div className="flex items-center justify-between border-b pb-3">
+              <div className="flex items-center space-x-2.5">
+                <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                  <Search className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-lg text-slate-900">
+                    e-Courts केस सिंक एवं इम्पोर्टर (Alwar District Court)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    अलवर जिला न्यायालय आधिकारिक e-Courts सर्वर से अपने केस सीधे वाद पंजिका में जोड़ें।
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setEcourtSyncModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600 text-sm font-bold p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Direct e-Courts Connection Strip */}
+            <div className="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-xl p-4 space-y-2 border border-blue-400/30">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="text-xs">
+                  <div className="text-blue-300 font-semibold font-mono text-[11px]">
+                    ADV. SANAD: {syncEnrollment}
+                  </div>
+                  <div className="font-bold text-sm text-white mt-0.5">
+                    जिला न्यायालय अलवर आधिकारिक सर्च पोर्टल
+                  </div>
+                </div>
+                <a
+                  href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition shadow flex items-center space-x-1.5 shrink-0"
+                >
+                  <span>e-Courts में केस खोजें ↗</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+              <p className="text-[11px] text-slate-300 leading-snug">
+                सरकारी e-Courts सर्वर पर अपना नाम या सनद संख्या (<code className="bg-blue-900/60 px-1 py-0.5 rounded text-blue-200">{syncEnrollment}</code>) दर्ज करके कैप्चा सॉल्व करें। मिलने वाले केस का CNR नंबर या केस नंबर नीचे डालकर तुरंत अपनी निजी पंजिका में सिंक करें।
+              </p>
+            </div>
+
+            {/* Quick Importer Form */}
+            <form onSubmit={handleCreateCase} className="space-y-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">
+                    16-Digit e-Courts CNR Number
+                  </label>
+                  <input
+                    type="text"
+                    value={cnrNumber}
+                    onChange={e => setCnrNumber(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg font-mono"
+                    placeholder="e.g. RJAL01-003412-2023"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">
+                    Case / Suit Number
+                  </label>
+                  <input
+                    type="text"
+                    value={caseNumber}
+                    onChange={e => setCaseNumber(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg font-mono"
+                    placeholder="e.g. Civil Suit 142/2023"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Case Title (पार्टी नाम)</label>
+                <input
+                  required
+                  type="text"
+                  value={caseTitle}
+                  onChange={e => setCaseTitle(e.target.value)}
+                  className="w-full p-2.5 border rounded-lg"
+                  placeholder="e.g. Ramesh Kumar v. State of Rajasthan / Smt. Shanti Devi v. Municipal Council"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Competent Court (न्यायालय)</label>
+                  <select
+                    value={courtName}
+                    onChange={e => setCourtName(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg bg-white"
+                  >
+                    <option value="District & Sessions Court, Alwar">District & Sessions Court, Alwar</option>
+                    <option value="Court of Additional District & Sessions Judge No. 1, Alwar">ADJ No. 1, Alwar</option>
+                    <option value="Court of Additional District & Sessions Judge No. 2, Alwar">ADJ No. 2, Alwar</option>
+                    <option value="Special Court (POCSO Act Cases No. 1), Alwar">Special Court (POCSO No. 1), Alwar</option>
+                    <option value="Court of Civil Judge & Senior Division, Alwar">Civil Judge & Senior Division, Alwar</option>
+                    <option value="Motor Accident Claims Tribunal (MACT), Alwar">MACT Tribunal, Alwar</option>
+                    <option value="Court of Sub-Divisional Officer (SDO), Alwar">Court of SDO, Alwar</option>
+                    <option value="Court of Revenue Appellate Authority (RAA), Alwar">RAA Revenue Court, Alwar</option>
+                    <option value="Family Court No. 1, Alwar">Family Court No. 1, Alwar</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Case Type (प्रकृति)</label>
+                  <input
+                    required
+                    type="text"
+                    value={caseType}
+                    onChange={e => setCaseType(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                    placeholder="e.g. Civil Suit, Sessions Trial, Bail (Sec 480 BNSS)"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Petitioner (प्रार्थी)</label>
+                  <input
+                    required
+                    type="text"
+                    value={petitioner}
+                    onChange={e => setPetitioner(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                    placeholder="Petitioner name"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Respondent (विपक्षी)</label>
+                  <input
+                    required
+                    type="text"
+                    value={respondent}
+                    onChange={e => setRespondent(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                    placeholder="Respondent name"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Current Stage (कार्यवाही चरण)</label>
+                  <input
+                    type="text"
+                    value={stageOfCase}
+                    onChange={e => setStageOfCase(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                    placeholder="e.g. Plaintiff Evidence, Final Arguments, Stay"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Next Hearing Date (अगली पेशी)</label>
+                  <input
+                    type="date"
+                    value={nextDate}
+                    onChange={e => setNextDate(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-3 flex justify-end space-x-2 border-t">
+                <button
+                  type="button"
+                  onClick={() => setEcourtSyncModalOpen(false)}
+                  className="px-3 py-1.5 border rounded-lg text-slate-600 hover:bg-slate-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-sm"
+                >
+                  {submitting ? 'सिंक हो रहा है...' : 'Sync & Save to Docket'}
                 </button>
               </div>
             </form>

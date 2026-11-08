@@ -134,6 +134,17 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => {
+                setEmail('rohitashwa.adv@alwarbar.in');
+                setPassword('Password@r1234');
+              }}
+              className="text-left px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-300 rounded text-blue-950 transition font-semibold col-span-2 flex items-center justify-between shadow-sm"
+            >
+              <span>⚖️ Sh. Rohitashwa Sain (R/331/1977) — e-Courts Active Docket</span>
+              <span className="text-[9px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-mono">49 Yrs Practice</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
                 setEmail('anilsain.adv@gmail.com');
                 setPassword('Password@12345');
               }}
@@ -157,7 +168,7 @@ export default function LoginPage() {
                 setEmail('advocate.rajesh@alwarbar.in');
                 setPassword('Password@r1234');
               }}
-              className="text-left px-2 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded text-blue-900 transition font-medium"
+              className="text-left px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-slate-800 transition font-medium"
             >
               ⚖️ Adv. Rajesh Sharma
             </button>

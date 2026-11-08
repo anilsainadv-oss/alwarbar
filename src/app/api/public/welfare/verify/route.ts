@@ -103,6 +103,7 @@ export async function GET(req: Request) {
     // Found in local directory!
     if (matched) {
       const expYears = matched.experience_years || 10;
+      const ecourtsCases = localDb.getCasesByEnrollment(matched.bar_council_enrollment_no);
       return NextResponse.json({
         found: true,
         source: 'local_directory',
@@ -121,7 +122,8 @@ export async function GET(req: Request) {
         accidental_cover: '₹10,00,000 Round-the-Clock Cover',
         nominee_status: 'Nominee Declaration Form A Active on File',
         bcr_dues_link: 'https://barcouncilofrajasthan.org/rawf/dues-list',
-        bcr_portal_link: 'https://barcouncilofrajasthan.org/Advocate/'
+        bcr_portal_link: 'https://barcouncilofrajasthan.org/Advocate/',
+        ecourts_cases: ecourtsCases
       });
     }
 
@@ -174,6 +176,7 @@ export async function GET(req: Request) {
         nominee_status: 'Nominee Protection under RAWF Act, 1987 Sections 16 & 17',
         bcr_dues_link: '/welfare?tab=dues',
         bcr_portal_link: 'https://barcouncilofrajasthan.org/rawf/dues-list',
+        ecourts_cases: localDb.getCasesByEnrollment(bcrMatch.enrol_no),
         sync_note: 'Verified from official Bar Council of Rajasthan Complete List of Advocates Due Subscription of R.A.W.F. (Alwar Judgeship Register, Record #' + bcrMatch.s_no + ', Electoral Roll #' + bcrMatch.elc_no + ').'
       });
     }
