@@ -33,6 +33,7 @@ function DraftingStudioContent() {
   const [editableText, setEditableText] = useState('');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [exportingDocx, setExportingDocx] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [error, setError] = useState('');
 
@@ -123,15 +124,44 @@ function DraftingStudioContent() {
     }
   };
 
-  const handleExportDocx = () => {
-    const blob = new Blob([editableText], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${draftType}_${new Date().toISOString().split('T')[0]}.docx`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleExportDocx = async () => {
+    if (!editableText.trim()) return;
+    setExportingDocx(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/my-case/drafts/export-docx', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          draftType,
+          title: `${draftType.toUpperCase()} — ${caseTitle || 'Pleading Dossier'}`,
+          contentText: editableText,
+          courtName,
+          parties: { petitioner, respondent },
+          language: draftLanguage
+        })
+      });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error || 'Failed to export Word document');
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${draftType}_${new Date().toISOString().split('T')[0]}.docx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Export failed');
+    } finally {
+      setExportingDocx(false);
+    }
   };
 
   return (
@@ -315,11 +345,11 @@ function DraftingStudioContent() {
                 <button
                   type="button"
                   onClick={handleExportDocx}
-                  disabled={!editableText}
-                  className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1"
+                  disabled={!editableText || exportingDocx}
+                  className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1 disabled:opacity-50"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Export (.docx)</span>
+                  <span>{exportingDocx ? 'Exporting Word (.docx)...' : 'Export Word (.docx)'}</span>
                 </button>
               </div>
             </div>

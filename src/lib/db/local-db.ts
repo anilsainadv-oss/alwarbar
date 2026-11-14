@@ -5,7 +5,10 @@ import type {
   User, AdvocateProfile, WelfareScheme, WelfareBulletin, LegalUpdate, LegalForm, NoticeEvent, AuditLog 
 } from '@/types/database';
 import type { 
-  CaseRecord, CaseDocument, CaseHearing, CaseTask, Client, Invoice, LegalDraft, PersonalLibraryItem 
+  CaseRecord, CaseDocument, CaseHearing, CaseTask, Client, Invoice, LegalDraft, PersonalLibraryItem,
+  AIChatSession, AIChatMessage,
+  NotificationPreferences, NotificationDeliveryRecord, ClientCommunication, AutomationJob, CauseListEntry,
+  AdvocateSubscription, SubscriptionInvoice, Chamber, ChamberMember, ChamberInvitation, ChamberMemberRole, ChamberMemberStatus
 } from '@/types/mycase';
 import type { 
   ForumCategory, ForumPost, ForumReply, ForumReport 
@@ -31,6 +34,17 @@ interface DatabaseState {
   invoices: Invoice[];
   drafts: LegalDraft[];
   personal_library: PersonalLibraryItem[];
+  chat_sessions: AIChatSession[];
+  notification_preferences: NotificationPreferences[];
+  notification_delivery_history: NotificationDeliveryRecord[];
+  client_communications: ClientCommunication[];
+  automation_jobs: AutomationJob[];
+  cause_list_entries: CauseListEntry[];
+  subscriptions: AdvocateSubscription[];
+  subscription_invoices: SubscriptionInvoice[];
+  chambers: Chamber[];
+  chamber_members: ChamberMember[];
+  chamber_invitations: ChamberInvitation[];
   audit_logs: AuditLog[];
 }
 
@@ -1052,6 +1066,188 @@ function getInitialState(): DatabaseState {
         private_notes: 'Challenged exorbitant ex-parte interim maintenance award passed without assessing actual agricultural income.',
         created_at: '2025-03-11T10:00:00.000Z',
         updated_at: '2026-10-28T10:00:00.000Z'
+      },
+      // --- DISPOSED CASES (निस्तारित वाद) ---
+      {
+        id: 'case-rohitashwa-disp-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Mool Chand Saini & Ors. v. State of Rajasthan & PWD Alwar',
+        case_number: 'Civil Suit No. 84/2019',
+        cnr_number: 'RJAL01-001923-2019',
+        court_name: 'Court of Additional District Judge No. 2, Alwar',
+        case_type: 'Civil Suit for Permanent Injunction & Compensation',
+        petitioner_parties: 'Mool Chand Saini s/o Lt. Kalyan Sahai & 2 Ors.',
+        respondent_parties: 'State of Rajasthan through Collector Alwar & Executive Engineer PWD',
+        filing_date: '2019-04-18',
+        next_hearing_date: undefined,
+        stage_of_case: 'Suit Decreed in Favour of Plaintiff (Final Judgment Passed)',
+        status: 'disposed',
+        private_notes: 'Judgment & Decree passed on 12-09-2024. PWD restrained from demolishing roadside shops without statutory acquisition. Decree sheet prepared.',
+        created_at: '2019-04-18T10:00:00.000Z',
+        updated_at: '2024-09-12T15:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'State of Rajasthan v. Satish Kumar & 2 Ors.',
+        case_number: 'Sessions Case No. 42/2021 (FIR 180/2020 PS Sadar Alwar)',
+        cnr_number: 'RJAL01-000845-2021',
+        court_name: 'District & Sessions Court, Alwar',
+        case_type: 'Sessions Trial (U/s 307, 326, 34 IPC)',
+        petitioner_parties: 'State of Rajasthan through Public Prosecutor',
+        respondent_parties: 'Satish Kumar s/o Prabhu Dayal & 2 Ors.',
+        filing_date: '2021-02-14',
+        next_hearing_date: undefined,
+        stage_of_case: 'Acquitted from all charges (Full Acquittal)',
+        status: 'disposed',
+        private_notes: 'Final judgment dated 05-08-2025. Prosecution witnesses turned hostile; medical evidence did not corroborate eyewitness version. Accused honorably acquitted.',
+        created_at: '2021-02-14T10:00:00.000Z',
+        updated_at: '2025-08-05T14:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Smt. Kamlesh Devi & 4 Ors. v. National Insurance Co. Ltd.',
+        case_number: 'MACT Claim Petition No. 115/2022',
+        cnr_number: 'RJAL01-003112-2022',
+        court_name: 'Motor Accident Claims Tribunal (MACT), Alwar',
+        case_type: 'Motor Accident Compensation Claim (Sec 166 MV Act)',
+        petitioner_parties: 'Smt. Kamlesh Devi w/o Late Jagdish Prasad & 4 Ors.',
+        respondent_parties: 'Owner, Driver (Truck RJ-14-GA-8821) & National Insurance Co.',
+        filing_date: '2022-06-10',
+        next_hearing_date: undefined,
+        stage_of_case: 'Claim Awarded with 7.5% Interest (Disposed)',
+        status: 'disposed',
+        private_notes: 'Award passed on 20-03-2025 for ₹34,75,000/- with 7.5% interest per annum. Insurance company deposited voucher in court.',
+        created_at: '2022-06-10T10:00:00.000Z',
+        updated_at: '2025-03-20T16:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Babulal Meena & Ors. v. Ramkaran & Tehsildar Rajgarh',
+        case_number: 'Revenue Suit No. 29/2020',
+        cnr_number: 'RJAL01-004210-2020',
+        court_name: 'Court of Sub-Divisional Officer (SDO), Rajgarh (Camp Alwar)',
+        case_type: 'Agricultural Land Partition under Sec 53 Rajasthan Tenancy Act',
+        petitioner_parties: 'Babulal Meena s/o Lt. Gopi Ram & 2 Ors.',
+        respondent_parties: 'Ramkaran s/o Gopi Ram & Tehsildar Rajgarh',
+        filing_date: '2020-01-25',
+        next_hearing_date: undefined,
+        stage_of_case: 'Final Decree of Partition Passed (Kurra Prepared)',
+        status: 'disposed',
+        private_notes: 'Patwari report and Kurra approved by SDO on 15-11-2024. Revenue boundaries permanently demarcated.',
+        created_at: '2020-01-25T10:00:00.000Z',
+        updated_at: '2024-11-15T12:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-005',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Vikash Yadav v. State of Rajasthan',
+        case_number: 'Bail Application No. 640/2025 (FIR 95/2025 PS Shivaji Park Alwar)',
+        cnr_number: 'RJAL01-005890-2025',
+        court_name: 'Court of Additional Sessions Judge No. 1, Alwar',
+        case_type: 'Regular Bail Application (Sec 480 BNSS)',
+        petitioner_parties: 'Vikash Yadav s/o Surendra Yadav',
+        respondent_parties: 'State of Rajasthan through Public Prosecutor',
+        filing_date: '2025-05-12',
+        next_hearing_date: undefined,
+        stage_of_case: 'Bail Application Allowed & Prisoner Released',
+        status: 'disposed',
+        private_notes: 'Bail granted on 28-05-2025 upon furnishing bail bond of ₹50,000/- with two solvent sureties. Release warrant executed.',
+        created_at: '2025-05-12T10:00:00.000Z',
+        updated_at: '2025-05-28T14:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-006',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Kailash Chand Gupta v. Mohan Swaroop',
+        case_number: 'Criminal Complaint No. 512/2023 (Sec 138 NI Act)',
+        cnr_number: 'RJAL01-002677-2023',
+        court_name: 'Court of Special Judicial Magistrate (NI Act Cases), Alwar',
+        case_type: 'Cheque Dishonour Complaint under Section 138 NI Act',
+        petitioner_parties: 'Kailash Chand Gupta s/o Lt. Brij Mohan Gupta',
+        respondent_parties: 'Mohan Swaroop s/o Nathu Lal',
+        filing_date: '2023-08-04',
+        next_hearing_date: undefined,
+        stage_of_case: 'Settled in National Lok Adalat (Compromised & Disposed)',
+        status: 'disposed',
+        private_notes: 'Matter settled amicably in National Lok Adalat on 14-09-2025 for ₹4,50,000/- full and final settlement. Full payment received by complainant.',
+        created_at: '2023-08-04T10:00:00.000Z',
+        updated_at: '2025-09-14T17:00:00.000Z'
+      },
+      // --- ARCHIVED HISTORIC CASES (अभिलेखागार वाद) ---
+      {
+        id: 'case-rohitashwa-arch-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Thakur Madan Singh & Ors. v. State of Rajasthan (Land Ceiling Reference)',
+        case_number: 'Revenue Reference Case No. 12/1984',
+        cnr_number: 'RJAL01-000102-1984',
+        court_name: 'Court of District Collector & District Magistrate, Alwar',
+        case_type: 'Agricultural Land Ceiling Re-opening under Sec 15 Ceiling Act',
+        petitioner_parties: 'Thakur Madan Singh & Legal Heirs',
+        respondent_parties: 'State of Rajasthan & Authorized Officer Ceiling Alwar',
+        filing_date: '1984-07-11',
+        next_hearing_date: undefined,
+        stage_of_case: 'Reference Dropped in Favour of Khatedars (Archived Record)',
+        status: 'archived',
+        private_notes: 'Historic 1984 litigation handled by Senior Advocate Sh. Rohitashwa Sain. Surplus declaration quashed; land retained by family. Preserved in chamber archive bundle #A-14.',
+        created_at: '1984-07-11T10:00:00.000Z',
+        updated_at: '1989-11-20T11:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-arch-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Prabhu Dayal Sharma v. Municipal Board Alwar & Mandir Committee',
+        case_number: 'Civil Original Suit No. 104/1996',
+        cnr_number: 'RJAL01-000455-1996',
+        court_name: 'Court of Senior Civil Judge, Alwar',
+        case_type: 'Declaration of Ownership & Trust Property Injunction',
+        petitioner_parties: 'Prabhu Dayal Sharma & Ors.',
+        respondent_parties: 'Municipal Board Alwar through Chairman & Anr.',
+        filing_date: '1996-03-20',
+        next_hearing_date: undefined,
+        stage_of_case: 'Suit Decreed with Permanent Injunction (Archived)',
+        status: 'archived',
+        private_notes: 'Decreed on 18-12-2002. Upheld by High Court in 2008. Certified judgment copy and site map preserved in record room.',
+        created_at: '1996-03-20T10:00:00.000Z',
+        updated_at: '2002-12-18T16:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-arch-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'State of Rajasthan v. Hoshiyar Singh & 4 Ors. (FIR 88/2004 PS Behror)',
+        case_number: 'Sessions Case No. 56/2005',
+        cnr_number: 'RJAL01-000789-2005',
+        court_name: 'Court of Additional Sessions Judge, Behror (Alwar Judgeship)',
+        case_type: 'Sessions Trial U/s 302/149 IPC',
+        petitioner_parties: 'State of Rajasthan',
+        respondent_parties: 'Hoshiyar Singh & 4 Ors.',
+        filing_date: '2005-02-18',
+        next_hearing_date: undefined,
+        stage_of_case: 'Honorable Acquittal (Archived Case Record)',
+        status: 'archived',
+        private_notes: 'Lead defense conducted by Sh. Rohitashwa Sain. Established defense alibi and non-recovery of alleged weapons. Acquittal dated 14-09-2009.',
+        created_at: '2005-02-18T10:00:00.000Z',
+        updated_at: '2009-09-14T15:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-arch-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Matsya Industrial Workers Union v. M/s Alwar Textile Mills Ltd.',
+        case_number: 'Labour Reference No. 19/2012',
+        cnr_number: 'RJAL01-001240-2012',
+        court_name: 'Labour Court & Industrial Tribunal, Alwar',
+        case_type: 'Industrial Dispute under Section 10 Industrial Disputes Act',
+        petitioner_parties: 'Matsya Industrial Workers Union through General Secretary',
+        respondent_parties: 'M/s Alwar Textile Mills Ltd. Management',
+        filing_date: '2012-05-14',
+        next_hearing_date: undefined,
+        stage_of_case: 'Settlement Award Passed & Implemented (Archived)',
+        status: 'archived',
+        private_notes: 'Tripartite agreement signed before Conciliation Officer. Gratuity and retrenchment compensation disbursed to 48 workers.',
+        created_at: '2012-05-14T10:00:00.000Z',
+        updated_at: '2014-08-30T14:00:00.000Z'
       }
     ],
     case_documents: [
@@ -1226,6 +1422,17 @@ function getInitialState(): DatabaseState {
         created_at: '2026-03-01T10:00:00.000Z'
       }
     ],
+    chat_sessions: [],
+    notification_preferences: [],
+    notification_delivery_history: [],
+    client_communications: [],
+    automation_jobs: [],
+    cause_list_entries: [],
+    subscriptions: [],
+    subscription_invoices: [],
+    chambers: [],
+    chamber_members: [],
+    chamber_invitations: [],
     audit_logs: [
       {
         id: 'audit-001',
@@ -1356,6 +1563,17 @@ class LocalDatabase {
         invoices: Array.isArray(loaded.invoices) && loaded.invoices.length > 0 ? loaded.invoices : initial.invoices,
         drafts: Array.isArray(loaded.drafts) && loaded.drafts.length > 0 ? loaded.drafts : initial.drafts,
         personal_library: Array.isArray(loaded.personal_library) && loaded.personal_library.length > 0 ? loaded.personal_library : initial.personal_library,
+        chat_sessions: Array.isArray(loaded.chat_sessions) ? loaded.chat_sessions : [],
+        notification_preferences: Array.isArray(loaded.notification_preferences) ? loaded.notification_preferences : [],
+        notification_delivery_history: Array.isArray(loaded.notification_delivery_history) ? loaded.notification_delivery_history : [],
+        client_communications: Array.isArray(loaded.client_communications) ? loaded.client_communications : [],
+        automation_jobs: Array.isArray(loaded.automation_jobs) ? loaded.automation_jobs : [],
+        cause_list_entries: Array.isArray(loaded.cause_list_entries) ? loaded.cause_list_entries : [],
+        subscriptions: Array.isArray(loaded.subscriptions) ? loaded.subscriptions : [],
+        subscription_invoices: Array.isArray(loaded.subscription_invoices) ? loaded.subscription_invoices : [],
+        chambers: Array.isArray(loaded.chambers) ? loaded.chambers : [],
+        chamber_members: Array.isArray(loaded.chamber_members) ? loaded.chamber_members : [],
+        chamber_invitations: Array.isArray(loaded.chamber_invitations) ? loaded.chamber_invitations : [],
         audit_logs: Array.isArray(loaded.audit_logs) && loaded.audit_logs.length > 0 ? loaded.audit_logs : initial.audit_logs,
       };
 
@@ -1522,6 +1740,17 @@ class LocalDatabase {
     };
   }
 
+  createAdvocateProfile(profile: Omit<AdvocateProfile, 'id'>): AdvocateProfile {
+    const s = this.ensureLoaded();
+    const newProfile: AdvocateProfile = {
+      ...profile,
+      id: 'prof-' + crypto.randomUUID()
+    };
+    s.advocate_profiles.push(newProfile);
+    this.save();
+    return newProfile;
+  }
+
   updateAdvocateVerification(profileId: string, isVerified: boolean, verifiedBy: string): boolean {
     const s = this.ensureLoaded();
     const p = s.advocate_profiles.find(prof => prof.id === profileId);
@@ -1531,6 +1760,54 @@ class LocalDatabase {
     p.verified_at = new Date().toISOString();
     this.save();
     return true;
+  }
+
+  updateAdvocateProfile(userId: string, updates: Partial<AdvocateProfile>, userUpdates?: { full_name?: string; phone?: string }): AdvocateProfile | null {
+    const s = this.ensureLoaded();
+    let p = s.advocate_profiles.find(prof => prof.user_id === userId);
+    if (!p) {
+      // Auto-create profile if missing
+      p = {
+        id: 'prof-' + crypto.randomUUID(),
+        user_id: userId,
+        bar_council_enrollment_no: updates.bar_council_enrollment_no || 'PENDING',
+        bar_association_name: updates.bar_association_name || 'District Bar Association, Alwar',
+        court_practice_complex: updates.court_practice_complex || 'District & Sessions Court, Alwar',
+        chamber_address: updates.chamber_address || '',
+        experience_years: updates.experience_years ?? 1,
+        practice_areas: updates.practice_areas || ['Civil', 'Criminal'],
+        bio_hindi: updates.bio_hindi || '',
+        bio_english: updates.bio_english || '',
+        is_verified: false,
+        is_publicly_listed: updates.is_publicly_listed ?? true
+      };
+      s.advocate_profiles.push(p);
+    } else {
+      if (updates.bar_council_enrollment_no !== undefined) p.bar_council_enrollment_no = updates.bar_council_enrollment_no;
+      if (updates.bar_association_name !== undefined) p.bar_association_name = updates.bar_association_name;
+      if (updates.court_practice_complex !== undefined) p.court_practice_complex = updates.court_practice_complex;
+      if (updates.chamber_address !== undefined) p.chamber_address = updates.chamber_address;
+      if (updates.experience_years !== undefined) p.experience_years = updates.experience_years;
+      if (updates.practice_areas !== undefined) p.practice_areas = updates.practice_areas;
+      if (updates.bio_hindi !== undefined) p.bio_hindi = updates.bio_hindi;
+      if (updates.bio_english !== undefined) p.bio_english = updates.bio_english;
+      if (updates.is_publicly_listed !== undefined) p.is_publicly_listed = updates.is_publicly_listed;
+    }
+
+    if (userUpdates) {
+      const u = s.users.find(usr => usr.id === userId);
+      if (u) {
+        if (userUpdates.full_name) u.full_name = userUpdates.full_name;
+        if (userUpdates.phone !== undefined) u.phone = userUpdates.phone;
+        u.updated_at = new Date().toISOString();
+      }
+    }
+
+    this.save();
+    return {
+      ...p,
+      user: s.users.find(u => u.id === userId)
+    };
   }
 
   bulkUpsertAdvocates(
@@ -1964,6 +2241,11 @@ class LocalDatabase {
     });
   }
 
+  getCaseDocumentById(advocateId: string, docId: string): CaseDocument | undefined {
+    const s = this.ensureLoaded();
+    return s.case_documents.find(d => d.id === docId && d.advocate_id === advocateId);
+  }
+
   createCaseDocument(advocateId: string, doc: Omit<CaseDocument, 'id' | 'advocate_id' | 'created_at'>): CaseDocument {
     const s = this.ensureLoaded();
     const newDoc: CaseDocument = {
@@ -2009,6 +2291,45 @@ class LocalDatabase {
     return newHearing;
   }
 
+  getHearingById(advocateId: string, hearingId: string): CaseHearing | undefined {
+    const s = this.ensureLoaded();
+    return s.case_hearings.find(h => h.id === hearingId && h.advocate_id === advocateId);
+  }
+
+  updateHearing(advocateId: string, hearingId: string, updates: Partial<CaseHearing>): CaseHearing | null {
+    const s = this.ensureLoaded();
+    const h = s.case_hearings.find(x => x.id === hearingId && x.advocate_id === advocateId);
+    if (!h) return null;
+
+    if (updates.hearing_date !== undefined) h.hearing_date = updates.hearing_date;
+    if (updates.court_room !== undefined) h.court_room = updates.court_room;
+    if (updates.judge_name !== undefined) h.judge_name = updates.judge_name;
+    if (updates.business_recorded !== undefined) h.business_recorded = updates.business_recorded;
+    if (updates.next_action !== undefined) h.next_action = updates.next_action;
+    if (updates.next_hearing_date !== undefined) h.next_hearing_date = updates.next_hearing_date;
+    if (updates.attended !== undefined) h.attended = updates.attended;
+
+    // Synchronize case next_hearing_date if updated
+    if (updates.next_hearing_date && h.case_id) {
+      const c = s.cases.find(caseRec => caseRec.id === h.case_id && caseRec.advocate_id === advocateId);
+      if (c) {
+        c.next_hearing_date = updates.next_hearing_date;
+        c.updated_at = new Date().toISOString();
+      }
+    }
+
+    this.save();
+    return h;
+  }
+
+  deleteHearing(advocateId: string, hearingId: string): boolean {
+    const s = this.ensureLoaded();
+    const before = s.case_hearings.length;
+    s.case_hearings = s.case_hearings.filter(h => !(h.id === hearingId && h.advocate_id === advocateId));
+    this.save();
+    return s.case_hearings.length < before;
+  }
+
   getTasks(advocateId: string): CaseTask[] {
     const s = this.ensureLoaded();
     return s.tasks.filter(t => t.advocate_id === advocateId);
@@ -2043,6 +2364,11 @@ class LocalDatabase {
     return s.clients.filter(c => c.advocate_id === advocateId);
   }
 
+  getClientById(advocateId: string, clientId: string): Client | undefined {
+    const s = this.ensureLoaded();
+    return s.clients.find(c => c.id === clientId && c.advocate_id === advocateId);
+  }
+
   createClient(advocateId: string, client: Omit<Client, 'id' | 'advocate_id' | 'created_at'>): Client {
     const s = this.ensureLoaded();
     const newClient: Client = {
@@ -2054,6 +2380,36 @@ class LocalDatabase {
     s.clients.push(newClient);
     this.save();
     return newClient;
+  }
+
+  updateClient(advocateId: string, clientId: string, updates: Partial<Client>): Client | null {
+    const s = this.ensureLoaded();
+    const cl = s.clients.find(c => c.id === clientId && c.advocate_id === advocateId);
+    if (!cl) return null;
+
+    if (updates.full_name !== undefined) cl.full_name = updates.full_name.trim();
+    if (updates.phone !== undefined) cl.phone = updates.phone.trim();
+    if (updates.email !== undefined) cl.email = updates.email.trim();
+    if (updates.address !== undefined) cl.address = updates.address.trim();
+    if (updates.confidential_notes !== undefined) cl.confidential_notes = updates.confidential_notes.trim();
+
+    this.save();
+    return cl;
+  }
+
+  deleteClient(advocateId: string, clientId: string): boolean {
+    const s = this.ensureLoaded();
+    const before = s.clients.length;
+    s.clients = s.clients.filter(c => !(c.id === clientId && c.advocate_id === advocateId));
+    // Nullify client_id on any cases that belonged to this client
+    s.cases.forEach(c => {
+      if (c.advocate_id === advocateId && c.client_id === clientId) {
+        c.client_id = undefined;
+        c.updated_at = new Date().toISOString();
+      }
+    });
+    this.save();
+    return s.clients.length < before;
   }
 
   getInvoices(advocateId: string): Invoice[] {
@@ -2165,6 +2521,509 @@ class LocalDatabase {
     s.audit_logs.unshift(newLog);
     this.save();
     return newLog;
+  }
+
+  // --- AI CHAT SESSIONS & USAGE LIMITS ---
+  getChatSessions(advocateId: string, caseId?: string): AIChatSession[] {
+    const s = this.ensureLoaded();
+    return s.chat_sessions
+      .filter(cs => cs.advocate_id === advocateId && (!caseId || cs.case_id === caseId))
+      .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  }
+
+  getChatSessionById(advocateId: string, sessionId: string): AIChatSession | undefined {
+    const s = this.ensureLoaded();
+    return s.chat_sessions.find(cs => cs.id === sessionId && cs.advocate_id === advocateId);
+  }
+
+  createChatSession(
+    advocateId: string,
+    data: { case_id?: string; title?: string; initialMessage?: AIChatMessage }
+  ): AIChatSession {
+    const s = this.ensureLoaded();
+    const newSession: AIChatSession = {
+      id: 'session-' + crypto.randomUUID(),
+      advocate_id: advocateId,
+      case_id: data.case_id,
+      title: data.title || 'Legal Consultation',
+      messages: data.initialMessage ? [data.initialMessage] : [],
+      total_tokens: data.initialMessage?.tokens || 0,
+      total_cost_inr: data.initialMessage?.costEstimateINR || 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.chat_sessions.unshift(newSession);
+    this.save();
+    return newSession;
+  }
+
+  appendChatMessage(advocateId: string, sessionId: string, message: AIChatMessage): AIChatSession | null {
+    const s = this.ensureLoaded();
+    const session = s.chat_sessions.find(cs => cs.id === sessionId && cs.advocate_id === advocateId);
+    if (!session) return null;
+
+    session.messages.push(message);
+    session.total_tokens = (session.total_tokens || 0) + (message.tokens || 0);
+    session.total_cost_inr = Number(((session.total_cost_inr || 0) + (message.costEstimateINR || 0)).toFixed(4));
+    session.updated_at = new Date().toISOString();
+    this.save();
+    return session;
+  }
+
+  deleteChatSession(advocateId: string, sessionId: string): boolean {
+    const s = this.ensureLoaded();
+    const before = s.chat_sessions.length;
+    s.chat_sessions = s.chat_sessions.filter(cs => !(cs.id === sessionId && cs.advocate_id === advocateId));
+    if (s.chat_sessions.length < before) {
+      this.save();
+      return true;
+    }
+    return false;
+  }
+
+  getAdvocateAIUsage(advocateId: string): { totalTokens: number; totalCostINR: number; queryCount: number } {
+    const s = this.ensureLoaded();
+    const sessions = s.chat_sessions.filter(cs => cs.advocate_id === advocateId);
+    let totalTokens = 0;
+    let totalCostINR = 0;
+    let queryCount = 0;
+
+    for (const session of sessions) {
+      totalTokens += session.total_tokens || 0;
+      totalCostINR += session.total_cost_inr || 0;
+      queryCount += session.messages.filter(m => m.role === 'user').length;
+    }
+
+    return {
+      totalTokens,
+      totalCostINR: Number(totalCostINR.toFixed(4)),
+      queryCount
+    };
+  }
+
+  // --- NOTIFICATION PREFERENCES (P4) ---
+  getNotificationPreferences(advocateId: string): NotificationPreferences {
+    const s = this.ensureLoaded();
+    let pref = s.notification_preferences.find(p => p.advocate_id === advocateId);
+    if (!pref) {
+      pref = {
+        id: 'np-' + crypto.randomUUID(),
+        advocate_id: advocateId,
+        email_enabled: true,
+        whatsapp_enabled: false,
+        in_app_enabled: true,
+        daily_digest_enabled: true,
+        daily_digest_time: '08:00',
+        reminder_lead_days: [1, 2],
+        client_reminders_enabled: true,
+        client_reminder_lead_days: 1,
+        preferred_language: 'en',
+        quiet_hours_enabled: false,
+        quiet_hours_start: '21:00',
+        quiet_hours_end: '07:00',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      s.notification_preferences.push(pref);
+      this.save();
+    }
+    return pref;
+  }
+
+  updateNotificationPreferences(advocateId: string, updates: Partial<NotificationPreferences>): NotificationPreferences {
+    const s = this.ensureLoaded();
+    let pref = s.notification_preferences.find(p => p.advocate_id === advocateId);
+    if (!pref) {
+      pref = this.getNotificationPreferences(advocateId);
+    }
+    Object.assign(pref, updates, { updated_at: new Date().toISOString() });
+    this.save();
+    return pref;
+  }
+
+  // --- NOTIFICATION DELIVERY HISTORY & DEDUPLICATION (P4) ---
+  getNotificationHistory(
+    advocateId: string, 
+    options?: { limit?: number; channel?: string; status?: string }
+  ): NotificationDeliveryRecord[] {
+    const s = this.ensureLoaded();
+    let list = s.notification_delivery_history.filter(n => n.advocate_id === advocateId);
+    if (options?.channel) {
+      list = list.filter(n => n.channel === options.channel);
+    }
+    if (options?.status) {
+      list = list.filter(n => n.status === options.status);
+    }
+    list.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    return list.slice(0, options?.limit || 50);
+  }
+
+  hasSentIdempotentNotification(advocateId: string, idempotencyKey: string): boolean {
+    const s = this.ensureLoaded();
+    return s.notification_delivery_history.some(
+      n => n.advocate_id === advocateId && n.idempotency_key === idempotencyKey && (n.status === 'sent' || n.status === 'delivered' || n.status === 'simulated')
+    );
+  }
+
+  createNotificationRecord(
+    advocateId: string, 
+    record: Omit<NotificationDeliveryRecord, 'id' | 'advocate_id' | 'created_at'>
+  ): NotificationDeliveryRecord {
+    const s = this.ensureLoaded();
+    const newRecord: NotificationDeliveryRecord = {
+      ...record,
+      id: 'notif-' + crypto.randomUUID(),
+      advocate_id: advocateId,
+      created_at: new Date().toISOString()
+    };
+    s.notification_delivery_history.unshift(newRecord);
+    this.save();
+    return newRecord;
+  }
+
+  // --- CLIENT COMMUNICATIONS (P4) ---
+  getClientCommunications(advocateId: string, clientId?: string): ClientCommunication[] {
+    const s = this.ensureLoaded();
+    return s.client_communications
+      .filter(c => c.advocate_id === advocateId && (!clientId || c.client_id === clientId))
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+
+  createClientCommunication(
+    advocateId: string,
+    comm: Omit<ClientCommunication, 'id' | 'advocate_id' | 'created_at'>
+  ): ClientCommunication {
+    const s = this.ensureLoaded();
+    const newComm: ClientCommunication = {
+      ...comm,
+      id: 'comm-' + crypto.randomUUID(),
+      advocate_id: advocateId,
+      created_at: new Date().toISOString()
+    };
+    s.client_communications.unshift(newComm);
+    this.save();
+    return newComm;
+  }
+
+  // --- AUTOMATION BACKGROUND JOBS (P4) ---
+  getAutomationJobs(advocateId?: string, status?: string): AutomationJob[] {
+    const s = this.ensureLoaded();
+    let jobs = s.automation_jobs;
+    if (advocateId) jobs = jobs.filter(j => j.advocate_id === advocateId);
+    if (status) jobs = jobs.filter(j => j.status === status);
+    return jobs.sort((a, b) => new Date(a.run_at).getTime() - new Date(b.run_at).getTime());
+  }
+
+  createAutomationJob(
+    job: Omit<AutomationJob, 'id' | 'attempts' | 'status' | 'created_at' | 'updated_at'>
+  ): AutomationJob {
+    const s = this.ensureLoaded();
+    const newJob: AutomationJob = {
+      ...job,
+      id: 'job-' + crypto.randomUUID(),
+      attempts: 0,
+      status: 'pending',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.automation_jobs.push(newJob);
+    this.save();
+    return newJob;
+  }
+
+  updateAutomationJob(id: string, updates: Partial<AutomationJob>): AutomationJob | null {
+    const s = this.ensureLoaded();
+    const job = s.automation_jobs.find(j => j.id === id);
+    if (!job) return null;
+    Object.assign(job, updates, { updated_at: new Date().toISOString() });
+    this.save();
+    return job;
+  }
+
+  // --- CAUSE LIST ENTRIES (P4) ---
+  getCauseListEntries(advocateId?: string, date?: string): CauseListEntry[] {
+    const s = this.ensureLoaded();
+    let entries = s.cause_list_entries;
+    if (date) entries = entries.filter(e => e.cause_list_date === date);
+    if (advocateId) entries = entries.filter(e => e.advocate_id === advocateId || !e.advocate_id);
+    return entries.sort((a, b) => a.item_number - b.item_number);
+  }
+
+  saveCauseListEntries(entries: Omit<CauseListEntry, 'id' | 'created_at'>[]): CauseListEntry[] {
+    const s = this.ensureLoaded();
+    const created: CauseListEntry[] = [];
+    for (const e of entries) {
+      const entry: CauseListEntry = {
+        ...e,
+        id: 'cl-' + crypto.randomUUID(),
+        created_at: new Date().toISOString()
+      };
+      s.cause_list_entries.push(entry);
+      created.push(entry);
+    }
+    this.save();
+    return created;
+  }
+
+  matchCauseListToDocket(advocateId: string, date: string): { matched: number; matches: { entry: CauseListEntry; caseRecord: CaseRecord }[] } {
+    const s = this.ensureLoaded();
+    const advocateCases = s.cases.filter(c => c.advocate_id === advocateId && c.status === 'active');
+    const dayEntries = s.cause_list_entries.filter(e => e.cause_list_date === date);
+
+    const matches: { entry: CauseListEntry; caseRecord: CaseRecord }[] = [];
+    const norm = (str?: string) => (str || '').toLowerCase().replace(/[\s\-_/]/g, '');
+
+    for (const entry of dayEntries) {
+      const match = advocateCases.find(c => {
+        if (c.cnr_number && entry.cnr_number && norm(c.cnr_number) === norm(entry.cnr_number)) return true;
+        if (c.case_number && entry.case_number && norm(c.case_number) === norm(entry.case_number)) return true;
+        return false;
+      });
+
+      if (match) {
+        entry.matched_case_id = match.id;
+        entry.advocate_id = advocateId;
+        matches.push({ entry, caseRecord: match });
+      }
+    }
+
+    if (matches.length > 0) this.save();
+    return { matched: matches.length, matches };
+  }
+
+  // ==========================================
+  // SUBSCRIPTIONS & INVOICES (P5)
+  // ==========================================
+
+  getSubscription(advocateId: string): AdvocateSubscription {
+    const s = this.ensureLoaded();
+    const sub = s.subscriptions.find(
+      (sub: any) => sub.advocate_id === advocateId && (sub.status === 'active' || sub.status === 'trialing')
+    );
+    if (sub) return sub;
+
+    // Default starter plan
+    return {
+      id: `sub-starter-${advocateId}`,
+      advocate_id: advocateId,
+      plan_id: 'starter',
+      billing_cycle: 'monthly',
+      status: 'active',
+      amount_inr: 0,
+      currency: 'INR',
+      current_period_start: new Date().toISOString(),
+      current_period_end: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+      cancel_at_period_end: false,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+  }
+
+  saveSubscription(subData: AdvocateSubscription): AdvocateSubscription {
+    const s = this.ensureLoaded();
+    const idx = s.subscriptions.findIndex((sub: any) => sub.advocate_id === subData.advocate_id);
+    if (idx >= 0) {
+      s.subscriptions[idx] = { ...subData, updated_at: new Date().toISOString() };
+    } else {
+      s.subscriptions.push(subData);
+    }
+    this.save();
+    return subData;
+  }
+
+  createSubscriptionInvoice(inv: Omit<SubscriptionInvoice, 'id' | 'created_at'>): SubscriptionInvoice {
+    const s = this.ensureLoaded();
+    const newInv: SubscriptionInvoice = {
+      ...inv,
+      id: 'sub-inv-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.subscription_invoices.unshift(newInv);
+    this.save();
+    return newInv;
+  }
+
+  getSubscriptionInvoices(advocateId: string): SubscriptionInvoice[] {
+    const s = this.ensureLoaded();
+    return s.subscription_invoices.filter((inv: any) => inv.advocate_id === advocateId);
+  }
+
+  // ==========================================
+  // CHAMBERS & TEAM MEMBERS (P5)
+  // ==========================================
+
+  getChamberForAdvocate(advocateId: string): { chamber: Chamber | null; membership: ChamberMember | null } {
+    const s = this.ensureLoaded();
+    // 1. Is owner of a chamber
+    const ownedChamber = s.chambers.find((ch: any) => ch.owner_advocate_id === advocateId);
+    if (ownedChamber) {
+      const ownerMember = s.chamber_members.find((m: any) => m.chamber_id === ownedChamber.id && m.user_id === advocateId);
+      return { chamber: ownedChamber, membership: ownerMember || null };
+    }
+
+    // 2. Is member of another chamber
+    const membership = s.chamber_members.find((m: any) => m.user_id === advocateId && m.status === 'active');
+    if (membership) {
+      const parentChamber = s.chambers.find((ch: any) => ch.id === membership.chamber_id);
+      return { chamber: parentChamber || null, membership };
+    }
+
+    return { chamber: null, membership: null };
+  }
+
+  createChamber(advocateId: string, data: { name: string; court_complex?: string; chamber_number?: string }): Chamber {
+    const s = this.ensureLoaded();
+    const existing = s.chambers.find((ch: any) => ch.owner_advocate_id === advocateId);
+    if (existing) {
+      existing.name = data.name;
+      if (data.court_complex) existing.court_complex = data.court_complex;
+      if (data.chamber_number) existing.chamber_number = data.chamber_number;
+      existing.updated_at = new Date().toISOString();
+      this.save();
+      return existing;
+    }
+
+    const newChamber: Chamber = {
+      id: 'ch-' + crypto.randomUUID(),
+      name: data.name,
+      court_complex: data.court_complex || 'District & Sessions Court, Alwar',
+      chamber_number: data.chamber_number,
+      owner_advocate_id: advocateId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.chambers.push(newChamber);
+
+    // Also register owner as Senior Advocate member
+    const user = this.getUserById(advocateId);
+    const profile = this.getAdvocateProfileByUserId(advocateId);
+    const ownerMember: ChamberMember = {
+      id: 'cm-' + crypto.randomUUID(),
+      chamber_id: newChamber.id,
+      user_id: advocateId,
+      full_name: profile?.user?.full_name || user?.full_name || 'Senior Advocate',
+      email: user?.email || '',
+      phone: user?.phone,
+      bar_enrollment_no: profile?.bar_council_enrollment_no,
+      role: 'senior_advocate',
+      status: 'active',
+      invited_by: advocateId,
+      joined_at: new Date().toISOString(),
+      created_at: new Date().toISOString()
+    };
+    s.chamber_members.push(ownerMember);
+
+    this.save();
+    return newChamber;
+  }
+
+  getChamberMembers(chamberId: string): ChamberMember[] {
+    const s = this.ensureLoaded();
+    return s.chamber_members.filter((m: any) => m.chamber_id === chamberId);
+  }
+
+  addChamberMember(chamberId: string, member: Omit<ChamberMember, 'id' | 'joined_at' | 'created_at'>): ChamberMember {
+    const s = this.ensureLoaded();
+    const newMember: ChamberMember = {
+      ...member,
+      id: 'cm-' + crypto.randomUUID(),
+      chamber_id: chamberId,
+      joined_at: new Date().toISOString(),
+      created_at: new Date().toISOString()
+    };
+    s.chamber_members.push(newMember);
+    this.save();
+    return newMember;
+  }
+
+  updateChamberMemberRole(chamberId: string, memberId: string, role: ChamberMemberRole, status?: ChamberMemberStatus): ChamberMember | null {
+    const s = this.ensureLoaded();
+    const m = s.chamber_members.find((mem: any) => mem.chamber_id === chamberId && mem.id === memberId);
+    if (!m) return null;
+    m.role = role;
+    if (status) m.status = status;
+    this.save();
+    return m;
+  }
+
+  removeChamberMember(chamberId: string, memberId: string): boolean {
+    const s = this.ensureLoaded();
+    const idx = s.chamber_members.findIndex((mem: any) => mem.chamber_id === chamberId && mem.id === memberId);
+    if (idx < 0) return false;
+    // Do not remove owner/senior advocate
+    if (s.chamber_members[idx].role === 'senior_advocate') return false;
+    s.chamber_members.splice(idx, 1);
+    this.save();
+    return true;
+  }
+
+  createChamberInvitation(data: {
+    chamber_id: string;
+    chamber_name: string;
+    invited_by_advocate_id: string;
+    invitee_email: string;
+    role: ChamberMemberRole;
+  }): ChamberInvitation {
+    const s = this.ensureLoaded();
+    const token = crypto.randomBytes(24).toString('hex');
+    const invitation: ChamberInvitation = {
+      id: 'cinv-' + crypto.randomUUID(),
+      chamber_id: data.chamber_id,
+      chamber_name: data.chamber_name,
+      invited_by_advocate_id: data.invited_by_advocate_id,
+      invitee_email: data.invitee_email.toLowerCase().trim(),
+      role: data.role,
+      token,
+      status: 'pending',
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days validity
+      created_at: new Date().toISOString()
+    };
+    s.chamber_invitations.push(invitation);
+    this.save();
+    return invitation;
+  }
+
+  getChamberInvitations(chamberId: string): ChamberInvitation[] {
+    const s = this.ensureLoaded();
+    return s.chamber_invitations.filter((i: any) => i.chamber_id === chamberId);
+  }
+
+  getInvitationByToken(token: string): ChamberInvitation | null {
+    const s = this.ensureLoaded();
+    return s.chamber_invitations.find((i: any) => i.token === token && i.status === 'pending') || null;
+  }
+
+  acceptChamberInvitation(token: string, userId: string, fullName: string, email: string): ChamberMember | null {
+    const s = this.ensureLoaded();
+    const inv = s.chamber_invitations.find((i: any) => i.token === token && i.status === 'pending');
+    if (!inv) return null;
+
+    inv.status = 'accepted';
+
+    const member: ChamberMember = {
+      id: 'cm-' + crypto.randomUUID(),
+      chamber_id: inv.chamber_id,
+      user_id: userId,
+      full_name: fullName,
+      email: email.toLowerCase().trim(),
+      role: inv.role,
+      status: 'active',
+      invited_by: inv.invited_by_advocate_id,
+      joined_at: new Date().toISOString(),
+      created_at: new Date().toISOString()
+    };
+    s.chamber_members.push(member);
+    this.save();
+    return member;
+  }
+
+  revokeChamberInvitation(chamberId: string, invitationId: string): boolean {
+    const s = this.ensureLoaded();
+    const inv = s.chamber_invitations.find((i: any) => i.chamber_id === chamberId && i.id === invitationId);
+    if (!inv) return false;
+    inv.status = 'revoked';
+    this.save();
+    return true;
   }
 }
 

@@ -1,5 +1,6 @@
 import assert from 'node:assert';
 import crypto from 'node:crypto';
+import bcrypt from 'bcryptjs';
 
 const AUTH_SECRET = 'alwar-advocates-secure-dev-secret-1234567890abcdef';
 
@@ -33,17 +34,25 @@ function verifySession(token) {
 }
 
 function hashPassword(password) {
-  return crypto.createHash('sha256').update(password + '_alwar_salt_2026').digest('hex');
+  return bcrypt.hashSync(password, 12);
+}
+
+function verifyPassword(password, hash) {
+  if (hash.startsWith('$2a$') || hash.startsWith('$2b$')) {
+    return bcrypt.compareSync(password, hash);
+  }
+  const legacy = crypto.createHash('sha256').update(password + '_alwar_salt_2026').digest('hex');
+  return legacy === hash;
 }
 
 export async function runAuthTests() {
   console.log('Testing Authentication & Cryptographic Session Tokens...');
 
-  // 1. Password Hash Verification
+  // 1. Password Hash Verification with Bcrypt
   const rawPass = 'Advocate@2026';
   const hashed = hashPassword(rawPass);
-  assert.strictEqual(hashed, hashPassword('Advocate@2026'), 'Password hash must be deterministic with salt');
-  assert.notStrictEqual(hashed, hashPassword('WrongPass'), 'Different passwords must yield different hashes');
+  assert(verifyPassword(rawPass, hashed), 'Password must verify successfully with bcrypt');
+  assert(!verifyPassword('WrongPass', hashed), 'Different password must be rejected');
   console.log('  ✓ Password hashing with salt verified');
 
   // 2. Session Sign and Verification

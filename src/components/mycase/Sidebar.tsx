@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Briefcase, Folder, FileText, Sparkles, Search, Calendar, 
-  CheckSquare, Users, CreditCard, Bookmark, Settings, Scale, Lock, ShieldCheck, ChevronRight, ExternalLink
+  CheckSquare, Users, CreditCard, Bookmark, Settings, Scale, Lock, ShieldCheck, ChevronRight, ExternalLink,
+  Building2
 } from 'lucide-react';
 
 export function MyCaseSidebar() {
@@ -23,7 +24,8 @@ export function MyCaseSidebar() {
     { href: '/my-case/ai-assistant', label: 'Case File Analyzer', icon: Scale },
     { href: '/my-case/tasks', label: 'Deadlines & Tasks', icon: CheckSquare },
     { href: '/my-case/clients', label: 'Client Directory', icon: Users },
-    { href: '/my-case/billing', label: 'Fee & Billing Ledger', icon: CreditCard },
+    { href: '/my-case/team', label: 'Chamber & Team', icon: Building2 },
+    { href: '/my-case/billing', label: 'Billing & SaaS Plans', icon: CreditCard },
     { href: '/my-case/library', label: 'Personal Library', icon: Bookmark },
     { href: '/my-case/settings', label: 'Office Settings', icon: Settings },
   ];

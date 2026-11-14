@@ -10,7 +10,7 @@ import {
   Coffee, Laptop, UserCheck, ChevronRight, ChevronLeft, 
   AlertCircle, Stamp, HeartHandshake, Plus, Trash2, X, 
   Image as ImageIcon, Eye, Maximize2, Sparkles, Filter, 
-  Camera, Upload, LayoutGrid, List, Check, Bell, Gavel
+  Camera, Upload, LayoutGrid, List, Check, Bell, Gavel, Printer
 } from 'lucide-react';
 
 interface BarMember {
@@ -1549,13 +1549,19 @@ PARTICULARS OF APPLICANT ADVOCATE:
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">
-                          {locale === 'hi' ? 'सत्यापित आदेश' : 'Verified Order'}
-                        </span>
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs gap-2">
+                        <a
+                          href={`/api/public/judgments/download?title=${encodeURIComponent(judgment.caseTitle)}&citation=${encodeURIComponent(judgment.caseNo)}&format=pdf`}
+                          download
+                          className="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold rounded-lg text-[11px] transition flex items-center space-x-1 border border-amber-200"
+                          title="Download judgment order copy"
+                        >
+                          <Download className="w-3.5 h-3.5 text-amber-700" />
+                          <span>PDF डाउनलोड</span>
+                        </a>
                         <button
                           onClick={() => setSelectedJudgment(judgment)}
-                          className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs transition flex items-center space-x-1"
+                          className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg text-xs transition flex items-center space-x-1"
                         >
                           <span>{locale === 'hi' ? 'विवरण देखें' : 'View Ruling'}</span>
                           <ChevronRight className="w-3.5 h-3.5" />
@@ -2671,10 +2677,26 @@ PARTICULARS OF APPLICANT ADVOCATE:
 
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span className="text-slate-400 font-mono text-[11px]">
-                अलवर जिला एवं सत्र न्यायालय नजीर बैंक
-              </span>
+            <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <a
+                  href={`/api/public/judgments/download?title=${encodeURIComponent(selectedJudgment.caseTitle)}&citation=${encodeURIComponent(selectedJudgment.caseNo)}&format=pdf`}
+                  download
+                  className="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold rounded-xl transition shadow flex items-center space-x-1.5"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{locale === 'hi' ? 'निर्णय आदेश PDF डाउनलोड करें' : 'Download Judgment PDF'}</span>
+                </a>
+                <a
+                  href={`/api/public/judgments/download?title=${encodeURIComponent(selectedJudgment.caseTitle)}&citation=${encodeURIComponent(selectedJudgment.caseNo)}&print=true`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded-xl transition flex items-center space-x-1"
+                >
+                  <Printer className="w-4 h-4 text-slate-600" />
+                  <span>{locale === 'hi' ? 'प्रिंट' : 'Print'}</span>
+                </a>
+              </div>
               <button
                 onClick={() => setSelectedJudgment(null)}
                 className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition"

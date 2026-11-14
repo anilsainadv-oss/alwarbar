@@ -128,7 +128,7 @@ export async function GET(req: Request) {
     }
 
     // 2. Check in official BCR Alwar Judgeship Dues Register (3,120 Advocates)
-    const officialRecords = getOfficialDuesRecords();
+    const officialRecords = getOfficialDuesRecords() || [];
     const bcrMatch = officialRecords.find((r) => {
       const rNorm = normalizeEnrollment(r.enrol_no);
       if (rNorm === targetNorm) return true;

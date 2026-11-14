@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/i18n/context';
-import { Bookmark, Plus, Search, BookOpen, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Bookmark, Plus, Search, BookOpen, ExternalLink, ShieldCheck, Download } from 'lucide-react';
 import type { PersonalLibraryItem } from '@/types/mycase';
 
 export default function PersonalLibraryPage() {
@@ -118,19 +118,32 @@ export default function PersonalLibraryPage() {
               </p>
             )}
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
               <span>Saved on: {new Date(item.created_at).toLocaleDateString()}</span>
-              {item.source_url && (
-                <a
-                  href={item.source_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-700 hover:underline flex items-center space-x-1 font-medium"
-                >
-                  <span>Law Report Link</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
+              <div className="flex items-center gap-2">
+                {item.citation && (
+                  <a
+                    href={`/api/public/judgments/download?title=${encodeURIComponent(item.title)}&citation=${encodeURIComponent(item.citation)}&download=true`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-800 hover:text-amber-950 font-semibold flex items-center space-x-1"
+                  >
+                    <Download className="w-3 h-3" />
+                    <span>Download PDF</span>
+                  </a>
+                )}
+                {item.source_url && (
+                  <a
+                    href={item.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 hover:underline flex items-center space-x-1 font-medium"
+                  >
+                    <span>Law Report Link</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}

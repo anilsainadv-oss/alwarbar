@@ -10,6 +10,7 @@ export async function GET(req: Request) {
     const category = searchParams.get('category') || 'all';
     const q = (searchParams.get('q') || '').trim().toLowerCase();
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
+    const page = Math.max(1, parseInt(searchParams.get('page') || '1') || 1);
 
     let items: NoticeEvent[] = localDb.getNotices().filter(n => n.is_published);
 
@@ -30,12 +31,16 @@ export async function GET(req: Request) {
 
     const total = items.length;
     if (limit && limit > 0) {
-      items = items.slice(0, limit);
+      const offset = (page - 1) * limit;
+      items = items.slice(offset, offset + limit);
     }
 
     return NextResponse.json({
       success: true,
       total,
+      page,
+      limit: limit || total,
+      total_pages: limit ? Math.ceil(total / limit) : 1,
       count: items.length,
       news: items,
       open_source_meta: {

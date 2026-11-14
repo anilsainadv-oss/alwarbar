@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { localDb } from '@/lib/db';
 import { getCurrentUser, assertAuthenticated } from '@/lib/auth/guards';
+import { createHearingSchema } from '@/lib/validation/schemas';
 
 export async function GET() {
   try {
@@ -21,24 +22,39 @@ export async function POST(req: Request) {
     assertAuthenticated(user);
 
     const body = await req.json();
-    const { case_id, hearing_date, court_room, judge_name, business_recorded, next_action, next_hearing_date } = body;
+    const parseResult = createHearingSchema.safeParse(body);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { error: parseResult.error.errors[0]?.message || 'Invalid hearing data' },
+        { status: 400 }
+      );
+    }
 
-    if (!case_id || !hearing_date) {
-      return NextResponse.json({ error: 'Case ID and hearing date are required.' }, { status: 400 });
+    const { case_id, hearing_date, court_room, judge_name, business_recorded, next_action, next_hearing_date } = parseResult.data;
+
+    // Verify advocate owns the case
+    const caseRecord = localDb.getCaseById(user.id, case_id);
+    if (!caseRecord) {
+      return NextResponse.json({ error: 'Case not found or access denied.' }, { status: 404 });
     }
 
     const hearing = localDb.createHearing(user.id, {
       case_id,
       hearing_date,
-      court_room: court_room || '',
-      judge_name: judge_name || '',
-      business_recorded: business_recorded || '',
-      next_action: next_action || '',
-      next_hearing_date: next_hearing_date || undefined,
-      attended: true
+      court_room,
+      judge_name,
+      business_recorded,
+      next_action,
+      next_hearing_date,
+      attended: false
     });
 
-    return NextResponse.json({ success: true, hearing });
+    // Auto-update case next hearing date if provided
+    if (next_hearing_date) {
+      localDb.updateCase(user.id, case_id, { next_hearing_date });
+    }
+
+    return NextResponse.json({ success: true, hearing }, { status: 201 });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to record hearing';
     return NextResponse.json({ error: message }, { status: 500 });

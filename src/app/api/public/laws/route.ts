@@ -10,6 +10,7 @@ export async function GET(req: Request) {
     const category = searchParams.get('category') || 'all';
     const type = searchParams.get('type') || 'all'; // 'bare_act' | 'judgment' | 'all'
     const q = (searchParams.get('q') || '').trim().toLowerCase();
+    const page = Math.max(1, parseInt(searchParams.get('page') || '1') || 1);
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
     let updates: LegalUpdate[] = localDb.getLegalUpdates().filter(l => l.is_published);
@@ -42,12 +43,16 @@ export async function GET(req: Request) {
 
     const total = updates.length;
     if (limit && limit > 0) {
-      updates = updates.slice(0, limit);
+      const offset = (page - 1) * limit;
+      updates = updates.slice(offset, offset + limit);
     }
 
     return NextResponse.json({
       success: true,
       total,
+      page,
+      limit: limit || total,
+      total_pages: limit ? Math.ceil(total / limit) : 1,
       count: updates.length,
       laws: updates,
       open_source_meta: {

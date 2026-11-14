@@ -34,8 +34,17 @@ export default function MyCaseDashboardPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  const [caseTab, setCaseTab] = useState<'active' | 'disposed' | 'archived'>('active');
   const activeCases = cases.filter(c => c.status === 'active');
+  const disposedCases = cases.filter(c => c.status === 'disposed');
+  const archivedCases = cases.filter(c => c.status === 'archived');
   const pendingTasks = tasks.filter(t => t.status === 'pending');
+
+  const displayedCases = caseTab === 'active' 
+    ? activeCases 
+    : caseTab === 'disposed' 
+    ? disposedCases 
+    : archivedCases;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -90,10 +99,15 @@ export default function MyCaseDashboardPage() {
             <span className="text-xs font-medium uppercase tracking-wider">{t.totalCases}</span>
             <Folder className="w-4 h-4 text-amber-600" />
           </div>
-          <div className="text-2xl font-bold font-serif text-slate-900">
-            {activeCases.length}
+          <div className="text-2xl font-bold font-serif text-slate-900 flex items-baseline space-x-1.5">
+            <span>{cases.length}</span>
+            <span className="text-xs font-normal text-slate-500 font-sans">
+              ({activeCases.length} सक्रिय / {disposedCases.length} निस्तारित)
+            </span>
           </div>
-          <div className="text-[11px] text-slate-500">Across Alwar Courts</div>
+          <div className="text-[11px] text-slate-500">
+            {disposedCases.length > 0 ? `${disposedCases.length} Disposed • ${archivedCases.length} Archived` : 'Across Alwar Courts'}
+          </div>
         </div>
 
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-1">
@@ -134,21 +148,39 @@ export default function MyCaseDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column (2 Cols): Active Cases & Hearings */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Active Cases Dossier List */}
+          {/* Case Files Dossier List with Status Tabs */}
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
-            <div className="flex items-center justify-between border-b pb-3 border-slate-100">
-              <h2 className="font-serif font-bold text-base text-slate-900 flex items-center space-x-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-3 border-slate-100">
+              <div className="flex items-center space-x-2">
                 <Folder className="w-4 h-4 text-amber-700" />
-                <span>Active Case Files</span>
-              </h2>
-              <Link href="/my-case/cases" className="text-xs text-amber-800 font-semibold hover:underline">
-                View All Files →
-              </Link>
+                <h2 className="font-serif font-bold text-base text-slate-900">
+                  {locale === 'hi' ? 'केस फाइल वाद पंजिका' : 'Case Files Dossier'}
+                </h2>
+              </div>
+              <div className="flex items-center space-x-1">
+                {[
+                  { id: 'active', label: `सक्रिय (${activeCases.length})` },
+                  { id: 'disposed', label: `निस्तारित (${disposedCases.length})` },
+                  { id: 'archived', label: `अभिलेखागार (${archivedCases.length})` }
+                ].map(tab => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setCaseTab(tab.id as 'active' | 'disposed' | 'archived')}
+                    className={`px-2.5 py-1 rounded text-xs font-semibold transition ${
+                      caseTab === tab.id
+                        ? 'bg-amber-600 text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {activeCases.length === 0 ? (
+            {displayedCases.length === 0 ? (
               <div className="py-8 text-center text-xs text-slate-400 space-y-2">
-                <p>No active case records found in your private workspace.</p>
+                <p>No {caseTab} case records found in your private workspace.</p>
                 <Link
                   href="/my-case/cases"
                   className="inline-block px-3 py-1.5 bg-amber-600 text-white rounded text-xs font-medium"
@@ -158,7 +190,7 @@ export default function MyCaseDashboardPage() {
               </div>
             ) : (
               <div className="space-y-3">
-                {activeCases.slice(0, 3).map(c => (
+                {displayedCases.slice(0, 4).map(c => (
                   <div
                     key={c.id}
                     className="p-4 rounded-lg border border-slate-200 hover:border-amber-400 transition bg-slate-50/50 space-y-2"
@@ -175,17 +207,31 @@ export default function MyCaseDashboardPage() {
                           {c.case_number || 'Pending No.'} • CNR: {c.cnr_number || 'Unassigned'}
                         </div>
                       </div>
-                      <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded capitalize">
-                        {c.status}
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded capitalize border ${
+                        c.status === 'disposed'
+                          ? 'bg-blue-50 text-blue-800 border-blue-200'
+                          : c.status === 'archived'
+                          ? 'bg-purple-50 text-purple-800 border-purple-200'
+                          : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      }`}>
+                        {c.status === 'disposed' ? '✓ Disposed' : c.status === 'archived' ? '📁 Archived' : '● Active'}
                       </span>
                     </div>
 
                     <div className="text-xs text-slate-600 flex flex-wrap gap-x-4 gap-y-1">
                       <span><strong>Court:</strong> {c.court_name}</span>
                       <span><strong>Stage:</strong> {c.stage_of_case || 'Arguments'}</span>
-                      {c.next_hearing_date && (
+                      {c.next_hearing_date ? (
                         <span className="text-amber-800 font-semibold">
                           <strong>Next Date:</strong> {c.next_hearing_date}
+                        </span>
+                      ) : c.status === 'disposed' ? (
+                        <span className="text-blue-800 font-semibold">
+                          <strong>Status:</strong> Final Decision / Disposed
+                        </span>
+                      ) : (
+                        <span className="text-purple-800 font-semibold">
+                          <strong>Status:</strong> Archived Record
                         </span>
                       )}
                     </div>
@@ -193,6 +239,11 @@ export default function MyCaseDashboardPage() {
                 ))}
               </div>
             )}
+            <div className="pt-2 text-right border-t border-slate-100">
+              <Link href="/my-case/cases" className="text-xs text-amber-800 font-semibold hover:underline">
+                View All {cases.length} Files in Docket →
+              </Link>
+            </div>
           </div>
 
           {/* Hearing Diary Preview */}

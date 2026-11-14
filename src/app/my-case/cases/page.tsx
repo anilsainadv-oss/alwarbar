@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Folder, Plus, Search, Filter, Calendar, MapPin, 
-  ExternalLink, Trash2, Edit2, CheckCircle2, AlertCircle 
+  ExternalLink, Trash2, Edit2, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight 
 } from 'lucide-react';
-import type { CaseRecord, Client } from '@/types/mycase';
+import type { CaseRecord, Client, CaseStatus } from '@/types/mycase';
 
 export default function CasesManagementPage() {
   const { t, locale } = useLanguage();
@@ -16,12 +16,18 @@ export default function CasesManagementPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [newModalOpen, setNewModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [ecourtSyncModalOpen, setEcourtSyncModalOpen] = useState(false);
   const [syncEnrollment, setSyncEnrollment] = useState('R/331/1977');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  // Form states
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 8;
+
+  // New Case form state
   const [caseTitle, setCaseTitle] = useState('');
   const [courtName, setCourtName] = useState('District & Sessions Court, Alwar');
   const [caseType, setCaseType] = useState('Bail Application (Sec 480 BNSS)');
@@ -32,8 +38,13 @@ export default function CasesManagementPage() {
   const [filingDate, setFilingDate] = useState('');
   const [nextDate, setNextDate] = useState('');
   const [stageOfCase, setStageOfCase] = useState('Arguments on Charge');
+  const [statusValue, setStatusValue] = useState<CaseStatus>('active');
   const [privateNotes, setPrivateNotes] = useState('');
   const [clientId, setClientId] = useState('');
+
+  // Editing Case state
+  const [editingCase, setEditingCase] = useState<CaseRecord | null>(null);
+  const [deletingCase, setDeletingCase] = useState<CaseRecord | null>(null);
 
   const loadData = () => {
     fetch('/api/my-case/cases')
@@ -75,7 +86,8 @@ export default function CasesManagementPage() {
           filing_date: filingDate,
           next_hearing_date: nextDate,
           stage_of_case: stageOfCase,
-          private_notes: privateNotes,
+          status: statusValue,
+          notes: privateNotes,
           client_id: clientId || undefined
         })
       });
@@ -91,9 +103,93 @@ export default function CasesManagementPage() {
       setCnrNumber('');
       setPrivateNotes('');
       setNewModalOpen(false);
+      setEcourtSyncModalOpen(false);
       loadData();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Error creating case');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const openEditModal = (c: CaseRecord) => {
+    setEditingCase(c);
+    setCaseTitle(c.case_title);
+    setCourtName(c.court_name);
+    setCaseType(c.case_type);
+    setPetitioner(c.petitioner_parties || '');
+    setRespondent(c.respondent_parties || '');
+    setCaseNumber(c.case_number || '');
+    setCnrNumber(c.cnr_number || '');
+    setFilingDate(c.filing_date || '');
+    setNextDate(c.next_hearing_date || '');
+    setStageOfCase(c.stage_of_case || 'Hearing');
+    setStatusValue(c.status);
+    setPrivateNotes(c.private_notes || '');
+    setClientId(c.client_id || '');
+    setEditModalOpen(true);
+    setError('');
+  };
+
+  const handleUpdateCase = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingCase) return;
+    setSubmitting(true);
+    setError('');
+
+    try {
+      const res = await fetch(`/api/my-case/cases/${editingCase.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          case_title: caseTitle,
+          court_name: courtName,
+          case_type: caseType,
+          petitioner_parties: petitioner,
+          respondent_parties: respondent,
+          case_number: caseNumber,
+          cnr_number: cnrNumber,
+          filing_date: filingDate,
+          next_hearing_date: nextDate,
+          stage_of_case: stageOfCase,
+          status: statusValue,
+          notes: privateNotes,
+          client_id: clientId || undefined
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update case');
+
+      setEditModalOpen(false);
+      setEditingCase(null);
+      loadData();
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error updating case');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDeleteCase = async () => {
+    if (!deletingCase) return;
+    setSubmitting(true);
+
+    try {
+      const res = await fetch(`/api/my-case/cases/${deletingCase.id}`, {
+        method: 'DELETE'
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to delete case');
+      }
+
+      setDeleteModalOpen(false);
+      setDeletingCase(null);
+      loadData();
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Error deleting case');
     } finally {
       setSubmitting(false);
     }
@@ -105,9 +201,34 @@ export default function CasesManagementPage() {
       c.case_title.toLowerCase().includes(search.toLowerCase()) ||
       c.court_name.toLowerCase().includes(search.toLowerCase()) ||
       (c.case_number && c.case_number.toLowerCase().includes(search.toLowerCase())) ||
-      (c.cnr_number && c.cnr_number.toLowerCase().includes(search.toLowerCase()));
+      (c.cnr_number && c.cnr_number.toLowerCase().includes(search.toLowerCase())) ||
+      (c.petitioner_parties && c.petitioner_parties.toLowerCase().includes(search.toLowerCase())) ||
+      (c.respondent_parties && c.respondent_parties.toLowerCase().includes(search.toLowerCase()));
     return matchesStatus && matchesSearch;
   });
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paginatedCases = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  // Reset to page 1 on filter or search change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter]);
+
+  const getStatusBadge = (status: CaseStatus) => {
+    switch (status) {
+      case 'disposed':
+        return <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded border bg-blue-50 text-blue-800 border-blue-200">✓ DISPOSED (निस्तारित)</span>;
+      case 'archived':
+        return <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded border bg-purple-50 text-purple-800 border-purple-200">📁 ARCHIVED (अभिलेखागार)</span>;
+      case 'stayed':
+        return <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded border bg-amber-50 text-amber-800 border-amber-200">⏸ STAYED (स्थगित)</span>;
+      case 'reserved_for_order':
+        return <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded border bg-indigo-50 text-indigo-800 border-indigo-200">⚖ RESERVED (आदेश हेतु सुरक्षित)</span>;
+      default:
+        return <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded border bg-emerald-50 text-emerald-800 border-emerald-200">● ACTIVE (विचाराधीन)</span>;
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -135,7 +256,16 @@ export default function CasesManagementPage() {
             <span>e-Courts Case Sync</span>
           </button>
           <button
-            onClick={() => setNewModalOpen(true)}
+            onClick={() => {
+              setCaseTitle('');
+              setPetitioner('');
+              setRespondent('');
+              setCaseNumber('');
+              setCnrNumber('');
+              setPrivateNotes('');
+              setStatusValue('active');
+              setNewModalOpen(true);
+            }}
             className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-semibold rounded-lg shadow-sm transition flex items-center space-x-1.5"
           >
             <Plus className="w-4 h-4" />
@@ -193,23 +323,30 @@ export default function CasesManagementPage() {
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Search by case title, suit number, or CNR..."
+            placeholder="Search by case title, suit number, parties, or CNR..."
             className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
         </div>
 
-        <div className="flex items-center space-x-2 w-full md:w-auto overflow-x-auto">
-          {['ALL', 'active', 'stayed', 'reserved_for_order', 'disposed', 'archived'].map(st => (
+        <div className="flex items-center space-x-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+          {[
+            { id: 'ALL', label: locale === 'hi' ? `सभी वाद (${cases.length})` : `All (${cases.length})` },
+            { id: 'active', label: locale === 'hi' ? `सक्रिय (${cases.filter(c => c.status === 'active').length})` : `Active (${cases.filter(c => c.status === 'active').length})` },
+            { id: 'stayed', label: locale === 'hi' ? `स्थगित (${cases.filter(c => c.status === 'stayed').length})` : `Stayed (${cases.filter(c => c.status === 'stayed').length})` },
+            { id: 'reserved_for_order', label: locale === 'hi' ? `सुरक्षित (${cases.filter(c => c.status === 'reserved_for_order').length})` : `Reserved (${cases.filter(c => c.status === 'reserved_for_order').length})` },
+            { id: 'disposed', label: locale === 'hi' ? `निस्तारित (${cases.filter(c => c.status === 'disposed').length})` : `Disposed (${cases.filter(c => c.status === 'disposed').length})` },
+            { id: 'archived', label: locale === 'hi' ? `अभिलेखागार (${cases.filter(c => c.status === 'archived').length})` : `Archived (${cases.filter(c => c.status === 'archived').length})` }
+          ].map(st => (
             <button
-              key={st}
-              onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium uppercase whitespace-nowrap transition ${
-                statusFilter === st
-                  ? 'bg-amber-600 text-white font-semibold shadow-sm'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              key={st.id}
+              onClick={() => setStatusFilter(st.id)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition flex items-center space-x-1 ${
+                statusFilter === st.id
+                  ? 'bg-amber-600 text-white shadow-sm'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
-              {st}
+              <span>{st.label}</span>
             </button>
           ))}
         </div>
@@ -231,66 +368,131 @@ export default function CasesManagementPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4">
-          {filtered.map(c => (
-            <div
-              key={c.id}
-              className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-amber-400 transition"
-            >
-              <div className="space-y-1.5 flex-1">
-                <div className="flex items-center space-x-2">
-                  <Link
-                    href={`/my-case/cases/${c.id}`}
-                    className="font-serif font-bold text-base text-slate-900 hover:text-amber-800 hover:underline"
-                  >
-                    {c.case_title}
-                  </Link>
-                  <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200">
-                    {c.status}
-                  </span>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
+            {paginatedCases.map(c => (
+              <div
+                key={c.id}
+                className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-amber-400 transition"
+              >
+                <div className="space-y-1.5 flex-1">
+                  <div className="flex items-center space-x-2">
+                    <Link
+                      href={`/my-case/cases/${c.id}`}
+                      className="font-serif font-bold text-base text-slate-900 hover:text-amber-800 hover:underline"
+                    >
+                      {c.case_title}
+                    </Link>
+                    {getStatusBadge(c.status)}
+                  </div>
+
+                  <div className="text-xs text-slate-500 font-mono flex flex-wrap gap-x-4">
+                    <span>No: {c.case_number || 'Unnumbered'}</span>
+                    <span>CNR: {c.cnr_number || 'RJAL01-XXXXXX-2026'}</span>
+                    <span>Type: {c.case_type}</span>
+                  </div>
+
+                  <div className="text-xs text-slate-600">
+                    <span><strong>Court:</strong> {c.court_name}</span> • <span><strong>Stage:</strong> {c.stage_of_case}</span>
+                  </div>
+
+                  {(c.petitioner_parties || c.respondent_parties) && (
+                    <div className="text-[11px] text-slate-500">
+                      <span><strong>Parties:</strong> {c.petitioner_parties || 'Petitioner'} v. {c.respondent_parties || 'Respondent'}</span>
+                    </div>
+                  )}
                 </div>
 
-                <div className="text-xs text-slate-500 font-mono flex flex-wrap gap-x-4">
-                  <span>No: {c.case_number || 'Unnumbered'}</span>
-                  <span>CNR: {c.cnr_number || 'RJAL01-XXXXXX-2026'}</span>
-                  <span>Type: {c.case_type}</span>
-                </div>
+                <div className="flex flex-col md:items-end space-y-2 shrink-0 text-xs w-full md:w-auto">
+                  {c.next_hearing_date ? (
+                    <span className="bg-amber-50 text-amber-900 font-bold px-2.5 py-1 rounded border border-amber-200">
+                      Next Hearing: {c.next_hearing_date}
+                    </span>
+                  ) : c.status === 'disposed' ? (
+                    <span className="bg-blue-50 text-blue-900 font-bold px-2.5 py-1 rounded border border-blue-200">
+                      ✓ Final Order / Disposed
+                    </span>
+                  ) : (
+                    <span className="bg-purple-50 text-purple-900 font-bold px-2.5 py-1 rounded border border-purple-200">
+                      📁 Chamber Record Vault
+                    </span>
+                  )}
 
-                <div className="text-xs text-slate-600">
-                  <span><strong>Court:</strong> {c.court_name}</span> • <span><strong>Stage:</strong> {c.stage_of_case}</span>
+                  <div className="flex items-center space-x-2 pt-1">
+                    <button
+                      onClick={() => openEditModal(c)}
+                      className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-medium flex items-center space-x-1"
+                      title="Edit case details"
+                    >
+                      <Edit2 className="w-3 h-3 text-slate-600" />
+                      <span>Edit</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDeletingCase(c);
+                        setDeleteModalOpen(true);
+                      }}
+                      className="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-700 rounded text-[11px] font-medium flex items-center space-x-1"
+                      title="Delete case file"
+                    >
+                      <Trash2 className="w-3 h-3 text-red-600" />
+                      <span>Delete</span>
+                    </button>
+                    <Link
+                      href={`/my-case/cases/${c.id}`}
+                      className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded text-[11px] font-semibold flex items-center space-x-1 shadow-sm"
+                    >
+                      <span>Dossier →</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
+            ))}
+          </div>
 
-              <div className="flex flex-col md:items-end space-y-1.5 shrink-0 text-xs">
-                {c.next_hearing_date && (
-                  <span className="bg-blue-50 text-blue-900 font-bold px-2.5 py-1 rounded border border-blue-200">
-                    Next Hearing: {c.next_hearing_date}
-                  </span>
-                )}
-                <div className="flex items-center space-x-3 pt-1">
-                  <a
-                    href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-700 hover:text-blue-900 hover:underline flex items-center space-x-1 text-[11px] font-medium"
-                    title="Check case live status on Alwar District Court e-Courts portal"
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 text-xs">
+              <span className="text-slate-500">
+                Showing <strong>{(currentPage - 1) * PAGE_SIZE + 1}</strong> to <strong>{Math.min(currentPage * PAGE_SIZE, filtered.length)}</strong> of <strong>{filtered.length}</strong> cases
+              </span>
+              <div className="flex items-center space-x-1">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className="px-2.5 py-1.5 border rounded-lg hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center space-x-1"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Previous</span>
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`w-8 h-8 rounded-lg font-semibold transition ${
+                      currentPage === page
+                        ? 'bg-amber-600 text-white'
+                        : 'border hover:bg-slate-50 text-slate-700'
+                    }`}
                   >
-                    <span>e-Courts Status ↗</span>
-                  </a>
-                  <Link
-                    href={`/my-case/cases/${c.id}`}
-                    className="text-amber-800 font-semibold hover:underline flex items-center space-x-1"
-                  >
-                    <span>Open Full Dossier →</span>
-                  </Link>
-                </div>
+                    {page}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-2.5 py-1.5 border rounded-lg hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center space-x-1"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
-          ))}
+          )}
         </div>
       )}
 
-      {/* New Case Modal */}
+      {/* Record New Case Modal */}
       {newModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-slate-900 border border-slate-200 max-h-[90vh] overflow-y-auto space-y-4">
@@ -313,7 +515,7 @@ export default function CasesManagementPage() {
                   value={caseTitle}
                   onChange={e => setCaseTitle(e.target.value)}
                   className="w-full p-2.5 border rounded-lg"
-                  placeholder="e.g. Ramesh Kumar v. State of Rajasthan / Shanti Devi v. Municipal Council"
+                  placeholder="e.g. Ramesh Kumar v. State of Rajasthan"
                 />
               </div>
 
@@ -326,13 +528,16 @@ export default function CasesManagementPage() {
                     className="w-full p-2.5 border rounded-lg bg-white"
                   >
                     <option>District & Sessions Court, Alwar</option>
+                    <option>Court of Additional District & Sessions Judge No. 1, Alwar</option>
+                    <option>Court of Additional District & Sessions Judge No. 2, Alwar</option>
+                    <option>Special Court (POCSO Act Cases No. 1), Alwar</option>
                     <option>Court of CJM / ACJM, Alwar</option>
+                    <option>Court of Civil Judge & Senior Division, Alwar</option>
                     <option>Commercial Court, Alwar</option>
-                    <option>Family Court, Alwar</option>
+                    <option>Family Court No. 1, Alwar</option>
                     <option>Motor Accident Claims Tribunal, Alwar</option>
                     <option>Sub-Divisional Officer (SDO Revenue Court), Alwar</option>
-                    <option>Civil Judge & Judicial Magistrate, Rajgarh</option>
-                    <option>Civil Judge & Judicial Magistrate, Tijara</option>
+                    <option>Revenue Appellate Authority (RAA), Alwar</option>
                   </select>
                 </div>
 
@@ -344,7 +549,7 @@ export default function CasesManagementPage() {
                     value={caseType}
                     onChange={e => setCaseType(e.target.value)}
                     className="w-full p-2.5 border rounded-lg"
-                    placeholder="e.g. Regular Bail (Sec 480 BNSS), Civil Suit, Partition"
+                    placeholder="e.g. Regular Bail, Civil Suit, Revision"
                   />
                 </div>
               </div>
@@ -374,7 +579,7 @@ export default function CasesManagementPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block font-semibold text-slate-700 mb-1">Court Case Number</label>
                   <input
@@ -382,11 +587,11 @@ export default function CasesManagementPage() {
                     value={caseNumber}
                     onChange={e => setCaseNumber(e.target.value)}
                     className="w-full p-2.5 border rounded-lg font-mono"
-                    placeholder="e.g. Criminal Misc. 120/2026"
+                    placeholder="e.g. 120/2026"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-700 mb-1">16-Digit CNR Number (if issued)</label>
+                  <label className="block font-semibold text-slate-700 mb-1">16-Digit CNR Number</label>
                   <input
                     type="text"
                     value={cnrNumber}
@@ -395,17 +600,30 @@ export default function CasesManagementPage() {
                     placeholder="RJAL01-001234-2026"
                   />
                 </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Case Status</label>
+                  <select
+                    value={statusValue}
+                    onChange={e => setStatusValue(e.target.value as CaseStatus)}
+                    className="w-full p-2.5 border rounded-lg bg-white"
+                  >
+                    <option value="active">Active (विचाराधीन)</option>
+                    <option value="stayed">Stayed (स्थगन आदेश)</option>
+                    <option value="reserved_for_order">Reserved for Order (सुरक्षित)</option>
+                    <option value="disposed">Disposed (निस्तारित)</option>
+                    <option value="archived">Archived (अभिलेखागार)</option>
+                  </select>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Current Case Stage</label>
+                  <label className="block font-semibold text-slate-700 mb-1">Filing Date</label>
                   <input
-                    type="text"
-                    value={stageOfCase}
-                    onChange={e => setStageOfCase(e.target.value)}
+                    type="date"
+                    value={filingDate}
+                    onChange={e => setFilingDate(e.target.value)}
                     className="w-full p-2.5 border rounded-lg"
-                    placeholder="e.g. Arguments on Stay / Charge / Evidence"
                   />
                 </div>
                 <div>
@@ -417,6 +635,32 @@ export default function CasesManagementPage() {
                     className="w-full p-2.5 border rounded-lg"
                   />
                 </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Current Case Stage</label>
+                  <input
+                    type="text"
+                    value={stageOfCase}
+                    onChange={e => setStageOfCase(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                    placeholder="e.g. Arguments on Charge"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Link with Client</label>
+                <select
+                  value={clientId}
+                  onChange={e => setClientId(e.target.value)}
+                  className="w-full p-2.5 border rounded-lg bg-white"
+                >
+                  <option value="">-- No Direct Client Link (General Dossier) --</option>
+                  {clients.map(cl => (
+                    <option key={cl.id} value={cl.id}>
+                      {cl.full_name} ({cl.phone || 'No Phone'})
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>
@@ -426,7 +670,7 @@ export default function CasesManagementPage() {
                   value={privateNotes}
                   onChange={e => setPrivateNotes(e.target.value)}
                   className="w-full p-2.5 border rounded-lg"
-                  placeholder="Record confidential client instructions, witness weaknesses, or trial strategy..."
+                  placeholder="Record confidential instructions, strategy, or evidence checklists..."
                 />
               </div>
 
@@ -447,6 +691,236 @@ export default function CasesManagementPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Case Modal */}
+      {editModalOpen && editingCase && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-slate-900 border border-slate-200 max-h-[90vh] overflow-y-auto space-y-4">
+            <h3 className="font-serif font-bold text-xl text-slate-900 border-b pb-3 flex items-center justify-between">
+              <span>Edit Case Record: {editingCase.case_title}</span>
+              <span className="text-xs font-mono text-slate-500">{editingCase.id}</span>
+            </h3>
+
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-xs">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleUpdateCase} className="space-y-4 text-xs">
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Case Title</label>
+                <input
+                  required
+                  type="text"
+                  value={caseTitle}
+                  onChange={e => setCaseTitle(e.target.value)}
+                  className="w-full p-2.5 border rounded-lg"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Competent Court</label>
+                  <select
+                    value={courtName}
+                    onChange={e => setCourtName(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg bg-white"
+                  >
+                    <option>District & Sessions Court, Alwar</option>
+                    <option>Court of Additional District & Sessions Judge No. 1, Alwar</option>
+                    <option>Court of Additional District & Sessions Judge No. 2, Alwar</option>
+                    <option>Special Court (POCSO Act Cases No. 1), Alwar</option>
+                    <option>Court of CJM / ACJM, Alwar</option>
+                    <option>Court of Civil Judge & Senior Division, Alwar</option>
+                    <option>Commercial Court, Alwar</option>
+                    <option>Family Court No. 1, Alwar</option>
+                    <option>Motor Accident Claims Tribunal, Alwar</option>
+                    <option>Sub-Divisional Officer (SDO Revenue Court), Alwar</option>
+                    <option>Revenue Appellate Authority (RAA), Alwar</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Case Category / Type</label>
+                  <input
+                    required
+                    type="text"
+                    value={caseType}
+                    onChange={e => setCaseType(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Petitioner / Complainant</label>
+                  <input
+                    required
+                    type="text"
+                    value={petitioner}
+                    onChange={e => setPetitioner(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Respondent / Accused</label>
+                  <input
+                    required
+                    type="text"
+                    value={respondent}
+                    onChange={e => setRespondent(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Court Case Number</label>
+                  <input
+                    type="text"
+                    value={caseNumber}
+                    onChange={e => setCaseNumber(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg font-mono"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">16-Digit CNR Number</label>
+                  <input
+                    type="text"
+                    value={cnrNumber}
+                    onChange={e => setCnrNumber(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg font-mono"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Case Status</label>
+                  <select
+                    value={statusValue}
+                    onChange={e => setStatusValue(e.target.value as CaseStatus)}
+                    className="w-full p-2.5 border rounded-lg bg-white"
+                  >
+                    <option value="active">Active (विचाराधीन)</option>
+                    <option value="stayed">Stayed (स्थगन आदेश)</option>
+                    <option value="reserved_for_order">Reserved for Order (सुरक्षित)</option>
+                    <option value="disposed">Disposed (निस्तारित)</option>
+                    <option value="archived">Archived (अभिलेखागार)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Filing Date</label>
+                  <input
+                    type="date"
+                    value={filingDate}
+                    onChange={e => setFilingDate(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Next Hearing Date</label>
+                  <input
+                    type="date"
+                    value={nextDate}
+                    onChange={e => setNextDate(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Current Case Stage</label>
+                  <input
+                    type="text"
+                    value={stageOfCase}
+                    onChange={e => setStageOfCase(e.target.value)}
+                    className="w-full p-2.5 border rounded-lg"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Associated Client</label>
+                <select
+                  value={clientId}
+                  onChange={e => setClientId(e.target.value)}
+                  className="w-full p-2.5 border rounded-lg bg-white"
+                >
+                  <option value="">-- No Direct Client Link --</option>
+                  {clients.map(cl => (
+                    <option key={cl.id} value={cl.id}>
+                      {cl.full_name} ({cl.phone || 'No Phone'})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Confidential Strategy & Case Notes</label>
+                <textarea
+                  rows={3}
+                  value={privateNotes}
+                  onChange={e => setPrivateNotes(e.target.value)}
+                  className="w-full p-2.5 border rounded-lg"
+                />
+              </div>
+
+              <div className="pt-3 flex justify-end space-x-2 border-t">
+                <button
+                  type="button"
+                  onClick={() => setEditModalOpen(false)}
+                  className="px-3 py-1.5 border rounded-lg text-slate-600 hover:bg-slate-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg shadow-sm"
+                >
+                  {submitting ? 'Updating...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Case Confirmation Modal */}
+      {deleteModalOpen && deletingCase && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 text-slate-900 border border-slate-200 space-y-4 text-xs">
+            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto">
+              <Trash2 className="w-6 h-6" />
+            </div>
+            <div className="text-center space-y-1">
+              <h3 className="font-bold text-base text-slate-900">Delete Case File?</h3>
+              <p className="text-slate-500">
+                Are you sure you want to permanently remove <strong>"{deletingCase.case_title}"</strong> from your docket? This action cannot be undone.
+              </p>
+            </div>
+            <div className="pt-3 flex justify-end space-x-2 border-t">
+              <button
+                type="button"
+                onClick={() => setDeleteModalOpen(false)}
+                className="px-3 py-1.5 border rounded-lg text-slate-600 hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteCase}
+                disabled={submitting}
+                className="px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-sm"
+              >
+                {submitting ? 'Deleting...' : 'Yes, Delete Case'}
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -478,7 +952,6 @@ export default function CasesManagementPage() {
               </button>
             </div>
 
-            {/* Direct e-Courts Connection Strip */}
             <div className="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-xl p-4 space-y-2 border border-blue-400/30">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="text-xs">
@@ -504,7 +977,6 @@ export default function CasesManagementPage() {
               </p>
             </div>
 
-            {/* Quick Importer Form */}
             <form onSubmit={handleCreateCase} className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -541,7 +1013,7 @@ export default function CasesManagementPage() {
                   value={caseTitle}
                   onChange={e => setCaseTitle(e.target.value)}
                   className="w-full p-2.5 border rounded-lg"
-                  placeholder="e.g. Ramesh Kumar v. State of Rajasthan / Smt. Shanti Devi v. Municipal Council"
+                  placeholder="e.g. Ramesh Kumar v. State of Rajasthan"
                 />
               </div>
 
@@ -572,7 +1044,7 @@ export default function CasesManagementPage() {
                     value={caseType}
                     onChange={e => setCaseType(e.target.value)}
                     className="w-full p-2.5 border rounded-lg"
-                    placeholder="e.g. Civil Suit, Sessions Trial, Bail (Sec 480 BNSS)"
+                    placeholder="e.g. Civil Suit, Regular Bail"
                   />
                 </div>
               </div>
@@ -610,7 +1082,7 @@ export default function CasesManagementPage() {
                     value={stageOfCase}
                     onChange={e => setStageOfCase(e.target.value)}
                     className="w-full p-2.5 border rounded-lg"
-                    placeholder="e.g. Plaintiff Evidence, Final Arguments, Stay"
+                    placeholder="e.g. Plaintiff Evidence, Final Arguments"
                   />
                 </div>
                 <div>

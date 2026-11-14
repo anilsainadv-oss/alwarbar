@@ -384,7 +384,7 @@ function VerifyAdvocateContent() {
                     Statutory Nominee Protection Status
                   </span>
                   <div className="font-bold text-slate-900 text-sm flex items-center space-x-1.5">
-                    <CheckCircle className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     <span>{data.nominee_status}</span>
                   </div>
                   <p className="text-[11px] text-slate-500">
@@ -552,18 +552,20 @@ function VerifyAdvocateContent() {
                     <div className="flex items-center gap-1.5 overflow-x-auto pt-2 border-t border-white/10 text-xs">
                       {[
                         { id: 'ALL', label: `सभी वाद (${data.ecourts_cases.length})` },
+                        { id: 'active', label: `सक्रिय वाद (${data.ecourts_cases.filter(c => c.status === 'active').length})` },
+                        { id: 'disposed', label: `निस्तारित वाद (${data.ecourts_cases.filter(c => c.status === 'disposed').length})` },
+                        { id: 'archived', label: `अभिलेखागार (${data.ecourts_cases.filter(c => c.status === 'archived').length})` },
                         { id: 'civil', label: 'दीवानी (Civil)' },
-                        { id: 'criminal', label: 'सत्र / दांडिक (Criminal)' },
+                        { id: 'criminal', label: 'सत्र / दांडिक' },
                         { id: 'revenue', label: 'राजस्व (Revenue)' },
-                        { id: 'mact', label: 'मोटर दावा (MACT)' },
-                        { id: 'pocso', label: 'विशिष्ट (POCSO)' }
+                        { id: 'mact', label: 'मोटर दावा (MACT)' }
                       ].map(tab => (
                         <button
                           key={tab.id}
                           onClick={() => setCaseFilter(tab.id)}
                           className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
                             caseFilter === tab.id
-                              ? 'bg-blue-500 text-white shadow-sm'
+                              ? 'bg-blue-500 text-white shadow-sm font-bold'
                               : 'bg-white/10 text-slate-300 hover:bg-white/20'
                           }`}
                         >
@@ -580,12 +582,14 @@ function VerifyAdvocateContent() {
                     {data.ecourts_cases
                       .filter(c => {
                         if (caseFilter === 'ALL') return true;
+                        if (caseFilter === 'active') return c.status === 'active';
+                        if (caseFilter === 'disposed') return c.status === 'disposed';
+                        if (caseFilter === 'archived') return c.status === 'archived';
                         const text = (c.case_type + ' ' + c.court_name + ' ' + c.case_title).toLowerCase();
                         if (caseFilter === 'civil') return text.includes('civil') || text.includes('suit') || text.includes('rfa');
                         if (caseFilter === 'criminal') return text.includes('session') || text.includes('revision') || text.includes('bail') || text.includes('bnss');
                         if (caseFilter === 'revenue') return text.includes('revenue') || text.includes('tenancy') || text.includes('sdo') || text.includes('raa');
                         if (caseFilter === 'mact') return text.includes('mact') || text.includes('accident') || text.includes('compensation');
-                        if (caseFilter === 'pocso') return text.includes('pocso') || text.includes('special');
                         return true;
                       })
                       .map(c => {
@@ -621,8 +625,14 @@ function VerifyAdvocateContent() {
                                       </button>
                                     </div>
                                   )}
-                                  <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
-                                    {c.status || 'Active'}
+                                  <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${
+                                    c.status === 'disposed'
+                                      ? 'bg-blue-50 text-blue-800 border-blue-200'
+                                      : c.status === 'archived'
+                                      ? 'bg-purple-50 text-purple-800 border-purple-200'
+                                      : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                  }`}>
+                                    {c.status === 'disposed' ? '✓ DISPOSED (निस्तारित)' : c.status === 'archived' ? '📁 ARCHIVED (अभिलेखागार)' : '● ACTIVE (सक्रिय)'}
                                   </span>
                                 </div>
 
@@ -643,10 +653,18 @@ function VerifyAdvocateContent() {
                               </div>
 
                               <div className="flex flex-col sm:items-end gap-1.5 shrink-0 pt-1">
-                                {c.next_hearing_date && (
+                                {c.next_hearing_date ? (
                                   <div className="bg-amber-50 border border-amber-200 text-amber-900 px-2.5 py-1 rounded text-xs font-bold flex items-center space-x-1">
                                     <Calendar className="w-3.5 h-3.5 text-amber-700" />
                                     <span>अगली पेशी: {c.next_hearing_date}</span>
+                                  </div>
+                                ) : c.status === 'disposed' ? (
+                                  <div className="bg-blue-50 border border-blue-200 text-blue-900 px-2.5 py-1 rounded text-xs font-bold flex items-center space-x-1">
+                                    <span>✓ अंतिम निर्णय / निस्तारित</span>
+                                  </div>
+                                ) : (
+                                  <div className="bg-purple-50 border border-purple-200 text-purple-900 px-2.5 py-1 rounded text-xs font-bold flex items-center space-x-1">
+                                    <span>📁 अभिलेखागार रिकॉर्ड</span>
                                   </div>
                                 )}
                                 <a

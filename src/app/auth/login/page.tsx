@@ -3,18 +3,24 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Scale, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
+import { Scale, Lock, Mail, ArrowRight, AlertCircle, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/context';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { t } = useLanguage();
-  const [email, setEmail] = useState('rohitashwa.adv@alwarbar.in');
-  const [password, setPassword] = useState('Password@r1234');
+  const { t, locale } = useLanguage();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const performLogin = async (loginEmail: string, loginPassword: string) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      setError('ईमेल अथवा सनद संख्या एवं पासवर्ड दर्ज करना अनिवार्य है।');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
@@ -22,12 +28,12 @@ export default function LoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: loginEmail.trim(), password: loginPassword.trim() })
+        body: JSON.stringify({ email: email.trim(), password: password.trim() })
       });
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || 'Authentication failed');
+        throw new Error(data.error || 'प्रमाणीकरण विफल (Authentication failed)');
       }
 
       if (data.user?.role === 'public_admin') {
@@ -44,11 +50,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    performLogin(email, password);
-  };
-
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
@@ -57,10 +58,10 @@ export default function LoginPage() {
             <Scale className="w-6 h-6" />
           </div>
           <h1 className="font-serif font-bold text-2xl text-legal-navy">
-            {t.navLogin}
+            {t.navLogin || 'अधिवक्ता लॉगिन'}
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Access My Case AI Legal Office or Bar Administration
+            My Case AI Legal Office & Bar Portal
           </p>
         </div>
 
@@ -83,8 +84,9 @@ export default function LoginPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
+                autoComplete="username"
                 className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-                placeholder="rohitashwa.adv@alwarbar.in अथवा R/331/1977"
+                placeholder="advocate@alwarbar.in अथवा R/..."
               />
             </div>
           </div>
@@ -100,8 +102,9 @@ export default function LoginPage() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
+                autoComplete="current-password"
                 className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
-                placeholder="Password@r1234"
+                placeholder="••••••••••••"
               />
             </div>
           </div>
@@ -111,103 +114,35 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full py-2.5 px-4 rounded-lg bg-legal-navy hover:bg-slate-800 text-amber-300 font-semibold text-sm transition flex items-center justify-center space-x-2 shadow"
           >
-            <span>{loading ? 'लॉगिन हो रहा है...' : 'साइन इन करें (Sign In) →'}</span>
+            <span>{loading ? 'सत्यापन हो रहा है...' : 'सुरक्षित लॉगिन करें (Sign In) →'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
-          <div className="flex items-center justify-between pt-1 text-xs">
+          <div className="text-center pt-1 text-xs">
+            <span className="text-slate-500">
+              {locale === 'hi' ? 'नवीन अधिवक्ता हैं? ' : 'New Advocate? '}
+            </span>
+            <Link 
+              href="/auth/register" 
+              className="text-amber-800 hover:text-amber-900 font-bold hover:underline"
+            >
+              {locale === 'hi' ? 'यहाँ नया खाता पंजीकृत करें (Register Here) →' : 'Register New Account →'}
+            </Link>
+          </div>
+
+          <div className="flex items-center justify-between pt-2 text-xs border-t border-slate-100">
             <Link 
               href="/auth/change-password" 
               className="text-amber-800 hover:text-amber-900 hover:underline font-medium flex items-center space-x-1"
             >
               <span>🔐 पासवर्ड बदलें (Change Password)</span>
             </Link>
-            <Link 
-              href="/auth/bootstrap" 
-              className="text-slate-500 hover:text-slate-700 hover:underline text-[11px]"
-            >
-              Bootstrap Admin Token →
-            </Link>
+            <div className="flex items-center space-x-1 text-slate-400 text-[11px]">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>256-Bit SSL Secured</span>
+            </div>
           </div>
         </form>
-
-        {/* Quick Demo Credentials Guide */}
-        <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-          <p className="font-semibold text-slate-700 mb-2">1-क्लिक त्वरित लॉगिन (Click to Instant Login):</p>
-          <div className="grid grid-cols-2 gap-1.5 text-[11px]">
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('rohitashwa.adv@alwarbar.in');
-                setPassword('Password@r1234');
-                performLogin('rohitashwa.adv@alwarbar.in', 'Password@r1234');
-              }}
-              className="text-left px-2.5 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-400 rounded-lg text-blue-950 transition font-bold col-span-2 flex items-center justify-between shadow-sm"
-            >
-              <div className="space-y-0.5">
-                <div>⚖️ Sh. Rohitashwa Sain (R/331/1977)</div>
-                <div className="text-[10px] text-blue-700 font-normal">Click to 1-Click Instant Login (e-Courts Docket)</div>
-              </div>
-              <span className="text-[10px] bg-blue-600 text-white px-2 py-1 rounded font-mono font-bold">1-Click Login →</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('anilsain.adv@gmail.com');
-                setPassword('Password@12345');
-                performLogin('anilsain.adv@gmail.com', 'Password@12345');
-              }}
-              className="text-left px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded text-amber-900 transition font-medium"
-            >
-              👑 Anil Sain (Admin)
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('public.admin@alwaradvocates.org');
-                setPassword('Password@r1234');
-                performLogin('public.admin@alwaradvocates.org', 'Password@r1234');
-              }}
-              className="text-left px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-slate-800 transition font-medium"
-            >
-              🏛️ Bar Admin
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('advocate.rajesh@alwarbar.in');
-                setPassword('Password@r1234');
-                performLogin('advocate.rajesh@alwarbar.in', 'Password@r1234');
-              }}
-              className="text-left px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-slate-800 transition font-medium"
-            >
-              ⚖️ Adv. Rajesh Sharma
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('case.admin@alwaradvocates.org');
-                setPassword('Password@r1234');
-                performLogin('case.admin@alwaradvocates.org', 'Password@r1234');
-              }}
-              className="text-left px-2 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded text-emerald-900 transition font-medium"
-            >
-              🛡️ Case Admin
-            </button>
-          </div>
-          <div className="mt-2.5 p-2 bg-slate-100/80 rounded-lg text-[10px] text-slate-600 font-mono space-y-0.5">
-            <div>• उपयोगकर्ता: <span className="font-bold text-slate-900">rohitashwa.adv@alwarbar.in</span> अथवा <span className="font-bold text-blue-800">R/331/1977</span></div>
-            <div>• पासवर्ड: <span className="bg-amber-100 text-amber-950 px-1.5 py-0.5 rounded font-bold">Password@r1234</span></div>
-          </div>
-          <div className="mt-2 text-[10px] text-slate-500 text-center font-mono font-medium">
-            वर्तमान पासवर्ड (All Users): <span className="bg-amber-100 text-amber-950 px-1 py-0.5 rounded font-bold">Password@r1234</span>
-          </div>
-          <div className="mt-2 text-center">
-            <Link href="/auth/bootstrap" className="text-amber-700 hover:underline text-[11px]">
-              Bootstrap Super-Admin Token →
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );
