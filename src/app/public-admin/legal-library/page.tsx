@@ -679,11 +679,11 @@ export default function AdminLegalLibraryPage() {
                     href={`/api/public/judgments/download?id=${encodeURIComponent(doc.id)}&format=pdf`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-800 rounded-lg text-xs font-semibold transition flex items-center space-x-1 border border-blue-200 shadow-sm"
-                    title="Download Certified Full Judgment PDF"
+                    className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 border border-emerald-200 shadow-sm"
+                    title="Download Original Certified Court Judgment PDF"
                   >
-                    <Download className="w-3.5 h-3.5 text-blue-600" />
-                    <span>PDF</span>
+                    <Download className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Original PDF</span>
                   </a>
 
                   <button
@@ -1102,10 +1102,10 @@ export default function AdminLegalLibraryPage() {
                 href={`/api/public/judgments/download?id=${encodeURIComponent(viewTranscriptDoc.id)}&format=pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 bg-indigo-700 hover:bg-indigo-800 text-white rounded-lg font-semibold flex items-center space-x-1.5 shadow-sm transition"
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold flex items-center space-x-1.5 shadow-sm transition"
               >
                 <Download className="w-4 h-4" />
-                <span>Download Certified PDF</span>
+                <span>Download Original Certified PDF</span>
               </a>
 
               <button

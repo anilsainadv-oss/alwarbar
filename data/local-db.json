@@ -162464,6 +162464,23 @@
   ],
   "storage_usage_history": [
     {
+      "id": "suh-b7860fa6-9fb0-4699-bcf7-42454d5ea6e8",
+      "createdAt": "2026-11-17T17:26:06.299Z",
+      "storageBytes": 75,
+      "databaseBytes": 3359880,
+      "physicalDiskBytes": 3359955,
+      "pdfCount": 10,
+      "chunkCount": 103,
+      "metadata": {
+        "alertLevel": "normal",
+        "totalJudgments": 11,
+        "totalEmbeddings": 103,
+        "triggered_by": "admin-user-alwar-0001",
+        "trigger_role": "public_admin",
+        "test_e2e_snapshot": true
+      }
+    },
+    {
       "id": "suh-4d557690-f5fd-4a60-a76f-94b808854ea1",
       "createdAt": "2026-11-17T16:13:39.173Z",
       "storageBytes": 75,

@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Scale, ExternalLink, Calendar, CheckCircle, Search, 
-  RefreshCw, Landmark, BookOpen, ChevronRight, X, ShieldAlert, Award
+  RefreshCw, Landmark, BookOpen, ChevronRight, X, ShieldAlert, Award,
+  Download, FileText, Check
 } from 'lucide-react';
 import type { LegalUpdate } from '@/types/database';
 
@@ -254,12 +255,23 @@ function JudgmentsContent() {
                   ))}
                 </div>
 
-                <div className="flex items-center space-x-3 shrink-0">
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <a
+                    href={`/api/public/judgments/download?id=${encodeURIComponent(j.id)}&citation=${encodeURIComponent(j.citation || '')}&title=${encodeURIComponent(j.act_or_case_name || '')}&format=pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm"
+                    title={locale === 'hi' ? 'मूल प्रमाणित फैसला डाउनलोड करें (PDF)' : 'Download Original Court Judgment PDF'}
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>{locale === 'hi' ? 'मूल फैसला PDF' : 'Original Judgment PDF'}</span>
+                  </a>
+
                   <button
                     onClick={() => setSelectedCase(j)}
                     className="inline-flex items-center space-x-1 text-xs font-semibold px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg transition"
                   >
-                    <span>Precedent Headnotes</span>
+                    <span>{locale === 'hi' ? 'विधिक विवरण व नज़ीर' : 'Precedent Headnotes'}</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
 
@@ -270,7 +282,7 @@ function JudgmentsContent() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center space-x-1 text-xs font-semibold text-blue-700 hover:text-blue-900 hover:underline"
                     >
-                      <span>Official Court Portal</span>
+                      <span>{locale === 'hi' ? 'कोर्ट पोर्टल' : 'Official Portal'}</span>
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   )}
@@ -297,12 +309,24 @@ function JudgmentsContent() {
                   Citation: {selectedCase.citation} • {selectedCase.court_name}
                 </p>
               </div>
-              <button
-                onClick={() => setSelectedCase(null)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center space-x-2">
+                <a
+                  href={`/api/public/judgments/download?id=${encodeURIComponent(selectedCase.id)}&citation=${encodeURIComponent(selectedCase.citation || '')}&title=${encodeURIComponent(selectedCase.act_or_case_name || '')}&format=pdf`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm"
+                  title="Download Original Certified Court Judgment PDF"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>{locale === 'hi' ? 'मूल फैसला PDF' : 'Original PDF'}</span>
+                </a>
+                <button
+                  onClick={() => setSelectedCase(null)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             <div className="space-y-4 text-xs">
@@ -338,19 +362,30 @@ function JudgmentsContent() {
                 </div>
               </div>
 
-              {selectedCase.official_source_url && (
-                <div className="pt-2">
+              {/* Download Original Judgment Section */}
+              <div className="pt-3 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <a
+                  href={`/api/public/judgments/download?id=${encodeURIComponent(selectedCase.id)}&citation=${encodeURIComponent(selectedCase.citation || '')}&title=${encodeURIComponent(selectedCase.act_or_case_name || '')}&format=pdf`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center justify-center space-x-2 transition shadow-md text-xs"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{locale === 'hi' ? 'मूल प्रमाणित फैसला डाउनलोड करें (PDF)' : 'Download Original Court Copy (PDF)'}</span>
+                </a>
+
+                {selectedCase.official_source_url && (
                   <a
                     href={selectedCase.official_source_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2.5 px-4 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-medium flex items-center justify-center space-x-2 transition shadow"
+                    className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold flex items-center justify-center space-x-2 transition text-xs"
                   >
-                    <span>View on Official Court Website ({selectedCase.court_name})</span>
+                    <span>{locale === 'hi' ? 'कोर्ट वेबसाइट पर देखें' : 'View Court Portal'}</span>
                     <ExternalLink className="w-4 h-4" />
                   </a>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

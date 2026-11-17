@@ -341,24 +341,52 @@ function AILegalResearchDashboardContent() {
     }
   };
 
-  const handleOpenJudgment = (doc: LegalSearchResult | SavedResearch['document']) => {
+  const handleOpenJudgment = async (doc: LegalSearchResult | SavedResearch['document']) => {
     if (!doc) return;
-    let jdg = findJudgmentByCitation(doc.citation);
+    const docId = ('document_id' in doc ? doc.document_id : (doc as any).id) || '';
+    const cite = doc.citation || '';
+    const title = doc.title || '';
+
+    // 1. Check static registry first
+    let jdg = findJudgmentByCitation(cite);
+
+    // 2. Hydrate from live database API if not static or to load complete verbatim transcript
+    if (!jdg || !jdg.full_judgment_text || jdg.full_judgment_text.length < 500) {
+      try {
+        const queryParams = new URLSearchParams();
+        if (docId) queryParams.set('id', docId);
+        if (cite) queryParams.set('citation', cite);
+        if (title) queryParams.set('title', title);
+        queryParams.set('format', 'json');
+
+        const res = await fetch(`/api/public/judgments/download?${queryParams.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.judgment) {
+            jdg = data.judgment;
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch full judgment details:', err);
+      }
+    }
+
+    // 3. Fallback if offline or API unavailable
     if (!jdg) {
-      const docId = ('document_id' in doc ? doc.document_id : doc.id) || 'dyn-doc';
-      const snippet = ('snippet' in doc ? doc.snippet : (doc.summary || doc.full_text?.slice(0, 300))) || 'Authoritative judgment proposition recorded in database.';
-      const judgeStr = Array.isArray(doc.judge_names) ? doc.judge_names.join(', ') : (doc.judge_names || 'Hon\'ble Judges on Record');
-      const statuteStr = Array.isArray(doc.statutes) ? doc.statutes.join(', ') : (doc.statutes || 'General Statutory Provisions');
-      const subjectStr = doc.legal_subject || ('legal_subjects' in doc && Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(', ') : 'Indian Statutory Law');
+      const snippet = ('snippet' in doc ? doc.snippet : ((doc as any).summary || (doc as any).full_text?.slice(0, 300))) || 'Authoritative judgment proposition recorded in database.';
+      const judgeStr = Array.isArray((doc as any).judge_names) ? (doc as any).judge_names.join(', ') : ((doc as any).judge_names || "Hon'ble Judges on Record");
+      const statuteStr = Array.isArray((doc as any).statutes) ? (doc as any).statutes.join(', ') : ((doc as any).statutes || 'General Statutory Provisions');
+      const subjectStr = (doc as any).legal_subject || ('legal_subjects' in doc && Array.isArray((doc as any).legal_subjects) ? (doc as any).legal_subjects.join(', ') : 'Indian Statutory Law');
+      const fullText = (doc as any).full_text || `IN THE ${doc.court_name.toUpperCase()}\n\nCITATION: ${doc.citation}\nBENCH: ${judgeStr}\nDECISION DATE: ${(doc as any).judgment_date || 'N/A'}\n\n${snippet}\n\nCertified copy of authoritative legal transcript preserved in Alwar Advocates Portal pgvector precedent repository.`;
       
       jdg = {
-        id: docId,
+        id: docId || 'dyn-doc',
         case_title: doc.title,
         citation: doc.citation,
         court: doc.court_name,
         court_hi: doc.court_name,
         bench: judgeStr,
-        decision_date: doc.judgment_date || 'Judgment on Record',
+        decision_date: (doc as any).judgment_date || 'Judgment on Record',
         statute_subject: subjectStr,
         statute_subject_hi: 'भारतीय संविधिक विधि',
         category: 'criminal',
@@ -371,7 +399,7 @@ function AILegalResearchDashboardContent() {
         held_proposition_hi: snippet,
         official_kanoon_url: `https://indiankanoon.org/search/?formInput=${encodeURIComponent(doc.citation)}`,
         official_escr_url: 'https://escr.sci.gov.in/',
-        full_judgment_text: `IN THE ${doc.court_name.toUpperCase()}\n\nCITATION: ${doc.citation}\nBENCH: ${judgeStr}\nDECISION DATE: ${doc.judgment_date || 'N/A'}\n\n${snippet}\n\nCertified copy of authoritative legal transcript preserved in Alwar Advocates Portal pgvector precedent repository.`
+        full_judgment_text: fullText
       };
     }
     if (jdg) setSelectedJudgment(jdg);
@@ -717,17 +745,17 @@ function AILegalResearchDashboardContent() {
                     <button
                       onClick={() => handleDownloadPdf(doc.citation, doc.title)}
                       disabled={downloadingId === doc.citation}
-                      className="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 transition flex items-center space-x-1 disabled:opacity-50"
-                      title="Download Certified PDF transcript"
+                      className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1 rounded-lg shadow-sm transition flex items-center space-x-1.5 disabled:opacity-50"
+                      title={locale === 'hi' ? 'मूल प्रमाणित फैसला डाउनलोड करें (PDF)' : 'Download Original Certified Court Judgment PDF'}
                     >
                       {downloadingId === doc.citation ? (
-                        <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-600" />
+                        <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
                       ) : downloadSuccessId === doc.citation ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <Check className="w-3.5 h-3.5 text-white" />
                       ) : (
-                        <Download className="w-3.5 h-3.5 text-blue-600" />
+                        <Download className="w-3.5 h-3.5 text-white" />
                       )}
-                      <span className="hidden sm:inline">PDF</span>
+                      <span>{locale === 'hi' ? 'मूल फैसला PDF' : 'Original PDF'}</span>
                     </button>
 
                     <button
@@ -919,10 +947,11 @@ function AILegalResearchDashboardContent() {
                                       </span>
                                       <button
                                         onClick={() => handleDownloadPdf(j.citation, j.title)}
-                                        className="text-blue-600 hover:text-blue-800 text-[10px] font-semibold flex items-center space-x-0.5"
+                                        className="text-emerald-700 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2 py-0.5 rounded text-[10px] font-bold flex items-center space-x-1"
+                                        title={locale === 'hi' ? 'मूल प्रमाणित फैसला डाउनलोड करें (PDF)' : 'Download Original Precedent PDF'}
                                       >
-                                        <Download className="w-3 h-3" />
-                                        <span>PDF</span>
+                                        <Download className="w-3 h-3 text-emerald-600" />
+                                        <span>{locale === 'hi' ? 'मूल PDF' : 'Original PDF'}</span>
                                       </button>
                                     </div>
                                     <p className="text-[11px] font-medium text-slate-700 truncate">{j.title}</p>
@@ -1108,10 +1137,11 @@ function AILegalResearchDashboardContent() {
                         {item.document?.citation && (
                           <button
                             onClick={() => handleDownloadPdf(item.document!.citation, item.document!.title)}
-                            className="text-slate-600 hover:text-slate-900 p-1"
-                            title="Download PDF"
+                            className="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded font-bold flex items-center space-x-1"
+                            title="Download Original Judgment PDF"
                           >
-                            <Download className="w-3.5 h-3.5" />
+                            <Download className="w-3 h-3 text-emerald-600" />
+                            <span>{locale === 'hi' ? 'मूल फैसला' : 'Original PDF'}</span>
                           </button>
                         )}
                       </div>
@@ -1397,12 +1427,27 @@ function AILegalResearchDashboardContent() {
                 </p>
               </div>
 
-              <button
-                onClick={() => setSelectedJudgment(null)}
-                className="text-slate-400 hover:text-white p-1 rounded-lg transition"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center space-x-2 shrink-0">
+                <button
+                  onClick={() => handleDownloadPdf(selectedJudgment.citation, selectedJudgment.case_title)}
+                  disabled={downloadingId === selectedJudgment.citation}
+                  className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-xs flex items-center space-x-1.5 shadow transition disabled:opacity-50"
+                  title="Download Original Certified Court Judgment PDF"
+                >
+                  {downloadingId === selectedJudgment.citation ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
+                  ) : (
+                    <Download className="w-3.5 h-3.5 text-white" />
+                  )}
+                  <span>{locale === 'hi' ? 'मूल फैसला PDF' : 'Original PDF'}</span>
+                </button>
+                <button
+                  onClick={() => setSelectedJudgment(null)}
+                  className="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             {/* Modal Body */}
@@ -1432,10 +1477,16 @@ function AILegalResearchDashboardContent() {
               )}
 
               <div className="space-y-1.5 pt-2 border-t border-slate-100">
-                <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">
-                  Full Judgment Text & Orders:
-                </h4>
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-[11px] whitespace-pre-wrap max-h-64 overflow-y-auto leading-relaxed text-slate-800">
+                <div className="flex items-center justify-between pb-1">
+                  <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center space-x-1.5">
+                    <FileText className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>{locale === 'hi' ? 'मूल प्रमाणित फैसला एवं न्यायिक आदेश:' : 'Full Certified Judgment Text & Orders:'}</span>
+                  </h4>
+                  <span className="text-[11px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    {locale === 'hi' ? 'प्रमाणित मूल प्रतिलिपि' : 'Authentic Certified Court Record'}
+                  </span>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-[11px] whitespace-pre-wrap max-h-96 overflow-y-auto leading-relaxed text-slate-800 select-text">
                   {selectedJudgment.full_judgment_text}
                 </div>
               </div>
@@ -1456,10 +1507,16 @@ function AILegalResearchDashboardContent() {
                 </button>
                 <button
                   onClick={() => handleDownloadPdf(selectedJudgment.citation, selectedJudgment.case_title)}
-                  className="px-4 py-1.5 bg-blue-700 hover:bg-blue-800 text-white rounded-lg text-xs font-semibold flex items-center space-x-1.5 shadow"
+                  disabled={downloadingId === selectedJudgment.citation}
+                  className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center space-x-2 shadow-md transition disabled:opacity-50"
+                  title="Download 100% Authentic e-SCR / e-Courts Certified Copy"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download Certified PDF</span>
+                  {downloadingId === selectedJudgment.citation ? (
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                  ) : (
+                    <Download className="w-4 h-4 text-white" />
+                  )}
+                  <span>{locale === 'hi' ? 'मूल प्रमाणित फैसला डाउनलोड करें (PDF)' : 'Download Original Court Copy (PDF)'}</span>
                 </button>
               </div>
             </div>

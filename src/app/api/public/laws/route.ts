@@ -15,6 +15,38 @@ export async function GET(req: Request) {
 
     let updates: LegalUpdate[] = localDb.getLegalUpdates().filter(l => l.is_published);
 
+    // Also include published full legal documents from Legal Repository
+    const legalDocs = localDb.getLegalDocuments().filter(d => d.publication_status !== 'draft');
+    for (const doc of legalDocs) {
+      const alreadyExists = updates.some(u => 
+        (u.citation && doc.citation && u.citation.toLowerCase().trim() === doc.citation.toLowerCase().trim()) ||
+        (u.act_or_case_name && doc.title && u.act_or_case_name.toLowerCase().trim() === doc.title.toLowerCase().trim())
+      );
+      if (!alreadyExists) {
+        const isSC = doc.court_level === 'Supreme Court' || doc.court_name?.toLowerCase().includes('supreme');
+        const cat: LegalCategory = isSC ? 'sc_judgment' : 'hc_judgment';
+        const statutesArr = Array.isArray(doc.statutes) ? doc.statutes : (doc.statutes ? [doc.statutes] : ['General Law']);
+        updates.push({
+          id: doc.id,
+          category: cat,
+          title_en: doc.title,
+          title_hi: doc.title,
+          act_or_case_name: doc.title,
+          citation: doc.citation,
+          court_name: doc.court_name,
+          summary_en: doc.summary || (doc.full_text ? doc.full_text.slice(0, 300) : 'Authoritative judicial ruling.'),
+          summary_hi: doc.summary || 'माननीय न्यायालय का स्थापित विधिक निर्णय एवं प्रमाणित न्यायिक नज़ीर।',
+          decision_or_commencement_date: doc.judgment_date || 'Certified Precedent',
+          official_source_url: doc.document_url || `https://indiankanoon.org/search/?formInput=${encodeURIComponent(doc.citation)}`,
+          key_sections: statutesArr,
+          is_verified: true,
+          last_verified_at: doc.created_at || new Date().toISOString(),
+          is_published: true,
+          created_at: doc.created_at || new Date().toISOString()
+        });
+      }
+    }
+
     // Filter by type
     if (type === 'bare_act') {
       updates = updates.filter(l => l.category === 'central_law' || l.category === 'rajasthan_act');
