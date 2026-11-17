@@ -6,7 +6,8 @@ import {
   documentRepository,
   hearingRepository,
   billingRepository,
-  advocateRepository
+  advocateRepository,
+  legalResearchRepository
 } from './repositories';
 
 export {
@@ -20,7 +21,8 @@ export {
   documentRepository,
   hearingRepository,
   billingRepository,
-  advocateRepository
+  advocateRepository,
+  legalResearchRepository
 };
 
 export default localDb;

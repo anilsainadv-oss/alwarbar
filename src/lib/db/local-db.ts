@@ -13,6 +13,21 @@ import type {
 import type { 
   ForumCategory, ForumPost, ForumReply, ForumReport 
 } from '@/types/forum';
+import type {
+  LegalDocument,
+  LegalDocumentChunk,
+  LegalResearchHistory,
+  SavedResearch,
+  LegalDocumentSource,
+  LegalDocumentProcessing,
+  LegalIngestionJob,
+  LegalDocumentCitation,
+  LegalSearchResult,
+  SearchFilters
+} from '@/types/legal-research';
+import type { StorageUsageHistoryRecord } from '@/types/storage-monitor';
+import { generateDeterministicEmbedding, cosineSimilarity } from '../ai/embeddings';
+import { JUDGMENT_REGISTRY } from '../precedents/judgment-store';
 
 interface DatabaseState {
   users: User[];
@@ -46,6 +61,16 @@ interface DatabaseState {
   chamber_members: ChamberMember[];
   chamber_invitations: ChamberInvitation[];
   audit_logs: AuditLog[];
+  // AI Legal Research & pgvector Engine
+  legal_documents: LegalDocument[];
+  legal_document_chunks: LegalDocumentChunk[];
+  legal_research_history: LegalResearchHistory[];
+  saved_research: SavedResearch[];
+  legal_document_sources: LegalDocumentSource[];
+  legal_document_processing?: LegalDocumentProcessing[];
+  legal_ingestion_jobs?: LegalIngestionJob[];
+  legal_document_citations?: LegalDocumentCitation[];
+  storage_usage_history?: StorageUsageHistoryRecord[];
 }
 
 const DB_FILE = path.join(process.cwd(), 'data', 'local-db.json');
@@ -54,12 +79,218 @@ function hashPassword(password: string): string {
   return crypto.createHash('sha256').update(password + '_alwar_salt_2026').digest('hex');
 }
 
+function getInitialLegalDocumentsAndChunks(): {
+  documents: LegalDocument[];
+  chunks: LegalDocumentChunk[];
+  sources: LegalDocumentSource[];
+  processing: LegalDocumentProcessing[];
+  citations: LegalDocumentCitation[];
+  jobs: LegalIngestionJob[];
+} {
+  const documents: LegalDocument[] = [];
+  const chunks: LegalDocumentChunk[] = [];
+  const processing: LegalDocumentProcessing[] = [];
+  const citations: LegalDocumentCitation[] = [];
+  
+  const sources: LegalDocumentSource[] = [
+    {
+      id: 'src-escr-sci',
+      source_name: 'Supreme Court of India (e-SCR Digital Repository)',
+      source_url: 'https://escr.sci.gov.in',
+      publication_details: 'Electronic Supreme Court Reports (e-SCR), Official Digital Law Reports of India',
+      verification_details: 'Certified by Supreme Court of India Registry',
+      created_at: '2026-01-01T00:00:00.000Z'
+    },
+    {
+      id: 'src-hcraj-gazette',
+      source_name: 'High Court of Rajasthan (Jodhpur & Jaipur)',
+      source_url: 'https://hcraj.nic.in',
+      publication_details: 'Rajasthan High Court Official Precedent & Judgment Bank',
+      verification_details: 'Certified by Registrar General, Rajasthan High Court',
+      created_at: '2026-01-01T00:00:00.000Z'
+    },
+    {
+      id: 'src-indiacode',
+      source_name: 'India Code Digital Legislative Repository',
+      source_url: 'https://www.indiacode.nic.in',
+      publication_details: 'Ministry of Law and Justice, Government of India',
+      verification_details: 'Official Statutory Gazette Enactments',
+      created_at: '2026-01-01T00:00:00.000Z'
+    }
+  ];
+
+  for (const [key, rec] of Object.entries(JUDGMENT_REGISTRY)) {
+    const docId = `doc-${rec.id}`;
+    const isSC = rec.court.toLowerCase().includes('supreme');
+    const isRaj = rec.court.toLowerCase().includes('rajasthan');
+
+    const doc: LegalDocument = {
+      id: docId,
+      title: rec.case_title,
+      case_number: rec.citation,
+      citation: rec.citation,
+      court_name: rec.court,
+      court_level: isSC ? 'Supreme Court' : (isRaj ? 'High Court' : 'High Court'),
+      state: isRaj ? 'Rajasthan' : 'National',
+      judge_names: rec.bench,
+      judgment_date: '2022-07-11',
+      case_type: rec.category === 'bail' ? 'Criminal Appeal / Bail' : 'Civil Appeal / Writ',
+      legal_subject: rec.statute_subject,
+      statutes: rec.statute_subject,
+      source_name: isSC ? 'Supreme Court of India (e-SCR)' : 'High Court of Rajasthan',
+      source_url: rec.official_kanoon_url || 'https://escr.sci.gov.in',
+      document_url: `/api/public/judgments/download?id=${rec.id}&format=pdf`,
+      language: 'en',
+      full_text: rec.full_judgment_text,
+      verification_status: 'verified',
+      created_at: '2026-01-01T00:00:00.000Z',
+      updated_at: '2026-01-01T00:00:00.000Z'
+    };
+    documents.push(doc);
+
+    // Chunk 1: Headnotes & Ratio Decidendi
+    const chunk1Content = `CASE TITLE: ${rec.case_title}\nCITATION: ${rec.citation}\nCOURT: ${rec.court}\nBENCH: ${rec.bench}\n\nHEADNOTES:\n${rec.headnotes?.map(h => '* ' + h).join('\n')}\n\nLEGAL RATIO DECIDENDI (HELD):\n${rec.held_proposition}`;
+    chunks.push({
+      id: `chk-${rec.id}-0`,
+      document_id: docId,
+      chunk_index: 0,
+      content: chunk1Content,
+      page_number: 1,
+      paragraph_number: 1,
+      embedding: generateDeterministicEmbedding(chunk1Content),
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Chunk 2: Full Judgment Excerpt & Facts
+    const chunk2Content = `JUDGMENT EXCERPT & FACTUAL BACKGROUND:\n${rec.full_judgment_text.slice(0, 1400)}\n\nSTATUTORY SUBJECT:\n${rec.statute_subject}`;
+    chunks.push({
+      id: `chk-${rec.id}-1`,
+      document_id: docId,
+      chunk_index: 1,
+      content: chunk2Content,
+      page_number: 2,
+      paragraph_number: 2,
+      embedding: generateDeterministicEmbedding(chunk2Content),
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Provenance source record conforming to 003_legal_sources_processing.sql
+    sources.push({
+      id: `src-${rec.id}`,
+      document_id: docId,
+      source_url: rec.official_kanoon_url || 'https://escr.sci.gov.in',
+      storage_path: `legal_vault/${docId}.pdf`,
+      original_filename: `${rec.case_title.slice(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.pdf`,
+      mime_type: 'application/pdf',
+      file_size: 154200,
+      checksum: crypto.createHash('sha256').update(docId).digest('hex'),
+      source_name: isSC ? 'Supreme Court of India (e-SCR)' : 'High Court of Rajasthan',
+      access_permission_status: 'permitted',
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Ingestion processing telemetry conforming to 003_legal_sources_processing.sql
+    processing.push({
+      id: `proc-${rec.id}`,
+      document_id: docId,
+      extraction_status: 'completed',
+      ocr_status: 'not_needed',
+      metadata_status: 'completed',
+      embedding_status: 'completed',
+      total_pages: 5,
+      processed_pages: 5,
+      total_chunks: 2,
+      error_message: null,
+      retry_count: 0,
+      started_at: '2026-01-01T00:00:00.000Z',
+      completed_at: '2026-01-01T00:00:05.000Z',
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Seed precedent graph citations conforming to 004_legal_ingestion_jobs.sql
+    if (rec.id === 'satender-antil-2022') {
+      citations.push({
+        id: `cit-${rec.id}-1`,
+        document_id: docId,
+        cited_document_id: 'doc-arnesh-kumar-2014',
+        cited_case_name: 'Arnesh Kumar v. State of Bihar & Another',
+        citation_text: '(2014) 8 SCC 273',
+        relation_type: 'followed',
+        verification_status: 'verified',
+        created_at: '2026-01-01T00:00:00.000Z'
+      });
+    } else if (rec.id === 'arjun-khotkar-2020') {
+      citations.push({
+        id: `cit-${rec.id}-1`,
+        document_id: docId,
+        cited_document_id: null,
+        cited_case_name: 'Shafhi Mohammad v. State of Himachal Pradesh',
+        citation_text: '(2018) 2 SCC 801',
+        relation_type: 'overruled',
+        verification_status: 'verified',
+        created_at: '2026-01-01T00:00:00.000Z'
+      });
+      citations.push({
+        id: `cit-${rec.id}-2`,
+        document_id: docId,
+        cited_document_id: null,
+        cited_case_name: 'Anvar P.V. v. P.K. Basheer & Others',
+        citation_text: '(2014) 10 SCC 473',
+        relation_type: 'affirmed',
+        verification_status: 'verified',
+        created_at: '2026-01-01T00:00:00.000Z'
+      });
+    }
+  }
+
+  // Pre-seeded batch ingestion job conforming to 004_legal_ingestion_jobs.sql
+  const jobs: LegalIngestionJob[] = [
+    {
+      id: 'job-init-batch-001',
+      collection_method: 'automatic',
+      source_name: 'Rajasthan High Court & Supreme Court Precedent Bank',
+      source_url: 'https://hcraj.nic.in',
+      status: 'completed',
+      total_documents: documents.length,
+      successful_documents: documents.length,
+      failed_documents: 0,
+      started_at: '2026-01-01T00:00:00.000Z',
+      completed_at: '2026-01-01T00:00:15.000Z',
+      error_message: null,
+      created_by: null,
+      created_at: '2026-01-01T00:00:00.000Z'
+    }
+  ];
+
+  return { documents, chunks, sources, processing, citations, jobs };
+}
+
+function getInitialStorageUsageHistory(): StorageUsageHistoryRecord[] {
+  const records: StorageUsageHistoryRecord[] = [];
+  const now = Date.now();
+  for (let i = 6; i >= 0; i--) {
+    const timestamp = new Date(now - i * 24 * 60 * 60 * 1000).toISOString();
+    records.push({
+      id: `suh-seed-${i}`,
+      createdAt: timestamp,
+      storageBytes: 15400000 + (6 - i) * 1250000,
+      databaseBytes: 4200000 + (6 - i) * 350000,
+      physicalDiskBytes: 85000000 + (6 - i) * 2000000,
+      pdfCount: 8 + (6 - i),
+      chunkCount: 16 + (6 - i) * 2,
+      metadata: { seed: true }
+    });
+  }
+  return records;
+}
+
 function getInitialState(): DatabaseState {
   const initialAdminId = 'admin-user-alwar-0001';
   const demoAdvocateId = 'advocate-user-alwar-0002';
   const demoAdvocate2Id = 'advocate-user-alwar-0003';
   const demoClientId = 'client-alwar-0001';
   const demoCaseId = 'case-alwar-0001';
+  const initialLegalDocs = getInitialLegalDocumentsAndChunks();
 
   return {
     users: [
@@ -1446,7 +1677,16 @@ function getInitialState(): DatabaseState {
         details: { enrollment_no: 'R/1420/2012', status: 'verified' },
         created_at: '2026-01-10T12:00:00.000Z'
       }
-    ]
+    ],
+    legal_documents: initialLegalDocs.documents,
+    legal_document_chunks: initialLegalDocs.chunks,
+    legal_research_history: [],
+    saved_research: [],
+    legal_document_sources: initialLegalDocs.sources,
+    legal_document_processing: initialLegalDocs.processing,
+    legal_ingestion_jobs: initialLegalDocs.jobs,
+    legal_document_citations: initialLegalDocs.citations,
+    storage_usage_history: getInitialStorageUsageHistory()
   };
 }
 
@@ -1575,6 +1815,15 @@ class LocalDatabase {
         chamber_members: Array.isArray(loaded.chamber_members) ? loaded.chamber_members : [],
         chamber_invitations: Array.isArray(loaded.chamber_invitations) ? loaded.chamber_invitations : [],
         audit_logs: Array.isArray(loaded.audit_logs) && loaded.audit_logs.length > 0 ? loaded.audit_logs : initial.audit_logs,
+        legal_documents: Array.isArray(loaded.legal_documents) && loaded.legal_documents.length > 0 ? loaded.legal_documents : initial.legal_documents,
+        legal_document_chunks: Array.isArray(loaded.legal_document_chunks) && loaded.legal_document_chunks.length > 0 ? loaded.legal_document_chunks : initial.legal_document_chunks,
+        legal_research_history: Array.isArray(loaded.legal_research_history) ? loaded.legal_research_history : [],
+        saved_research: Array.isArray(loaded.saved_research) ? loaded.saved_research : [],
+        legal_document_sources: Array.isArray(loaded.legal_document_sources) && loaded.legal_document_sources.length > 0 ? loaded.legal_document_sources : initial.legal_document_sources,
+        legal_document_processing: Array.isArray(loaded.legal_document_processing) && loaded.legal_document_processing.length > 0 ? loaded.legal_document_processing : initial.legal_document_processing || [],
+        legal_ingestion_jobs: Array.isArray(loaded.legal_ingestion_jobs) && loaded.legal_ingestion_jobs.length > 0 ? loaded.legal_ingestion_jobs : initial.legal_ingestion_jobs || [],
+        legal_document_citations: Array.isArray(loaded.legal_document_citations) && loaded.legal_document_citations.length > 0 ? loaded.legal_document_citations : initial.legal_document_citations || [],
+        storage_usage_history: Array.isArray(loaded.storage_usage_history) && loaded.storage_usage_history.length > 0 ? loaded.storage_usage_history : initial.storage_usage_history || [],
       };
 
       // Ensure preset users exist with valid password hashes
@@ -1622,7 +1871,7 @@ class LocalDatabase {
       }
 
       this.state = merged;
-      if (changed || !loaded.advocate_profiles) {
+      if (changed || !loaded.advocate_profiles || !loaded.legal_documents) {
         this.save();
       }
       return this.state;
@@ -2158,14 +2407,13 @@ class LocalDatabase {
 
   // --- MY CASE: STRICT TENANT-ISOLATED DATA ACCESS ---
 
-  getCases(advocateId: string): CaseRecord[] {
+  getCases(advocateId?: string): CaseRecord[] {
     const s = this.ensureLoaded();
-    return s.cases
-      .filter(c => c.advocate_id === advocateId)
-      .map(c => ({
-        ...c,
-        client: s.clients.find(cl => cl.id === c.client_id)
-      }));
+    const list = advocateId ? s.cases.filter(c => c.advocate_id === advocateId) : s.cases;
+    return list.map(c => ({
+      ...c,
+      client: s.clients.find(cl => cl.id === c.client_id)
+    }));
   }
 
   getCasesByEnrollment(enrollment: string): CaseRecord[] {
@@ -2359,9 +2607,13 @@ class LocalDatabase {
     return true;
   }
 
-  getClients(advocateId: string): Client[] {
+  getClients(advocateId?: string): Client[] {
     const s = this.ensureLoaded();
-    return s.clients.filter(c => c.advocate_id === advocateId);
+    const list = s.clients || [];
+    if (advocateId) {
+      return list.filter(c => c.advocate_id === advocateId);
+    }
+    return list;
   }
 
   getClientById(advocateId: string, clientId: string): Client | undefined {
@@ -3024,6 +3276,573 @@ class LocalDatabase {
     inv.status = 'revoked';
     this.save();
     return true;
+  }
+
+  // ==============================================================================
+  // AI LEGAL RESEARCH & PGVECTOR LOCAL REPOSITORY METHODS
+  // ==============================================================================
+
+  getLegalDocuments(filter?: { status?: string; court_level?: string; limit?: number }): LegalDocument[] {
+    const s = this.ensureLoaded();
+    let docs = s.legal_documents || [];
+    if (filter?.status) docs = docs.filter(d => d.verification_status === filter.status);
+    if (filter?.court_level && filter.court_level !== 'ALL') docs = docs.filter(d => d.court_level === filter.court_level);
+    if (filter?.limit && filter.limit > 0) docs = docs.slice(0, filter.limit);
+    return docs;
+  }
+
+  getLegalDocumentById(id: string): LegalDocument | undefined {
+    const s = this.ensureLoaded();
+    return (s.legal_documents || []).find(d => d.id === id);
+  }
+
+  updateLegalDocument(id: string, updates: Partial<LegalDocument>): LegalDocument | null {
+    const s = this.ensureLoaded();
+    const doc = (s.legal_documents || []).find(d => d.id === id);
+    if (!doc) return null;
+    Object.assign(doc, updates, { updated_at: new Date().toISOString() });
+    this.save();
+    return doc;
+  }
+
+  deleteLegalDocument(id: string): boolean {
+    const s = this.ensureLoaded();
+    if (!s.legal_documents) return false;
+    const idx = s.legal_documents.findIndex(d => d.id === id);
+    if (idx === -1) return false;
+    s.legal_documents.splice(idx, 1);
+    if (s.legal_document_chunks) {
+      s.legal_document_chunks = s.legal_document_chunks.filter(c => c.document_id !== id);
+    }
+    if (s.saved_research) {
+      s.saved_research = s.saved_research.filter(sr => sr.document_id !== id);
+    }
+    if (s.legal_document_sources) {
+      s.legal_document_sources = s.legal_document_sources.filter(src => src.document_id !== id);
+    }
+    if (s.legal_document_processing) {
+      s.legal_document_processing = s.legal_document_processing.filter(p => p.document_id !== id);
+    }
+    if (s.legal_document_citations) {
+      // ON DELETE CASCADE for citing document
+      s.legal_document_citations = s.legal_document_citations.filter(c => c.document_id !== id);
+      // ON DELETE SET NULL for cited document
+      for (const cit of s.legal_document_citations) {
+        if (cit.cited_document_id === id) {
+          cit.cited_document_id = null;
+        }
+      }
+    }
+    this.save();
+    return true;
+  }
+
+  getLegalDocumentChunks(docId?: string): LegalDocumentChunk[] {
+    const s = this.ensureLoaded();
+    const chunks = s.legal_document_chunks || [];
+    if (docId) return chunks.filter(c => c.document_id === docId);
+    return chunks;
+  }
+
+  createLegalDocument(
+    doc: Omit<LegalDocument, 'id' | 'created_at' | 'updated_at'>,
+    chunks: Omit<LegalDocumentChunk, 'id' | 'document_id' | 'created_at'>[]
+  ): LegalDocument {
+    const s = this.ensureLoaded();
+    if (!s.legal_documents) s.legal_documents = [];
+    if (!s.legal_document_chunks) s.legal_document_chunks = [];
+
+    const docId = 'doc-' + crypto.randomUUID();
+    const newDoc: LegalDocument = {
+      ...doc,
+      id: docId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.legal_documents.push(newDoc);
+
+    const chunkRows: LegalDocumentChunk[] = chunks.map((c, idx) => ({
+      ...c,
+      id: `chk-${docId}-${c.chunk_index !== undefined ? c.chunk_index : idx}`,
+      document_id: docId,
+      chunk_index: c.chunk_index !== undefined ? c.chunk_index : idx,
+      paragraph_number: c.paragraph_number != null ? String(c.paragraph_number) : undefined,
+      created_at: new Date().toISOString()
+    }));
+    s.legal_document_chunks.push(...chunkRows);
+
+    this.save();
+    return newDoc;
+  }
+
+  searchChunksByVector(
+    queryEmbedding: number[],
+    limit = 10,
+    threshold = 0.60,
+    filters: SearchFilters = {}
+  ): LegalSearchResult[] {
+    const s = this.ensureLoaded();
+    const verifiedDocs = new Map((s.legal_documents || []).filter(d => d.verification_status === 'verified').map(d => [d.id, d]));
+    const results: LegalSearchResult[] = [];
+
+    for (const chunk of s.legal_document_chunks || []) {
+      const doc = verifiedDocs.get(chunk.document_id);
+      if (!doc) continue;
+
+      if (filters.court_level && filters.court_level !== 'ALL' && doc.court_level !== filters.court_level) continue;
+      if (filters.court_name && !doc.court_name.toLowerCase().includes(filters.court_name.toLowerCase())) continue;
+      if (filters.legal_subject && (!doc.legal_subject || !doc.legal_subject.toLowerCase().includes(filters.legal_subject.toLowerCase()))) continue;
+      if (filters.year && doc.judgment_date && !doc.judgment_date.startsWith(filters.year)) continue;
+
+      const sim = chunk.embedding ? cosineSimilarity(queryEmbedding, chunk.embedding) : 0;
+      if (sim >= threshold) {
+        results.push({
+          document_id: doc.id,
+          chunk_id: chunk.id,
+          title: doc.title,
+          citation: doc.citation,
+          court_name: doc.court_name,
+          court_level: doc.court_level || 'High Court',
+          judgment_date: doc.judgment_date,
+          judge_names: Array.isArray(doc.judge_names) ? doc.judge_names.join(', ') : doc.judge_names,
+          legal_subject: doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(', ') : undefined),
+          statutes: Array.isArray(doc.statutes) ? doc.statutes.join(', ') : doc.statutes,
+          snippet: chunk.content.slice(0, 450),
+          page_number: chunk.page_number,
+          paragraph_number: chunk.paragraph_number,
+          semantic_score: Number(sim.toFixed(4)),
+          hybrid_score: Number(sim.toFixed(4)),
+          document_url: doc.document_url,
+          verification_status: doc.verification_status
+        });
+      }
+    }
+
+    results.sort((a, b) => b.hybrid_score - a.hybrid_score);
+    return results.slice(0, limit);
+  }
+
+  hybridSearchLegalDocuments(
+    query: string,
+    queryEmbedding: number[],
+    limit = 15,
+    filters: SearchFilters = {}
+  ): LegalSearchResult[] {
+    const s = this.ensureLoaded();
+    const cleanQuery = query.toLowerCase().trim();
+    const queryTokens = cleanQuery.split(/[\s,.;:()\[\]{}"'\-]+/).filter(t => t.length > 2);
+    const verifiedDocs = (s.legal_documents || []).filter(d => d.verification_status === 'verified');
+    
+    // 1. Semantic match on chunks
+    const chunkScores = new Map<string, { docId: string; chunk: LegalDocumentChunk; sim: number }>();
+    for (const chunk of s.legal_document_chunks || []) {
+      if (!chunk.embedding) continue;
+      const sim = cosineSimilarity(queryEmbedding, chunk.embedding);
+      const existing = chunkScores.get(chunk.document_id);
+      if (!existing || sim > existing.sim) {
+        chunkScores.set(chunk.document_id, { docId: chunk.document_id, chunk, sim });
+      }
+    }
+
+    // 2. Keyword & Citation match on documents
+    const docScores: LegalSearchResult[] = [];
+    for (const doc of verifiedDocs) {
+      if (filters.court_level && filters.court_level !== 'ALL' && doc.court_level !== filters.court_level) continue;
+      if (filters.court_name && !doc.court_name.toLowerCase().includes(filters.court_name.toLowerCase())) continue;
+      if (filters.legal_subject && (!doc.legal_subject || !doc.legal_subject.toLowerCase().includes(filters.legal_subject.toLowerCase()))) continue;
+      if (filters.year && doc.judgment_date && !doc.judgment_date.startsWith(filters.year)) continue;
+
+      let kwScore = 0;
+      const statuteStr = Array.isArray(doc.statutes) ? doc.statutes.join(' ') : (doc.statutes || '');
+      const subjectStr = doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(' ') : '');
+      const judgeStr = Array.isArray(doc.judge_names) ? doc.judge_names.join(' ') : (doc.judge_names || '');
+      const docText = `${doc.title} ${doc.citation} ${doc.court_name} ${doc.bench || ''} ${statuteStr} ${subjectStr} ${judgeStr}`.toLowerCase();
+      
+      // Exact citation boost
+      const citationMatch = doc.citation.toLowerCase().includes(cleanQuery) || cleanQuery.includes(doc.citation.toLowerCase());
+      if (citationMatch) kwScore += 0.8;
+
+      for (const tok of queryTokens) {
+        if (docText.includes(tok)) kwScore += 0.15;
+      }
+
+      const chunkMatch = chunkScores.get(doc.id);
+      const semScore = chunkMatch ? chunkMatch.sim : 0;
+      
+      const hybridScore = Number((semScore * 0.55 + Math.min(kwScore, 1.0) * 0.45).toFixed(4));
+      if (hybridScore <= 0.05 && kwScore <= 0) continue;
+
+      const snippet = chunkMatch 
+        ? chunkMatch.chunk.content.slice(0, 450)
+        : doc.full_text.slice(0, 450);
+
+      const result: LegalSearchResult = {
+        document_id: doc.id,
+        chunk_id: chunkMatch ? chunkMatch.chunk.id : undefined,
+        title: doc.title,
+        citation: doc.citation,
+        court_name: doc.court_name,
+        court_level: doc.court_level || 'High Court',
+        judgment_date: doc.judgment_date,
+        judge_names: Array.isArray(doc.judge_names) ? doc.judge_names.join(', ') : doc.judge_names,
+        legal_subject: doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(', ') : undefined),
+        statutes: Array.isArray(doc.statutes) ? doc.statutes.join(', ') : doc.statutes,
+        snippet,
+        page_number: chunkMatch?.chunk.page_number || 1,
+        paragraph_number: chunkMatch?.chunk.paragraph_number || 1,
+        semantic_score: Number(semScore.toFixed(4)),
+        keyword_score: Number(Math.min(kwScore, 1.0).toFixed(4)),
+        hybrid_score: hybridScore,
+        document_url: doc.document_url,
+        verification_status: doc.verification_status
+      };
+      docScores.push(result);
+    }
+
+    docScores.sort((a, b) => b.hybrid_score - a.hybrid_score);
+    return docScores.slice(0, limit);
+  }
+
+  /**
+   * Reciprocal Rank Fusion Chunk Search (006_legal_hybrid_search.sql)
+   */
+  searchLegalChunks(
+    queryEmbedding: number[],
+    queryText: string,
+    matchCount = 10,
+    courtFilter?: string | null,
+    benchFilter?: string | null,
+    yearFilter?: number | null
+  ): LegalSearchResult[] {
+    const s = this.ensureLoaded();
+    const cleanQuery = (queryText || '').toLowerCase().trim();
+    const queryTokens = cleanQuery.split(/[\s,.;:()\[\]{}"'\-]+/).filter(t => t.length > 2);
+    const docsMap = new Map((s.legal_documents || []).map(d => [d.id, d]));
+
+    // Eligible chunks belonging to verified & published documents
+    const eligibleChunks = (s.legal_document_chunks || []).filter(c => {
+      const doc = docsMap.get(c.document_id);
+      if (!doc) return false;
+      if (doc.verification_status !== 'verified') return false;
+      if (doc.publication_status && doc.publication_status !== 'published') return false;
+      if (courtFilter && doc.court_name !== courtFilter) return false;
+      if (benchFilter && doc.bench !== benchFilter) return false;
+      if (yearFilter && doc.judgment_date) {
+        const docYear = parseInt(doc.judgment_date.slice(0, 4), 10);
+        if (docYear !== yearFilter) return false;
+      }
+      return true;
+    });
+
+    // 1. Vector Results with rank_number
+    const vectorScored = eligibleChunks
+      .filter(c => Array.isArray(c.embedding) && c.embedding.length > 0)
+      .map(c => ({
+        chunk: c,
+        sim: cosineSimilarity(queryEmbedding, c.embedding!)
+      }))
+      .sort((a, b) => b.sim - a.sim)
+      .slice(0, Math.min(Math.max(matchCount * 5, 20), 200));
+
+    const vectorRanks = new Map<string, number>();
+    vectorScored.forEach((item, idx) => {
+      vectorRanks.set(item.chunk.id, idx + 1);
+    });
+
+    // 2. Text Results with rank_number
+    const textScored = eligibleChunks
+      .map(c => {
+        let hits = 0;
+        const contentLower = c.content.toLowerCase();
+        for (const tok of queryTokens) {
+          if (contentLower.includes(tok)) hits++;
+        }
+        return { chunk: c, hits };
+      })
+      .filter(item => item.hits > 0)
+      .sort((a, b) => b.hits - a.hits)
+      .slice(0, Math.min(Math.max(matchCount * 5, 20), 200));
+
+    const textRanks = new Map<string, number>();
+    textScored.forEach((item, idx) => {
+      textRanks.set(item.chunk.id, idx + 1);
+    });
+
+    // 3. Combined Reciprocal Rank Fusion (RRF: 1.0 / (60 + rank))
+    const chunkScores = new Map<string, { chunk: LegalDocumentChunk; score: number }>();
+    
+    for (const [chunkId, rank] of vectorRanks.entries()) {
+      const chunk = eligibleChunks.find(c => c.id === chunkId)!;
+      const rrf = 1.0 / (60 + rank);
+      chunkScores.set(chunkId, { chunk, score: rrf });
+    }
+
+    for (const [chunkId, rank] of textRanks.entries()) {
+      const rrf = 1.0 / (60 + rank);
+      const existing = chunkScores.get(chunkId);
+      if (existing) {
+        existing.score += rrf;
+      } else {
+        const chunk = eligibleChunks.find(c => c.id === chunkId)!;
+        chunkScores.set(chunkId, { chunk, score: rrf });
+      }
+    }
+
+    const sorted = Array.from(chunkScores.values())
+      .sort((a, b) => b.score - a.score)
+      .slice(0, Math.min(Math.max(matchCount, 1), 50));
+
+    return sorted.map(({ chunk, score }) => {
+      const doc = docsMap.get(chunk.document_id)!;
+      return {
+        chunk_id: chunk.id,
+        document_id: doc.id,
+        title: doc.title,
+        citation: doc.citation,
+        court_name: doc.court_name,
+        court_level: doc.court_level || 'High Court',
+        bench: doc.bench,
+        judgment_date: doc.judgment_date,
+        page_number: chunk.page_number,
+        paragraph_number: chunk.paragraph_number,
+        snippet: chunk.content,
+        hybrid_score: Number(score.toFixed(6))
+      };
+    });
+  }
+
+  getLegalResearchHistory(userId: string, limit = 20): LegalResearchHistory[] {
+    const s = this.ensureLoaded();
+    const history = s.legal_research_history || [];
+    return history
+      .filter(h => h.user_id === userId)
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .slice(0, limit);
+  }
+
+  createLegalResearchHistory(
+    userId: string,
+    query: string,
+    aiResponse: any,
+    retrievedDocumentIds: string[] = [],
+    modelName = 'gpt-4o'
+  ): LegalResearchHistory {
+    const s = this.ensureLoaded();
+    if (!s.legal_research_history) s.legal_research_history = [];
+    const entry: LegalResearchHistory = {
+      id: 'lrh-' + crypto.randomUUID(),
+      user_id: userId,
+      query,
+      ai_response: aiResponse,
+      retrieved_document_ids: retrievedDocumentIds,
+      model_name: modelName,
+      created_at: new Date().toISOString()
+    };
+    s.legal_research_history.push(entry);
+    this.save();
+    return entry;
+  }
+
+  getSavedResearch(userId: string, caseId?: string | null): SavedResearch[] {
+    const s = this.ensureLoaded();
+    const saved = s.saved_research || [];
+    const docsMap = new Map((s.legal_documents || []).map(d => [d.id, d]));
+    
+    return saved
+      .filter(sr => sr.user_id === userId && (caseId === undefined || sr.case_id === caseId))
+      .map(sr => ({
+        ...sr,
+        document: docsMap.get(sr.document_id)
+      }))
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+
+  createSavedResearch(userId: string, documentId: string, caseId?: string | null, notes?: string): SavedResearch {
+    const s = this.ensureLoaded();
+    if (!s.saved_research) s.saved_research = [];
+
+    // Enforce UNIQUE(user_id, document_id, case_id) constraint from 005_legal_research.sql
+    const existingIdx = s.saved_research.findIndex(
+      sr => sr.user_id === userId && sr.document_id === documentId && (sr.case_id || null) === (caseId || null)
+    );
+    if (existingIdx !== -1) {
+      if (notes !== undefined) {
+        s.saved_research[existingIdx].notes = notes;
+        this.save();
+      }
+      const doc = (s.legal_documents || []).find(d => d.id === documentId);
+      return { ...s.saved_research[existingIdx], document: doc };
+    }
+
+    const entry: SavedResearch = {
+      id: 'sr-' + crypto.randomUUID(),
+      user_id: userId,
+      document_id: documentId,
+      case_id: caseId || null,
+      notes: notes || '',
+      created_at: new Date().toISOString()
+    };
+    s.saved_research.push(entry);
+    this.save();
+
+    const doc = (s.legal_documents || []).find(d => d.id === documentId);
+    return { ...entry, document: doc };
+  }
+
+  deleteSavedResearch(userId: string, id: string): boolean {
+    const s = this.ensureLoaded();
+    if (!s.saved_research) return false;
+    const idx = s.saved_research.findIndex(sr => sr.id === id && sr.user_id === userId);
+    if (idx === -1) return false;
+    s.saved_research.splice(idx, 1);
+    this.save();
+    return true;
+  }
+
+  getLegalDocumentSources(docId?: string): LegalDocumentSource[] {
+    const s = this.ensureLoaded();
+    const sources = s.legal_document_sources || [];
+    if (docId) {
+      return sources.filter(src => src.document_id === docId);
+    }
+    return sources;
+  }
+
+  addLegalDocumentSource(src: Omit<LegalDocumentSource, 'id' | 'created_at'>): LegalDocumentSource {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_sources) s.legal_document_sources = [];
+    const newSource: LegalDocumentSource = {
+      ...src,
+      id: 'src-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.legal_document_sources.push(newSource);
+    this.save();
+    return newSource;
+  }
+
+  getLegalChunks(docId?: string): LegalDocumentChunk[] {
+    const s = this.ensureLoaded();
+    const chunks = s.legal_document_chunks || [];
+    if (docId) {
+      return chunks.filter(c => c.document_id === docId);
+    }
+    return chunks;
+  }
+
+  getAllLegalDocumentProcessing(): LegalDocumentProcessing[] {
+    const s = this.ensureLoaded();
+    return s.legal_document_processing || [];
+  }
+
+  getLegalDocumentProcessing(docId: string): LegalDocumentProcessing | null {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_processing) return null;
+    return s.legal_document_processing.find(p => p.document_id === docId) || null;
+  }
+
+  updateLegalDocumentProcessing(
+    docId: string,
+    updates: Partial<LegalDocumentProcessing>
+  ): LegalDocumentProcessing {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_processing) s.legal_document_processing = [];
+    let p = s.legal_document_processing.find(item => item.document_id === docId);
+    if (!p) {
+      p = {
+        id: 'proc-' + crypto.randomUUID(),
+        document_id: docId,
+        extraction_status: 'pending',
+        ocr_status: 'pending',
+        metadata_status: 'pending',
+        embedding_status: 'pending',
+        total_pages: 0,
+        processed_pages: 0,
+        total_chunks: 0,
+        retry_count: 0,
+        created_at: new Date().toISOString(),
+        ...updates
+      };
+      s.legal_document_processing.push(p);
+    } else {
+      Object.assign(p, updates);
+    }
+    this.save();
+    return p;
+  }
+
+  getLegalDocumentCitations(docId?: string): LegalDocumentCitation[] {
+    const s = this.ensureLoaded();
+    const citations = s.legal_document_citations || [];
+    if (docId) {
+      return citations.filter(c => c.document_id === docId || c.cited_document_id === docId);
+    }
+    return citations;
+  }
+
+  addLegalDocumentCitation(cit: Omit<LegalDocumentCitation, 'id' | 'created_at'>): LegalDocumentCitation {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_citations) s.legal_document_citations = [];
+    const newCitation: LegalDocumentCitation = {
+      ...cit,
+      id: 'cit-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.legal_document_citations.push(newCitation);
+    this.save();
+    return newCitation;
+  }
+
+  getIngestionJobs(): LegalIngestionJob[] {
+    const s = this.ensureLoaded();
+    return s.legal_ingestion_jobs || [];
+  }
+
+  createIngestionJob(job: Omit<LegalIngestionJob, 'id' | 'created_at'>): LegalIngestionJob {
+    const s = this.ensureLoaded();
+    if (!s.legal_ingestion_jobs) s.legal_ingestion_jobs = [];
+    const newJob: LegalIngestionJob = {
+      ...job,
+      id: 'job-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.legal_ingestion_jobs.unshift(newJob);
+    this.save();
+    return newJob;
+  }
+
+  updateIngestionJob(id: string, updates: Partial<LegalIngestionJob>): LegalIngestionJob | null {
+    const s = this.ensureLoaded();
+    if (!s.legal_ingestion_jobs) return null;
+    const job = s.legal_ingestion_jobs.find(j => j.id === id);
+    if (!job) return null;
+    Object.assign(job, updates);
+    this.save();
+    return job;
+  }
+
+  getStorageUsageHistory(limit = 60): StorageUsageHistoryRecord[] {
+    const s = this.ensureLoaded();
+    const history = s.storage_usage_history || [];
+    return [...history].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, limit);
+  }
+
+  recordStorageSnapshot(snapshot: Omit<StorageUsageHistoryRecord, 'id' | 'createdAt'> & { id?: string; createdAt?: string }): StorageUsageHistoryRecord {
+    const s = this.ensureLoaded();
+    if (!s.storage_usage_history) s.storage_usage_history = [];
+    const newRecord: StorageUsageHistoryRecord = {
+      id: snapshot.id || 'suh-' + crypto.randomUUID(),
+      createdAt: snapshot.createdAt || new Date().toISOString(),
+      storageBytes: snapshot.storageBytes,
+      databaseBytes: snapshot.databaseBytes,
+      physicalDiskBytes: snapshot.physicalDiskBytes !== undefined ? snapshot.physicalDiskBytes : null,
+      pdfCount: snapshot.pdfCount,
+      chunkCount: snapshot.chunkCount,
+      metadata: snapshot.metadata || {}
+    };
+    s.storage_usage_history.unshift(newRecord);
+    this.save();
+    return newRecord;
   }
 }
 

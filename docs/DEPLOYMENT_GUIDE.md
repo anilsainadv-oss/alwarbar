@@ -67,6 +67,7 @@ cp .env.example .env.production
    - **Step 3:** [`migrations/002_rls_security_policies.sql`](file:///C:/alwar-advocates/migrations/002_rls_security_policies.sql) (Enables RLS on sensitive tables: `cases`, `clients`, `case_documents`, `hearing_diary`, `advocate_profiles`, `subscriptions`, and `team_members`).
    - **Step 4:** [`migrations/003_seed_verified_data.sql`](file:///C:/alwar-advocates/migrations/003_seed_verified_data.sql) (Seeds verified statutory acts, landmark precedents, and 18 Taluka Bar Association records).
    - **Step 5:** [`migrations/004_seed_users_and_profiles.sql`](file:///C:/alwar-advocates/migrations/004_seed_users_and_profiles.sql) (Seeds initial administrator and verified advocate accounts with bcrypt password hashes).
+   - **Step 6:** [`migrations/005_ai_legal_research_pgvector.sql`](file:///C:/alwar-advocates/migrations/005_ai_legal_research_pgvector.sql) (Enables `vector` extension with schema `extensions`, creates `legal_documents`, `legal_document_chunks` [1536-dim VECTOR], `legal_research_history`, `saved_research`, `legal_document_sources`, HNSW cosine index `idx_chunks_embedding_hnsw`, GIN FTS index `idx_legal_docs_fts`, stored RPC functions `match_legal_documents` & `hybrid_legal_search`, and tenant RLS isolation).
    
    *Alternative single-file execution:*
    Run [`data/backups/migration-seed.sql`](file:///C:/alwar-advocates/data/backups/migration-seed.sql) which bundles the complete schema and seed data into a single transaction.

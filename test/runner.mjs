@@ -6,6 +6,13 @@ import { runCaseClientManagementTests } from './case-client-management.test.mjs'
 import { runAIDocumentManagementTests } from './ai-document-management.test.mjs';
 import { runAutomationNotificationTests } from './automation-notifications.test.mjs';
 import { runSaaSTeamManagementTests } from './saas-team-management.test.mjs';
+import { runDatabasePgVectorTests } from './database-pgvector.test.mjs';
+import { runIndexingPipelineTests } from './indexing-pipeline.test.mjs';
+import { runHybridSearchTests } from './hybrid-search.test.mjs';
+import { runRAGAssistantTests } from './rag-assistant.test.mjs';
+import { runCaseResearchIntegrationTests } from './case-research-integration.test.mjs';
+import { runAdminLegalLibraryTests } from './admin-legal-library.test.mjs';
+import { runStorageDatabaseMonitorTests } from './storage-database-monitor.test.mjs';
 import { runProductionReadinessTests } from './production-readiness.test.mjs';
 
 async function main() {
@@ -29,6 +36,20 @@ async function main() {
     await runAutomationNotificationTests();
     console.log('');
     await runSaaSTeamManagementTests();
+    console.log('');
+    await runDatabasePgVectorTests();
+    console.log('');
+    await runIndexingPipelineTests();
+    console.log('');
+    await runHybridSearchTests();
+    console.log('');
+    await runRAGAssistantTests();
+    console.log('');
+    await runCaseResearchIntegrationTests();
+    console.log('');
+    await runAdminLegalLibraryTests();
+    console.log('');
+    await runStorageDatabaseMonitorTests();
     console.log('');
     await runProductionReadinessTests();
 

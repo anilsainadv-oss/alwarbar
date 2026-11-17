@@ -6,9 +6,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   ArrowLeft, Folder, Calendar, FileText, CheckSquare, Sparkles, 
-  Plus, Trash2, Edit2, ShieldAlert, CheckCircle2, Clock, Upload, Scale, Download
+  Plus, Trash2, Edit2, ShieldAlert, CheckCircle2, Clock, Upload, Scale, Download,
+  ExternalLink, Copy, Check, BookOpen
 } from 'lucide-react';
 import type { CaseRecord, CaseDocument, CaseHearing, CaseTask, Invoice, CaseStatus } from '@/types/mycase';
+import type { SavedResearch } from '@/types/legal-research';
 
 export default function CaseDetailPage() {
   const params = useParams();
@@ -21,8 +23,10 @@ export default function CaseDetailPage() {
   const [hearings, setHearings] = useState<CaseHearing[]>([]);
   const [tasks, setTasks] = useState<CaseTask[]>([]);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [savedResearch, setSavedResearch] = useState<SavedResearch[]>([]);
+  const [copiedCitation, setCopiedCitation] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'documents' | 'hearings' | 'tasks'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'documents' | 'hearings' | 'tasks' | 'research'>('overview');
 
   // Edit Case Modal state
   const [editCaseModal, setEditCaseModal] = useState(false);
@@ -87,9 +91,31 @@ export default function CaseDetailPage() {
         if (data.hearings) setHearings(data.hearings);
         if (data.tasks) setTasks(data.tasks);
         if (data.invoices) setInvoices(data.invoices);
+        if (data.savedResearch) setSavedResearch(data.savedResearch);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
+  };
+
+  const handleDeleteSavedResearch = async (researchId: string) => {
+    if (!confirm('Are you sure you want to unlink this precedent from the case docket?')) return;
+    try {
+      const res = await fetch(`/api/my-case/research/saved?id=${researchId}`, { method: 'DELETE' });
+      if (res.ok) {
+        setSavedResearch(prev => prev.filter(r => r.id !== researchId));
+      } else {
+        alert('Failed to remove precedent');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error unlinking precedent');
+    }
+  };
+
+  const handleCopyCitation = (citation: string, id: string) => {
+    navigator.clipboard.writeText(citation);
+    setCopiedCitation(id);
+    setTimeout(() => setCopiedCitation(null), 2000);
   };
 
   useEffect(() => {
@@ -323,6 +349,14 @@ export default function CaseDetailPage() {
             <span>Delete Case</span>
           </button>
           <Link
+            href={`/my-case/research?case_id=${id}&query=${encodeURIComponent(`${caseRecord.case_title} ${caseRecord.case_type || ''}`.trim())}`}
+            className="px-3.5 py-1.5 bg-indigo-700 hover:bg-indigo-800 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1.5"
+            title="Research binding citations & precedents for this case docket"
+          >
+            <Scale className="w-3.5 h-3.5" />
+            <span>Research Precedents</span>
+          </Link>
+          <Link
             href={`/my-case/drafting?caseId=${id}&type=bail_application`}
             className="px-3.5 py-1.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1.5"
           >
@@ -447,6 +481,18 @@ export default function CaseDetailPage() {
           <CheckSquare className="w-4 h-4" />
           <span>Deadlines ({tasks.length})</span>
         </button>
+
+        <button
+          onClick={() => setActiveTab('research')}
+          className={`pb-2.5 transition flex items-center space-x-1.5 ${
+            activeTab === 'research'
+              ? 'border-b-2 border-amber-600 text-amber-800 font-bold'
+              : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Scale className="w-4 h-4" />
+          <span>Legal Precedents ({savedResearch.length})</span>
+        </button>
       </div>
 
       {/* Tab 0: Overview */}
@@ -486,6 +532,64 @@ export default function CaseDetailPage() {
                   <span className="text-[10px] text-slate-400 uppercase font-mono">{d.category}</span>
                 </div>
               ))
+            )}
+          </div>
+
+          {/* Linked Precedents Card in Overview */}
+          <div className="bg-white p-6 rounded-xl border border-slate-200 space-y-4 text-xs md:col-span-2">
+            <div className="flex items-center justify-between border-b pb-2">
+              <div className="flex items-center space-x-2">
+                <Scale className="w-4 h-4 text-indigo-600" />
+                <h3 className="font-bold text-sm text-slate-900 font-serif">
+                  Case Precedents & Legal Authorities ({savedResearch.length})
+                </h3>
+              </div>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => setActiveTab('research')}
+                  className="text-indigo-700 hover:underline text-[11px] font-semibold"
+                >
+                  View All Precedents →
+                </button>
+                <Link
+                  href={`/my-case/research?case_id=${id}&query=${encodeURIComponent(`${caseRecord.case_title} ${caseRecord.case_type || ''}`.trim())}`}
+                  className="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded text-[11px] font-semibold transition"
+                >
+                  + Research Precedents
+                </Link>
+              </div>
+            </div>
+            {savedResearch.length === 0 ? (
+              <div className="text-center py-4 text-slate-400">
+                <span>No legal precedents linked yet. </span>
+                <Link
+                  href={`/my-case/research?case_id=${id}&query=${encodeURIComponent(`${caseRecord.case_title} ${caseRecord.case_type || ''}`.trim())}`}
+                  className="text-indigo-600 font-semibold hover:underline"
+                >
+                  Launch AI Precedent Search for this case →
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {savedResearch.slice(0, 4).map(sr => (
+                  <div key={sr.id} className="p-3 rounded-lg border border-slate-200 bg-slate-50/60 hover:bg-slate-50 transition space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold font-mono text-[10px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                        {sr.document?.citation || 'Precedent'}
+                      </span>
+                      <span className="text-[10px] text-slate-400">{sr.document?.court_level || 'Court'}</span>
+                    </div>
+                    <div className="font-semibold text-slate-900 text-xs line-clamp-1">
+                      {sr.document?.title || 'Court Judgment'}
+                    </div>
+                    {sr.notes && (
+                      <p className="text-[11px] text-slate-600 line-clamp-1 italic bg-white/70 p-1 rounded border border-slate-100">
+                        &quot;{sr.notes}&quot;
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </div>
@@ -639,6 +743,165 @@ export default function CaseDetailPage() {
               ))
             )}
           </div>
+        </div>
+      )}
+
+      {/* Tab 4: Legal Precedents & Authorities */}
+      {activeTab === 'research' && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="font-serif font-bold text-base text-slate-900 flex items-center space-x-2">
+                <Scale className="w-5 h-5 text-indigo-700" />
+                <span>Linked Precedents & Legal Authorities ({savedResearch.length})</span>
+              </h3>
+              <p className="text-xs text-slate-500 mt-1">
+                Authoritative judicial precedents linked to this case docket for application in written statements, rejoinders, and final arguments.
+              </p>
+            </div>
+
+            <Link
+              href={`/my-case/research?case_id=${id}&query=${encodeURIComponent(`${caseRecord.case_title} ${caseRecord.case_type || ''}`.trim())}`}
+              className="px-3.5 py-2 bg-gradient-to-r from-indigo-700 to-indigo-800 hover:from-indigo-800 hover:to-indigo-900 text-white rounded-xl text-xs font-semibold shadow-sm transition flex items-center space-x-2 shrink-0 self-start sm:self-auto"
+            >
+              <Scale className="w-4 h-4" />
+              <span>Search More Precedents for Case</span>
+            </Link>
+          </div>
+
+          {savedResearch.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-4">
+              <div className="w-14 h-14 mx-auto rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
+                <Scale className="w-7 h-7" />
+              </div>
+              <div className="max-w-md mx-auto space-y-1">
+                <h4 className="font-serif font-bold text-base text-slate-900">
+                  No Legal Precedents Attached Yet
+                </h4>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Enhance your case strategy by retrieving landmark Supreme Court and High Court judgments relevant to &quot;{caseRecord.case_type || caseRecord.case_title}&quot;.
+                </p>
+              </div>
+              <Link
+                href={`/my-case/research?case_id=${id}&query=${encodeURIComponent(`${caseRecord.case_title} ${caseRecord.case_type || ''}`.trim())}`}
+                className="inline-flex items-center space-x-2 px-5 py-2.5 bg-indigo-700 hover:bg-indigo-800 text-white rounded-xl text-xs font-semibold shadow transition"
+              >
+                <Scale className="w-4 h-4" />
+                <span>Launch Case Precedent Search</span>
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {savedResearch.map(item => {
+                const doc = item.document;
+                return (
+                  <div
+                    key={item.id}
+                    className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition space-y-3"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b pb-3 border-slate-100">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                          <span className="font-mono font-bold text-xs bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded border border-indigo-200">
+                            {doc?.citation || 'Precedent Record'}
+                          </span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                            {doc?.court_level || 'Court'}
+                          </span>
+                          {doc?.judgment_date && (
+                            <span className="text-[10px] font-mono text-slate-500">
+                              Decided: {doc.judgment_date}
+                            </span>
+                          )}
+                        </div>
+                        <h4 className="font-serif font-bold text-base text-slate-900 leading-snug">
+                          {doc?.title || 'Court Judgment'}
+                        </h4>
+                        <div className="text-xs text-slate-600 mt-1">
+                          <span className="font-semibold text-slate-800">{doc?.court_name}</span>
+                          {doc?.judge_names && <span> • Bench: {doc.judge_names}</span>}
+                        </div>
+                      </div>
+
+                      {/* Precedent Actions */}
+                      <div className="flex flex-wrap items-center gap-2 shrink-0">
+                        <button
+                          onClick={() => handleCopyCitation(doc?.citation || '', item.id)}
+                          className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition flex items-center space-x-1"
+                          title="Copy citation"
+                        >
+                          {copiedCitation === item.id ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="text-emerald-700">Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              <span>Copy Citation</span>
+                            </>
+                          )}
+                        </button>
+
+                        <a
+                          href={`/api/public/judgments/download?citation=${encodeURIComponent(doc?.citation || '')}&format=pdf`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded-lg text-xs font-semibold transition flex items-center space-x-1"
+                          title="Download Certified PDF"
+                        >
+                          <Download className="w-3.5 h-3.5 text-amber-700" />
+                          <span>PDF Copy</span>
+                        </a>
+
+                        <button
+                          onClick={() => handleDeleteSavedResearch(item.id)}
+                          className="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-semibold transition flex items-center space-x-1"
+                          title="Unlink from this case docket"
+                        >
+                          <Trash2 className="w-3.5 h-3.5 text-red-600" />
+                          <span>Unlink</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Legal Proposition / Summary */}
+                    {doc && (doc.summary || doc.full_text) && (
+                      <div className="text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed">
+                        <span className="font-bold text-[10px] uppercase tracking-wider text-slate-400 block mb-1">
+                          Core Judicial Holding / Proposition:
+                        </span>
+                        <p>{doc.summary || doc.full_text.slice(0, 300) + '...'}</p>
+                      </div>
+                    )}
+
+                    {/* Advocate's Custom Case Strategy Notes */}
+                    {item.notes && (
+                      <div className="bg-amber-50/70 p-3 rounded-xl border border-amber-200/80 text-xs text-amber-950 space-y-1">
+                        <span className="font-bold uppercase tracking-wider text-[10px] text-amber-800 block">
+                          Advocate Docket Strategy Note:
+                        </span>
+                        <p className="leading-relaxed italic">&quot;{item.notes}&quot;</p>
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 pt-1">
+                      <div>
+                        {doc?.statutes && (
+                          <span>
+                            <strong className="text-slate-700">Applicable Statutes:</strong> {doc.statutes}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-[10px] font-mono text-slate-400">
+                        Linked on: {new Date(item.created_at).toLocaleDateString('en-IN')}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 

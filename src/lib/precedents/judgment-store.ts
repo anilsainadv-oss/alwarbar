@@ -399,6 +399,67 @@ JUDGMENT (EXCERPT & RATIO):
    (iii) Scope of preliminary inquiry is limited to matrimonial, medical negligence, corruption, or commercial cases.
    (iv) The preliminary inquiry should be made time bound and in any case not exceed 7 to 14 days.
    (v) While ensuring and protecting the rights of the accused and complainant, a complete reflection of all events must be documented in the General Diary.`
+  },
+
+  'ravi-kumar-2026-hcraj': {
+    id: 'ravi-kumar-2026-hcraj',
+    case_title: 'Ravi Kumar v. State of Rajasthan & Ors.',
+    citation: '2026:RJ-JP:44204-DB',
+    alternate_citations: [
+      '[2026:RJ-JP:44204-DB]',
+      'D.B. Civil Reference No. 2/2026',
+      'CNR: RJHC020994472026',
+      'URN: CREF / 5U / 2026',
+      '2026 (4) RLR 1'
+    ],
+    court: 'High Court of Judicature for Rajasthan, Bench at Jaipur',
+    court_hi: 'माननीय राजस्थान उच्च न्यायालय (जयपुर पीठ, पूर्ण पीठ / Full Bench)',
+    bench: "Hon'ble The Chief Justice Mr. Sanjay K. Agrawal, Hon'ble Mr. Justice Sameer Jain & Hon'ble Mr. Justice Anuroop Singhi",
+    decision_date: '02 November 2026',
+    statute_subject: 'Article 226 Constitution of India & Rule 315(1)(h) Rajasthan High Court Rules, 1952 — Registration and Classification of Criminal Writ Petitions',
+    statute_subject_hi: 'संविधान का अनुच्छेद 226 एवं नियम 315(1)(एच) राजस्थान उच्च न्यायालय नियम, 1952 — आपराधिक मामलों की रिट याचिकाओं का पंजीकरण व वर्गीकरण',
+    category: 'criminal',
+    headnotes: [
+      'Full Bench Reference — Maintainability and nomenclature/registration of writ petitions under Article 226 concerning criminal matters.',
+      'Rajasthan High Court Rules, 1952 — Rule 315(1)(h) specifically mandates entertaining and registering applications under Article 226 concerning criminal matters under the criminal procedural framework as Criminal Writ Petitions.',
+      'Doctrine of Per Incuriam — Division Bench order in Jiya & Ors. v. State of Rajasthan (D.B. Criminal Writ Petition No. 128/2018) held per incuriam to the extent it prohibited criminal-side registration in disregard of Rule 315(1)(h).',
+      'Prospective Overruling — Declaration of law operates prospectively from 02.11.2026. Concluded matters remain undisturbed.',
+      'Registry Directions — Pending writ petitions concerning criminal matters to be re-registered as Criminal Writ Petitions within two weeks and placed before appropriate roster Benches.'
+    ],
+    held_proposition: 'Writ petitions arising out of or concerning criminal matters under Article 226 of the Constitution of India must be entertained, registered, and processed as "Criminal Writ Petitions" in accordance with Rule 315(1)(h) of the Rajasthan High Court Rules, 1952. The contrary Division Bench decision in Jiya v. State of Rajasthan was held per incuriam.',
+    held_proposition_hi: 'माननीय राजस्थान उच्च न्यायालय (पूर्ण पीठ): आपराधिक मामलों से संबंधित सभी रिट याचिकाएं अनुच्छेद 226 के तहत "क्रिमिनल रिट पिटीशन" (Criminal Writ Petition) के नाम से ही पंजीकृत की जाएंगी जैसा कि राजस्थान उच्च न्यायालय नियम के नियम 315(1)(एच) में निर्धारित है। जिया बनाम राजस्थान के विपरीत निर्णय को पर-इन्क्युरियम (per incuriam) माना गया।',
+    official_kanoon_url: 'https://hcraj.nic.in/casedetails/RJHC020994472026',
+    official_escr_url: 'https://hcraj.nic.in/',
+    counsel_record: 'Mr. Nitin Jain, Ms. Kriti Kalawatia, Mr. Vaibhav Pareek, Mr. Rajeev Bhushan Bansal, Mr. Rajesh Joshi (Sr. Adv.), Mr. Vikas Baliya (Sr. Adv.) for Petitioners; Learned Public Prosecutor & Members of Bar Associations.',
+    full_judgment_text: `HIGH COURT OF JUDICATURE FOR RAJASTHAN BENCH AT JAIPUR
+[2026:RJ-JP:44204-DB]
+REPORTABLE
+D.B. Civil Reference No. 2/2026 In S.B. Civil Writ Petition No. 16049/2026
+CNR: RJHC020994472026 | URN: CREF / 5U / 2026
+
+RAVI KUMAR S/O DHARAM SINGH                           ...PETITIONER
+VERSUS
+STATE OF RAJASTHAN, THROUGH P.P. & ORS.               ...RESPONDENTS
+
+FULL BENCH CORAM:
+HON'BLE THE CHIEF JUSTICE MR. SANJAY K. AGRAWAL
+HON'BLE MR. JUSTICE SAMEER JAIN
+HON'BLE MR. JUSTICE ANUROOP SINGHI
+
+JUDGMENT RESERVED ON: 29.10.2026 | DELIVERED ON: 02.11.2026
+
+QUESTIONS REFERRED TO FULL BENCH:
+i) Whether, having regard to Rule 315(1)(h) of the Rules of the High Court of Judicature for Rajasthan, 1952, a petition under Article 226 of the Constitution arising out of or concerning a criminal matter can be separately registered as an S.B. Criminal Writ Petition?
+ii) Whether the nomenclature "Criminal Writ Petition" is merely a matter of Registry classification or reflects substantive criminal character?
+iii) Whether Rule 315(1)(h) can be rendered inoperative by judicial direction without holding it ultra vires?
+iv) Whether the Division Bench order in Jiya & Ors. v. State of Rajasthan is reconcilable with Rule 315(1)(h)?
+v) Whether the decision in Jiya requires reconsideration?
+
+ANSWERS & OPERATIVE RATIO DECIDENDI:
+1. Writ petitions under Article 226 concerning criminal matters shall be separately registered and processed as "Criminal Writ Petitions" under Rule 315(1)(h) of the Rajasthan High Court Rules, 1952.
+2. The contrary Division Bench order in Jiya & Ors. v. State of Rajasthan (D.B. Criminal Writ Petition No. 128/2018) is declared per incuriam as it failed to consider Rule 315(1)(h).
+3. The declaration of law operates prospectively from 02.11.2026.
+4. The Registry is directed to re-register pending petitions as "Criminal Writ Petitions" within two weeks and place them before the appropriate roster Bench.`
   }
 };
 

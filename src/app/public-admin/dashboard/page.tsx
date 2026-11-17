@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Shield, Users, BookOpen, FileText, MessageSquare, 
-  CheckCircle2, AlertTriangle, ArrowRight, Activity, Plus 
+  CheckCircle2, AlertTriangle, ArrowRight, Activity, Plus, Scale, Server, HardDrive, AlertOctagon, Info
 } from 'lucide-react';
 import type { AdvocateProfile, WelfareScheme, LegalUpdate, AuditLog } from '@/types/database';
 
@@ -13,6 +13,12 @@ export default function PublicAdminDashboard() {
   const [schemes, setSchemes] = useState<WelfareScheme[]>([]);
   const [laws, setLaws] = useState<LegalUpdate[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
+  const [storageAlert, setStorageAlert] = useState<{
+    level: 'normal' | 'info' | 'warning' | 'critical' | 'emergency';
+    percentage: number;
+    message?: string;
+  } | null>(null);
+  const [pendingCourtDocs, setPendingCourtDocs] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,12 +27,22 @@ export default function PublicAdminDashboard() {
       fetch('/api/admin/public/welfare').then(r => r.json()),
       fetch('/api/admin/public/laws').then(r => r.json()),
       fetch('/api/admin/public/audit-logs').then(r => r.json()),
+      fetch('/api/admin/system/storage-usage').then(r => r.json()).catch(() => null),
+      fetch('/api/admin/public/legal-library?status=pending').then(r => r.json()).catch(() => null),
     ])
-      .then(([profData, welfData, lawData, logData]) => {
-        if (profData.profiles) setProfiles(profData.profiles);
-        if (welfData.schemes) setSchemes(welfData.schemes);
-        if (lawData.laws) setLaws(lawData.laws);
-        if (logData.logs) setAuditLogs(logData.logs);
+      .then(([profData, welfData, lawData, logData, storageData, legalData]) => {
+        if (profData?.profiles) setProfiles(profData.profiles);
+        if (welfData?.schemes) setSchemes(welfData.schemes);
+        if (lawData?.laws) setLaws(lawData.laws);
+        if (logData?.logs) setAuditLogs(logData.logs);
+        if (legalData?.metrics?.pendingCount) setPendingCourtDocs(legalData.metrics.pendingCount);
+        if (storageData && storageData.alertLevel) {
+          setStorageAlert({
+            level: storageData.alertLevel,
+            percentage: storageData.usagePercentage || 0,
+            message: storageData.alertMessage
+          });
+        }
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -54,6 +70,20 @@ export default function PublicAdminDashboard() {
 
         <div className="flex items-center space-x-2">
           <Link
+            href="/public-admin/system-health/storage-monitor"
+            className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1"
+          >
+            <Server className="w-3.5 h-3.5 text-emerald-400" />
+            <span>System Health</span>
+          </Link>
+          <Link
+            href="/public-admin/legal-library"
+            className="px-3.5 py-2 bg-indigo-700 hover:bg-indigo-800 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1"
+          >
+            <Scale className="w-3.5 h-3.5" />
+            <span>Legal Library & AI</span>
+          </Link>
+          <Link
             href="/public-admin/advocates"
             className="px-3.5 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1"
           >
@@ -61,14 +91,72 @@ export default function PublicAdminDashboard() {
             <span>Verify Directory</span>
           </Link>
           <Link
-            href="/public-admin/welfare"
+            href="/public-admin/welfare?tab=dues"
             className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-lg text-xs font-semibold shadow-sm transition flex items-center space-x-1"
           >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Add Welfare Scheme</span>
+            <FileText className="w-3.5 h-3.5" />
+            <span>Welfare & Dues</span>
           </Link>
         </div>
       </div>
+
+      {/* Storage Alert Notification (Configurable 60% Info, 75% Warning, 85% Critical, 95% Emergency) */}
+      {storageAlert && storageAlert.level !== 'normal' && (
+        <div className={`p-4 rounded-xl border flex items-center justify-between gap-4 shadow-sm ${
+          storageAlert.level === 'emergency'
+            ? 'bg-rose-50 border-rose-300 text-rose-900'
+            : storageAlert.level === 'critical'
+            ? 'bg-orange-50 border-orange-300 text-orange-900'
+            : storageAlert.level === 'warning'
+            ? 'bg-amber-50 border-amber-300 text-amber-900'
+            : 'bg-blue-50 border-blue-200 text-blue-900'
+        }`}>
+          <div className="flex items-center space-x-3">
+            {storageAlert.level === 'emergency' ? (
+              <AlertOctagon className="w-5 h-5 text-rose-600 flex-shrink-0" />
+            ) : storageAlert.level === 'critical' || storageAlert.level === 'warning' ? (
+              <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0" />
+            ) : (
+              <Info className="w-5 h-5 text-blue-600 flex-shrink-0" />
+            )}
+            <div>
+              <span className="font-bold text-xs uppercase tracking-wider">
+                Storage Alert ({storageAlert.percentage}% Used):
+              </span>{' '}
+              <span className="text-xs">{storageAlert.message}</span>
+            </div>
+          </div>
+          <Link
+            href="/public-admin/system-health/storage-monitor"
+            className="px-3 py-1 bg-white hover:bg-slate-50 border rounded text-xs font-semibold whitespace-nowrap"
+          >
+            Inspect Storage →
+          </Link>
+        </div>
+      )}
+
+      {/* Court Ingestion Review Gate Alert */}
+      {pendingCourtDocs > 0 && (
+        <div className="p-4 rounded-xl border border-amber-300 bg-amber-50 text-amber-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+          <div className="flex items-center space-x-3">
+            <Scale className="w-5 h-5 text-amber-700 shrink-0" />
+            <div>
+              <span className="font-bold text-xs uppercase tracking-wider text-amber-900">
+                Court Ingestion Alert:
+              </span>{' '}
+              <span className="text-xs font-medium">
+                आज राजस्थान हाई कोर्ट / सुप्रीम कोर्ट के <strong>{pendingCourtDocs} नए फैसले</strong> डाउनलोड हुए हैं (Pending Review)।
+              </span>
+            </div>
+          </div>
+          <Link
+            href="/public-admin/legal-library?status=pending"
+            className="px-3.5 py-1.5 bg-amber-800 hover:bg-amber-900 text-white rounded-lg text-xs font-semibold whitespace-nowrap shadow-sm transition"
+          >
+            Review & Approve →
+          </Link>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -138,13 +226,38 @@ export default function PublicAdminDashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
-              href="/public-admin/welfare"
+              href="/public-admin/system-health/storage-monitor"
+              className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-blue-500 transition space-y-2 block"
+            >
+              <div className="flex items-center space-x-2">
+                <HardDrive className="w-4 h-4 text-blue-700" />
+                <h3 className="font-bold text-sm text-slate-900">Storage & Database Monitor</h3>
+              </div>
+              <p className="text-xs text-slate-500">Track 1 GB Supabase storage quota, 500 MB DB size, 2 GB physical disk & alerts.</p>
+            </Link>
+
+            <Link
+              href="/public-admin/legal-library"
+              className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-500 transition space-y-2 block"
+            >
+              <div className="flex items-center space-x-2">
+                <Scale className="w-4 h-4 text-indigo-700" />
+                <h3 className="font-bold text-sm text-slate-900">Precedent Library & AI</h3>
+              </div>
+              <p className="text-xs text-slate-500">Manage pgvector case laws, OCR indexing, and RAG verification.</p>
+            </Link>
+
+            <Link
+              href="/public-admin/welfare?tab=dues"
               className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-amber-500 transition space-y-2 block"
             >
-              <h3 className="font-bold text-sm text-slate-900">Welfare Schemes</h3>
-              <p className="text-xs text-slate-500">Edit benefits, application rules, and deadline notices.</p>
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold text-sm text-slate-900">Welfare Schemes & BCR Dues</h3>
+                <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-full">18 Bars</span>
+              </div>
+              <p className="text-xs text-slate-500">Manage welfare benefits, circulars & inspect BCR Dues Register for 18 Bar Associations.</p>
             </Link>
 
             <Link

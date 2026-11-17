@@ -246,3 +246,42 @@ export const createChamberSchema = z.object({
   court_complex: z.string().min(2).max(150).default('District & Sessions Court, Alwar'),
   chamber_number: z.string().max(50).optional()
 });
+
+// ==========================================
+// AI LEGAL RESEARCH & SMART SEARCH SCHEMAS
+// ==========================================
+
+export const indexLegalDocumentSchema = z.object({
+  title: z.string().max(300).optional(),
+  case_number: z.string().max(150).optional(),
+  citation: z.string().max(150).optional(),
+  alternate_citations: z.array(z.string().max(150)).optional(),
+  court_level: z.enum(['Supreme Court', 'High Court', 'District Court', 'Tribunal']).optional(),
+  court_name: z.string().max(200).optional(),
+  bench: z.enum(['Jodhpur', 'Jaipur']).nullable().optional(),
+  judgment_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD').optional(),
+  decision_type: z.string().max(100).optional(),
+  case_type: z.string().max(100).optional(),
+  judge_names: z.union([z.string().max(500), z.array(z.string())]).optional(),
+  parties: z.union([z.string().max(500), z.array(z.string())]).optional(),
+  legal_subjects: z.array(z.string()).optional(),
+  legal_subject: z.string().max(200).optional(),
+  statutes: z.union([z.string().max(1000), z.array(z.string())]).optional(),
+  language: z.string().max(50).optional(),
+  summary: z.string().max(2000).optional(),
+  source_type: z.enum(['manual', 'automatic', 'api']).optional(),
+  publication_status: z.enum(['draft', 'published', 'archived']).optional(),
+  raw_text: z.string().min(20, 'Document text must be at least 20 characters').max(2000000).optional(),
+  document_url: z.string().url().max(500).optional()
+});
+
+export const searchLegalDocumentsSchema = z.object({
+  query: z.string().min(2, 'Search query must be at least 2 characters').max(500),
+  court_level: z.enum(['Supreme Court', 'High Court', 'District Court', 'Tribunal', 'ALL']).optional(),
+  court_name: z.string().max(200).optional(),
+  year: z.string().regex(/^\d{4}$/, 'Year must be 4 digits').optional(),
+  legal_subject: z.string().max(200).optional(),
+  statute: z.string().max(200).optional(),
+  limit: z.number().int().min(1).max(50).optional().default(15)
+});
+

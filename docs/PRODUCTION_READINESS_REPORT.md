@@ -29,8 +29,8 @@ The application code, multi-tenant boundaries, cryptographic security, API schem
 | :--- | :--- | :--- | :--- |
 | **1. TypeScript Checks** | `npx tsc --noEmit` | **0 errors, 0 warnings** | **PASSED** |
 | **2. ESLint Checks** | Next.js internal compile linter | Code passed all static AST checks | **PASSED** |
-| **3. Automated Test Suite** | `npm test` (`test/runner.mjs`) | **9 test suites, 100% pass (0 errors)** | **PASSED** |
-| **4. Production Build** | `npm run build` | **101/101 routes compiled cleanly** | **PASSED** |
+| **3. Automated Test Suite** | `npm test` (`test/runner.mjs`) | **15 test suites, 100% pass (0 errors)** | **PASSED** |
+| **4. Production Build** | `npm run build` | **109/109 routes compiled cleanly** | **PASSED** |
 | **5. Authentication Security** | Bcrypt (12 rounds) + HMAC sessions | Salted hashing & tamper rejection verified | **PASSED** |
 | **6. Authorization & RBAC** | Server-side guards on all APIs | Role separation strictly enforced | **PASSED** |
 | **7. Multi-Tenant Isolation** | Cross-tenant queries blocked | Zero leakage between Advocate A & B | **PASSED** |
@@ -42,6 +42,12 @@ The application code, multi-tenant boundaries, cryptographic security, API schem
 | **13. Bilingual UI (Hindi/English)** | `LanguageProvider` & translations | Full statutory bilingual toggle intact | **PASSED** |
 | **14. Responsive UI** | Viewport breakpoints (<640px to >1024px) | Mobile drawer, responsive grids verified | **PASSED** |
 | **15. SEO & Privacy Shielding** | Robots.txt, sitemap.xml, noindex | Private dockets completely shielded | **PASSED** |
+| **16. pgvector HNSW & Embeddings** | Migration 005 + 1536-dim vector math | Unit-norm & cosine similarity verified | **PASSED** |
+| **17. Ingestion & Chunking Pipeline** | Pure-Node PDF stream + sliding window | 800w chunks, 100w overlap & Indian regex | **PASSED** |
+| **18. Hybrid Precedent Search** | Vector + GIN FTS + Citation boost | Reciprocal Rank Fusion & snippets verified | **PASSED** |
+| **19. Anti-Hallucination RAG Assistant** | Ground-truth context + structured schema | Zero fictitious citations, bilingual output | **PASSED** |
+| **20. My Case Precedent Integration** | Docket URL linking & saved precedents | Case filtering & dossier tab verified | **PASSED** |
+| **21. Public Admin Legal Library** | `/public-admin/legal-library` & telemetry | Ingestion, 1-click verify & cascade delete | **PASSED** |
 
 ---
 

@@ -40,6 +40,13 @@ export function assertCaseAdmin(user: SessionUser | null): asserts user is Sessi
   }
 }
 
+export function assertSystemAdmin(user: SessionUser | null): asserts user is SessionUser {
+  assertAuthenticated(user);
+  if (user.role !== 'public_admin' && user.role !== 'case_admin') {
+    throw new Error('FORBIDDEN: Requires administrative privileges to monitor system storage and infrastructure.');
+  }
+}
+
 /**
  * STRICT ZERO-KNOWLEDGE BARRIER:
  * Case Administrators are barred from reading private case dossiers, documents, or client records.

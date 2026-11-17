@@ -24,6 +24,7 @@ export async function GET(
     const tasks = localDb.getTasks(user.id).filter(t => t.case_id === id);
     const invoices = localDb.getInvoices(user.id).filter(i => i.case_id === id);
     const drafts = localDb.getDrafts(user.id).filter(d => d.case_id === id);
+    const savedResearch = localDb.getSavedResearch(user.id, id);
 
     return NextResponse.json({
       case: caseRecord,
@@ -31,7 +32,8 @@ export async function GET(
       hearings,
       tasks,
       invoices,
-      drafts
+      drafts,
+      savedResearch
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unauthorized';

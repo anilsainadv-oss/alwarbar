@@ -556,3 +556,6 @@ export const chamberRepository = {
     return localDb.revokeChamberInvitation(chamberId, invitationId);
   }
 };
+
+export { legalResearchRepository } from './legal-research';
+
