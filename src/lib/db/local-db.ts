@@ -23,7 +23,8 @@ import type {
   LegalIngestionJob,
   LegalDocumentCitation,
   LegalSearchResult,
-  SearchFilters
+  SearchFilters,
+  JudgmentAuditLog
 } from '@/types/legal-research';
 import type { StorageUsageHistoryRecord } from '@/types/storage-monitor';
 import { generateDeterministicEmbedding, cosineSimilarity } from '../ai/embeddings';
@@ -71,6 +72,7 @@ interface DatabaseState {
   legal_ingestion_jobs?: LegalIngestionJob[];
   legal_document_citations?: LegalDocumentCitation[];
   storage_usage_history?: StorageUsageHistoryRecord[];
+  judgment_audit_logs?: JudgmentAuditLog[];
 }
 
 const DB_FILE = path.join(process.cwd(), 'data', 'local-db.json');
@@ -3282,13 +3284,66 @@ class LocalDatabase {
   // AI LEGAL RESEARCH & PGVECTOR LOCAL REPOSITORY METHODS
   // ==============================================================================
 
-  getLegalDocuments(filter?: { status?: string; court_level?: string; limit?: number }): LegalDocument[] {
+  getLegalDocuments(filter?: { 
+    status?: string; 
+    court_level?: string; 
+    limit?: number;
+    approval_status?: string;
+    publication_status?: string;
+    court_code?: string;
+  }): LegalDocument[] {
     const s = this.ensureLoaded();
     let docs = s.legal_documents || [];
+    
+    // Ensure legacy docs have approval_status & court_code backfilled
+    docs.forEach(d => {
+      if (!d.approval_status) {
+        d.approval_status = (d.verification_status === 'verified' ? 'approved' : d.verification_status === 'rejected' ? 'rejected' : 'pending');
+      }
+      if (!d.court_code) {
+        d.court_code = (d.court_name || '').toLowerCase().includes('supreme') 
+          ? 'INSC' 
+          : (d.court_name || '').toLowerCase().includes('jaipur') 
+            ? 'HCRAJ-JP' 
+            : 'HCRAJ-JD';
+      }
+    });
+
     if (filter?.status) docs = docs.filter(d => d.verification_status === filter.status);
-    if (filter?.court_level && filter.court_level !== 'ALL') docs = docs.filter(d => d.court_level === filter.court_level);
+    if (filter?.approval_status && filter.approval_status !== 'ALL') {
+      docs = docs.filter(d => d.approval_status === filter.approval_status);
+    }
+    if (filter?.publication_status && filter.publication_status !== 'ALL') {
+      docs = docs.filter(d => d.publication_status === filter.publication_status);
+    }
+    if (filter?.court_code && filter.court_code !== 'ALL') {
+      docs = docs.filter(d => d.court_code === filter.court_code);
+    }
+    if (filter?.court_level && filter.court_level !== 'ALL') {
+      docs = docs.filter(d => d.court_level === filter.court_level);
+    }
     if (filter?.limit && filter.limit > 0) docs = docs.slice(0, filter.limit);
     return docs;
+  }
+
+  getJudgmentAuditLogs(documentId?: string): JudgmentAuditLog[] {
+    const s = this.ensureLoaded();
+    const logs = s.judgment_audit_logs || [];
+    if (documentId) return logs.filter(l => l.document_id === documentId);
+    return logs;
+  }
+
+  addJudgmentAuditLog(log: Omit<JudgmentAuditLog, 'id' | 'created_at'>): JudgmentAuditLog {
+    const s = this.ensureLoaded();
+    if (!s.judgment_audit_logs) s.judgment_audit_logs = [];
+    const newLog: JudgmentAuditLog = {
+      ...log,
+      id: 'aud-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.judgment_audit_logs.unshift(newLog);
+    this.save();
+    return newLog;
   }
 
   getLegalDocumentById(id: string): LegalDocument | undefined {
@@ -3431,7 +3486,11 @@ class LocalDatabase {
     const s = this.ensureLoaded();
     const cleanQuery = query.toLowerCase().trim();
     const queryTokens = cleanQuery.split(/[\s,.;:()\[\]{}"'\-]+/).filter(t => t.length > 2);
-    const verifiedDocs = (s.legal_documents || []).filter(d => d.verification_status === 'verified');
+    // Double-Lock: Only retrieve approved and published documents
+    const verifiedDocs = (s.legal_documents || []).filter(d => 
+      (d.publication_status === 'published' || !d.publication_status) && 
+      (d.approval_status === 'approved' || d.verification_status === 'verified')
+    );
     
     // 1. Semantic match on chunks
     const chunkScores = new Map<string, { docId: string; chunk: LegalDocumentChunk; sim: number }>();
@@ -3523,8 +3582,9 @@ class LocalDatabase {
     const eligibleChunks = (s.legal_document_chunks || []).filter(c => {
       const doc = docsMap.get(c.document_id);
       if (!doc) return false;
-      if (doc.verification_status !== 'verified') return false;
-      if (doc.publication_status && doc.publication_status !== 'published') return false;
+      const isApproved = doc.approval_status === 'approved' || doc.verification_status === 'verified';
+      const isPublished = doc.publication_status === 'published' || !doc.publication_status;
+      if (!isApproved || !isPublished) return false;
       if (courtFilter && doc.court_name !== courtFilter) return false;
       if (benchFilter && doc.bench !== benchFilter) return false;
       if (yearFilter && doc.judgment_date) {

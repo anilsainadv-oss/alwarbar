@@ -203,11 +203,21 @@ export const legalResearchRepository = {
   /**
    * List legal documents (Admin / Public search)
    */
-  async getDocuments(filter?: { status?: string; court_level?: string; limit?: number }): Promise<LegalDocument[]> {
+  async getDocuments(filter?: { 
+    status?: string; 
+    court_level?: string; 
+    limit?: number;
+    approval_status?: string;
+    publication_status?: string;
+    court_code?: string;
+  }): Promise<LegalDocument[]> {
     if (isSupabaseConfigured && supabase) {
       try {
         let q = supabase.from('legal_documents').select('*');
         if (filter?.status) q = q.eq('verification_status', filter.status);
+        if (filter?.approval_status && filter.approval_status !== 'ALL') q = q.eq('approval_status', filter.approval_status);
+        if (filter?.publication_status && filter.publication_status !== 'ALL') q = q.eq('publication_status', filter.publication_status);
+        if (filter?.court_code && filter.court_code !== 'ALL') q = q.eq('court_code', filter.court_code);
         if (filter?.court_level && filter.court_level !== 'ALL') q = q.eq('court_level', filter.court_level);
         if (filter?.limit) q = q.limit(filter.limit);
         const { data, error } = await q.order('created_at', { ascending: false });
@@ -218,6 +228,44 @@ export const legalResearchRepository = {
     }
 
     return localDb.getLegalDocuments(filter);
+  },
+
+  /**
+   * Fetch judgment audit history
+   */
+  async getAuditLogs(documentId?: string) {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        let q = supabase.from('judgment_audit_logs').select('*');
+        if (documentId) q = q.eq('document_id', documentId);
+        const { data, error } = await q.order('created_at', { ascending: false });
+        if (!error && data) return data;
+      } catch {
+        // Fallback
+      }
+    }
+    return localDb.getJudgmentAuditLogs(documentId);
+  },
+
+  /**
+   * Record a judgment audit entry
+   */
+  async recordAuditLog(log: {
+    document_id: string;
+    action: any;
+    performed_by?: string;
+    notes?: string;
+    metadata_snapshot?: Record<string, any>;
+  }) {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase.from('judgment_audit_logs').insert(log).select().single();
+        if (!error && data) return data;
+      } catch {
+        // Fallback
+      }
+    }
+    return localDb.addJudgmentAuditLog(log);
   },
 
   /**

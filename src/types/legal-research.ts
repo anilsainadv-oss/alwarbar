@@ -5,6 +5,8 @@
 
 export type CourtLevel = 'Supreme Court' | 'High Court' | 'District Court' | 'Tribunal';
 export type VerificationStatus = 'pending' | 'verified' | 'rejected' | 'archived';
+export type ApprovalStatus = 'pending' | 'approved' | 'rejected' | 'draft';
+export type OCRStatus = 'pending' | 'completed' | 'failed' | 'not_required';
 export type PublicationStatus = 'draft' | 'published' | 'archived';
 export type HighCourtBench = 'Jodhpur' | 'Jaipur';
 export type SourceType = 'manual' | 'automatic' | 'api';
@@ -17,12 +19,20 @@ export interface LegalDocument {
   alternate_citations?: string[];
   court_name: string;
   court_level?: CourtLevel;
+  court_code?: string; // 'INSC' | 'HCRAJ-JP' | 'HCRAJ-JD'
   bench?: HighCourtBench | string | null;
+  court_bench?: string | null;
   state?: string;
+  diary_number?: string;
+  petitioner?: string;
+  respondent?: string;
+  advocate_names?: string | string[];
   judge_names?: string | string[];
   judgment_date?: string; // ISO date 'YYYY-MM-DD'
   decision_type?: string;
+  judgment_type?: string;
   case_type?: string;
+  reportable_status?: boolean;
   legal_subjects?: string[];
   legal_subject?: string;
   statutes?: string | string[];
@@ -31,17 +41,51 @@ export interface LegalDocument {
   source_type?: SourceType;
   source_name?: string;
   source_url?: string;
+  original_source_url?: string;
   document_url?: string;
+  r2_storage_key?: string;
+  pdf_sha256?: string;
   language?: string;
   full_text: string;
   content_hash?: string;
+  ocr_status?: OCRStatus;
   verification_status: VerificationStatus;
+  approval_status?: ApprovalStatus;
   publication_status?: PublicationStatus;
   uploaded_by?: string;
   verified_by?: string;
   verified_at?: string;
+  approved_by?: string;
+  approved_at?: string;
+  rejected_by?: string;
+  rejected_at?: string;
+  rejection_reason?: string;
+  published_at?: string;
   created_at: string;
   updated_at: string;
+}
+
+export type JudgmentAuditAction = 
+  | 'discovered'
+  | 'downloaded'
+  | 'extracted'
+  | 'submitted_for_approval'
+  | 'approved'
+  | 'published'
+  | 'rejected'
+  | 'saved_draft'
+  | 'metadata_updated'
+  | 'reprocessed'
+  | 'deleted';
+
+export interface JudgmentAuditLog {
+  id: string;
+  document_id: string;
+  action: JudgmentAuditAction;
+  performed_by?: string;
+  notes?: string;
+  metadata_snapshot?: Record<string, any>;
+  created_at: string;
 }
 
 export interface LegalDocumentChunk {

@@ -15,8 +15,10 @@ export async function GET(req: Request) {
 
     let updates: LegalUpdate[] = localDb.getLegalUpdates().filter(l => l.is_published);
 
-    // Also include published full legal documents from Legal Repository
-    const legalDocs = localDb.getLegalDocuments().filter(d => d.publication_status !== 'draft');
+    // Strictly enforce Double-Lock: publication_status === 'published' AND approval_status === 'approved'
+    const legalDocs = localDb.getLegalDocuments().filter(d => 
+      d.publication_status === 'published' && (d.approval_status === 'approved' || d.verification_status === 'verified')
+    );
     for (const doc of legalDocs) {
       const alreadyExists = updates.some(u => 
         (u.citation && doc.citation && u.citation.toLowerCase().trim() === doc.citation.toLowerCase().trim()) ||

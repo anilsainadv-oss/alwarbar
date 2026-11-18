@@ -158,8 +158,10 @@ export async function runAutomatedCourtIngestion(options: {
   const autoVerify = options.autoVerify ?? false;
   const triggeredBy = options.triggeredBy || 'system-court-cron';
 
-  const targetVerificationStatus: VerificationStatus = autoVerify ? 'verified' : 'pending';
-  const targetPublicationStatus: PublicationStatus = autoVerify ? 'published' : 'draft';
+  // MANDATORY: No judgment may ever be published automatically.
+  // All collected judgments must go to PENDING ADMIN APPROVAL.
+  const targetVerificationStatus: VerificationStatus = 'pending';
+  const targetPublicationStatus: PublicationStatus = 'draft';
 
   // 1. Fetch Candidates from both courts
   const candidates: CourtFeedCandidate[] = [];

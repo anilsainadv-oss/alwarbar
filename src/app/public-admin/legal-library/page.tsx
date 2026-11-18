@@ -5,9 +5,18 @@ import Link from 'next/link';
 import { 
   ArrowLeft, Scale, Plus, CheckCircle2, AlertTriangle, ShieldCheck, 
   Search, Filter, Trash2, Edit2, Download, FileText, Upload, RefreshCw, 
-  ExternalLink, Layers, Check, X, Eye, Loader2, Sparkles, BookOpen
+  ExternalLink, Layers, Check, X, Eye, Loader2, Sparkles, BookOpen,
+  Cloud, Database, Clock, History, CheckSquare, XCircle, AlertCircle,
+  Lock, Unlock, FileCheck, ArrowRight
 } from 'lucide-react';
-import type { LegalDocument, CourtLevel, VerificationStatus } from '@/types/legal-research';
+import type { 
+  LegalDocument, 
+  CourtLevel, 
+  VerificationStatus, 
+  ApprovalStatus, 
+  PublicationStatus, 
+  JudgmentAuditLog 
+} from '@/types/legal-research';
 
 interface DocumentWithMeta extends LegalDocument {
   chunks_count?: number;
@@ -17,37 +26,61 @@ interface Metrics {
   totalDocuments: number;
   verifiedCount: number;
   pendingCount: number;
+  approvedCount: number;
+  publishedCount: number;
   rejectedCount: number;
+  draftCount: number;
+  r2StorageCount: number;
   totalChunks: number;
   vectorStorageStatus: string;
 }
 
+interface R2StatusInfo {
+  configured: boolean;
+  bucketName: string | null;
+  accountId: string | null;
+  missingVariables: string[];
+  connectionStatus: 'connected' | 'pending_configuration' | 'error';
+  errorMessage?: string;
+  totalFiles?: number;
+  totalStorageBytes?: number;
+}
+
+type AdminSection = 
+  | 'PENDING'
+  | 'APPROVED'
+  | 'PUBLISHED'
+  | 'ALL_DOCS'
+  | 'COLLECTION'
+  | 'R2_STORAGE'
+  | 'REJECTED_DRAFTS'
+  | 'AUDIT_LOGS';
+
 export default function AdminLegalLibraryPage() {
+  const [activeSection, setActiveSection] = useState<AdminSection>('PENDING');
   const [documents, setDocuments] = useState<DocumentWithMeta[]>([]);
   const [metrics, setMetrics] = useState<Metrics>({
     totalDocuments: 0,
     verifiedCount: 0,
     pendingCount: 0,
+    approvedCount: 0,
+    publishedCount: 0,
     rejectedCount: 0,
+    draftCount: 0,
+    r2StorageCount: 0,
     totalChunks: 0,
     vectorStorageStatus: 'active'
   });
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [courtFilter, setCourtFilter] = useState<string>('ALL');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const [syncingCourts, setSyncingCourts] = useState(false);
-  const [verifyingAll, setVerifyingAll] = useState(false);
-  const [selectedCourtSync, setSelectedCourtSync] = useState<'all' | 'high_court' | 'supreme_court'>('all');
-  const [autoVerifySync, setAutoVerifySync] = useState(false);
-  const [lastSyncTelemetry, setLastSyncTelemetry] = useState<{
-    time?: string;
-    newlyIngested?: number;
-    skipped?: number;
-    captchaMethod?: string;
-  } | null>(null);
+
+  // Rejection Modal State
+  const [rejectModalDoc, setRejectModalDoc] = useState<DocumentWithMeta | null>(null);
+  const [rejectionReason, setRejectionReason] = useState('');
+  const [submittingAction, setSubmittingAction] = useState(false);
 
   // Edit Modal State
   const [editModalDoc, setEditModalDoc] = useState<DocumentWithMeta | null>(null);
@@ -59,14 +92,17 @@ export default function AdminLegalLibraryPage() {
   const [editDecisionType, setEditDecisionType] = useState<string>('Judgment');
   const [editJudgmentDate, setEditJudgmentDate] = useState('');
   const [editJudgeNames, setEditJudgeNames] = useState('');
+  const [editPetitioner, setEditPetitioner] = useState('');
+  const [editRespondent, setEditRespondent] = useState('');
+  const [editAdvocateNames, setEditAdvocateNames] = useState('');
   const [editLegalSubject, setEditLegalSubject] = useState('');
   const [editStatutes, setEditStatutes] = useState('');
   const [editSummary, setEditSummary] = useState('');
-  const [editStatus, setEditStatus] = useState<VerificationStatus>('verified');
-  const [editPublicationStatus, setEditPublicationStatus] = useState<'draft' | 'published' | 'archived'>('published');
+  const [editApprovalStatus, setEditApprovalStatus] = useState<ApprovalStatus>('pending');
+  const [editPublicationStatus, setEditPublicationStatus] = useState<PublicationStatus>('draft');
   const [savingEdit, setSavingEdit] = useState(false);
 
-  // Ingest Modal State
+  // Ingest / Collection Modal State
   const [ingestModalOpen, setIngestModalOpen] = useState(false);
   const [ingestFile, setIngestFile] = useState<File | null>(null);
   const [ingestRawText, setIngestRawText] = useState('');
@@ -81,14 +117,54 @@ export default function AdminLegalLibraryPage() {
   // Full Transcript View State
   const [viewTranscriptDoc, setViewTranscriptDoc] = useState<DocumentWithMeta | null>(null);
 
+  // R2 Management State
+  const [r2Status, setR2Status] = useState<R2StatusInfo | null>(null);
+  const [r2SetupSteps, setR2SetupSteps] = useState<string[]>([]);
+  const [testingR2, setTestingR2] = useState(false);
+  const [r2TestOutput, setR2TestOutput] = useState<{ success: boolean; message: string; details?: any } | null>(null);
+
+  // Official Court Search State
+  const [collectionCourt, setCollectionCourt] = useState<'rajasthan_high_court' | 'supreme_court'>('rajasthan_high_court');
+  const [collBench, setCollBench] = useState<'Jaipur' | 'Jodhpur' | 'All'>('Jaipur');
+  const [collDateFrom, setCollDateFrom] = useState('');
+  const [collDateTo, setCollDateTo] = useState('');
+  const [collCaseType, setCollCaseType] = useState('');
+  const [collPartyName, setCollPartyName] = useState('');
+  const [collAdvocateName, setCollAdvocateName] = useState('');
+  const [collJudgeName, setCollJudgeName] = useState('');
+  const [collCitation, setCollCitation] = useState('');
+  const [collSearching, setCollSearching] = useState(false);
+  const [collResults, setCollResults] = useState<any[]>([]);
+  const [collUrlInput, setCollUrlInput] = useState('');
+  const [collUrlTitle, setCollUrlTitle] = useState('');
+  const [collUrlCitation, setCollUrlCitation] = useState('');
+  const [importingUrl, setImportingUrl] = useState(false);
+
+  // Audit Logs State
+  const [auditLogs, setAuditLogs] = useState<JudgmentAuditLog[]>([]);
+  const [loadingLogs, setLoadingLogs] = useState(false);
+
+  // ---------------------------------------------------------------------------
+  // Load Documents & Metrics
+  // ---------------------------------------------------------------------------
   const loadData = async () => {
     setLoading(true);
     setError('');
     try {
       const params = new URLSearchParams();
-      if (statusFilter !== 'ALL') params.set('status', statusFilter);
       if (courtFilter !== 'ALL') params.set('court_level', courtFilter);
       if (searchQuery.trim()) params.set('search', searchQuery.trim());
+
+      if (activeSection === 'PENDING') {
+        params.set('approval_status', 'pending');
+      } else if (activeSection === 'APPROVED') {
+        params.set('approval_status', 'approved');
+        params.set('publication_status', 'draft');
+      } else if (activeSection === 'PUBLISHED') {
+        params.set('publication_status', 'published');
+      } else if (activeSection === 'REJECTED_DRAFTS') {
+        params.set('approval_status', 'rejected');
+      }
 
       const res = await fetch(`/api/admin/public/legal-library?${params.toString()}`);
       if (!res.ok) throw new Error('Failed to load legal documents library');
@@ -102,102 +178,265 @@ export default function AdminLegalLibraryPage() {
     }
   };
 
+  // ---------------------------------------------------------------------------
+  // Load R2 Status
+  // ---------------------------------------------------------------------------
+  const loadR2Status = async () => {
+    try {
+      const res = await fetch('/api/admin/public/r2-storage');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.status) setR2Status(data.status);
+        if (data.setupInstructions?.steps) setR2SetupSteps(data.setupInstructions.steps);
+      }
+    } catch (err) {
+      console.error('Failed to load R2 status:', err);
+    }
+  };
+
+  // ---------------------------------------------------------------------------
+  // Load Audit Logs
+  // ---------------------------------------------------------------------------
+  const loadAuditLogs = async () => {
+    setLoadingLogs(true);
+    try {
+      const res = await fetch('/api/admin/public/legal-library/approval');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.logs) setAuditLogs(data.logs);
+      }
+    } catch (err) {
+      console.error('Failed to load audit logs:', err);
+    } finally {
+      setLoadingLogs(false);
+    }
+  };
+
   useEffect(() => {
     loadData();
-  }, [statusFilter, courtFilter]);
+    loadR2Status();
+    if (activeSection === 'AUDIT_LOGS') {
+      loadAuditLogs();
+    }
+  }, [activeSection, courtFilter]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     loadData();
   };
 
-  // Automated Court Synchronization (hcraj.nic.in & Supreme Court e-SCR)
-  const handleSyncCourtFeeds = async () => {
-    setSyncingCourts(true);
+  // ---------------------------------------------------------------------------
+  // Approval Actions
+  // ---------------------------------------------------------------------------
+  const handleApprovalAction = async (
+    docId: string,
+    action: 'approve_and_publish' | 'approve_only' | 'reject' | 'save_draft' | 'reprocess',
+    reason?: string
+  ) => {
+    setSubmittingAction(true);
     setMessage('');
+    setError('');
     try {
-      const res = await fetch(`/api/cron/court-ingestion?court=${selectedCourtSync}&auto_verify=${autoVerifySync}`, {
-        method: 'POST'
+      const res = await fetch('/api/admin/public/legal-library/approval', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          document_id: docId,
+          action,
+          rejection_reason: reason
+        })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to sync court feeds');
-      setMessage(data.message || 'Court synchronization completed successfully.');
-      setLastSyncTelemetry({
-        time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-        newlyIngested: data.newlyIngestedCount,
-        skipped: data.skippedCount,
-        captchaMethod: data.captchaStatus?.method || 'ai_vision_ocr'
-      });
+      if (!res.ok) throw new Error(data.error || 'Approval action failed');
+      
+      const label = action === 'approve_and_publish' 
+        ? 'Judgment approved and published to public & AI research.'
+        : action === 'approve_only'
+          ? 'Judgment approved (saved in draft status).'
+          : action === 'reject'
+            ? 'Judgment rejected with reason recorded.'
+            : action === 'save_draft'
+              ? 'Saved as draft.'
+              : 'Reprocessing triggered.';
+      setMessage(label);
+      setRejectModalDoc(null);
+      setRejectionReason('');
       loadData();
     } catch (err: unknown) {
-      alert(err instanceof Error ? err.message : 'Error syncing court feeds');
+      setError(err instanceof Error ? err.message : 'Action failed');
     } finally {
-      setSyncingCourts(false);
+      setSubmittingAction(false);
     }
   };
 
-  // 1-Click Bulk Verification Gate
-  const handleVerifyAllPending = async () => {
-    if (!confirm(`Are you sure you want to approve and publish all ${metrics.pendingCount} pending court judgments?`)) {
+  // ---------------------------------------------------------------------------
+  // Cloudflare R2 Connection Test Probe
+  // ---------------------------------------------------------------------------
+  const handleTestR2 = async () => {
+    setTestingR2(true);
+    setR2TestOutput(null);
+    try {
+      const res = await fetch('/api/admin/public/r2-storage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'test_connection' })
+      });
+      const data = await res.json();
+      setR2TestOutput(data);
+      loadR2Status();
+    } catch (err: unknown) {
+      setR2TestOutput({
+        success: false,
+        message: err instanceof Error ? err.message : 'R2 test probe failed'
+      });
+    } finally {
+      setTestingR2(false);
+    }
+  };
+
+  // ---------------------------------------------------------------------------
+  // Official Court Search
+  // ---------------------------------------------------------------------------
+  const handleSearchCourt = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCollSearching(true);
+    setCollResults([]);
+    try {
+      const res = await fetch('/api/admin/public/legal-library/collection', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'search_court',
+          params: {
+            court: collectionCourt,
+            bench: collBench,
+            dateFrom: collDateFrom || undefined,
+            dateTo: collDateTo || undefined,
+            caseType: collCaseType || undefined,
+            partyName: collPartyName || undefined,
+            advocateName: collAdvocateName || undefined,
+            judgeName: collJudgeName || undefined,
+            citationNumber: collCitation || undefined,
+            neutralCitation: collCitation || undefined
+          }
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to search court repository');
+      if (data.candidates) setCollResults(data.candidates);
+      if (data.captchaStatus?.challenged) {
+        setMessage(data.captchaStatus.message || 'Direct court search presented Captcha barrier. You can import using the official URL or PDF upload.');
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Court search error');
+    } finally {
+      setCollSearching(false);
+    }
+  };
+
+  // ---------------------------------------------------------------------------
+  // URL Import
+  // ---------------------------------------------------------------------------
+  const handleImportByUrl = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!collUrlInput || !collUrlTitle || !collUrlCitation) {
+      alert('Please provide the PDF URL, Case Title, and Citation');
       return;
     }
-    setVerifyingAll(true);
+    setImportingUrl(true);
+    setMessage('');
     try {
-      const res = await fetch('/api/admin/public/legal-library', {
-        method: 'PATCH',
+      const res = await fetch('/api/admin/public/legal-library/collection', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'verify_all' })
+        body: JSON.stringify({
+          action: 'import_by_url',
+          court: collectionCourt,
+          pdfUrl: collUrlInput,
+          title: collUrlTitle,
+          citation: collUrlCitation,
+          bench: collBench
+        })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to verify pending documents');
-      setMessage(data.message || `${metrics.pendingCount} judgments verified & published!`);
+      if (!res.ok) throw new Error(data.error || 'Failed to import judgment from URL');
+      setMessage(data.message || 'Judgment imported and placed in Pending Approval.');
+      setCollUrlInput('');
+      setCollUrlTitle('');
+      setCollUrlCitation('');
       loadData();
+      setActiveSection('PENDING');
     } catch (err: unknown) {
-      alert(err instanceof Error ? err.message : 'Error verifying documents');
+      setError(err instanceof Error ? err.message : 'URL import failed');
     } finally {
-      setVerifyingAll(false);
+      setImportingUrl(false);
     }
   };
 
-  // 1-Click Verification / Status change
-  const handleQuickStatusChange = async (docId: string, newStatus: VerificationStatus) => {
+  // ---------------------------------------------------------------------------
+  // Ingest from File Upload
+  // ---------------------------------------------------------------------------
+  const handleIngest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIngesting(true);
+    setIngestSuccessMsg('');
+    setIngestError('');
+
     try {
-      const res = await fetch('/api/admin/public/legal-library', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: docId, verification_status: newStatus })
+      const formData = new FormData();
+      if (ingestFile) formData.append('file', ingestFile);
+      if (ingestRawText) formData.append('raw_text', ingestRawText);
+      if (ingestTitle) formData.append('title', ingestTitle);
+      if (ingestCitation) formData.append('citation', ingestCitation);
+      formData.append('court_level', ingestCourtLevel);
+      formData.append('court_name', ingestCourtName);
+
+      const res = await fetch('/api/admin/public/legal-library/upload', {
+        method: 'POST',
+        body: formData
       });
-      if (!res.ok) {
-        const d = await res.json();
-        throw new Error(d.error || 'Failed to update verification status');
-      }
-      setMessage(`Status updated to ${newStatus}`);
-      setTimeout(() => setMessage(''), 2500);
-      loadData();
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ingestion failed');
+
+      setIngestSuccessMsg('Judgment uploaded, SHA-256 verified, indexed, and queued in Pending Approval.');
+      setTimeout(() => {
+        setIngestModalOpen(false);
+        setIngestFile(null);
+        setIngestRawText('');
+        setIngestTitle('');
+        setIngestCitation('');
+        loadData();
+      }, 1500);
     } catch (err: unknown) {
-      alert(err instanceof Error ? err.message : 'Error changing status');
+      setIngestError(err instanceof Error ? err.message : 'Failed to ingest document');
+    } finally {
+      setIngesting(false);
     }
   };
 
-  // Open Edit Modal
+  // ---------------------------------------------------------------------------
+  // Edit Document Metadata
+  // ---------------------------------------------------------------------------
   const handleOpenEdit = (doc: DocumentWithMeta) => {
     setEditModalDoc(doc);
     setEditTitle(doc.title);
     setEditCitation(doc.citation);
     setEditCourtName(doc.court_name);
-    setEditCourtLevel(doc.court_level || 'High Court');
+    setEditCourtLevel(doc.court_level || 'Supreme Court');
     setEditBench(doc.bench || 'NONE');
     setEditDecisionType(doc.decision_type || 'Judgment');
     setEditJudgmentDate(doc.judgment_date || '');
     setEditJudgeNames(Array.isArray(doc.judge_names) ? doc.judge_names.join(', ') : (doc.judge_names || ''));
+    setEditPetitioner(doc.petitioner || (Array.isArray(doc.parties) ? doc.parties[0] : (doc.parties || '')));
+    setEditRespondent(doc.respondent || (Array.isArray(doc.parties) ? doc.parties[1] : ''));
+    setEditAdvocateNames(Array.isArray(doc.advocate_names) ? doc.advocate_names.join(', ') : (doc.advocate_names || ''));
     setEditLegalSubject(doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(', ') : ''));
     setEditStatutes(Array.isArray(doc.statutes) ? doc.statutes.join(', ') : (doc.statutes || ''));
     setEditSummary(doc.summary || '');
-    setEditStatus(doc.verification_status);
-    setEditPublicationStatus(doc.publication_status || (doc.verification_status === 'verified' ? 'published' : 'draft'));
+    setEditApprovalStatus(doc.approval_status || 'pending');
+    setEditPublicationStatus(doc.publication_status || 'draft');
   };
 
-  // Save Edit
   const handleSaveEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editModalDoc) return;
@@ -208,712 +447,1141 @@ export default function AdminLegalLibraryPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id: editModalDoc.id,
-          title: editTitle.trim(),
-          citation: editCitation.trim(),
-          court_name: editCourtName.trim(),
+          title: editTitle,
+          citation: editCitation,
+          court_name: editCourtName,
           court_level: editCourtLevel,
           bench: editBench === 'NONE' ? null : editBench,
           decision_type: editDecisionType,
-          judgment_date: editJudgmentDate.trim() || undefined,
-          judge_names: editJudgeNames.trim() || undefined,
-          legal_subject: editLegalSubject.trim() || undefined,
-          statutes: editStatutes.trim() || undefined,
-          summary: editSummary.trim() || undefined,
-          verification_status: editStatus,
+          judgment_date: editJudgmentDate,
+          judge_names: editJudgeNames.split(',').map(s => s.trim()).filter(Boolean),
+          parties: [editPetitioner, editRespondent].filter(Boolean),
+          legal_subject: editLegalSubject,
+          statutes: editStatutes.split(',').map(s => s.trim()).filter(Boolean),
+          summary: editSummary,
+          approval_status: editApprovalStatus,
           publication_status: editPublicationStatus
         })
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update document metadata');
 
-      if (!res.ok) {
-        const d = await res.json();
-        throw new Error(d.error || 'Failed to update metadata');
-      }
-
+      setMessage(`Metadata for ${editCitation} successfully updated.`);
       setEditModalDoc(null);
-      setMessage('Precedent metadata successfully updated');
-      setTimeout(() => setMessage(''), 3000);
       loadData();
     } catch (err: unknown) {
-      alert(err instanceof Error ? err.message : 'Error updating precedent');
+      alert(err instanceof Error ? err.message : 'Error updating document');
     } finally {
       setSavingEdit(false);
     }
   };
 
+  // ---------------------------------------------------------------------------
   // Delete Document
-  const handleDelete = async (docId: string, citation: string) => {
-    if (!confirm(`Are you sure you want to permanently delete judgment ${citation} and all related pgvector chunks?`)) {
+  // ---------------------------------------------------------------------------
+  const handleDeleteDoc = async (id: string, citation: string) => {
+    if (!confirm(`Permanently delete judgment ${citation} and all vector embeddings from database?`)) {
       return;
     }
     try {
-      const res = await fetch(`/api/admin/public/legal-library?id=${docId}`, {
+      const res = await fetch(`/api/admin/public/legal-library?id=${encodeURIComponent(id)}`, {
         method: 'DELETE'
       });
-      if (!res.ok) {
-        const d = await res.json();
-        throw new Error(d.error || 'Failed to delete document');
-      }
-      setMessage(`Judgment ${citation} deleted`);
-      setTimeout(() => setMessage(''), 2500);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to delete');
+      setMessage(`Precedent ${citation} removed successfully.`);
       loadData();
     } catch (err: unknown) {
       alert(err instanceof Error ? err.message : 'Error deleting document');
     }
   };
 
-  // Ingest Document
-  const handleIngest = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIngesting(true);
-    setIngestError('');
-    setIngestSuccessMsg('');
-
-    try {
-      let res: Response;
-      if (ingestFile) {
-        const fd = new FormData();
-        fd.append('file', ingestFile);
-        if (ingestTitle) fd.append('title', ingestTitle);
-        if (ingestCitation) fd.append('citation', ingestCitation);
-        fd.append('court_level', ingestCourtLevel);
-        fd.append('court_name', ingestCourtName);
-
-        res = await fetch('/api/admin/public/legal-library/upload', {
-          method: 'POST',
-          body: fd
-        });
-      } else {
-        if (!ingestRawText.trim() || ingestRawText.trim().length < 20) {
-          throw new Error('Please provide at least 20 characters of legal judgment text');
-        }
-
-        res = await fetch('/api/admin/public/legal-library/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            raw_text: ingestRawText.trim(),
-            title: ingestTitle || undefined,
-            citation: ingestCitation || undefined,
-            court_level: ingestCourtLevel,
-            court_name: ingestCourtName
-          })
-        });
-      }
-
-      const d = await res.json();
-      if (!res.ok) throw new Error(d.error || 'Document ingestion failed');
-
-      setIngestSuccessMsg(
-        `Precedent successfully indexed into pgvector! Created ${d.chunksIndexed} chunks (${d.totalTokens} tokens) in ${d.processingTimeMs}ms.`
-      );
-      setIngestFile(null);
-      setIngestRawText('');
-      setIngestTitle('');
-      setIngestCitation('');
-      loadData();
-      setTimeout(() => {
-        setIngestModalOpen(false);
-        setIngestSuccessMsg('');
-      }, 2000);
-    } catch (err: unknown) {
-      setIngestError(err instanceof Error ? err.message : 'Ingestion error');
-    } finally {
-      setIngesting(false);
-    }
-  };
-
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl space-y-8">
-      {/* Back button */}
-      <div className="flex items-center justify-between">
-        <Link
-          href="/public-admin/dashboard"
-          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Portal Admin</span>
-        </Link>
-
-        <span className="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">
-          pgvector HNSW: <strong>1536 Dimensions Active</strong>
-        </span>
-      </div>
-
-      {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-5 border-slate-200">
+    <div className="container mx-auto px-4 py-8 max-w-7xl space-y-6">
+      {/* Top Breadcrumb & Actions */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <div className="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-wider text-indigo-700">
-            <Scale className="w-4 h-4" />
-            <span>AI Legal Precedent Repository & pgvector Management</span>
+          <div className="flex items-center space-x-2 text-xs text-slate-500 mb-1">
+            <Link href="/public-admin/dashboard" className="hover:text-indigo-600 flex items-center space-x-1">
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Admin Overview</span>
+            </Link>
+            <span>/</span>
+            <span className="text-slate-800 font-semibold">Official Court Judgment Repository</span>
           </div>
-          <h1 className="font-serif font-bold text-2xl sm:text-3xl text-slate-900 mt-1">
-            Precedent Library & Ingestion Pipeline
+          <h1 className="font-serif font-bold text-2xl sm:text-3xl text-slate-900 flex items-center space-x-2.5">
+            <Scale className="w-7 h-7 text-indigo-700" />
+            <span>Supreme Court & Rajasthan High Court Precedent Engine</span>
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Administer verified case law citations, approve OCR/PDF extractions, and inspect semantic embeddings.
+          <p className="text-xs text-slate-500 mt-1">
+            Official Precedent Repository with Cloudflare R2 Private Storage, SHA-256 Checksum, and Mandatory Admin Approval Workflow.
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 shrink-0">
-          <button
-            onClick={handleSyncCourtFeeds}
-            disabled={syncingCourts}
-            className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-amber-300 text-xs font-semibold rounded-xl shadow transition flex items-center space-x-1.5"
-            title="Auto-fetch newly released decisions from Rajasthan High Court & Supreme Court e-SCR"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${syncingCourts ? 'animate-spin' : ''}`} />
-            <span>{syncingCourts ? 'Syncing Feeds...' : 'Sync Court Feeds Now'}</span>
-          </button>
-
+        <div className="flex items-center space-x-2">
           <button
             onClick={() => setIngestModalOpen(true)}
-            className="px-4 py-2 bg-gradient-to-r from-indigo-700 to-indigo-800 hover:from-indigo-800 hover:to-indigo-900 text-white text-xs font-semibold rounded-xl shadow transition flex items-center space-x-1.5"
+            className="px-4 py-2 bg-indigo-700 hover:bg-indigo-800 text-white text-xs font-bold rounded-lg shadow-sm flex items-center space-x-1.5 transition"
           >
-            <Plus className="w-4 h-4" />
-            <span>Ingest New Judgment</span>
+            <Upload className="w-3.5 h-3.5" />
+            <span>Upload Official PDF</span>
           </button>
         </div>
       </div>
 
-      {/* Automated Judicial Ingestion & Live Scraper Card */}
-      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-lg space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center space-x-2">
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
-                100% Automated Live Crawler Active
-              </span>
-              <span className="text-[11px] text-slate-400">
-                Scheduled Daily at <strong>02:00 AM IST</strong>
-              </span>
-            </div>
-            <h2 className="text-base font-semibold text-white flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Rajasthan High Court & Supreme Court Automated Ingestion</span>
-            </h2>
-            <p className="text-xs text-slate-300">
-              Live crawler with automated AI Captcha decoding fetches certified daily judgments from{' '}
-              <span className="text-amber-200 font-mono">hcraj.nic.in</span> &{' '}
-              <span className="text-amber-200 font-mono">escr.sci.gov.in</span>.
-            </p>
+      {/* Messages */}
+      {message && (
+        <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl text-xs flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+            <span>{message}</span>
           </div>
+          <button onClick={() => setMessage('')}><X className="w-4 h-4 text-emerald-600" /></button>
+        </div>
+      )}
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <div className="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700">
-              <label className="text-[11px] text-slate-300 font-medium">Court Feed:</label>
-              <select
-                value={selectedCourtSync}
-                onChange={e => setSelectedCourtSync(e.target.value as any)}
-                className="bg-slate-900 text-xs text-amber-300 rounded-lg px-2 py-1 border border-slate-600 focus:outline-none"
-              >
-                <option value="all">All (High Court + Supreme Court)</option>
-                <option value="high_court">Rajasthan High Court (Jaipur/Jodhpur)</option>
-                <option value="supreme_court">Supreme Court (e-SCR)</option>
-              </select>
+      {error && (
+        <div className="p-3.5 bg-red-50 border border-red-200 text-red-900 rounded-xl text-xs flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <AlertTriangle className="w-4 h-4 text-red-700 shrink-0" />
+            <span>{error}</span>
+          </div>
+          <button onClick={() => setError('')}><X className="w-4 h-4 text-red-600" /></button>
+        </div>
+      )}
+
+      {/* Primary Metrics Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <button
+          onClick={() => setActiveSection('PENDING')}
+          className={`p-4 rounded-xl border text-left transition ${
+            activeSection === 'PENDING'
+              ? 'bg-amber-50/80 border-amber-300 ring-2 ring-amber-400/40 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-amber-200 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase text-amber-700">Pending Review</span>
+            <Clock className="w-4 h-4 text-amber-600" />
+          </div>
+          <div className="text-2xl font-bold font-serif text-amber-900 mt-1">{metrics.pendingCount}</div>
+          <span className="text-[10px] text-amber-700 font-medium">Requires Admin Action</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('PUBLISHED')}
+          className={`p-4 rounded-xl border text-left transition ${
+            activeSection === 'PUBLISHED'
+              ? 'bg-emerald-50/80 border-emerald-300 ring-2 ring-emerald-400/40 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-emerald-200 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase text-emerald-700">Published</span>
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          </div>
+          <div className="text-2xl font-bold font-serif text-emerald-900 mt-1">{metrics.publishedCount}</div>
+          <span className="text-[10px] text-emerald-700 font-medium">Live in Public & AI</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('APPROVED')}
+          className={`p-4 rounded-xl border text-left transition ${
+            activeSection === 'APPROVED'
+              ? 'bg-blue-50/80 border-blue-300 ring-2 ring-blue-400/40 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-blue-200 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase text-blue-700">Approved Drafts</span>
+            <CheckSquare className="w-4 h-4 text-blue-600" />
+          </div>
+          <div className="text-2xl font-bold font-serif text-blue-900 mt-1">{metrics.approvedCount - metrics.publishedCount}</div>
+          <span className="text-[10px] text-blue-600 font-medium">Verified Unreleased</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('COLLECTION')}
+          className={`p-4 rounded-xl border text-left transition ${
+            activeSection === 'COLLECTION'
+              ? 'bg-indigo-50/80 border-indigo-300 ring-2 ring-indigo-400/40 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-indigo-200 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase text-indigo-700">Court Feeds</span>
+            <Scale className="w-4 h-4 text-indigo-600" />
+          </div>
+          <div className="text-2xl font-bold font-serif text-indigo-900 mt-1">2 Sources</div>
+          <span className="text-[10px] text-indigo-600 font-medium">HCRAJ & e-SCR</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('R2_STORAGE')}
+          className={`p-4 rounded-xl border text-left transition ${
+            activeSection === 'R2_STORAGE'
+              ? 'bg-purple-50/80 border-purple-300 ring-2 ring-purple-400/40 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-purple-200 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase text-purple-700">Cloudflare R2</span>
+            <Cloud className="w-4 h-4 text-purple-600" />
+          </div>
+          <div className="text-base font-bold font-serif text-purple-900 mt-1 truncate">
+            {r2Status?.configured ? 'Connected' : 'Pending'}
+          </div>
+          <span className="text-[10px] text-purple-700 font-medium">
+            {r2Status?.configured ? `${r2Status.totalFiles || 0} PDFs in R2` : 'Config Required'}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('AUDIT_LOGS')}
+          className={`p-4 rounded-xl border text-left transition ${
+            activeSection === 'AUDIT_LOGS'
+              ? 'bg-slate-100 border-slate-400 ring-2 ring-slate-400/40 shadow-sm'
+              : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold uppercase text-slate-600">Audit History</span>
+            <History className="w-4 h-4 text-slate-500" />
+          </div>
+          <div className="text-2xl font-bold font-serif text-slate-900 mt-1">{auditLogs.length || metrics.totalDocuments}</div>
+          <span className="text-[10px] text-slate-500 font-medium">Immutable Events</span>
+        </button>
+      </div>
+
+      {/* Navigation Tabs Bar */}
+      <div className="flex items-center space-x-1 border-b border-slate-200 overflow-x-auto text-xs font-semibold">
+        <button
+          onClick={() => setActiveSection('PENDING')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'PENDING'
+              ? 'border-amber-600 text-amber-800 bg-amber-50/50'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Clock className="w-3.5 h-3.5 text-amber-600" />
+          <span>Pending Admin Approval</span>
+          <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-amber-200 text-amber-900 font-bold">
+            {metrics.pendingCount}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('APPROVED')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'APPROVED'
+              ? 'border-blue-600 text-blue-800 bg-blue-50/50'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <CheckSquare className="w-3.5 h-3.5 text-blue-600" />
+          <span>Approved Judgments</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('PUBLISHED')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'PUBLISHED'
+              ? 'border-emerald-600 text-emerald-800 bg-emerald-50/50'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+          <span>Published (Public & AI)</span>
+          <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-bold">
+            {metrics.publishedCount}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('COLLECTION')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'COLLECTION'
+              ? 'border-indigo-600 text-indigo-800 bg-indigo-50/50'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Scale className="w-3.5 h-3.5 text-indigo-600" />
+          <span>Official Court Collection</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('R2_STORAGE')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'R2_STORAGE'
+              ? 'border-purple-600 text-purple-800 bg-purple-50/50'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Cloud className="w-3.5 h-3.5 text-purple-600" />
+          <span>Cloudflare R2 Management</span>
+          <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+            r2Status?.configured ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+          }`}>
+            {r2Status?.configured ? 'Live' : 'Pending'}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('REJECTED_DRAFTS')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'REJECTED_DRAFTS'
+              ? 'border-red-600 text-red-800 bg-red-50/50'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <XCircle className="w-3.5 h-3.5 text-red-600" />
+          <span>Rejected & Drafts ({metrics.rejectedCount + metrics.draftCount})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('AUDIT_LOGS')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'AUDIT_LOGS'
+              ? 'border-slate-800 text-slate-900 bg-slate-100'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <History className="w-3.5 h-3.5 text-slate-600" />
+          <span>Audit History</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('ALL_DOCS')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'ALL_DOCS'
+              ? 'border-slate-800 text-slate-900 bg-slate-100'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Layers className="w-3.5 h-3.5 text-slate-600" />
+          <span>All Documents ({metrics.totalDocuments})</span>
+        </button>
+      </div>
+
+      {/* ===================================================================== */}
+      {/* SECTION: CLOUDFLARE R2 MANAGEMENT                                     */}
+      {/* ===================================================================== */}
+      {activeSection === 'R2_STORAGE' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div>
+              <div className="flex items-center space-x-2">
+                <Cloud className="w-6 h-6 text-purple-600" />
+                <h2 className="text-xl font-bold font-serif text-slate-900">Cloudflare R2 Object Storage</h2>
+                <span className={`px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider ${
+                  r2Status?.configured ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-amber-100 text-amber-800 border border-amber-200'
+                }`}>
+                  {r2Status?.configured ? 'Configured & Connected' : 'R2 Configuration Pending'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 mt-1">
+                Private, S3-compatible cloud storage for authentic court judgment PDF copies with SHA-256 integrity checks and presigned access.
+              </p>
             </div>
-
-            <label className="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700 cursor-pointer text-xs">
-              <input
-                type="checkbox"
-                checked={autoVerifySync}
-                onChange={e => setAutoVerifySync(e.target.checked)}
-                className="rounded border-slate-600 text-indigo-600 focus:ring-0"
-              />
-              <span className="text-[11px] text-slate-200">Auto-Verify (Direct Live)</span>
-            </label>
 
             <button
-              onClick={handleSyncCourtFeeds}
-              disabled={syncingCourts}
-              className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 text-slate-950 text-xs font-bold rounded-xl shadow transition flex items-center space-x-1.5"
+              onClick={handleTestR2}
+              disabled={testingR2}
+              className="px-4 py-2 bg-purple-700 hover:bg-purple-800 disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center space-x-2 shadow transition shrink-0"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${syncingCourts ? 'animate-spin' : ''}`} />
-              <span>{syncingCourts ? 'Crawling Courts...' : 'Sync Live Feeds Now'}</span>
+              {testingR2 ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              <span>Run R2 Connection Test</span>
             </button>
           </div>
-        </div>
 
-        {/* Telemetry Footer */}
-        <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
-          <div className="flex items-center space-x-4">
-            <span>
-              AI Captcha Engine: <strong className="text-emerald-400">Active (OCR / Optical Pattern)</strong>
-            </span>
-            <span>•</span>
-            <span>
-              Jaipur Bench Jurisdiction: <strong className="text-slate-200">Alwar & NCR Environs</strong>
-            </span>
+          {/* Test Probe Output */}
+          {r2TestOutput && (
+            <div className={`p-4 rounded-xl border text-xs space-y-1 ${
+              r2TestOutput.success ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-amber-50 border-amber-200 text-amber-900'
+            }`}>
+              <div className="font-bold flex items-center space-x-2">
+                {r2TestOutput.success ? <CheckCircle2 className="w-4 h-4 text-emerald-700" /> : <AlertTriangle className="w-4 h-4 text-amber-700" />}
+                <span>{r2TestOutput.message}</span>
+              </div>
+              {r2TestOutput.details && (
+                <pre className="p-3 bg-white/80 rounded border font-mono text-[11px] mt-2 overflow-x-auto">
+                  {JSON.stringify(r2TestOutput.details, null, 2)}
+                </pre>
+              )}
+            </div>
+          )}
+
+          {/* Configuration Parameters Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span className="text-[10px] font-bold uppercase text-slate-400">R2 Bucket Name</span>
+              <div className="font-mono font-semibold text-slate-800 text-sm mt-1 truncate">
+                {r2Status?.bucketName || 'Not Set'}
+              </div>
+            </div>
+
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span className="text-[10px] font-bold uppercase text-slate-400">Account ID</span>
+              <div className="font-mono font-semibold text-slate-800 text-sm mt-1 truncate">
+                {r2Status?.accountId ? `${r2Status.accountId.slice(0, 8)}...` : 'Not Set'}
+              </div>
+            </div>
+
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span className="text-[10px] font-bold uppercase text-slate-400">PDFs in Bucket</span>
+              <div className="font-mono font-semibold text-slate-800 text-sm mt-1">
+                {r2Status?.totalFiles ?? 'N/A'}
+              </div>
+            </div>
+
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span className="text-[10px] font-bold uppercase text-slate-400">Storage Used</span>
+              <div className="font-mono font-semibold text-slate-800 text-sm mt-1">
+                {r2Status?.totalStorageBytes ? `${(r2Status.totalStorageBytes / (1024 * 1024)).toFixed(2)} MB` : 'N/A'}
+              </div>
+            </div>
           </div>
-          {lastSyncTelemetry && (
-            <div className="text-amber-300 font-mono text-[11px]">
-              Last sync: {lastSyncTelemetry.time} | Ingested: {lastSyncTelemetry.newlyIngested} | Skipped: {lastSyncTelemetry.skipped}
+
+          {/* Setup Instructions if Pending */}
+          {!r2Status?.configured && r2SetupSteps.length > 0 && (
+            <div className="p-5 bg-amber-50/70 border border-amber-200 rounded-xl space-y-3">
+              <div className="flex items-center space-x-2 font-bold text-amber-900 text-xs">
+                <AlertCircle className="w-4 h-4 text-amber-700" />
+                <span>Cloudflare Dashboard Setup Instructions:</span>
+              </div>
+              <ol className="list-decimal pl-5 space-y-1.5 text-xs text-amber-900 leading-relaxed font-sans">
+                {r2SetupSteps.map((step, idx) => (
+                  <li key={idx} className={step.startsWith('  ') ? 'font-mono text-[11px] bg-white/70 p-1 rounded my-1' : ''}>
+                    {step}
+                  </li>
+                ))}
+              </ol>
             </div>
           )}
         </div>
-      </div>
+      )}
 
-      {/* Admin Review Gate Banner (सुरक्षित गेट) */}
-      {metrics.pendingCount > 0 && (
-        <div className="p-4 rounded-xl border border-amber-300 bg-amber-50 text-amber-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-          <div className="flex items-center space-x-3">
-            <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0" />
+      {/* ===================================================================== */}
+      {/* SECTION: OFFICIAL COURT COLLECTION                                    */}
+      {/* ===================================================================== */}
+      {activeSection === 'COLLECTION' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
-              <span className="font-bold text-xs uppercase tracking-wider text-amber-900">
-                Admin Review Gate (सुरक्षित सत्यापन गेट):
-              </span>{' '}
-              <span className="text-xs font-medium">
-                आज राजस्थान हाई कोर्ट / सुप्रीम कोर्ट से <strong>{metrics.pendingCount} नए फैसले</strong> ऑटोमैटिक डाउनलोड होकर समीक्षा हेतु लंबित (Pending) हैं।
-              </span>
+              <h2 className="text-xl font-bold font-serif text-slate-900 flex items-center space-x-2">
+                <Scale className="w-6 h-6 text-indigo-700" />
+                <span>Official Judgment Feed Discovery</span>
+              </h2>
+              <p className="text-xs text-slate-500 mt-1">
+                Legitimate discovery across Rajasthan High Court (hcraj.nic.in) & Supreme Court of India (sci.gov.in / e-SCR).
+              </p>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setCollectionCourt('rajasthan_high_court')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                  collectionCourt === 'rajasthan_high_court'
+                    ? 'bg-amber-800 text-white shadow'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                Rajasthan High Court
+              </button>
+              <button
+                onClick={() => setCollectionCourt('supreme_court')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                  collectionCourt === 'supreme_court'
+                    ? 'bg-purple-800 text-white shadow'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                Supreme Court of India
+              </button>
             </div>
           </div>
-          <button
-            onClick={handleVerifyAllPending}
-            disabled={verifyingAll}
-            className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white text-xs font-bold rounded-lg shadow-sm flex items-center space-x-1.5 whitespace-nowrap transition"
-          >
-            {verifyingAll ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin" />
-            ) : (
-              <Check className="w-3.5 h-3.5" />
+
+          {/* Search Filters Form */}
+          <form onSubmit={handleSearchCourt} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            {collectionCourt === 'rajasthan_high_court' && (
+              <div>
+                <label className="block font-semibold text-slate-700 mb-1">Bench</label>
+                <select
+                  value={collBench}
+                  onChange={e => setCollBench(e.target.value as any)}
+                  className="w-full p-2 border border-slate-200 rounded-lg bg-slate-50"
+                >
+                  <option value="Jaipur">Jaipur Bench</option>
+                  <option value="Jodhpur">Jodhpur Principal Seat</option>
+                  <option value="All">All Benches</option>
+                </select>
+              </div>
             )}
-            <span>Verify All Pending ({metrics.pendingCount})</span>
-          </button>
-        </div>
-      )}
 
-      {/* Success / Alert message */}
-      {message && (
-        <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs flex items-center space-x-2">
-          <CheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>{message}</span>
-        </div>
-      )}
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Date From</label>
+              <input
+                type="date"
+                value={collDateFrom}
+                onChange={e => setCollDateFrom(e.target.value)}
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs"
+              />
+            </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-1">
-          <span className="text-[10px] font-bold uppercase text-slate-400">Total Precedents</span>
-          <div className="text-2xl font-bold font-serif text-slate-900">{metrics.totalDocuments}</div>
-          <span className="text-[11px] text-slate-500">Indexed in database</span>
-        </div>
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Date To</label>
+              <input
+                type="date"
+                value={collDateTo}
+                onChange={e => setCollDateTo(e.target.value)}
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs"
+              />
+            </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-1">
-          <span className="text-[10px] font-bold uppercase text-emerald-600">Verified & Published</span>
-          <div className="text-2xl font-bold font-serif text-emerald-700">{metrics.verifiedCount}</div>
-          <span className="text-[11px] text-emerald-600 font-medium">Available for RAG</span>
-        </div>
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Citation / Diary No.</label>
+              <input
+                type="text"
+                value={collCitation}
+                onChange={e => setCollCitation(e.target.value)}
+                placeholder={collectionCourt === 'supreme_court' ? 'e.g. 2026 INSC 485' : 'e.g. 2026:RJ-JP:44204'}
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs"
+              />
+            </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-1">
-          <span className="text-[10px] font-bold uppercase text-amber-600">Pending Review</span>
-          <div className="text-2xl font-bold font-serif text-amber-700">{metrics.pendingCount}</div>
-          <span className="text-[11px] text-amber-600 font-medium">Require approval</span>
-        </div>
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Case Type / No.</label>
+              <input
+                type="text"
+                value={collCaseType}
+                onChange={e => setCollCaseType(e.target.value)}
+                placeholder="CRLA, CRLMB, D.B. Ref..."
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs"
+              />
+            </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-1">
-          <span className="text-[10px] font-bold uppercase text-indigo-600">Vector Chunks</span>
-          <div className="text-2xl font-bold font-serif text-indigo-800">{metrics.totalChunks}</div>
-          <span className="text-[11px] text-indigo-600 font-medium">HNSW Index</span>
-        </div>
-      </div>
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Party Name</label>
+              <input
+                type="text"
+                value={collPartyName}
+                onChange={e => setCollPartyName(e.target.value)}
+                placeholder="Petitioner or Respondent..."
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs"
+              />
+            </div>
 
-      {/* Filter & Search Toolbar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
-        <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search by citation, case title, court, or statutory sections..."
-              className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Judge Name</label>
+              <input
+                type="text"
+                value={collJudgeName}
+                onChange={e => setCollJudgeName(e.target.value)}
+                placeholder="Hon'ble Judge..."
+                className="w-full p-2 border border-slate-200 rounded-lg text-xs"
+              />
+            </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <select
-              value={statusFilter}
-              onChange={e => setStatusFilter(e.target.value)}
-              className="px-3 py-2 text-xs border border-slate-200 rounded-lg bg-slate-50 font-semibold text-slate-700 focus:outline-none"
-            >
-              <option value="ALL">All Verification Statuses</option>
-              <option value="verified">Verified (सत्यापित)</option>
-              <option value="pending">Pending (लंबित)</option>
-              <option value="rejected">Rejected (अस्वीकृत)</option>
-              <option value="archived">Archived (अभिलेखागार)</option>
-            </select>
+            <div className="flex items-end">
+              <button
+                type="submit"
+                disabled={collSearching}
+                className="w-full py-2 bg-indigo-700 hover:bg-indigo-800 disabled:opacity-50 text-white font-bold rounded-lg shadow-sm flex items-center justify-center space-x-1.5 transition"
+              >
+                {collSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+                <span>Search Official Portal</span>
+              </button>
+            </div>
+          </form>
 
-            <select
-              value={courtFilter}
-              onChange={e => setCourtFilter(e.target.value)}
-              className="px-3 py-2 text-xs border border-slate-200 rounded-lg bg-slate-50 font-semibold text-slate-700 focus:outline-none"
-            >
-              <option value="ALL">All Courts</option>
-              <option value="Supreme Court">Supreme Court</option>
-              <option value="High Court">High Courts</option>
-              <option value="District Court">District Courts</option>
-              <option value="Tribunal">Tribunals</option>
-            </select>
-
-            <button
-              type="submit"
-              className="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-lg hover:bg-slate-800 transition"
-            >
-              Filter
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery('');
-                setStatusFilter('ALL');
-                setCourtFilter('ALL');
-                loadData();
-              }}
-              className="px-3 py-2 border border-slate-200 text-slate-600 text-xs rounded-lg hover:bg-slate-50 transition"
-              title="Reset Filters"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* Documents List */}
-      <div className="space-y-4">
-        {loading ? (
-          <div className="bg-white p-12 text-center rounded-2xl border text-xs text-slate-500">
-            <Loader2 className="w-6 h-6 animate-spin mx-auto text-indigo-600 mb-2" />
-            Loading legal precedent repository...
-          </div>
-        ) : documents.length === 0 ? (
-          <div className="bg-white p-12 text-center rounded-2xl border border-slate-200 text-slate-500 space-y-3">
-            <BookOpen className="w-10 h-10 text-slate-300 mx-auto" />
-            <h3 className="font-serif font-bold text-base text-slate-900">No Precedents Found</h3>
-            <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              No legal documents match your current filter criteria. You can ingest a new judgment or clear filters.
-            </p>
-          </div>
-        ) : (
-          documents.map(doc => (
-            <div
-              key={doc.id}
-              className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-indigo-300 transition space-y-3 text-xs"
-            >
-              {/* Top Row: Citation, Status, Court */}
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b pb-3 border-slate-100">
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className="font-mono font-bold text-xs bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded border border-indigo-200">
-                      {doc.citation}
-                    </span>
-
-                    <span
-                      className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded ${
-                        doc.verification_status === 'verified'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : doc.verification_status === 'pending'
-                          ? 'bg-amber-100 text-amber-800'
-                          : doc.verification_status === 'rejected'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-slate-100 text-slate-700'
-                      }`}
-                    >
-                      ● {doc.verification_status}
-                    </span>
-
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
-                      {doc.court_level}
-                    </span>
-
-                    {doc.judgment_date && (
-                      <span className="text-[10px] font-mono text-slate-400">
-                        Date: {doc.judgment_date}
-                      </span>
-                    )}
-
-                    <span className="text-[10px] font-mono text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
-                      Chunks: {doc.chunks_count ?? 1}
-                    </span>
-
-                    {doc.source_type === 'automatic' && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-800">
-                        ⚡ Auto-Feed: {doc.court_name?.includes('Rajasthan') ? 'HCRAJ' : 'e-SCR'}
-                      </span>
-                    )}
-                  </div>
-
-                  <h3 className="font-serif font-bold text-base text-slate-900">
-                    {doc.title}
-                  </h3>
-                  <div className="text-slate-500 mt-0.5">
-                    <strong>{doc.court_name}</strong>
-                    {doc.judge_names && <span> • Bench: {doc.judge_names}</span>}
-                  </div>
-                </div>
-
-                {/* Admin Actions */}
-                <div className="flex flex-wrap items-center gap-2 shrink-0">
-                  {doc.verification_status !== 'verified' && (
-                    <button
-                      onClick={() => handleQuickStatusChange(doc.id, 'verified')}
-                      className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition flex items-center space-x-1 shadow-sm"
-                      title="Approve and publish to RAG research index"
-                    >
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Approve</span>
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => handleOpenEdit(doc)}
-                    className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition flex items-center space-x-1"
-                    title="Edit Metadata"
-                  >
-                    <Edit2 className="w-3.5 h-3.5 text-slate-600" />
-                    <span>Edit</span>
-                  </button>
-
-                  <a
-                    href={`/api/public/judgments/download?id=${encodeURIComponent(doc.id)}&format=pdf`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 border border-emerald-200 shadow-sm"
-                    title="Download Original Certified Court Judgment PDF"
-                  >
-                    <Download className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Original PDF</span>
-                  </a>
-
-                  <button
-                    onClick={() => setViewTranscriptDoc(doc)}
-                    className="px-2.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 rounded-lg text-xs font-semibold transition flex items-center space-x-1"
-                    title="View Full Text"
-                  >
-                    <Eye className="w-3.5 h-3.5 text-indigo-600" />
-                    <span>View</span>
-                  </button>
-
-                  <button
-                    onClick={() => handleDelete(doc.id, doc.citation)}
-                    className="px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-xs font-semibold transition flex items-center space-x-1"
-                    title="Delete document and chunks"
-                  >
-                    <Trash2 className="w-3.5 h-3.5 text-red-600" />
-                  </button>
-                </div>
+          {/* Direct URL Import Box */}
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <h3 className="font-bold text-slate-900 text-xs flex items-center space-x-1.5">
+              <Download className="w-4 h-4 text-indigo-700" />
+              <span>Import Official Judgment Copy Directly by URL</span>
+            </h3>
+            <form onSubmit={handleImportByUrl} className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+              <div className="sm:col-span-2">
+                <input
+                  type="url"
+                  required
+                  value={collUrlInput}
+                  onChange={e => setCollUrlInput(e.target.value)}
+                  placeholder="https://hcraj.nic.in/... or https://escr.sci.gov.in/..."
+                  className="w-full p-2 border border-slate-200 rounded-lg"
+                />
               </div>
+              <div>
+                <input
+                  type="text"
+                  required
+                  value={collUrlCitation}
+                  onChange={e => setCollUrlCitation(e.target.value)}
+                  placeholder="Citation (e.g. 2026 INSC 485)"
+                  className="w-full p-2 border border-slate-200 rounded-lg"
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  required
+                  value={collUrlTitle}
+                  onChange={e => setCollUrlTitle(e.target.value)}
+                  placeholder="Case Title"
+                  className="w-full p-2 border border-slate-200 rounded-lg"
+                />
+              </div>
+              <div className="sm:col-span-4 flex justify-end">
+                <button
+                  type="submit"
+                  disabled={importingUrl}
+                  className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white font-bold rounded-lg flex items-center space-x-1.5 shadow"
+                >
+                  {importingUrl ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
+                  <span>Retrieve PDF & Queue in Pending Approval</span>
+                </button>
+              </div>
+            </form>
+          </div>
 
-              {/* Holding summary */}
-              {doc.summary && (
-                <p className="text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed">
-                  <strong className="text-slate-900 block mb-0.5 text-[10px] uppercase font-mono text-slate-400">
-                    Holding Summary:
-                  </strong>
-                  {doc.summary}
-                </p>
-              )}
+          {/* Results List */}
+          {collResults.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="font-bold text-slate-800 text-xs">Discovered Official Precedents ({collResults.length}):</h3>
+              <div className="space-y-2">
+                {collResults.map((cand, idx) => (
+                  <div key={idx} className="p-4 bg-white border border-slate-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                          {cand.citation}
+                        </span>
+                        <span className="text-[10px] font-bold text-slate-500 uppercase">{cand.courtCode}</span>
+                        <span className="text-[10px] text-slate-400">Date: {cand.judgmentDate}</span>
+                      </div>
+                      <h4 className="font-bold font-serif text-slate-900 text-sm">{cand.caseTitle}</h4>
+                      <p className="text-[11px] text-slate-500">Bench / Coram: {cand.judgeNames?.join(', ')}</p>
+                    </div>
 
-              {/* Meta details */}
-              <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 pt-1">
-                <div>
-                  {doc.statutes && (
-                    <span>
-                      <strong className="text-slate-700">Statutes:</strong> {doc.statutes}
-                    </span>
-                  )}
-                  {doc.legal_subject && (
-                    <span className="ml-3">
-                      <strong className="text-slate-700">Subject:</strong> {doc.legal_subject}
-                    </span>
-                  )}
-                </div>
-                <div className="text-slate-400 font-mono text-[10px]">
-                  ID: {doc.id}
-                </div>
+                    <div className="flex items-center space-x-2 shrink-0">
+                      <a
+                        href={cand.officialSourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 flex items-center space-x-1 font-semibold"
+                      >
+                        <span>Official Portal</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                      <button
+                        onClick={async () => {
+                          if (!cand.officialPdfUrl) {
+                            alert('Direct PDF URL not available for this record. Use URL import above.');
+                            return;
+                          }
+                          try {
+                            const res = await fetch('/api/admin/public/legal-library/collection', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                action: 'import_by_url',
+                                court: collectionCourt,
+                                pdfUrl: cand.officialPdfUrl,
+                                title: cand.caseTitle,
+                                citation: cand.citation,
+                                bench: cand.bench
+                              })
+                            });
+                            const data = await res.json();
+                            if (!res.ok) throw new Error(data.error || 'Import failed');
+                            alert('Judgment imported and queued in Pending Approval!');
+                            loadData();
+                            setActiveSection('PENDING');
+                          } catch (err: unknown) {
+                            alert(err instanceof Error ? err.message : 'Import failed');
+                          }
+                        }}
+                        className="px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg flex items-center space-x-1 shadow"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>Import to Pending</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
-      {/* ========================================================= */}
-      {/* MODAL 1: EDIT METADATA                                    */}
-      {/* ========================================================= */}
+      {/* ===================================================================== */}
+      {/* SECTION: AUDIT LOGS                                                   */}
+      {/* ===================================================================== */}
+      {activeSection === 'AUDIT_LOGS' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h2 className="text-xl font-bold font-serif text-slate-900 flex items-center space-x-2">
+              <History className="w-5 h-5 text-indigo-700" />
+              <span>Immutable Precedent Audit History</span>
+            </h2>
+            <button
+              onClick={loadAuditLogs}
+              disabled={loadingLogs}
+              className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center space-x-1"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingLogs ? 'animate-spin' : ''}`} />
+              <span>Refresh Logs</span>
+            </button>
+          </div>
+
+          {loadingLogs ? (
+            <div className="py-12 text-center text-slate-400 text-xs">Loading audit logs...</div>
+          ) : auditLogs.length === 0 ? (
+            <div className="py-12 text-center text-slate-400 text-xs">No audit events recorded yet.</div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                    <th className="py-2.5 px-3">Timestamp</th>
+                    <th className="py-2.5 px-3">Action</th>
+                    <th className="py-2.5 px-3">Document ID</th>
+                    <th className="py-2.5 px-3">Notes & Audit Details</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {auditLogs.map(log => (
+                    <tr key={log.id} className="hover:bg-slate-50/70">
+                      <td className="py-2.5 px-3 text-slate-400 whitespace-nowrap font-mono text-[11px]">
+                        {new Date(log.created_at).toLocaleString()}
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                          log.action === 'published' ? 'bg-emerald-100 text-emerald-800' :
+                          log.action === 'approved' ? 'bg-blue-100 text-blue-800' :
+                          log.action === 'rejected' ? 'bg-red-100 text-red-800' :
+                          log.action === 'submitted_for_approval' ? 'bg-amber-100 text-amber-800' :
+                          'bg-slate-100 text-slate-700'
+                        }`}>
+                          {log.action}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 font-mono text-slate-600 truncate max-w-[140px]">
+                        {log.document_id}
+                      </td>
+                      <td className="py-2.5 px-3 text-slate-700 font-sans">
+                        {log.notes || 'Routine status transition'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* SECTIONS: PENDING / APPROVED / PUBLISHED / REJECTED / ALL DOCS        */}
+      {/* ===================================================================== */}
+      {(activeSection === 'PENDING' || activeSection === 'APPROVED' || activeSection === 'PUBLISHED' || activeSection === 'REJECTED_DRAFTS' || activeSection === 'ALL_DOCS') && (
+        <div className="space-y-4">
+          {/* Filter Toolbar */}
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-3">
+            <form onSubmit={handleSearchSubmit} className="relative flex-1">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search by citation, case title, court, or statutory sections..."
+                className="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </form>
+
+            <div className="flex items-center gap-2">
+              <select
+                value={courtFilter}
+                onChange={e => setCourtFilter(e.target.value)}
+                className="px-3 py-2 text-xs border border-slate-200 rounded-lg bg-slate-50 font-semibold text-slate-700 focus:outline-none"
+              >
+                <option value="ALL">All Courts</option>
+                <option value="Supreme Court">Supreme Court of India</option>
+                <option value="High Court">Rajasthan High Court</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Documents Table */}
+          {loading ? (
+            <div className="py-16 text-center text-slate-400 text-xs flex items-center justify-center space-x-2">
+              <Loader2 className="w-4 h-4 animate-spin text-indigo-700" />
+              <span>Loading judgment repository records...</span>
+            </div>
+          ) : documents.length === 0 ? (
+            <div className="bg-white p-12 text-center rounded-xl border border-slate-200 space-y-2">
+              <Scale className="w-8 h-8 text-slate-300 mx-auto" />
+              <h3 className="font-bold text-slate-700 text-sm">No legal documents found in this section</h3>
+              <p className="text-xs text-slate-400">
+                {activeSection === 'PENDING' ? 'All discovered court judgments have been reviewed.' : 'Adjust search filters or upload new judgments.'}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {documents.map(doc => {
+                const isPending = (doc.approval_status || doc.verification_status) === 'pending';
+                const isApproved = doc.approval_status === 'approved' || doc.verification_status === 'verified';
+                const isPublished = doc.publication_status === 'published';
+                const isRejected = doc.approval_status === 'rejected' || doc.verification_status === 'rejected';
+
+                return (
+                  <div
+                    key={doc.id}
+                    className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-slate-300 transition space-y-3"
+                  >
+                    {/* Header Row */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-mono font-bold text-indigo-700 text-xs bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">
+                          {doc.citation}
+                        </span>
+                        <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                          doc.court_code === 'INSC' || doc.court_level === 'Supreme Court'
+                            ? 'bg-purple-100 text-purple-900 border border-purple-200'
+                            : 'bg-amber-100 text-amber-900 border border-amber-200'
+                        }`}>
+                          {doc.court_code || doc.court_name}
+                        </span>
+                        {doc.case_number && (
+                          <span className="text-[11px] font-mono text-slate-500">
+                            {doc.case_number}
+                          </span>
+                        )}
+                        <span className="text-[10px] text-slate-400">
+                          Decided: {doc.judgment_date || 'N/A'}
+                        </span>
+                      </div>
+
+                      {/* Status Badges */}
+                      <div className="flex items-center space-x-2">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex items-center space-x-1 ${
+                          isPublished
+                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                            : isApproved
+                              ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                              : isRejected
+                                ? 'bg-red-100 text-red-800 border border-red-200'
+                                : 'bg-amber-100 text-amber-800 border border-amber-200'
+                        }`}>
+                          {isPublished ? <CheckCircle2 className="w-3 h-3" /> : isApproved ? <CheckSquare className="w-3 h-3" /> : isRejected ? <XCircle className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+                          <span>{isPublished ? 'Published' : isApproved ? 'Approved (Draft)' : isRejected ? 'Rejected' : 'Pending Approval'}</span>
+                        </span>
+
+                        {doc.r2_storage_key ? (
+                          <span className="text-[10px] bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded font-mono font-semibold" title={doc.r2_storage_key}>
+                            R2 Stored
+                          </span>
+                        ) : (
+                          <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-mono">
+                            Local Storage
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Title & Parties */}
+                    <div>
+                      <h3 className="font-serif font-bold text-base text-slate-900">{doc.title}</h3>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Coram: {Array.isArray(doc.judge_names) ? doc.judge_names.join(', ') : (doc.judge_names || 'Bench on record')}
+                      </p>
+                    </div>
+
+                    {/* Rejection notice if rejected */}
+                    {doc.rejection_reason && (
+                      <div className="p-2.5 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 flex items-center space-x-2">
+                        <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
+                        <span><strong>Rejection Reason:</strong> {doc.rejection_reason}</span>
+                      </div>
+                    )}
+
+                    {/* Summary */}
+                    {doc.summary && (
+                      <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-100 line-clamp-2">
+                        {doc.summary}
+                      </p>
+                    )}
+
+                    {/* Actions Row */}
+                    <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+                      {/* Technical details */}
+                      <div className="flex items-center space-x-3 text-[11px] text-slate-400 font-mono">
+                        {doc.pdf_sha256 && (
+                          <span title={doc.pdf_sha256}>SHA: {doc.pdf_sha256.slice(0, 10)}...</span>
+                        )}
+                        <span>Chunks: {doc.chunks_count ?? 'Index Active'}</span>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex flex-wrap items-center gap-2">
+                        {/* Approval Workflows */}
+                        {isPending && (
+                          <>
+                            <button
+                              onClick={() => handleApprovalAction(doc.id, 'approve_and_publish')}
+                              disabled={submittingAction}
+                              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold flex items-center space-x-1 shadow-sm transition"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>Approve & Publish</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleApprovalAction(doc.id, 'approve_only')}
+                              disabled={submittingAction}
+                              className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold flex items-center space-x-1 shadow-sm transition"
+                            >
+                              <CheckSquare className="w-3.5 h-3.5" />
+                              <span>Approve (Draft)</span>
+                            </button>
+
+                            <button
+                              onClick={() => setRejectModalDoc(doc)}
+                              disabled={submittingAction}
+                              className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-lg font-bold flex items-center space-x-1 transition"
+                            >
+                              <XCircle className="w-3.5 h-3.5" />
+                              <span>Reject</span>
+                            </button>
+                          </>
+                        )}
+
+                        {isApproved && !isPublished && (
+                          <button
+                            onClick={() => handleApprovalAction(doc.id, 'approve_and_publish')}
+                            disabled={submittingAction}
+                            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold flex items-center space-x-1 shadow-sm transition"
+                          >
+                            <Unlock className="w-3.5 h-3.5" />
+                            <span>Publish to Public</span>
+                          </button>
+                        )}
+
+                        <button
+                          onClick={() => setViewTranscriptDoc(doc)}
+                          className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold flex items-center space-x-1 transition"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>Transcript</span>
+                        </button>
+
+                        <a
+                          href={`/api/public/judgments/download?id=${encodeURIComponent(doc.id)}&format=pdf`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg font-bold flex items-center space-x-1 transition"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          <span>PDF</span>
+                        </a>
+
+                        <button
+                          onClick={() => handleOpenEdit(doc)}
+                          className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg"
+                          title="Edit Metadata"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+
+                        <button
+                          onClick={() => handleDeleteDoc(doc.id, doc.citation)}
+                          className="p-1.5 text-red-500 hover:text-red-800 hover:bg-red-50 rounded-lg"
+                          title="Delete Judgment"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* MODAL: REJECT JUDGMENT WITH REASON                                    */}
+      {/* ===================================================================== */}
+      {rejectModalDoc && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 text-slate-900 border border-slate-200 space-y-4 text-xs">
+            <div className="flex items-center justify-between border-b pb-3">
+              <h3 className="font-serif font-bold text-base text-red-900 flex items-center space-x-2">
+                <XCircle className="w-5 h-5 text-red-600" />
+                <span>Reject Court Precedent</span>
+              </h3>
+              <button onClick={() => setRejectModalDoc(null)}>
+                <X className="w-4 h-4 text-slate-400" />
+              </button>
+            </div>
+
+            <p className="text-slate-600">
+              Please enter the official reason for rejecting <strong>{rejectModalDoc.citation}</strong>. This record will not be published and the reason will be logged in audit history.
+            </p>
+
+            <div>
+              <label className="block font-semibold text-slate-700 mb-1">Rejection Reason *</label>
+              <textarea
+                required
+                rows={3}
+                value={rejectionReason}
+                onChange={e => setRejectionReason(e.target.value)}
+                placeholder="e.g. Scanned copy illegible, incomplete order sheet, or duplicate citation..."
+                className="w-full p-2.5 border border-slate-200 rounded-lg text-xs"
+              />
+            </div>
+
+            <div className="flex justify-end space-x-2 pt-2 border-t">
+              <button
+                type="button"
+                onClick={() => setRejectModalDoc(null)}
+                className="px-4 py-2 border rounded-lg text-slate-700 hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={submittingAction || !rejectionReason.trim()}
+                onClick={() => handleApprovalAction(rejectModalDoc.id, 'reject', rejectionReason)}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white rounded-lg font-bold flex items-center space-x-1"
+              >
+                {submittingAction ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
+                <span>Confirm Rejection</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* MODAL: EDIT METADATA                                                  */}
+      {/* ===================================================================== */}
       {editModalDoc && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-slate-900 border border-slate-200 max-h-[90vh] overflow-y-auto space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
               <h3 className="font-serif font-bold text-lg text-slate-900 flex items-center space-x-2">
                 <Edit2 className="w-4 h-4 text-indigo-700" />
-                <span>Edit Precedent Metadata & Verification</span>
+                <span>Edit Judgment Metadata</span>
               </h3>
-              <button
-                onClick={() => setEditModalDoc(null)}
-                className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <button onClick={() => setEditModalDoc(null)}><X className="w-4 h-4 text-slate-400" /></button>
             </div>
 
             <form onSubmit={handleSaveEdit} className="space-y-4">
-              <div>
-                <label className="block font-semibold mb-1">Case Title</label>
-                <input
-                  required
-                  type="text"
-                  value={editTitle}
-                  onChange={e => setEditTitle(e.target.value)}
-                  className="w-full p-2.5 border rounded-lg"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1">Citation (AIR / SCC / RLR)</label>
+                  <label className="block font-semibold mb-1">Case Title</label>
                   <input
-                    required
                     type="text"
+                    required
+                    value={editTitle}
+                    onChange={e => setEditTitle(e.target.value)}
+                    className="w-full p-2 border rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1">Citation</label>
+                  <input
+                    type="text"
+                    required
                     value={editCitation}
                     onChange={e => setEditCitation(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold mb-1">Court Level</label>
-                  <select
-                    value={editCourtLevel}
-                    onChange={e => setEditCourtLevel(e.target.value as CourtLevel)}
-                    className="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold"
-                  >
-                    <option value="Supreme Court">Supreme Court</option>
-                    <option value="High Court">High Court</option>
-                    <option value="District Court">District Court</option>
-                    <option value="Tribunal">Tribunal</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-semibold mb-1">Court Name</label>
-                  <input
-                    required
-                    type="text"
-                    value={editCourtName}
-                    onChange={e => setEditCourtName(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg"
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold mb-1">Decision Date (YYYY-MM-DD)</label>
-                  <input
-                    type="text"
-                    value={editJudgmentDate}
-                    onChange={e => setEditJudgmentDate(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg font-mono"
-                    placeholder="2024-05-10"
+                    className="w-full p-2 border rounded-lg font-mono"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1">Coram / Bench</label>
+                  <label className="block font-semibold mb-1">Petitioner</label>
                   <input
                     type="text"
-                    value={editJudgeNames}
-                    onChange={e => setEditJudgeNames(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg"
-                    placeholder="Hon'ble Justices..."
+                    value={editPetitioner}
+                    onChange={e => setEditPetitioner(e.target.value)}
+                    className="w-full p-2 border rounded-lg"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1">Bench (Rajasthan High Court)</label>
-                  <select
-                    value={editBench}
-                    onChange={e => setEditBench(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold"
-                  >
-                    <option value="NONE">None / Principal Seat</option>
-                    <option value="Jaipur">Jaipur Bench</option>
-                    <option value="Jodhpur">Jodhpur Bench</option>
-                  </select>
+                  <label className="block font-semibold mb-1">Respondent</label>
+                  <input
+                    type="text"
+                    value={editRespondent}
+                    onChange={e => setEditRespondent(e.target.value)}
+                    className="w-full p-2 border rounded-lg"
+                  />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1">Decision Type</label>
-                  <input
-                    type="text"
-                    value={editDecisionType}
-                    onChange={e => setEditDecisionType(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg"
-                    placeholder="Judgment, Order..."
-                  />
-                </div>
-                <div>
-                  <label className="block font-semibold mb-1">Verification Status</label>
+                  <label className="block font-semibold mb-1">Approval Status</label>
                   <select
-                    value={editStatus}
-                    onChange={e => setEditStatus(e.target.value as VerificationStatus)}
-                    className="w-full p-2.5 border rounded-lg bg-slate-50 font-bold"
+                    value={editApprovalStatus}
+                    onChange={e => setEditApprovalStatus(e.target.value as ApprovalStatus)}
+                    className="w-full p-2 border rounded-lg bg-slate-50 font-bold"
                   >
-                    <option value="verified">Verified (Approved)</option>
-                    <option value="pending">Pending Review</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
                     <option value="rejected">Rejected</option>
-                    <option value="archived">Archived</option>
+                    <option value="draft">Draft</option>
                   </select>
                 </div>
                 <div>
                   <label className="block font-semibold mb-1">Publication Status</label>
                   <select
                     value={editPublicationStatus}
-                    onChange={e => setEditPublicationStatus(e.target.value as any)}
-                    className="w-full p-2.5 border rounded-lg bg-slate-50 font-bold"
+                    onChange={e => setEditPublicationStatus(e.target.value as PublicationStatus)}
+                    className="w-full p-2 border rounded-lg bg-slate-50 font-bold"
                   >
-                    <option value="published">Published</option>
-                    <option value="draft">Draft</option>
+                    <option value="draft">Draft (Private)</option>
+                    <option value="published">Published (Public)</option>
                     <option value="archived">Archived</option>
                   </select>
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1">Judgment Date</label>
+                  <input
+                    type="date"
+                    value={editJudgmentDate}
+                    onChange={e => setEditJudgmentDate(e.target.value)}
+                    className="w-full p-2 border rounded-lg"
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold mb-1">Statutes & Key Sections</label>
+                <label className="block font-semibold mb-1">Coram / Judge Names</label>
                 <input
                   type="text"
-                  value={editStatutes}
-                  onChange={e => setEditStatutes(e.target.value)}
-                  className="w-full p-2.5 border rounded-lg"
-                  placeholder="Section 480 BNSS, Section 139 NI Act..."
+                  value={editJudgeNames}
+                  onChange={e => setEditJudgeNames(e.target.value)}
+                  className="w-full p-2 border rounded-lg"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1">Subject / Domain</label>
-                <input
-                  type="text"
-                  value={editLegalSubject}
-                  onChange={e => setEditLegalSubject(e.target.value)}
-                  className="w-full p-2.5 border rounded-lg"
-                  placeholder="Criminal Law — Regular Bail..."
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold mb-1">Holding Summary / Ratio Decidendi</label>
+                <label className="block font-semibold mb-1">Ratio Decidendi / Summary</label>
                 <textarea
                   rows={3}
                   value={editSummary}
                   onChange={e => setEditSummary(e.target.value)}
-                  className="w-full p-2.5 border rounded-lg"
+                  className="w-full p-2 border rounded-lg"
                 />
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-3 border-t">
+              <div className="flex justify-end space-x-2 pt-3 border-t">
                 <button
                   type="button"
                   onClick={() => setEditModalDoc(null)}
@@ -924,7 +1592,7 @@ export default function AdminLegalLibraryPage() {
                 <button
                   type="submit"
                   disabled={savingEdit}
-                  className="px-5 py-2 bg-indigo-700 hover:bg-indigo-800 text-white rounded-lg font-semibold flex items-center space-x-1.5"
+                  className="px-5 py-2 bg-indigo-700 hover:bg-indigo-800 text-white font-bold rounded-lg flex items-center space-x-1"
                 >
                   {savingEdit ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
                   <span>Save Changes</span>
@@ -935,23 +1603,18 @@ export default function AdminLegalLibraryPage() {
         </div>
       )}
 
-      {/* ========================================================= */}
-      {/* MODAL 2: INGEST NEW JUDGMENT                              */}
-      {/* ========================================================= */}
+      {/* ===================================================================== */}
+      {/* MODAL: UPLOAD ORIGINAL PDF                                            */}
+      {/* ===================================================================== */}
       {ingestModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-slate-900 border border-slate-200 max-h-[90vh] overflow-y-auto space-y-4 text-xs">
             <div className="flex items-center justify-between border-b pb-3">
               <h3 className="font-serif font-bold text-lg text-slate-900 flex items-center space-x-2">
                 <Upload className="w-4 h-4 text-indigo-700" />
-                <span>Ingest & Index Judgment into pgvector</span>
+                <span>Upload Official Court Judgment PDF</span>
               </h3>
-              <button
-                onClick={() => setIngestModalOpen(false)}
-                className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <button onClick={() => setIngestModalOpen(false)}><X className="w-4 h-4 text-slate-400" /></button>
             </div>
 
             {ingestSuccessMsg && (
@@ -969,67 +1632,54 @@ export default function AdminLegalLibraryPage() {
             )}
 
             <form onSubmit={handleIngest} className="space-y-4">
-              {/* File upload box */}
               <div>
-                <label className="block font-semibold mb-1">
-                  Upload PDF / DOCX File (or paste text below)
-                </label>
+                <label className="block font-semibold mb-1">Select Official Court Copy (PDF)</label>
                 <input
                   type="file"
-                  accept=".pdf,.docx,.txt"
+                  accept=".pdf"
+                  required={!ingestRawText}
                   onChange={e => setIngestFile(e.target.files?.[0] || null)}
-                  className="w-full text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                  className="w-full text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                 />
               </div>
 
-              {!ingestFile && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1">Or Paste Judgment Text</label>
-                  <textarea
-                    rows={6}
-                    value={ingestRawText}
-                    onChange={e => setIngestRawText(e.target.value)}
-                    placeholder="IN THE SUPREME COURT OF INDIA / HIGH COURT... Copy and paste judgment text here..."
-                    className="w-full p-2.5 border rounded-lg font-mono text-xs"
-                  />
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-semibold mb-1">Override Case Title (Optional)</label>
+                  <label className="block font-semibold mb-1">Case Title</label>
                   <input
                     type="text"
                     value={ingestTitle}
                     onChange={e => setIngestTitle(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg"
-                    placeholder="Auto-extracted if omitted"
+                    placeholder="Auto-extracted if left empty"
+                    className="w-full p-2 border rounded-lg"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1">Override Citation (Optional)</label>
+                  <label className="block font-semibold mb-1">Citation</label>
                   <input
                     type="text"
                     value={ingestCitation}
                     onChange={e => setIngestCitation(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg font-mono"
-                    placeholder="e.g. 2026 (1) RLR 555"
+                    placeholder="e.g. 2026 INSC 485 or 2026:RJ-JP:44204"
+                    className="w-full p-2 border rounded-lg font-mono"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block font-semibold mb-1">Court Level</label>
                   <select
                     value={ingestCourtLevel}
-                    onChange={e => setIngestCourtLevel(e.target.value as CourtLevel)}
-                    className="w-full p-2.5 border rounded-lg bg-slate-50 font-semibold"
+                    onChange={e => {
+                      const lvl = e.target.value as CourtLevel;
+                      setIngestCourtLevel(lvl);
+                      setIngestCourtName(lvl === 'Supreme Court' ? 'Supreme Court of India' : 'High Court of Judicature for Rajasthan (Jaipur Bench)');
+                    }}
+                    className="w-full p-2 border rounded-lg bg-slate-50 font-semibold"
                   >
-                    <option value="Supreme Court">Supreme Court</option>
-                    <option value="High Court">High Court</option>
-                    <option value="District Court">District Court</option>
-                    <option value="Tribunal">Tribunal</option>
+                    <option value="Supreme Court">Supreme Court of India</option>
+                    <option value="High Court">Rajasthan High Court</option>
                   </select>
                 </div>
                 <div>
@@ -1038,12 +1688,16 @@ export default function AdminLegalLibraryPage() {
                     type="text"
                     value={ingestCourtName}
                     onChange={e => setIngestCourtName(e.target.value)}
-                    className="w-full p-2.5 border rounded-lg"
+                    className="w-full p-2 border rounded-lg"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-3 border-t">
+              <div className="p-3 bg-amber-50 rounded-lg border border-amber-200 text-amber-900 text-[11px]">
+                <strong>Mandatory Approval Guarantee:</strong> Newly uploaded judgments are placed in <strong>Pending Admin Approval</strong> and will NOT be visible publicly until reviewed and approved.
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-3 border-t">
                 <button
                   type="button"
                   onClick={() => setIngestModalOpen(false)}
@@ -1054,19 +1708,10 @@ export default function AdminLegalLibraryPage() {
                 <button
                   type="submit"
                   disabled={ingesting}
-                  className="px-5 py-2 bg-indigo-700 hover:bg-indigo-800 text-white rounded-lg font-semibold flex items-center space-x-1.5 shadow"
+                  className="px-5 py-2 bg-indigo-700 hover:bg-indigo-800 disabled:opacity-50 text-white font-bold rounded-lg flex items-center space-x-1.5 shadow"
                 >
-                  {ingesting ? (
-                    <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>Extracting & Indexing...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Start Indexing Pipeline</span>
-                    </>
-                  )}
+                  {ingesting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+                  <span>Verify PDF & Ingest</span>
                 </button>
               </div>
             </form>
@@ -1074,9 +1719,9 @@ export default function AdminLegalLibraryPage() {
         </div>
       )}
 
-      {/* ========================================================= */}
-      {/* MODAL 3: VIEW FULL TRANSCRIPT                             */}
-      {/* ========================================================= */}
+      {/* ===================================================================== */}
+      {/* MODAL: VIEW FULL TRANSCRIPT                                           */}
+      {/* ===================================================================== */}
       {viewTranscriptDoc && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full p-6 text-slate-900 border border-slate-200 max-h-[90vh] overflow-y-auto space-y-4 text-xs">
@@ -1085,15 +1730,10 @@ export default function AdminLegalLibraryPage() {
                 <span className="font-mono font-bold text-indigo-700">{viewTranscriptDoc.citation}</span>
                 <h3 className="font-serif font-bold text-base text-slate-900">{viewTranscriptDoc.title}</h3>
               </div>
-              <button
-                onClick={() => setViewTranscriptDoc(null)}
-                className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <button onClick={() => setViewTranscriptDoc(null)}><X className="w-4 h-4 text-slate-400" /></button>
             </div>
 
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 font-mono text-[11px] whitespace-pre-wrap max-h-96 overflow-y-auto leading-relaxed">
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 font-mono text-[11px] whitespace-pre-wrap max-h-96 overflow-y-auto leading-relaxed select-text">
               {viewTranscriptDoc.full_text}
             </div>
 

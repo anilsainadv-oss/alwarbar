@@ -8,10 +8,19 @@ import type {
   LegalDocument, 
   LegalDocumentChunk, 
   VerificationStatus,
+  ApprovalStatus,
+  OCRStatus,
   HighCourtBench,
   PublicationStatus,
   SourceType
 } from '../../types/legal-research';
+import { 
+  validatePdfIntegrity, 
+  uploadPdfToR2, 
+  generateR2StorageKey, 
+  isR2Configured, 
+  calculateSha256 
+} from '../storage/r2-client';
 import crypto from 'crypto';
 
 export interface IngestionInput {
@@ -27,7 +36,16 @@ export interface IngestionInput {
   alternate_citations?: string[];
   court_level?: CourtLevel;
   court_name?: string;
+  court_code?: string;
   bench?: HighCourtBench | string | null;
+  diary_number?: string;
+  petitioner?: string;
+  respondent?: string;
+  advocate_names?: string | string[];
+  judgment_type?: string;
+  reportable_status?: boolean;
+  approval_status?: ApprovalStatus;
+  ocr_status?: OCRStatus;
   judgment_date?: string;
   decision_type?: string;
   case_type?: string;
@@ -116,9 +134,13 @@ export async function ingestAndIndexLegalDocument(
   const finalStatutes = inputStatutesStr.trim() || autoMeta.statutes;
   const finalSummary = (input.summary || '').trim() || autoMeta.summary || cleanedText.slice(0, 300) + '...';
 
-  // Determine verification status
-  // Default is 'verified' for manual admin uploads; 'pending' for automated court feeds
-  const verificationStatus: VerificationStatus = input.verification_status || 'verified';
+  // Determine verification & mandatory approval status
+  // STRICT RULE: No judgment may ever be published without Admin Approval.
+  const approvalStatus: ApprovalStatus = input.approval_status || 'pending';
+  const verificationStatus: VerificationStatus = approvalStatus === 'approved' ? 'verified' : approvalStatus === 'rejected' ? 'rejected' : 'pending';
+  const publicationStatus: PublicationStatus = (approvalStatus === 'approved' && input.publication_status === 'published')
+    ? 'published'
+    : 'draft';
 
   // 4. Semantic Chunking with Overlap
   const chunks = chunkLegalDocument(cleanedText, {
@@ -157,8 +179,51 @@ export async function ingestAndIndexLegalDocument(
     bench = 'Jodhpur';
   }
 
-  const contentHash = crypto.createHash('sha256').update(cleanedText).digest('hex');
+  const isSC = finalCourtLevel === 'Supreme Court' || finalCourtName.toLowerCase().includes('supreme');
+  const courtCode = input.court_code || (isSC ? 'INSC' : bench === 'Jodhpur' ? 'HCRAJ-JD' : 'HCRAJ-JP');
 
+  // Cloudflare R2 Upload & Integrity Verification
+  let pdfSha256: string | undefined;
+  let r2StorageKey: string | undefined;
+
+  if (input.buffer) {
+    const integrity = validatePdfIntegrity(input.buffer);
+    if (!integrity.valid) {
+      warnings.push(`PDF validation warning: ${integrity.error}`);
+    }
+    pdfSha256 = integrity.sha256;
+    r2StorageKey = generateR2StorageKey({
+      courtCode,
+      year: finalJudgmentDate?.slice(0, 4) || new Date().getFullYear(),
+      caseNumber: input.case_number || finalCitation,
+      sha256: integrity.sha256
+    });
+
+    if (isR2Configured()) {
+      try {
+        await uploadPdfToR2({
+          buffer: input.buffer,
+          key: r2StorageKey,
+          mimeType: input.mimeType || 'application/pdf',
+          metadata: {
+            citation: finalCitation,
+            court_code: courtCode,
+            sha256: integrity.sha256
+          }
+        });
+      } catch (err) {
+        console.warn('Cloudflare R2 upload deferred or failed:', err);
+        warnings.push(`R2 upload warning: ${err instanceof Error ? err.message : 'Upload failed'}`);
+      }
+    }
+  }
+
+  const contentHash = crypto.createHash('sha256').update(cleanedText).digest('hex');
+  const ocrStatus: OCRStatus = extractionResult?.isScanned 
+    ? ((extractionResult.text?.trim().length || 0) > 50 ? 'completed' : 'pending')
+    : 'not_required';
+
+  const defaultParties = finalParties || 'Petitioner v. Respondent';
   const documentPayload: Omit<LegalDocument, 'id' | 'created_at' | 'updated_at'> = {
     title: finalTitle,
     case_number: input.case_number || autoMeta.case_number || undefined,
@@ -166,10 +231,18 @@ export async function ingestAndIndexLegalDocument(
     alternate_citations: input.alternate_citations || autoMeta.alternate_citations || [],
     court_level: finalCourtLevel,
     court_name: finalCourtName,
+    court_code: courtCode,
     bench,
+    court_bench: bench,
+    diary_number: input.diary_number,
+    petitioner: input.petitioner || (Array.isArray(input.parties) ? input.parties[0] : defaultParties.split(' v. ')[0]),
+    respondent: input.respondent || (Array.isArray(input.parties) ? input.parties[1] : defaultParties.split(' v. ')[1]),
+    advocate_names: input.advocate_names,
     judgment_date: finalJudgmentDate,
     decision_type: input.decision_type || 'Judgment',
+    judgment_type: input.judgment_type || 'Judgment',
     case_type: input.case_type || autoMeta.case_type || undefined,
+    reportable_status: input.reportable_status ?? true,
     judge_names: Array.isArray(input.judge_names) ? input.judge_names : (finalJudgeNames ? [finalJudgeNames] : []),
     parties: Array.isArray(input.parties) ? input.parties : (finalParties ? [finalParties] : []),
     legal_subjects: input.legal_subjects || (finalSubject ? [finalSubject] : []),
@@ -181,14 +254,34 @@ export async function ingestAndIndexLegalDocument(
     content_hash: contentHash,
     source_type: input.source_type || (input.userRole === 'public_admin' ? 'manual' : 'automatic'),
     document_url: input.document_url || undefined,
+    original_source_url: input.document_url || undefined,
+    r2_storage_key: r2StorageKey,
+    pdf_sha256: pdfSha256,
+    ocr_status: ocrStatus,
     verification_status: verificationStatus,
-    publication_status: input.publication_status || (verificationStatus === 'verified' ? 'published' : 'draft'),
+    approval_status: approvalStatus,
+    publication_status: publicationStatus,
     uploaded_by: input.userId || undefined,
     verified_by: verificationStatus === 'verified' ? (input.userId || undefined) : undefined,
-    verified_at: verificationStatus === 'verified' ? new Date().toISOString() : undefined
+    verified_at: verificationStatus === 'verified' ? new Date().toISOString() : undefined,
+    approved_by: approvalStatus === 'approved' ? (input.userId || undefined) : undefined,
+    approved_at: approvalStatus === 'approved' ? new Date().toISOString() : undefined,
+    published_at: publicationStatus === 'published' ? new Date().toISOString() : undefined
   };
 
   const createdDoc = await legalResearchRepository.createDocument(documentPayload, chunkRows);
+
+  // Record audit log entry
+  try {
+    await legalResearchRepository.recordAuditLog({
+      document_id: createdDoc.id,
+      action: approvalStatus === 'approved' ? 'approved' : 'submitted_for_approval',
+      performed_by: input.userId,
+      notes: `Ingested from ${input.source_type || 'manual'} with status: ${approvalStatus}. R2 Storage: ${r2StorageKey || 'pending'}, SHA-256: ${pdfSha256 || 'N/A'}`
+    });
+  } catch (err) {
+    console.warn('Audit log recording failed:', err);
+  }
 
   // 8. Persist Source Provenance (003_legal_sources_processing.sql)
   try {

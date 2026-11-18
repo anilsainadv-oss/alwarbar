@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getJudgmentById, findJudgmentByCitation, type FullJudgmentRecord } from '@/lib/precedents/judgment-store';
 import { generateJudgmentPDF } from '@/lib/pdf/judgment-pdf';
+import { getCurrentUser } from '@/lib/auth/guards';
 import { localDb } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
@@ -25,6 +26,17 @@ export async function GET(req: Request) {
     if (!dbDoc && title) {
       const cleanTit = title.toLowerCase().trim();
       dbDoc = allDbDocs.find(d => d.title.toLowerCase().trim() === cleanTit || d.title.toLowerCase().includes(cleanTit));
+    }
+
+    // Access Control: Block public download of pending, rejected, or unapproved records
+    if (dbDoc && ((dbDoc.approval_status && dbDoc.approval_status !== 'approved') || dbDoc.publication_status === 'draft')) {
+      const user = await getCurrentUser().catch(() => null);
+      if (!user || user.role !== 'public_admin') {
+        return NextResponse.json(
+          { error: 'यह न्यायिक निर्णय अभी प्रशासकीय सत्यापन (Pending Admin Approval) में है। केवल स्वीकृत एवं प्रकाशित निर्णय ही सार्वजनिक रूप से डाउनलोड किए जा सकते हैं।' },
+          { status: 403 }
+        );
+      }
     }
 
     let judgment: FullJudgmentRecord | undefined;

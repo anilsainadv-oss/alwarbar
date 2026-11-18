@@ -34,11 +34,17 @@ export async function GET(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status') || undefined;
+    const approvalStatus = searchParams.get('approval_status') || undefined;
+    const publicationStatus = searchParams.get('publication_status') || undefined;
     const courtLevel = searchParams.get('court_level') || undefined;
+    const courtCode = searchParams.get('court_code') || undefined;
     const search = searchParams.get('search')?.toLowerCase().trim() || '';
 
     const allDocs = await legalResearchRepository.getDocuments({
       status: status !== 'ALL' ? status : undefined,
+      approval_status: approvalStatus !== 'ALL' ? approvalStatus : undefined,
+      publication_status: publicationStatus !== 'ALL' ? publicationStatus : undefined,
+      court_code: courtCode !== 'ALL' ? courtCode : undefined,
       court_level: courtLevel !== 'ALL' ? courtLevel : undefined
     });
 
@@ -52,6 +58,7 @@ export async function GET(req: Request) {
           d.title.toLowerCase().includes(search) ||
           d.citation.toLowerCase().includes(search) ||
           d.court_name.toLowerCase().includes(search) ||
+          (d.case_number && d.case_number.toLowerCase().includes(search)) ||
           statutesStr.toLowerCase().includes(search) ||
           judgeStr.toLowerCase().includes(search) ||
           subjectsStr.toLowerCase().includes(search)
@@ -59,6 +66,7 @@ export async function GET(req: Request) {
       });
     }
 
+    const allTotalDocs = await legalResearchRepository.getDocuments({});
     const allChunks = localDb.getLegalDocumentChunks();
     const docWithMeta = filtered.map(d => ({
       ...d,
@@ -66,10 +74,14 @@ export async function GET(req: Request) {
     }));
 
     const metrics = {
-      totalDocuments: allDocs.length,
-      verifiedCount: allDocs.filter(d => d.verification_status === 'verified').length,
-      pendingCount: allDocs.filter(d => d.verification_status === 'pending').length,
-      rejectedCount: allDocs.filter(d => d.verification_status === 'rejected').length,
+      totalDocuments: allTotalDocs.length,
+      verifiedCount: allTotalDocs.filter(d => d.verification_status === 'verified').length,
+      pendingCount: allTotalDocs.filter(d => (d.approval_status || d.verification_status) === 'pending').length,
+      approvedCount: allTotalDocs.filter(d => d.approval_status === 'approved' || d.verification_status === 'verified').length,
+      publishedCount: allTotalDocs.filter(d => d.publication_status === 'published' && (d.approval_status === 'approved' || d.verification_status === 'verified')).length,
+      rejectedCount: allTotalDocs.filter(d => d.approval_status === 'rejected' || d.verification_status === 'rejected').length,
+      draftCount: allTotalDocs.filter(d => d.approval_status === 'draft' || (d.publication_status === 'draft' && d.approval_status !== 'pending')).length,
+      r2StorageCount: allTotalDocs.filter(d => Boolean(d.r2_storage_key)).length,
       totalChunks: allChunks.length,
       vectorStorageStatus: 'active_pgvector_hnsw'
     };
