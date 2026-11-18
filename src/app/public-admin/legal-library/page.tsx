@@ -7,7 +7,7 @@ import {
   Search, Filter, Trash2, Edit2, Download, FileText, Upload, RefreshCw, 
   ExternalLink, Layers, Check, X, Eye, Loader2, Sparkles, BookOpen,
   Cloud, Database, Clock, History, CheckSquare, XCircle, AlertCircle,
-  Lock, Unlock, FileCheck, ArrowRight
+  Lock, Unlock, FileCheck, ArrowRight, Zap
 } from 'lucide-react';
 import type { 
   LegalDocument, 
@@ -139,6 +139,9 @@ export default function AdminLegalLibraryPage() {
   const [collUrlTitle, setCollUrlTitle] = useState('');
   const [collUrlCitation, setCollUrlCitation] = useState('');
   const [importingUrl, setImportingUrl] = useState(false);
+  const [isSyncingDaily, setIsSyncingDaily] = useState(false);
+  const [autoPublishDaily, setAutoPublishDaily] = useState(true);
+  const [dailySyncMessage, setDailySyncMessage] = useState<string | null>(null);
 
   // Audit Logs State
   const [auditLogs, setAuditLogs] = useState<JudgmentAuditLog[]>([]);
@@ -370,6 +373,44 @@ export default function AdminLegalLibraryPage() {
       setError(err instanceof Error ? err.message : 'URL import failed');
     } finally {
       setImportingUrl(false);
+    }
+  };
+
+  // ---------------------------------------------------------------------------
+  // ⚡ Run Automated Daily Court Ingestion
+  // ---------------------------------------------------------------------------
+  const handleRunDailySync = async () => {
+    setIsSyncingDaily(true);
+    setDailySyncMessage(null);
+    setMessage('');
+    setError('');
+    try {
+      const res = await fetch('/api/admin/public/legal-library/collection', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'auto_sync_daily',
+          autoPublish: autoPublishDaily,
+          court: 'all'
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Daily Court Auto-Sync failed');
+      setDailySyncMessage(
+        data.message ||
+        `Successfully synced ${data.newlyIngestedCount} judgments to Cloudflare R2!`
+      );
+      setMessage(`Daily Sync Completed: ${data.newlyIngestedCount} new judgments processed.`);
+      loadData();
+      if (autoPublishDaily) {
+        setActiveSection('PUBLISHED');
+      } else {
+        setActiveSection('PENDING');
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Daily court sync failed');
+    } finally {
+      setIsSyncingDaily(false);
     }
   };
 
@@ -899,6 +940,61 @@ export default function AdminLegalLibraryPage() {
                 Supreme Court of India
               </button>
             </div>
+          </div>
+
+          {/* ⚡ PROMINENT DAILY COURT AUTO-SYNC HERO CARD */}
+          <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 shadow-md border border-indigo-500/30 space-y-4">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40">
+                  <Zap className="w-3.5 h-3.5 text-amber-400" />
+                  <span>AUTOMATIC DAILY JUDGMENT ENGINE</span>
+                </div>
+                <h3 className="text-xl font-black text-white tracking-wide">
+                  Daily Supreme Court & Rajasthan High Court Auto-Sync
+                </h3>
+                <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
+                  Fetches today's published judgments from the Supreme Court of India (INSC) and Rajasthan High Court (Jaipur & Jodhpur Benches), generates official PDFs, uploads them directly to your private Cloudflare R2 bucket (<code className="text-amber-300 font-mono">alwar-advocates-judgements</code>), extracts full text, and indexes in AI Legal Research.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto shrink-0">
+                <label className="flex items-center space-x-2 bg-white/10 px-3.5 py-2.5 rounded-xl text-xs font-semibold cursor-pointer border border-white/15 hover:bg-white/20 transition select-none">
+                  <input
+                    type="checkbox"
+                    checked={autoPublishDaily}
+                    onChange={e => setAutoPublishDaily(e.target.checked)}
+                    className="w-4 h-4 text-emerald-500 rounded focus:ring-emerald-400"
+                  />
+                  <span>Auto-Save & Publish Directly</span>
+                </label>
+
+                <button
+                  onClick={handleRunDailySync}
+                  disabled={isSyncingDaily}
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-xs transition shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
+                >
+                  {isSyncingDaily ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin text-slate-950" />
+                      <span>Syncing & Uploading to R2...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-4 h-4 fill-slate-950" />
+                      <span>⚡ Sync Today's Judgments Now</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {dailySyncMessage && (
+              <div className="p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-xl text-emerald-300 text-xs flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>{dailySyncMessage}</span>
+              </div>
+            )}
           </div>
 
           {/* Search Filters Form */}

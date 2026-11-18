@@ -10,6 +10,7 @@ import {
   importSupremeCourtJudgmentByUrl, 
   importSupremeCourtJudgmentFromBuffer 
 } from '@/lib/court-scrapers/supreme-court';
+import { runAutomatedCourtIngestion } from '@/lib/legal-research/court-crawler';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -188,6 +189,19 @@ export async function POST(req: Request) {
         message: `Retrieved court copy from URL, verified SHA-256, uploaded to R2, extracted text, and placed in Pending Approval.`,
         document: doc
       });
+    }
+
+    // 3. Automated Daily Court Ingestion Action
+    if (body.action === 'auto_sync_daily') {
+      const autoPublish = body.autoPublish !== false; // Default true for frictionless daily save
+      const court = body.court || 'all';
+      const syncResult = await runAutomatedCourtIngestion({
+        court,
+        autoPublish,
+        autoVerify: autoPublish,
+        triggeredBy: user.email
+      });
+      return NextResponse.json(syncResult);
     }
 
     return NextResponse.json({ error: 'Unrecognized action' }, { status: 400 });
