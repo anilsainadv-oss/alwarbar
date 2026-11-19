@@ -1720,6 +1720,23 @@
   "chamber_invitations": [],
   "audit_logs": [
     {
+      "actor_id": "public.admin@alwaradvocates.org",
+      "actor_name": "Automated Court Feed Worker (hcraj.nic.in & e-SCR)",
+      "actor_role": "system_service",
+      "action": "AUTOMATIC_COURT_INGESTION_SYNC",
+      "entity_type": "legal_ingestion_job",
+      "entity_id": "job-48df82a7-5266-4c9c-abc4-26b5397ec520",
+      "details": {
+        "total_candidates": 6,
+        "newly_ingested": 0,
+        "skipped_existing": 6,
+        "auto_publish": true,
+        "duration_ms": 7966
+      },
+      "id": "aud-519c7fdb-690b-47fc-982f-e005464efb78",
+      "created_at": "2026-11-18T19:13:55.998Z"
+    },
+    {
       "actor_id": "admin@alwarbar.org",
       "actor_name": "Automated Court Feed Worker (hcraj.nic.in & e-SCR)",
       "actor_role": "system_service",
@@ -2455,9 +2472,9 @@
       "full_text": "IN THE SUPREME COURT OF INDIA\nCRIMINAL APPELLATE JURISDICTION\n\nCRIMINAL APPEAL NO. 1945 OF 2026\n(ARISING OUT OF SPECIAL LEAVE PETITION (CRL.) NO. 6120 OF 2025)\n\nMAHESH KUMAR S/O SHRI KISHAN LAL,\nRESIDENT OF HOPE CIRCUS, PURANA ALWAR,\nTEHSIL & DISTRICT ALWAR (RAJASTHAN)\n                                                            ...APPELLANT\nVERSUS\nRAJESH MEENA S/O SHRI CHHAJU RAM MEENA,\nRESIDENT OF SECTOR-7, RAJIV GANDHI NAGAR,\nALWAR, DISTRICT ALWAR (RAJASTHAN)\n                                                            ...RESPONDENT\n\nCOUNSEL APPEARING:\nMr. Dushyant Dave, Senior Advocate with Mr. P.S. Patwalia, for the Appellant.\nMr. Siddhartha Dave, Senior Advocate with Mr. Ajay Choudhary, for the Respondent.\n\nCORAM:\nHON'BLE MR. JUSTICE VIKRAM NATH\nHON'BLE MR. JUSTICE SATISH CHANDRA SHARMA\n\nJUDGMENT:\n1. Leave granted under Article 136 of the Constitution.\nThis appeal is directed against the judgment and order dated 14th May 2025 passed by the High Court of Judicature for Rajasthan at Jaipur Bench in S.B. Criminal Revision Petition No. 512/2024. By the impugned judgment, the High Court set aside the concurrent judgments of conviction recorded by the learned Judicial Magistrate, First Class No. 2, Alwar in Criminal Case No. 418/2021, and affirmed by the learned Sessions Judge, Alwar in Criminal Appeal No. 45/2023, whereby the respondent Rajesh Meena was convicted of the offence punishable under Section 138 of the Negotiable Instruments Act, 1881 and sentenced to six months simple imprisonment with a direction to pay fine/compensation of Rs. 10,00,000/-.\n\n2. SUBSTANTIVE FACTUAL BACKGROUND:\nThe appellant Mahesh Kumar instituted a complaint under Section 138 of the Negotiable Instruments Act, 1881 against the respondent in the Court of Judicial Magistrate, Alwar. It was stated in the complaint that the appellant and respondent enjoyed family relations for several years. In November 2020, the respondent approached the appellant seeking an urgent friendly financial accommodation of Rs. 8,00,000/- (Rupees Eight Lakhs) to clear urgent commercial dues in his real estate business. The appellant advanced the said amount through a combination of bank withdrawal and cash savings.\nIn discharge of the legally enforceable debt, the respondent issued Cheque No. 441028 dated 15th January 2021 for Rs. 8,00,000/- drawn on State Bank of India, Alwar Main Branch.\nThe appellant presented the cheque through his banker, HDFC Bank, Alwar Branch, on 20th January 2021. The cheque was dishonoured and returned unpaid vide bank return memo dated 22nd January 2021 with the endorsement 'Funds Insufficient'.\nThe appellant caused a statutory legal demand notice dated 5th February 2021 to be served upon the respondent through registered post. The postal track report confirmed service on 9th February 2021. The respondent sent a reply notice raising a defense that the cheque was handed over as a blank security cheque in an unconsummated land transaction. Payment was not tendered within the statutory 15 days, leading to the complaint.\n\n3. FINDINGS OF THE TRIAL MAGISTRATE & SESSIONS COURT:\nDuring the trial before the JMFC Alwar, the appellant examined himself as CW-1 and tendered the original cheque (Ex.P-1), bank return memo (Ex.P-2), copy of demand notice (Ex.P-3), postal receipt (Ex.P-4), and delivery report (Ex.P-5). In statement under Section 313 CrPC, the respondent admitted that the signature appearing on the cheque was his, but claimed that the body of the cheque was not filled in his handwriting and was given as a security cheque. Crucially, the respondent chose not to step into the witness box as DW-1 nor did he examine any independent witness to corroborate his defense.\nThe trial magistrate held that upon admission of signature, the statutory presumption under Section 139 of the Act came into play. The defense of security cheque was rejected as an unproved afterthought. The Sessions Judge, Alwar dismissed the appeal.\n\n4. THE REVERSAL BY THE HIGH COURT:\nThe learned Single Judge of the High Court, in exercise of revisional jurisdiction, reversed the conviction and acquitted the respondent on a singular premise: during cross-examination, CW-1 admitted that he did not show the loan of Rs. 8,00,000/- in his Income Tax Returns (ITR). The High Court held that cash lending above Rs. 20,000/- violates Section 269SS of the Income Tax Act, 1961, and in the absence of ITR proof, the complainant failed to prove his financial capacity to lend Rs. 8,00,000/- beyond reasonable doubt.\n\n5. QUESTION OF LAW FOR DETERMINATION:\nWhether the High Court was legally justified in acquitting the drawer under Section 138 of the Negotiable Instruments Act solely on the ground of non-disclosure of the loan transaction in the complainant's Income Tax Returns, thereby disregarding the mandatory statutory presumption under Section 139 once execution of the cheque is admitted?\n\n6. LEGAL ANALYSIS & BINDING PRECEDENTS:\nWe find the reasoning of the High Court to be fundamentally flawed and contrary to authoritative pronouncements of this Court.\nThe core of Chapter XVII of the Negotiable Instruments Act is to enhance the credibility of commercial negotiable instruments in business transactions.\nSection 139 creates a statutory reverse burden of proof:\n\"139. Presumption in favour of holder.—It shall be presumed, unless the contrary is proved, that the holder of a cheque received the cheque of the nature referred to in section 138 for the discharge, in whole or in part, of any debt or other liability.\"\n\nA three-Judge Bench of this Court in Rangappa v. Sri Mohan, (2010) 11 SCC 441, authoritatively held:\n\"The presumption mandated by Section 139 of the Act does indeed include the existence of a legally enforceable debt or liability... It is a settled position that when an accused has to rebut the presumption under Section 139, the standard of proof for doing so is that of 'preponderance of probabilities'. Therefore, if the accused is able to raise a probable defence which creates doubts about the existence of a legally enforceable debt or liability, the prosecution can fail. The accused can rely on the materials submitted by the complainant in order to raise such a defence and it is conceivable that in some cases the accused may not need to adduce evidence of his/her own.\"\n\nHowever, in Bir Singh v. Mukesh Kumar, (2019) 4 SCC 197, this Court clarified that:\n\"Even if a blank cheque leaf is voluntarily signed and handed over by the accused, which is towards some payment, it would attract the presumption under Section 139 of the Act, in the absence of any cogent evidence to show that the cheque was not issued in discharge of a debt.\"\n\nReiterating this principle in Kalamani Tex v. P. Balasubramanian, (2021) 5 SCC 283, and Rohitbhai Jivanlal Patel v. State of Gujarat, (2019) 18 SCC 106, this Court held:\n\"Once the execution of the cheque is admitted, the court has to presume that the cheque had been issued for discharging a debt or liability. The question of complainant proving his source of income or financial capacity does not arise until the accused creates a strong, probable doubt by leading credible defense evidence.\"\n\nRegarding the non-disclosure of loan in Income Tax Returns, this Court in Tedhi Singh v. Narayan Dass Gautam, (2022) 6 SCC 735, held that an infraction of Section 269SS of the Income Tax Act may attract statutory penalties from tax authorities, but it does not render the underlying transaction void or invalid under civil and criminal law. A debt does not cease to be a legally enforceable debt merely because it was not reflected in the ledger of the assessee.\nIn the case at hand, the respondent admitted his signature on the cheque. He admitted receipt of legal notice. He offered a nebulous defense of an unconsummated land transaction, yet he never instituted any police complaint or civil suit seeking return of the cheque for over two years. He failed to enter the witness box. Mere bald suggestions in cross-examination do not satisfy the legal standard of preponderance of probabilities.\nThe High Court misapplied revisional powers by reversing concurrent findings of facts on a totally irrelevant consideration.\n\n7. FINAL DISPOSITION & DIRECTIONS:\nFor the reasons recorded above, the judgment and order of the High Court of Judicature for Rajasthan at Jaipur Bench dated 14th May 2025 is hereby SET ASIDE.\nThe judgment of conviction and sentence passed by the Judicial Magistrate, First Class No. 2, Alwar, as affirmed by the Sessions Judge, Alwar, is RESTORED.\nThe respondent Rajesh Meena is directed to deposit the compensation amount of Rs. 10,00,000/- (Rupees Ten Lakhs) before the learned trial magistrate within a period of eight weeks from today. Upon such deposit, the compensation shall be disbursed to the appellant.\nIn the event the respondent fails to deposit the said amount within the stipulated eight weeks, the trial magistrate shall take immediate coercive steps to arrest the respondent to serve out the sentence of six months simple imprisonment.\nThe appeal is ALLOWED with costs quantified at Rs. 25,000/- payable by the respondent to the appellant.",
       "content_hash": "56ccb3f0d138139522289bc97ce9e7b8012a953efd15a463a40a29f5d32de123",
       "source_type": "automatic",
-      "document_url": "https://escr.sci.gov.in/judgment/2026-INSC-485",
+      "document_url": "https://escr.sci.gov.in/search?q=2026+INSC+485",
       "verification_status": "verified",
-      "publication_status": "draft",
+      "publication_status": "published",
       "id": "doc-21cecd00-613e-4d8b-a2d5-f576b066f922",
       "created_at": "2026-11-15T11:04:21.993Z",
       "updated_at": "2026-11-15T11:21:56.069Z",
@@ -2465,7 +2482,9 @@
       "verified_at": "2026-11-15T11:21:56.014Z",
       "summary_hi": "चेक पर हस्ताक्षर स्वीकार होने पर परक्राम्य लिखत अधिनियम 1881 की धारा 139 के तहत वैधानिक उपधारणा उत्पन्न होती है, जिसे केवल कोरे इनकार से खंडित नहीं किया जा सकता।",
       "approval_status": "approved",
-      "court_code": "INSC"
+      "court_code": "INSC",
+      "r2_storage_key": "INSC/2026/CRL-A-1945-2026_abe47c9c.pdf",
+      "pdf_sha256": "abe47c9cd47ebaa987f85654367cfba47cf7133e7f6a517933bb2645e8644dcf"
     },
     {
       "title": "M/s Alwar Marble & Granites v. State of Rajasthan & Ors.",
@@ -170529,6 +170548,19 @@
     }
   ],
   "legal_ingestion_jobs": [
+    {
+      "collection_method": "automatic",
+      "source_name": "Rajasthan High Court (Jaipur & Jodhpur) & Supreme Court (e-SCR)",
+      "source_url": "https://hcraj.nic.in/ & https://escr.sci.gov.in/",
+      "status": "completed",
+      "total_documents": 6,
+      "successful_documents": 0,
+      "failed_documents": 0,
+      "started_at": "2026-11-18T19:13:47.830Z",
+      "id": "job-48df82a7-5266-4c9c-abc4-26b5397ec520",
+      "created_at": "2026-11-18T19:13:48.152Z",
+      "completed_at": "2026-11-18T19:13:55.715Z"
+    },
     {
       "collection_method": "automatic",
       "source_name": "Rajasthan High Court (Jaipur & Jodhpur) & Supreme Court (e-SCR)",

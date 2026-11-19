@@ -3,6 +3,7 @@ import { getJudgmentById, findJudgmentByCitation, type FullJudgmentRecord } from
 import { generateJudgmentPDF } from '@/lib/pdf/judgment-pdf';
 import { getCurrentUser } from '@/lib/auth/guards';
 import { localDb } from '@/lib/db';
+import { downloadPdfFromR2, isR2Configured } from '@/lib/storage/r2-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -167,7 +168,19 @@ export async function GET(req: Request) {
     const shouldReturnBinaryPdf = format === 'pdf' || (isDownload && format !== 'html');
 
     if (shouldReturnBinaryPdf) {
-      const pdfBuffer = generateJudgmentPDF(judgment);
+      let pdfBuffer: Buffer;
+      if (dbDoc?.r2_storage_key && isR2Configured()) {
+        try {
+          const r2Result = await downloadPdfFromR2(dbDoc.r2_storage_key);
+          pdfBuffer = r2Result.buffer;
+        } catch (r2Err) {
+          console.warn(`Failed to fetch from R2 key ${dbDoc.r2_storage_key}, falling back to generator:`, r2Err);
+          pdfBuffer = generateJudgmentPDF(judgment);
+        }
+      } else {
+        pdfBuffer = generateJudgmentPDF(judgment);
+      }
+
       const cleanCaseTitle = judgment.case_title.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 40);
       const cleanCite = judgment.citation.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 30);
       const filename = `${cleanCaseTitle}_${cleanCite}.pdf`;
