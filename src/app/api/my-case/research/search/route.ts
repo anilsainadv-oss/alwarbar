@@ -114,6 +114,12 @@ export async function GET(req: Request) {
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Legal research search failed';
+    if (message.includes('UNAUTHORIZED')) {
+      return NextResponse.json({ error: 'अनधिकृत पहुंच (Unauthorized): कृपया अधिवक्ता खाते में लॉगिन करें।' }, { status: 401 });
+    }
+    if (message.includes('FORBIDDEN')) {
+      return NextResponse.json({ error: 'निषिद्ध पहुंच (Forbidden): केवल पंजीकृत अधिवक्ताओं के लिए उपलब्ध।' }, { status: 403 });
+    }
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
@@ -196,6 +202,12 @@ export async function POST(req: Request) {
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Legal research search failed';
+    if (message.includes('UNAUTHORIZED')) {
+      return NextResponse.json({ error: 'अनधिकृत पहुंच (Unauthorized): कृपया अधिवक्ता खाते में लॉगिन करें।' }, { status: 401 });
+    }
+    if (message.includes('FORBIDDEN')) {
+      return NextResponse.json({ error: 'निषिद्ध पहुंच (Forbidden): केवल पंजीकृत अधिवक्ताओं के लिए उपलब्ध।' }, { status: 403 });
+    }
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

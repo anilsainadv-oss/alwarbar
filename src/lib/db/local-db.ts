@@ -3515,11 +3515,23 @@ class LocalDatabase {
       const statuteStr = Array.isArray(doc.statutes) ? doc.statutes.join(' ') : (doc.statutes || '');
       const subjectStr = doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(' ') : '');
       const judgeStr = Array.isArray(doc.judge_names) ? doc.judge_names.join(' ') : (doc.judge_names || '');
-      const docText = `${doc.title} ${doc.citation} ${doc.court_name} ${doc.bench || ''} ${statuteStr} ${subjectStr} ${judgeStr}`.toLowerCase();
+      const docCaseNo = (doc.case_number || '').toLowerCase();
+      const partiesStr = Array.isArray(doc.parties) ? doc.parties.join(' ').toLowerCase() : '';
+      const docText = `${doc.title} ${doc.citation} ${docCaseNo} ${partiesStr} ${doc.court_name} ${doc.bench || ''} ${statuteStr} ${subjectStr} ${judgeStr}`.toLowerCase();
       
-      // Exact citation boost
+      // Exact citation boost (+0.85)
       const citationMatch = doc.citation.toLowerCase().includes(cleanQuery) || cleanQuery.includes(doc.citation.toLowerCase());
-      if (citationMatch) kwScore += 0.8;
+      if (citationMatch) kwScore += 0.85;
+
+      // Case number boost (+0.75)
+      if (docCaseNo && (docCaseNo.includes(cleanQuery) || cleanQuery.includes(docCaseNo))) {
+        kwScore += 0.75;
+      }
+
+      // Parties boost (+0.60)
+      if (partiesStr && (partiesStr.includes(cleanQuery) || cleanQuery.includes(partiesStr))) {
+        kwScore += 0.60;
+      }
 
       for (const tok of queryTokens) {
         if (docText.includes(tok)) kwScore += 0.15;

@@ -1,5 +1,5 @@
 import { localDb } from '@/lib/db';
-import { supabase, isSupabaseConfigured } from '@/lib/db/supabase';
+import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/db/supabase';
 import { embeddingService, cosineSimilarity } from '@/lib/ai/embeddings';
 import type { 
   LegalDocument, 
@@ -33,59 +33,130 @@ export const legalResearchRepository = {
 
     // 2. Try Supabase pgvector RPC functions if configured
     if (isSupabaseConfigured && supabase) {
-      // 2a. Attempt 006_legal_hybrid_search: search_legal_chunks (Chunk RRF)
       try {
+        // Fetch candidate chunks from Supabase RPC with a wide match window for deduplication
         const { data: chunksData, error: chunksErr } = await supabase.rpc('search_legal_chunks', {
           query_embedding: queryEmbedding,
           query_text: cleanQuery,
-          match_count: limit,
+          match_count: 50,
           court_filter: filters.court_name || null,
           bench_filter: null,
           year_filter: filters.year ? parseInt(filters.year, 10) : null
         });
 
-        if (!chunksErr && Array.isArray(chunksData) && chunksData.length > 0) {
-          return chunksData.map((r: any) => ({
-            chunk_id: r.chunk_id,
-            document_id: r.document_id,
-            title: r.title,
-            citation: r.citation,
-            court_name: r.court_name,
-            court_level: r.court_name?.toLowerCase().includes('supreme') ? 'Supreme Court' : 'High Court',
-            bench: r.bench,
-            judgment_date: r.judgment_date,
-            page_number: r.page_number,
-            paragraph_number: r.paragraph_number,
-            snippet: r.content,
-            hybrid_score: r.relevance_score
-          })) as LegalSearchResult[];
+        // Query published & approved documents from Supabase (Double-Lock Enforced)
+        let docQuery = supabase
+          .from('legal_documents')
+          .select('id, title, citation, case_number, parties, court_name, court_level, bench, judgment_date, legal_subject, statutes, summary, full_text')
+          .eq('approval_status', 'approved')
+          .eq('publication_status', 'published');
+
+        if (filters.court_level && filters.court_level !== 'ALL') {
+          docQuery = docQuery.eq('court_level', filters.court_level);
         }
-      } catch {
-        // Fall through to hybrid_legal_search
-      }
+        if (filters.court_name) {
+          docQuery = docQuery.ilike('court_name', `%${filters.court_name}%`);
+        }
+        if (filters.year) {
+          docQuery = docQuery.gte('judgment_date', `${filters.year}-01-01`).lte('judgment_date', `${filters.year}-12-31`);
+        }
 
-      // 2b. Attempt hybrid_legal_search (Document + Chunk level)
-      try {
-        const filterCriteria: Record<string, any> = {};
-        if (filters.court_level && filters.court_level !== 'ALL') filterCriteria.court_level = filters.court_level;
-        if (filters.court_name) filterCriteria.court_name = filters.court_name;
-        if (filters.legal_subject) filterCriteria.legal_subject = filters.legal_subject;
-        if (filters.year) filterCriteria.year = filters.year;
+        const { data: docsData, error: docsErr } = await docQuery;
 
-        const { data, error } = await supabase.rpc('hybrid_legal_search', {
-          query_text: cleanQuery,
-          query_embedding: queryEmbedding,
-          match_count: limit,
-          full_text_weight: 0.5,
-          semantic_weight: 0.5,
-          filter_criteria: filterCriteria
-        });
+        if (!docsErr && Array.isArray(docsData) && docsData.length > 0) {
+          // Document-Level Chunk Deduplication: map each document to its BEST matching chunk
+          const bestChunkPerDoc = new Map<string, any>();
+          if (!chunksErr && Array.isArray(chunksData)) {
+            for (const c of chunksData) {
+              const existing = bestChunkPerDoc.get(c.document_id);
+              if (!existing || c.relevance_score > existing.relevance_score) {
+                bestChunkPerDoc.set(c.document_id, c);
+              }
+            }
+          }
 
-        if (!error && Array.isArray(data) && data.length > 0) {
-          return data as LegalSearchResult[];
+          const lowerQuery = cleanQuery.toLowerCase();
+          const queryTokens = lowerQuery.split(/[\s,.;:()\[\]{}"'\-]+/).filter(t => t.length > 2);
+          const scoredResults: LegalSearchResult[] = [];
+
+          for (const doc of docsData) {
+            if (filters.legal_subject && doc.legal_subject && !doc.legal_subject.toLowerCase().includes(filters.legal_subject.toLowerCase())) {
+              continue;
+            }
+
+            const chunk = bestChunkPerDoc.get(doc.id);
+            const semScore = chunk ? Math.max(0, chunk.relevance_score) : 0;
+
+            let kwScore = 0;
+            const docCitation = (doc.citation || '').toLowerCase();
+            const docCaseNo = (doc.case_number || '').toLowerCase();
+            const docTitle = (doc.title || '').toLowerCase();
+            const partiesStr = Array.isArray(doc.parties) ? doc.parties.join(' ').toLowerCase() : '';
+            const statutesStr = Array.isArray(doc.statutes) ? doc.statutes.join(' ').toLowerCase() : (doc.statutes || '').toLowerCase();
+            const subjectStr = (doc.legal_subject || '').toLowerCase();
+
+            // Exact or substring citation match (+0.85)
+            if (docCitation && (docCitation.includes(lowerQuery) || lowerQuery.includes(docCitation))) {
+              kwScore += 0.85;
+            }
+
+            // Exact or partial case number match (+0.75)
+            if (docCaseNo && (docCaseNo.includes(lowerQuery) || lowerQuery.includes(docCaseNo))) {
+              kwScore += 0.75;
+            }
+
+            // Party names matching (+0.60)
+            if (partiesStr && (partiesStr.includes(lowerQuery) || lowerQuery.includes(partiesStr))) {
+              kwScore += 0.60;
+            }
+
+            // Token-based matching across metadata (+0.40 max)
+            const fullMeta = `${docTitle} ${docCitation} ${docCaseNo} ${partiesStr} ${statutesStr} ${subjectStr} ${doc.court_name}`;
+            let matchedTokenCount = 0;
+            for (const token of queryTokens) {
+              if (fullMeta.includes(token)) {
+                matchedTokenCount++;
+              }
+            }
+            if (queryTokens.length > 0) {
+              kwScore += (matchedTokenCount / queryTokens.length) * 0.40;
+            }
+
+            const hybridScore = Number((semScore * 0.50 + Math.min(kwScore, 1.0) * 0.50).toFixed(4));
+
+            if (hybridScore > 0.05 || kwScore > 0.2) {
+              const snippet = chunk?.content 
+                ? chunk.content.slice(0, 450)
+                : (doc.summary || doc.full_text.slice(0, 450));
+
+              scoredResults.push({
+                document_id: doc.id,
+                chunk_id: chunk?.chunk_id,
+                title: doc.title,
+                citation: doc.citation,
+                court_name: doc.court_name,
+                court_level: doc.court_level || (doc.court_name?.toLowerCase().includes('supreme') ? 'Supreme Court' : 'High Court'),
+                bench: doc.bench,
+                judgment_date: doc.judgment_date,
+                legal_subject: doc.legal_subject,
+                statutes: Array.isArray(doc.statutes) ? doc.statutes.join(', ') : doc.statutes,
+                page_number: chunk?.page_number || 1,
+                paragraph_number: chunk?.paragraph_number || '1',
+                snippet,
+                semantic_score: Number(semScore.toFixed(4)),
+                keyword_score: Number(Math.min(kwScore, 1.0).toFixed(4)),
+                hybrid_score: hybridScore
+              });
+            }
+          }
+
+          scoredResults.sort((a, b) => b.hybrid_score - a.hybrid_score);
+          if (scoredResults.length > 0) {
+            return scoredResults.slice(0, limit);
+          }
         }
       } catch (err) {
-        console.warn('Supabase hybrid search RPC failed, falling back to local hybrid engine:', err);
+        console.warn('Supabase hybrid search failed, falling back to local hybrid engine:', err);
       }
     }
 
@@ -172,16 +243,17 @@ export const legalResearchRepository = {
    * Get complete document record with all chunks
    */
   async getDocumentById(id: string): Promise<(LegalDocument & { chunks: LegalDocumentChunk[] }) | null> {
-    if (isSupabaseConfigured && supabase) {
+    const client = supabaseAdmin || supabase;
+    if (isSupabaseConfigured && client) {
       try {
-        const { data: doc, error: docError } = await supabase
+        const { data: doc, error: docError } = await client
           .from('legal_documents')
           .select('*')
           .eq('id', id)
           .single();
 
         if (!docError && doc) {
-          const { data: chunks } = await supabase
+          const { data: chunks } = await client
             .from('legal_document_chunks')
             .select('*')
             .eq('document_id', id)
@@ -211,9 +283,10 @@ export const legalResearchRepository = {
     publication_status?: string;
     court_code?: string;
   }): Promise<LegalDocument[]> {
-    if (isSupabaseConfigured && supabase) {
+    const client = supabaseAdmin || supabase;
+    if (isSupabaseConfigured && client) {
       try {
-        let q = supabase.from('legal_documents').select('*');
+        let q = client.from('legal_documents').select('*');
         if (filter?.status) q = q.eq('verification_status', filter.status);
         if (filter?.approval_status && filter.approval_status !== 'ALL') q = q.eq('approval_status', filter.approval_status);
         if (filter?.publication_status && filter.publication_status !== 'ALL') q = q.eq('publication_status', filter.publication_status);
@@ -234,9 +307,10 @@ export const legalResearchRepository = {
    * Fetch judgment audit history
    */
   async getAuditLogs(documentId?: string) {
-    if (isSupabaseConfigured && supabase) {
+    const client = supabaseAdmin || supabase;
+    if (isSupabaseConfigured && client) {
       try {
-        let q = supabase.from('judgment_audit_logs').select('*');
+        let q = client.from('judgment_audit_logs').select('*');
         if (documentId) q = q.eq('document_id', documentId);
         const { data, error } = await q.order('created_at', { ascending: false });
         if (!error && data) return data;
@@ -257,9 +331,10 @@ export const legalResearchRepository = {
     notes?: string;
     metadata_snapshot?: Record<string, any>;
   }) {
-    if (isSupabaseConfigured && supabase) {
+    const client = supabaseAdmin || supabase;
+    if (isSupabaseConfigured && client) {
       try {
-        const { data, error } = await supabase.from('judgment_audit_logs').insert(log).select().single();
+        const { data, error } = await client.from('judgment_audit_logs').insert(log).select().single();
         if (!error && data) return data;
       } catch {
         // Fallback
@@ -275,9 +350,10 @@ export const legalResearchRepository = {
     doc: Omit<LegalDocument, 'id' | 'created_at' | 'updated_at'>,
     chunks: Omit<LegalDocumentChunk, 'id' | 'document_id' | 'created_at'>[]
   ): Promise<LegalDocument> {
-    if (isSupabaseConfigured && supabase) {
+    const client = supabaseAdmin || supabase;
+    if (isSupabaseConfigured && client) {
       try {
-        const { data: newDoc, error: docErr } = await supabase
+        const { data: newDoc, error: docErr } = await client
           .from('legal_documents')
           .insert(doc)
           .select()
@@ -289,7 +365,7 @@ export const legalResearchRepository = {
               ...c,
               document_id: newDoc.id
             }));
-            await supabase.from('legal_document_chunks').insert(chunkRows);
+            await client.from('legal_document_chunks').insert(chunkRows);
           }
           return newDoc as LegalDocument;
         }
@@ -305,9 +381,10 @@ export const legalResearchRepository = {
    * Update legal document metadata or verification status (Admin)
    */
   async updateDocument(id: string, updates: Partial<LegalDocument>): Promise<LegalDocument | null> {
-    if (isSupabaseConfigured && supabase) {
+    const client = supabaseAdmin || supabase;
+    if (isSupabaseConfigured && client) {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await client
           .from('legal_documents')
           .update(updates)
           .eq('id', id)
@@ -326,9 +403,10 @@ export const legalResearchRepository = {
    * Delete legal document and cascading chunks (Admin)
    */
   async deleteDocument(id: string): Promise<boolean> {
-    if (isSupabaseConfigured && supabase) {
+    const client = supabaseAdmin || supabase;
+    if (isSupabaseConfigured && client) {
       try {
-        const { error } = await supabase
+        const { error } = await client
           .from('legal_documents')
           .delete()
           .eq('id', id);

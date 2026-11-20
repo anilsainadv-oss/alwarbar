@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { localDb } from '@/lib/db';
+import { legalResearchRepository } from '@/lib/db/repositories/legal-research';
 import type { LegalCategory, LegalUpdate } from '@/types/database';
 
 export const dynamic = 'force-dynamic';
@@ -7,8 +8,10 @@ export const dynamic = 'force-dynamic';
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const category = searchParams.get('category') || 'all';
-    const type = searchParams.get('type') || 'all'; // 'bare_act' | 'judgment' | 'all'
+    const rawCategory = searchParams.get('category') || 'all';
+    const category = rawCategory.toLowerCase().trim();
+    const rawType = searchParams.get('type') || 'all';
+    const type = rawType.toLowerCase().trim(); // 'bare_act' | 'judgment' | 'all'
     const q = (searchParams.get('q') || '').trim().toLowerCase();
     const page = Math.max(1, parseInt(searchParams.get('page') || '1') || 1);
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
@@ -16,9 +19,16 @@ export async function GET(req: Request) {
     let updates: LegalUpdate[] = localDb.getLegalUpdates().filter(l => l.is_published);
 
     // Strictly enforce Double-Lock: publication_status === 'published' AND approval_status === 'approved'
-    const legalDocs = localDb.getLegalDocuments().filter(d => 
-      d.publication_status === 'published' && (d.approval_status === 'approved' || d.verification_status === 'verified')
-    );
+    // Hydrate primarily from Supabase Cloud Database via legalResearchRepository with localDb safety fallback
+    let legalDocs = await legalResearchRepository.getDocuments({
+      publication_status: 'published',
+      approval_status: 'approved'
+    });
+    if (!legalDocs || legalDocs.length === 0) {
+      legalDocs = localDb.getLegalDocuments().filter(d => 
+        d.publication_status === 'published' && (d.approval_status === 'approved' || d.verification_status === 'verified')
+      );
+    }
     for (const doc of legalDocs) {
       const alreadyExists = updates.some(u => 
         (u.citation && doc.citation && u.citation.toLowerCase().trim() === doc.citation.toLowerCase().trim()) ||
@@ -49,16 +59,16 @@ export async function GET(req: Request) {
       }
     }
 
-    // Filter by type
+    // Filter by type (case-insensitive)
     if (type === 'bare_act') {
       updates = updates.filter(l => l.category === 'central_law' || l.category === 'rajasthan_act');
     } else if (type === 'judgment') {
       updates = updates.filter(l => l.category === 'sc_judgment' || l.category === 'hc_judgment');
     }
 
-    // Filter by category
-    if (category !== 'all') {
-      updates = updates.filter(l => l.category === category);
+    // Filter by category (case-insensitive, ignore if 'all')
+    if (category && category !== 'all') {
+      updates = updates.filter(l => l.category.toLowerCase() === category);
     }
 
     // Search query
