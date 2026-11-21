@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { localDb } from '@/lib/db';
 import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/db/supabase';
 import { embeddingService, cosineSimilarity } from '@/lib/ai/embeddings';
@@ -328,19 +329,39 @@ export const legalResearchRepository = {
     document_id: string;
     action: any;
     performed_by?: string;
+    actor_id?: string;
+    actor_name?: string;
+    actor_role?: string;
     notes?: string;
+    details?: Record<string, any>;
     metadata_snapshot?: Record<string, any>;
   }) {
     const client = supabaseAdmin || supabase;
+    const actorId = log.actor_id || log.performed_by || 'admin-user-alwar-0001';
+    const auditRow = {
+      id: `aud-${crypto.randomUUID()}`,
+      document_id: log.document_id,
+      actor_id: actorId,
+      actor_name: log.actor_name || (actorId.includes('@') ? actorId.split('@')[0] : 'Alwar Bar Admin'),
+      actor_role: log.actor_role || 'public_admin',
+      action: String(log.action),
+      entity_type: 'legal_document',
+      entity_id: log.document_id,
+      details: log.details || null,
+      notes: log.notes || null,
+      metadata_snapshot: log.metadata_snapshot || null,
+      created_at: new Date().toISOString()
+    };
     if (isSupabaseConfigured && client) {
       try {
-        const { data, error } = await client.from('judgment_audit_logs').insert(log).select().single();
+        const { data, error } = await client.from('judgment_audit_logs').insert(auditRow).select().single();
         if (!error && data) return data;
-      } catch {
-        // Fallback
+        if (error) console.error('Supabase recordAuditLog insert error:', error.message);
+      } catch (err) {
+        console.warn('Supabase recordAuditLog exception:', err);
       }
     }
-    return localDb.addJudgmentAuditLog(log);
+    return localDb.addJudgmentAuditLog(auditRow);
   },
 
   /**

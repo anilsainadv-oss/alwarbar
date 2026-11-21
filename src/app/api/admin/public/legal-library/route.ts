@@ -38,6 +38,7 @@ export async function GET(req: Request) {
     const publicationStatus = searchParams.get('publication_status') || undefined;
     const courtLevel = searchParams.get('court_level') || undefined;
     const courtCode = searchParams.get('court_code') || undefined;
+    const flaggedOnly = searchParams.get('flagged') === 'true';
     const search = searchParams.get('search')?.toLowerCase().trim() || '';
 
     const allDocs = await legalResearchRepository.getDocuments({
@@ -49,8 +50,11 @@ export async function GET(req: Request) {
     });
 
     let filtered = allDocs;
+    if (flaggedOnly) {
+      filtered = filtered.filter(d => !d.approved_by || !d.approved_at);
+    }
     if (search) {
-      filtered = allDocs.filter(d => {
+      filtered = filtered.filter(d => {
         const statutesStr = Array.isArray(d.statutes) ? d.statutes.join(' ') : (d.statutes || '');
         const judgeStr = Array.isArray(d.judge_names) ? d.judge_names.join(' ') : (d.judge_names || '');
         const subjectsStr = Array.isArray(d.legal_subjects) ? d.legal_subjects.join(' ') : (d.legal_subject || '');
@@ -70,8 +74,11 @@ export async function GET(req: Request) {
     const allChunks = localDb.getLegalDocumentChunks();
     const docWithMeta = filtered.map(d => ({
       ...d,
+      is_flagged_for_review: !d.approved_by || !d.approved_at,
       chunks_count: allChunks.filter(c => c.document_id === d.id).length
     }));
+
+    const flaggedCount = allTotalDocs.filter(d => !d.approved_by || !d.approved_at).length;
 
     const metrics = {
       totalDocuments: allTotalDocs.length,
@@ -81,6 +88,7 @@ export async function GET(req: Request) {
       publishedCount: allTotalDocs.filter(d => d.publication_status === 'published' && (d.approval_status === 'approved' || d.verification_status === 'verified')).length,
       rejectedCount: allTotalDocs.filter(d => d.approval_status === 'rejected' || d.verification_status === 'rejected').length,
       draftCount: allTotalDocs.filter(d => d.approval_status === 'draft' || (d.publication_status === 'draft' && d.approval_status !== 'pending')).length,
+      flaggedCount,
       r2StorageCount: allTotalDocs.filter(d => Boolean(d.r2_storage_key)).length,
       totalChunks: allChunks.length,
       vectorStorageStatus: 'active_pgvector_hnsw'

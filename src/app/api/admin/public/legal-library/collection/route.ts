@@ -193,7 +193,7 @@ export async function POST(req: Request) {
 
     // 3. Automated Daily Court Ingestion Action
     if (body.action === 'auto_sync_daily') {
-      const autoPublish = body.autoPublish !== false; // Default true for frictionless daily save
+      const autoPublish = body.autoPublish === true; // Mandatory default: FALSE. No automatic publication permitted!
       const court = body.court || 'all';
       const syncResult = await runAutomatedCourtIngestion({
         court,

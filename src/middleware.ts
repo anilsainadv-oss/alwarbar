@@ -108,7 +108,17 @@ export async function middleware(request: NextRequest) {
 
   // 2. Public Portal Admin Protection
   if (isPublicAdminPage || isPublicAdminApi) {
-    if (!session || session.role !== 'public_admin') {
+    if (!session) {
+      if (isPublicAdminApi) {
+        return NextResponse.json(
+          { error: 'UNAUTHORIZED: Please sign in to access admin resources.' },
+          { status: 401 }
+        );
+      }
+      return NextResponse.redirect(new URL('/public-admin/login', request.url));
+    }
+
+    if (session.role !== 'public_admin') {
       if (isPublicAdminApi) {
         return NextResponse.json(
           { error: 'FORBIDDEN: Requires Public Portal Administrator privileges.' },
@@ -121,7 +131,17 @@ export async function middleware(request: NextRequest) {
 
   // 3. My Case Service Admin Protection (Zero-Knowledge Telemetry)
   if (isCaseAdminPage || isCaseAdminApi) {
-    if (!session || session.role !== 'case_admin') {
+    if (!session) {
+      if (isCaseAdminApi) {
+        return NextResponse.json(
+          { error: 'UNAUTHORIZED: Please sign in to access case admin resources.' },
+          { status: 401 }
+        );
+      }
+      return NextResponse.redirect(new URL('/case-admin/login', request.url));
+    }
+
+    if (session.role !== 'case_admin') {
       if (isCaseAdminApi) {
         return NextResponse.json(
           { error: 'FORBIDDEN: Requires My Case Service Administrator privileges.' },

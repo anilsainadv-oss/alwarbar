@@ -431,7 +431,7 @@ export async function runAutomatedCourtIngestion(options: {
 } = {}): Promise<IngestionSyncResult> {
   const startTime = Date.now();
   const courtChoice = options.court || 'all';
-  const autoPublish = options.autoPublish ?? true;
+  const autoPublish = options.autoPublish === true; // Mandatory default: FALSE. No automatic approval or publication permitted!
   const triggeredBy = options.triggeredBy || 'system-court-cron';
 
   // Publication & approval targets

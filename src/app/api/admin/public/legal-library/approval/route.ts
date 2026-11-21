@@ -118,19 +118,30 @@ export async function POST(req: Request) {
 
     const updatedDoc = await legalResearchRepository.updateDocument(document_id, updates);
 
-    // Record Immutable Audit Log Entry
+    // Record Immutable Audit Log Entry with actual admin identity and timestamp
     await legalResearchRepository.recordAuditLog({
       document_id,
       action: auditAction as any,
       performed_by: user.id,
+      actor_id: user.id,
+      actor_name: user.full_name || user.email,
+      actor_role: user.role,
       notes: auditNotes,
+      details: {
+        action,
+        admin_id: user.id,
+        admin_email: user.email,
+        timestamp: now
+      },
       metadata_snapshot: {
         citation: doc.citation,
         court: doc.court_name,
         action,
         previous_approval_status: doc.approval_status || 'pending',
         new_approval_status: updates.approval_status,
-        new_publication_status: updates.publication_status
+        new_publication_status: updates.publication_status,
+        admin_identity: user.email,
+        timestamp: now
       }
     });
 
@@ -142,6 +153,12 @@ export async function POST(req: Request) {
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Action failed';
+    if (message.includes('UNAUTHORIZED') || message.includes('Authentication required')) {
+      return NextResponse.json({ error: message }, { status: 401 });
+    }
+    if (message.includes('FORBIDDEN') || message.includes('Requires Public Portal Administrator')) {
+      return NextResponse.json({ error: message }, { status: 403 });
+    }
     const statusCode = message.includes('Unauthorized') || message.includes('Forbidden') ? 403 : 500;
     return NextResponse.json({ error: message }, { status: statusCode });
   }
@@ -164,6 +181,12 @@ export async function GET(req: Request) {
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unauthorized';
+    if (message.includes('UNAUTHORIZED') || message.includes('Authentication required')) {
+      return NextResponse.json({ error: message }, { status: 401 });
+    }
+    if (message.includes('FORBIDDEN') || message.includes('Requires Public Portal Administrator')) {
+      return NextResponse.json({ error: message }, { status: 403 });
+    }
     return NextResponse.json({ error: message }, { status: 403 });
   }
 }

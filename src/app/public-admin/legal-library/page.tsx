@@ -30,6 +30,7 @@ interface Metrics {
   publishedCount: number;
   rejectedCount: number;
   draftCount: number;
+  flaggedCount: number;
   r2StorageCount: number;
   totalChunks: number;
   vectorStorageStatus: string;
@@ -50,6 +51,7 @@ type AdminSection =
   | 'PENDING'
   | 'APPROVED'
   | 'PUBLISHED'
+  | 'FLAGGED'
   | 'ALL_DOCS'
   | 'COLLECTION'
   | 'R2_STORAGE'
@@ -67,6 +69,7 @@ export default function AdminLegalLibraryPage() {
     publishedCount: 0,
     rejectedCount: 0,
     draftCount: 0,
+    flaggedCount: 0,
     r2StorageCount: 0,
     totalChunks: 0,
     vectorStorageStatus: 'active'
@@ -140,7 +143,7 @@ export default function AdminLegalLibraryPage() {
   const [collUrlCitation, setCollUrlCitation] = useState('');
   const [importingUrl, setImportingUrl] = useState(false);
   const [isSyncingDaily, setIsSyncingDaily] = useState(false);
-  const [autoPublishDaily, setAutoPublishDaily] = useState(true);
+  const [autoPublishDaily, setAutoPublishDaily] = useState(false);
   const [dailySyncMessage, setDailySyncMessage] = useState<string | null>(null);
 
   // Audit Logs State
@@ -167,6 +170,8 @@ export default function AdminLegalLibraryPage() {
         params.set('publication_status', 'published');
       } else if (activeSection === 'REJECTED_DRAFTS') {
         params.set('approval_status', 'rejected');
+      } else if (activeSection === 'FLAGGED') {
+        params.set('flagged', 'true');
       }
 
       const res = await fetch(`/api/admin/public/legal-library?${params.toString()}`);
@@ -708,6 +713,21 @@ export default function AdminLegalLibraryPage() {
           <span>Pending Admin Approval</span>
           <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-amber-200 text-amber-900 font-bold">
             {metrics.pendingCount}
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('FLAGGED')}
+          className={`px-4 py-2.5 border-b-2 transition flex items-center space-x-2 whitespace-nowrap ${
+            activeSection === 'FLAGGED'
+              ? 'border-orange-600 text-orange-800 bg-orange-50/50'
+              : 'border-transparent text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <AlertCircle className="w-3.5 h-3.5 text-orange-600" />
+          <span>Flagged for Review</span>
+          <span className="px-1.5 py-0.5 rounded-full text-[10px] bg-orange-200 text-orange-900 font-bold">
+            {metrics.flaggedCount ?? 0}
           </span>
         </button>
 
@@ -1374,6 +1394,13 @@ export default function AdminLegalLibraryPage() {
                           <span>{isPublished ? 'Published' : isApproved ? 'Approved (Draft)' : isRejected ? 'Rejected' : 'Pending Approval'}</span>
                         </span>
 
+                        {Boolean((doc as any).is_flagged_for_review ?? (!doc.approved_by || !doc.approved_at)) && (
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-orange-100 text-orange-900 border border-orange-300 flex items-center space-x-1" title="Lacks individual admin sign-off timestamp. Pending administrator review.">
+                            <AlertCircle className="w-3 h-3 text-orange-600" />
+                            <span>Flagged for Review</span>
+                          </span>
+                        )}
+
                         {doc.r2_storage_key ? (
                           <span className="text-[10px] bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded font-mono font-semibold" title={doc.r2_storage_key}>
                             R2 Stored
@@ -1461,6 +1488,18 @@ export default function AdminLegalLibraryPage() {
                           >
                             <Unlock className="w-3.5 h-3.5" />
                             <span>Publish to Public</span>
+                          </button>
+                        )}
+
+                        {Boolean((doc as any).is_flagged_for_review ?? (!doc.approved_by || !doc.approved_at)) && (
+                          <button
+                            onClick={() => handleApprovalAction(doc.id, isPublished ? 'approve_and_publish' : 'approve_only')}
+                            disabled={submittingAction}
+                            className="px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold flex items-center space-x-1 shadow-sm transition"
+                            title="Sign off this flagged judgment with your authenticated admin credentials"
+                          >
+                            <FileCheck className="w-3.5 h-3.5" />
+                            <span>Sign-Off Audit</span>
                           </button>
                         )}
 
