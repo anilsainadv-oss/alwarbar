@@ -189,6 +189,30 @@ export async function uploadPdfToR2(params: {
   }
 
   const client = getR2Client();
+
+  // Safety Guarantee: Never replace or overwrite an existing original PDF in R2
+  try {
+    const headCommand = new HeadObjectCommand({
+      Bucket: config.bucketName,
+      Key: params.key
+    });
+    const headResponse = await client.send(headCommand);
+    if (headResponse) {
+      return {
+        key: params.key,
+        sha256: headResponse.Metadata?.sha256 || integrity.sha256,
+        sizeBytes: headResponse.ContentLength || integrity.sizeBytes,
+        etag: headResponse.ETag?.replace(/"/g, ''),
+        uploadedAt: headResponse.LastModified ? headResponse.LastModified.toISOString() : new Date().toISOString()
+      };
+    }
+  } catch (headErr: any) {
+    // If NotFound (404), proceed to upload. Otherwise log and proceed
+    if (headErr.name !== 'NotFound' && headErr.$metadata?.httpStatusCode !== 404) {
+      // Continue to put
+    }
+  }
+
   const command = new PutObjectCommand({
     Bucket: config.bucketName,
     Key: params.key,

@@ -1,11 +1,19 @@
 import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth/guards';
+import { CourtSyncService } from '@/lib/court-sync/court-sync-service';
 import { runAutomatedCourtIngestion } from '@/lib/legal-research/court-crawler';
 
+export const dynamic = 'force-dynamic';
+
 /**
- * Automated Live Court Ingestion Route
- * Connects with Rajasthan High Court (hcraj.nic.in) & Supreme Court of India (e-SCR)
- * Triggered by Scheduled Nightly Cron or 1-Click Manual Admin Sync.
+ * 6-Hour Scheduled Court Judgment Ingestion Cron Route
+ * Connects with Supreme Court of India & Rajasthan High Court
+ * 
+ * Scheduled every 6 hours (0 * /6 * * *)
+ * Protected by CRON_SECRET or Public Admin Session
+ * 
+ * Invokes CourtSyncService (and runAutomatedCourtIngestion pipeline) with strict
+ * pending approval defaults, R2 non-overwrite, and quadruple deduplication.
  */
 export async function POST(req: Request) {
   try {
@@ -14,55 +22,65 @@ export async function POST(req: Request) {
     const isCronAuthorized = authHeader === `Bearer ${cronSecret}`;
 
     let triggeredBy = 'system-court-cron';
-    let autoVerify = false;
-    let court: 'all' | 'high_court' | 'supreme_court' = 'all';
+    let court: 'all' | 'rajasthan_high_court' | 'supreme_court' = 'all';
+    let dryRun = false;
+    let force = false;
 
     if (!isCronAuthorized) {
-      const user = await getCurrentUser();
-      if (!user || user.role !== 'public_admin') {
-        return NextResponse.json(
-          { error: 'FORBIDDEN: Requires Public Admin privileges or valid CRON Authorization.' },
-          { status: 403 }
-        );
+      // Check query param key fallback
+      const url = new URL(req.url);
+      const queryKey = url.searchParams.get('key') || url.searchParams.get('token');
+      if (queryKey !== cronSecret) {
+        const user = await getCurrentUser();
+        if (!user || user.role !== 'public_admin') {
+          return NextResponse.json(
+            { error: 'FORBIDDEN: Requires Public Admin privileges or valid CRON Authorization token.' },
+            { status: 403 }
+          );
+        }
+        triggeredBy = user.id;
       }
-      triggeredBy = user.id;
     }
 
-    // Parse options if provided in request
+    // Parse options
     try {
       const url = new URL(req.url);
-      if (url.searchParams.get('court')) {
-        const c = url.searchParams.get('court');
-        if (c === 'high_court' || c === 'supreme_court' || c === 'all') {
-          court = c;
-        }
+      const c = url.searchParams.get('court');
+      if (c === 'high_court' || c === 'rajasthan_high_court') court = 'rajasthan_high_court';
+      else if (c === 'supreme_court') court = 'supreme_court';
+
+      if (url.searchParams.get('dry_run') === 'true' || url.searchParams.get('dryRun') === 'true') {
+        dryRun = true;
       }
-      if (url.searchParams.get('auto_verify') === 'true') {
-        autoVerify = true;
+      if (url.searchParams.get('force') === 'true') {
+        force = true;
       }
 
       if (req.headers.get('content-type')?.includes('application/json')) {
         const body = await req.json().catch(() => ({}));
-        if (body.court) court = body.court;
-        if (typeof body.autoVerify === 'boolean') autoVerify = body.autoVerify;
+        if (body.court) {
+          if (body.court === 'high_court' || body.court === 'rajasthan_high_court') court = 'rajasthan_high_court';
+          else if (body.court === 'supreme_court') court = 'supreme_court';
+        }
+        if (typeof body.dryRun === 'boolean') dryRun = body.dryRun;
+        if (typeof body.force === 'boolean') force = body.force;
       }
     } catch {
-      // query or body parsing fallback
+      // fallback
     }
 
-    const result = await runAutomatedCourtIngestion({
+    const result = await CourtSyncService.executeSync({
       court,
-      autoVerify,
-      triggeredBy
+      dryRun,
+      triggeredBy,
+      force
     });
 
     return NextResponse.json(result);
   } catch (err: unknown) {
-    console.error('Error in automated court ingestion cron:', err);
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Internal Server Error in court ingestion' },
-      { status: 500 }
-    );
+    const message = err instanceof Error ? err.message : 'Court sync cron failed';
+    const statusCode = message.includes('Rate limit') ? 429 : 500;
+    return NextResponse.json({ error: message }, { status: statusCode });
   }
 }
 
