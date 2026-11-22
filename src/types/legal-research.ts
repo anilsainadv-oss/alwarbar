@@ -76,15 +76,26 @@ export type JudgmentAuditAction =
   | 'saved_draft'
   | 'metadata_updated'
   | 'reprocessed'
-  | 'deleted';
+  | 'deleted'
+  | 'INGEST_LEGAL_DOCUMENT'
+  | 'DELETE_LEGAL_DOCUMENT'
+  | 'UPDATE_LEGAL_DOCUMENT_METADATA'
+  | 'VERIFY_ALL_LEGAL_DOCUMENTS'
+  | (string & {});
 
 export interface JudgmentAuditLog {
   id: string;
   document_id: string;
+  actor_id?: string;
+  actor_name?: string;
+  actor_role?: string;
   action: JudgmentAuditAction;
+  entity_type?: string;
+  entity_id?: string;
+  details?: Record<string, any> | null;
   performed_by?: string;
-  notes?: string;
-  metadata_snapshot?: Record<string, any>;
+  notes?: string | null;
+  metadata_snapshot?: Record<string, any> | null;
   created_at: string;
 }
 

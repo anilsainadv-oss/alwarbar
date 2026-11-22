@@ -13,7 +13,9 @@ import type {
   LegalDocumentCitation,
   LegalSearchResult,
   SearchFilters,
-  RAGLegalResponse
+  RAGLegalResponse,
+  JudgmentAuditAction,
+  JudgmentAuditLog
 } from '@/types/legal-research';
 
 export const legalResearchRepository = {
@@ -344,7 +346,7 @@ export const legalResearchRepository = {
       actor_id: actorId,
       actor_name: log.actor_name || (actorId.includes('@') ? actorId.split('@')[0] : 'Alwar Bar Admin'),
       actor_role: log.actor_role || 'public_admin',
-      action: String(log.action),
+      action: log.action as JudgmentAuditAction,
       entity_type: 'legal_document',
       entity_id: log.document_id,
       details: log.details || null,
