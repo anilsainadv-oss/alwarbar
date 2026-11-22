@@ -25,6 +25,7 @@ function JudgmentsContent() {
   const [selectedCase, setSelectedCase] = useState<LegalUpdate | null>(null);
   const [syncStatus, setSyncStatus] = useState<string>('Live Connected');
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [originalJudgments, setOriginalJudgments] = useState<Array<{id:string; court:string; case_title:string; case_number:string; citation:string|null; judgment_date:string; official_source_url:string; original_sha256:string}>>([]);
 
   const fetchJudgments = async () => {
     setLoading(true);
@@ -33,11 +34,13 @@ function JudgmentsContent() {
       const data = await res.json();
       if (data.laws) {
         setJudgments(data.laws);
-        setSyncStatus(`Verified with e-SCR & High Court Portal (${new Date().toLocaleTimeString()})`);
+        setSyncStatus(`Existing repository records loaded (${new Date().toLocaleTimeString()})`);
       }
+      const originals = await fetch('/api/public/judgments');
+      if (originals.ok) { const originalData = await originals.json(); setOriginalJudgments(originalData.judgments || []); }
     } catch (err) {
       console.error('Failed to load judgments:', err);
-      setSyncStatus('Using Verified Local Precedent Bank');
+      setSyncStatus('Could not refresh repository records');
     } finally {
       setLoading(false);
     }
@@ -89,7 +92,7 @@ function JudgmentsContent() {
               {locale === 'hi' ? 'महत्वपूर्ण निर्णय एवं न्यायिक नज़ीरें' : 'Case Law & Judicial Precedents'}
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-3xl">
-              Authentic judicial rulings from the Supreme Court of India and Rajasthan High Court (Jaipur & Jodhpur Benches) on criminal bail under BNSS, land revenue partition, Section 138 NI Act, and civil injunctions.
+              Judgment records currently available in the repository. Original court PDFs are shown separately only after an administrator has reviewed and approved them.
             </p>
           </div>
 
@@ -98,10 +101,10 @@ function JudgmentsContent() {
               onClick={handleManualSync}
               disabled={isRefreshing}
               className="inline-flex items-center space-x-2 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded-lg text-xs font-medium border border-amber-200 transition shadow-sm"
-              title="Re-query open-source court databases"
+              title="Refresh records currently stored in the repository"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-amber-700' : ''}`} />
-              <span>{isRefreshing ? 'Checking Court Portals...' : 'Sync Case Law'}</span>
+              <span>{isRefreshing ? 'Refreshing Repository...' : 'Refresh Repository'}</span>
             </button>
             <span className="text-[10px] text-slate-400 mt-1 flex items-center space-x-1">
               <CheckCircle className="w-3 h-3 text-emerald-600" />
@@ -123,6 +126,25 @@ function JudgmentsContent() {
           </Link>
         </div>
       </div>
+
+      {originalJudgments.length > 0 && (
+        <section className="bg-white rounded-xl border border-emerald-200 p-5 space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="font-serif font-bold text-xl text-slate-900">Approved Original Court Judgments</h2>
+            <span className="text-xs text-emerald-700 font-semibold">{originalJudgments.length} verified by administrator</span>
+          </div>
+          {originalJudgments.map(item => (
+            <article key={item.id} className="border-t border-slate-100 pt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div className="space-y-1">
+                <div className="text-[10px] font-bold uppercase text-emerald-800">{item.court === 'supreme_court' ? 'Supreme Court of India' : 'Rajasthan High Court'}</div>
+                <h3 className="font-semibold text-sm text-slate-900">{item.case_title}</h3>
+                <p className="text-xs text-slate-500">{item.case_number} · {item.citation || 'Citation not supplied'} · {item.judgment_date}</p>
+              </div>
+              <a href={`/api/public/judgments/${item.id}/pdf`} className="text-xs font-semibold text-blue-700 hover:underline shrink-0">Download original PDF ↗</a>
+            </article>
+          ))}
+        </section>
+      )}
 
       {/* Filter and Search Bar */}
       <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 space-y-3">
@@ -159,7 +181,7 @@ function JudgmentsContent() {
         <span>Showing {filtered.length} authoritative judicial rulings</span>
         <div className="flex items-center space-x-2 text-[11px]">
           <span className="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>Official Repositories: sci.gov.in (e-SCR) & hcraj.nic.in</span>
+          <span>Approved original PDFs only</span>
         </div>
       </div>
 
