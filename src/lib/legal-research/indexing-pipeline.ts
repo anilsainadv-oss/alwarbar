@@ -110,9 +110,14 @@ export async function ingestAndIndexLegalDocument(
   }
 
   // 2. Text Cleaning & Normalization
-  const cleanedText = cleanLegalText(extractedText);
+  let cleanedText = cleanLegalText(extractedText);
   if (!cleanedText || cleanedText.length < 20) {
-    throw new Error('Extracted text is empty or insufficient for legal indexing (less than 20 characters).');
+    if (input.buffer) {
+      warnings.push('Low character count from direct text extraction. Scanned document flagged for OCR review.');
+      cleanedText = `[OFFICIAL COURT DOCUMENT - SCANNED IMAGE REQUIRING OCR REVIEW]\nCourt: ${input.court_name || 'Official Court'}\nCase: ${input.case_number || input.citation || 'Legal Proceeding'}\nOriginal PDF binary preserved in Cloudflare R2 archive for Admin Review.`;
+    } else {
+      throw new Error('Extracted text is empty or insufficient for legal indexing (less than 20 characters).');
+    }
   }
 
   // 3. Automated Metadata Extraction

@@ -10,11 +10,12 @@ import { ingestAndIndexLegalDocument } from '@/lib/legal-research/indexing-pipel
 import { 
   DAILY_SUPREME_COURT_FEED, 
   DAILY_RAJASTHAN_HIGH_COURT_FEED, 
-  generateOfficialCourtPdfBuffer,
   type CourtFeedCandidate 
 } from '@/lib/legal-research/court-crawler';
 import crypto from 'crypto';
+import http from 'http';
 import https from 'https';
+import { URL } from 'url';
 
 export interface CourtSyncMetrics {
   courtCode: 'INSC' | 'HCRAJ';
@@ -117,6 +118,152 @@ function probeHttps(url: string, timeoutMs = 8000): Promise<{ reachable: boolean
     req.on('error', () => resolve({ reachable: false, status: 0, hasCaptcha: false, timeMs: Date.now() - start }));
     req.on('timeout', () => { req.destroy(); resolve({ reachable: false, status: 408, hasCaptcha: false, timeMs: Date.now() - start }); });
   });
+}
+
+/**
+ * Official Court PDF Downloader with redirect following, timeout, and binary verification
+ */
+export async function downloadOfficialCourtPdf(
+  url: string,
+  timeoutMs = 15000,
+  maxRedirects = 5
+): Promise<{
+  ok: boolean;
+  status: number;
+  contentType: string;
+  buffer?: Buffer;
+  sha256?: string;
+  error?: string;
+}> {
+  let currentUrl = url;
+  let redirectsFollowed = 0;
+
+  while (redirectsFollowed <= maxRedirects) {
+    try {
+      const parsedUrl = new URL(currentUrl);
+      const isHttps = parsedUrl.protocol === 'https:';
+      const client = isHttps ? https : http;
+
+      const response = await new Promise<{
+        statusCode: number;
+        headers: Record<string, string | string[] | undefined>;
+        buffer: Buffer;
+      }>((resolve, reject) => {
+        const req = client.get(
+          currentUrl,
+          {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 AlwarBarJudgmentSync/1.0',
+              'Accept': 'application/pdf,application/octet-stream,*/*',
+              'Referer': parsedUrl.origin + '/'
+            },
+            timeout: timeoutMs
+          },
+          (res) => {
+            const chunks: Buffer[] = [];
+            res.on('data', (chunk) => chunks.push(chunk));
+            res.on('end', () => {
+              resolve({
+                statusCode: res.statusCode || 0,
+                headers: res.headers,
+                buffer: Buffer.concat(chunks)
+              });
+            });
+          }
+        );
+
+        req.on('error', (err) => reject(err));
+        req.on('timeout', () => {
+          req.destroy();
+          reject(new Error(`Download timed out after ${timeoutMs}ms`));
+        });
+      });
+
+      // Handle HTTP redirects (301, 302, 303, 307, 308)
+      if (
+        response.statusCode >= 300 &&
+        response.statusCode < 400 &&
+        response.headers.location
+      ) {
+        redirectsFollowed++;
+        const nextLoc = Array.isArray(response.headers.location)
+          ? response.headers.location[0]
+          : response.headers.location;
+        currentUrl = new URL(nextLoc, currentUrl).href;
+        continue;
+      }
+
+      const contentType = (response.headers['content-type'] as string) || '';
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        return {
+          ok: false,
+          status: response.statusCode,
+          contentType,
+          error: `HTTP error ${response.statusCode} from official court portal`
+        };
+      }
+
+      // Check for HTML error or anti-bot challenge response
+      const headerSnippet = response.buffer.subarray(0, 100).toString('utf8');
+      if (
+        headerSnippet.includes('<html') ||
+        headerSnippet.includes('<!DOCTYPE') ||
+        headerSnippet.includes('<HTML')
+      ) {
+        return {
+          ok: false,
+          status: response.statusCode,
+          contentType,
+          error: 'Portal returned HTML content or CAPTCHA challenge instead of PDF binary'
+        };
+      }
+
+      // Trim leading whitespace/newlines that government servers (e.g. sci.gov.in) emit before %PDF-
+      let startOffset = 0;
+      while (
+        startOffset < Math.min(response.buffer.length, 2048) &&
+        (response.buffer[startOffset] === 0x0A || response.buffer[startOffset] === 0x0D || response.buffer[startOffset] === 0x20 || response.buffer[startOffset] === 0x09)
+      ) {
+        startOffset++;
+      }
+      const pdfBinary = startOffset > 0 ? response.buffer.subarray(startOffset) : response.buffer;
+
+      // Verify PDF Magic Bytes (%PDF-)
+      if (!pdfBinary.subarray(0, 5).toString('ascii').startsWith('%PDF-')) {
+        return {
+          ok: false,
+          status: response.statusCode,
+          contentType,
+          error: 'Downloaded file does not match PDF binary specification (missing %PDF- magic header)'
+        };
+      }
+
+      const sha256 = crypto.createHash('sha256').update(pdfBinary).digest('hex');
+
+      return {
+        ok: true,
+        status: response.statusCode,
+        contentType,
+        buffer: pdfBinary,
+        sha256
+      };
+    } catch (err: any) {
+      return {
+        ok: false,
+        status: 0,
+        contentType: '',
+        error: err?.message || 'Network download failed'
+      };
+    }
+  }
+
+  return {
+    ok: false,
+    status: 0,
+    contentType: '',
+    error: `Exceeded maximum redirect limit of ${maxRedirects}`
+  };
 }
 
 export class CourtSyncService {
@@ -237,7 +384,7 @@ export class CourtSyncService {
         for (const candidate of scCandidates) {
           const cleanCitation = candidate.citation.toLowerCase().trim();
           const cleanCaseKey = `${candidate.court_code}:${candidate.case_number.toLowerCase().trim()}`;
-          const cleanUrl = candidate.source_url.toLowerCase().trim();
+          const cleanUrl = (candidate.official_pdf_url || candidate.source_url).toLowerCase().trim();
 
           // Quadruple Deduplication Check (Citation, Case Number, Source URL)
           if (
@@ -249,11 +396,33 @@ export class CourtSyncService {
             continue;
           }
 
-          // Build authentic %PDF-1.4 binary buffer
-          const pdfBuffer = generateOfficialCourtPdfBuffer(candidate);
+          // Production Rule: Must have official_pdf_url and download genuine PDF binary
+          const targetPdfUrl = candidate.official_pdf_url;
+          if (!targetPdfUrl) {
+            failedDownloads.push({
+              citation: candidate.citation,
+              reason: 'Official PDF URL not provided. Synthetic PDF generation is strictly prohibited.'
+            });
+            continue;
+          }
+
+          // Download authentic court PDF binary
+          const downloadResult = await downloadOfficialCourtPdf(targetPdfUrl);
+          if (!downloadResult.ok || !downloadResult.buffer) {
+            failedDownloads.push({
+              citation: candidate.citation,
+              reason: downloadResult.error || 'Failed to download official court PDF binary'
+            });
+            continue;
+          }
+
+          const pdfBuffer = downloadResult.buffer;
           const integrity = validatePdfIntegrity(pdfBuffer);
           if (!integrity.valid) {
-            failedDownloads.push({ citation: candidate.citation, reason: integrity.error || 'Invalid PDF' });
+            failedDownloads.push({
+              citation: candidate.citation,
+              reason: integrity.error || 'Invalid PDF binary'
+            });
             continue;
           }
 
@@ -294,7 +463,7 @@ export class CourtSyncService {
             summary: candidate.summary,
             reportable_status: candidate.reportable_status ?? true,
             source_type: 'automatic',
-            document_url: candidate.source_url,
+            document_url: targetPdfUrl,
             // STRICT GUARANTEE: Never automatically publish
             approval_status: 'pending',
             verification_status: 'pending',
@@ -311,6 +480,7 @@ export class CourtSyncService {
             });
             existingCitations.add(cleanCitation);
             existingCaseNumbers.add(cleanCaseKey);
+            existingSourceUrls.add(cleanUrl);
             existingSha256.add(integrity.sha256.toLowerCase());
           }
         }
@@ -342,7 +512,7 @@ export class CourtSyncService {
         if (hcProbe.hasCaptcha) {
           // STRICT SECURITY RULE: Respect official CAPTCHA gate. Never bypass anti-bot challenges!
           hcSyncState.status = 'challenged';
-          hcSyncState.lastErrorMessage = 'Rajasthan High Court portal requires optical CAPTCHA verification. Direct automated scraping safely paused without anti-bot bypass.';
+          hcSyncState.lastErrorMessage = 'Rajasthan High Court portal requires optical CAPTCHA verification. Automated bypass strictly prohibited. Use Admin-Assisted Upload.';
         }
 
         const hcCandidates: CourtFeedCandidate[] = DAILY_RAJASTHAN_HIGH_COURT_FEED;
@@ -351,7 +521,7 @@ export class CourtSyncService {
         for (const candidate of hcCandidates) {
           const cleanCitation = candidate.citation.toLowerCase().trim();
           const cleanCaseKey = `${candidate.court_code}:${candidate.case_number.toLowerCase().trim()}`;
-          const cleanUrl = candidate.source_url.toLowerCase().trim();
+          const cleanUrl = (candidate.official_pdf_url || candidate.source_url).toLowerCase().trim();
 
           // Quadruple Deduplication Check
           if (
@@ -363,11 +533,33 @@ export class CourtSyncService {
             continue;
           }
 
-          // Build authentic %PDF-1.4 binary buffer
-          const pdfBuffer = generateOfficialCourtPdfBuffer(candidate);
+          // Rajasthan High Court has an optical CAPTCHA gate on portal
+          // Automated bypass is strictly prohibited. Synthetic PDF generation is disabled.
+          if (hcProbe.hasCaptcha || !candidate.official_pdf_url) {
+            failedDownloads.push({
+              citation: candidate.citation,
+              reason: 'Rajasthan High Court portal requires optical CAPTCHA verification. Automated bypass strictly prohibited. Use Admin-Assisted Upload.'
+            });
+            continue;
+          }
+
+          // If official direct PDF URL is provided without CAPTCHA
+          const downloadResult = await downloadOfficialCourtPdf(candidate.official_pdf_url);
+          if (!downloadResult.ok || !downloadResult.buffer) {
+            failedDownloads.push({
+              citation: candidate.citation,
+              reason: downloadResult.error || 'Failed to download Rajasthan High Court PDF binary'
+            });
+            continue;
+          }
+
+          const pdfBuffer = downloadResult.buffer;
           const integrity = validatePdfIntegrity(pdfBuffer);
           if (!integrity.valid) {
-            failedDownloads.push({ citation: candidate.citation, reason: integrity.error || 'Invalid PDF' });
+            failedDownloads.push({
+              citation: candidate.citation,
+              reason: integrity.error || 'Invalid PDF binary'
+            });
             continue;
           }
 
@@ -407,7 +599,7 @@ export class CourtSyncService {
             summary: candidate.summary,
             reportable_status: candidate.reportable_status ?? true,
             source_type: 'automatic',
-            document_url: candidate.source_url,
+            document_url: candidate.official_pdf_url || candidate.source_url,
             // STRICT GUARANTEE: Never automatically publish
             approval_status: 'pending',
             verification_status: 'pending',
@@ -424,6 +616,7 @@ export class CourtSyncService {
             });
             existingCitations.add(cleanCitation);
             existingCaseNumbers.add(cleanCaseKey);
+            existingSourceUrls.add(cleanUrl);
             existingSha256.add(integrity.sha256.toLowerCase());
           }
         }
@@ -444,11 +637,18 @@ export class CourtSyncService {
     // 4. Update Job Telemetry in Database
     if (job && !isDryRun) {
       try {
+        const isJobFailed = newlyIngested.length === 0 && failedDownloads.length > 0;
+        const jobStatus: 'completed' | 'failed' = isJobFailed ? 'failed' : 'completed';
+        const failureSummary = failedDownloads.length > 0 
+          ? failedDownloads.map(f => `${f.citation}: ${f.reason}`).join('; ')
+          : null;
+
         await legalResearchRepository.updateIngestionJob(job.id, {
-          status: 'completed',
+          status: jobStatus,
           total_documents: newlyIngested.length + skippedDuplicates.length + failedDownloads.length,
           successful_documents: newlyIngested.length,
           failed_documents: failedDownloads.length,
+          error_message: isJobFailed ? (failureSummary || 'Sync completed with 0 successful documents') : (failedDownloads.length > 0 ? `Partial failures: ${failureSummary}` : null),
           completed_at: new Date().toISOString()
         });
       } catch (err) {

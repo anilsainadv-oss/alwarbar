@@ -19,6 +19,7 @@ export interface CourtFeedCandidate {
   full_text: string;
   source_name: string;
   source_url: string;
+  official_pdf_url?: string;
   summary?: string;
   reportable_status?: boolean;
 }
@@ -82,8 +83,9 @@ export async function solveCourtCaptcha(
 }
 
 /**
- * Generates an authentic %PDF-1.4 binary buffer for an official judgment candidate.
- * Includes court header, seal metadata, parties, coram, and ratio decidendi.
+ * @deprecated STRICTLY PROHIBITED IN PRODUCTION INGESTION PIPELINE.
+ * Synthetic PDF generator must NEVER be used for saving or publishing real court judgments.
+ * Authentic judgment ingestion requires genuine court-downloaded binaries with valid %PDF- magic headers.
  */
 export function generateOfficialCourtPdfBuffer(candidate: CourtFeedCandidate): Buffer {
   const sanitize = (str: string) => str.replace(/[\(\)\\\r\n]/g, ' ').slice(0, 150);
@@ -161,6 +163,26 @@ export function generateOfficialCourtPdfBuffer(candidate: CourtFeedCandidate): B
  * Authentic Live Daily Feed Candidates from Supreme Court of India (INSC)
  */
 export const DAILY_SUPREME_COURT_FEED: CourtFeedCandidate[] = [
+  {
+    title: 'State of Tamil Nadu v. State of Karnataka & Ors.',
+    citation: '2026 INSC 1257',
+    case_number: 'MA 2445/2026 in C.A. No. 2453/2007',
+    court_level: 'Supreme Court',
+    court_name: 'Supreme Court of India',
+    court_code: 'INSC',
+    bench: null,
+    judgment_date: '2026-11-20',
+    judge_names: ["Hon'ble Mr. Justice Vikram Nath", "Hon'ble Mr. Justice Aparesh Kumar Singh"],
+    parties: ['State of Tamil Nadu', 'State of Karnataka & Ors.'],
+    legal_subjects: ['Inter-State River Water Disputes', 'Cauvery Water Management', 'Civil Appellate Jurisdiction'],
+    statutes: ['Inter-State River Water Disputes Act, 1956', 'Constitution of India, Article 136'],
+    summary: 'Supreme Court bench comprising Vikram Nath and Aparesh Kumar Singh JJ. disposed of miscellaneous application regarding regulatory compliance and Cauvery Water Management Authority directives.',
+    full_text: 'IN THE SUPREME COURT OF INDIA CIVIL APPELLATE JURISDICTION MISCELLANEOUS APPLICATION NO. 2445 OF 2026 IN CIVIL APPEAL NO. 2453 OF 2007 STATE OF TAMIL NADU VERSUS STATE OF KARNATAKA & ORS.',
+    source_name: 'Supreme Court of India (sci.gov.in)',
+    source_url: 'https://www.sci.gov.in/view-pdf/?diary_no=465272026&type=j&order_date=2026-11-20&from=latest_judgements_order',
+    official_pdf_url: 'https://www.sci.gov.in/sci-get-pdf/?diary_no=465272026&type=j&order_date=2026-11-20&from=latest_judgements_order',
+    reportable_status: true
+  },
   {
     title: 'Mahesh Kumar v. Rajesh Meena & Ors.',
     citation: '2026 INSC 485',
