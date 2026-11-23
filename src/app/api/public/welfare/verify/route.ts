@@ -5,7 +5,7 @@ import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
-let cachedDuesRecords: Array<{
+interface OfficialDuesRecord {
   s_no: number;
   enrol_no: string;
   elc_no: string;
@@ -13,9 +13,11 @@ let cachedDuesRecords: Array<{
   due_subs: string;
   ltm_subs: string;
   category: string;
-}> | null = null;
+}
 
-function getOfficialDuesRecords() {
+let cachedDuesRecords: OfficialDuesRecord[] | null = null;
+
+function getOfficialDuesRecords(): OfficialDuesRecord[] {
   if (cachedDuesRecords) return cachedDuesRecords;
   const candidatePaths = [
     path.join(process.cwd(), 'data', 'bcr-alwar-dues.json'),
@@ -26,14 +28,15 @@ function getOfficialDuesRecords() {
       try {
         const raw = fs.readFileSync(p, 'utf-8');
         const parsed = JSON.parse(raw);
-        cachedDuesRecords = parsed.records || [];
+        cachedDuesRecords = (parsed.records || []) as OfficialDuesRecord[];
         return cachedDuesRecords;
       } catch (e) {
         console.error('Failed to parse bcr-alwar-dues in verify route:', e);
       }
     }
   }
-  return [];
+  cachedDuesRecords = [];
+  return cachedDuesRecords;
 }
 
 function calculateBenefitSlab(years: number): string {
@@ -128,8 +131,8 @@ export async function GET(req: Request) {
     }
 
     // 2. Check in official BCR Alwar Judgeship Dues Register (3,120 Advocates)
-    const officialRecords = getOfficialDuesRecords() || [];
-    const bcrMatch = officialRecords.find((r) => {
+    const officialRecords: OfficialDuesRecord[] = getOfficialDuesRecords() || [];
+    const bcrMatch = (officialRecords || []).find((r) => {
       const rNorm = normalizeEnrollment(r.enrol_no);
       if (rNorm === targetNorm) return true;
       const rDigits = rNorm.replace(/^r\//, '');
