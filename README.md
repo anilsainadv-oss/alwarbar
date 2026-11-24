@@ -85,3 +85,7 @@ Visit:
 - [AI Integration & RAG Engine](docs/AI_INTEGRATION.md)
 - [Production Deployment Guide](docs/DEPLOYMENT.md)
 - [Feature Verification Checklist](docs/FEATURE_CHECKLIST.md)
+
+## Original Judgment Repository
+
+The first original-PDF intake and admin approval implementation is documented in [`docs/JUDGMENT_INGESTION_SETUP.md`](docs/JUDGMENT_INGESTION_SETUP.md). It provides private R2 storage, SHA-256 recording, Supabase review queue, and approval-gated public downloads. It is **not yet an automatic court scraper**; source connectors and OCR/semantic indexing remain separate work.
