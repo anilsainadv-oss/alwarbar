@@ -159,7 +159,7 @@ export function Navbar() {
               title="Bar Council of Rajasthan Official Advocate Portal (Login)"
             >
               <ExternalLink className="w-3 h-3 text-amber-400" />
-              <span className="hidden sm:inline">BCR Login (जोधपुर) ↗</span>
+              <span className="hidden sm:inline">{locale === 'hi' ? 'BCR लॉगिन (जोधपुर) ↗' : 'BCR Login (Jodhpur) ↗'}</span>
             </a>
 
             <Link
@@ -168,7 +168,7 @@ export function Navbar() {
               title="Verify Advocate Sanad R/2268/2009"
             >
               <ShieldCheck className="w-3 h-3 text-emerald-400" />
-              <span className="hidden sm:inline">Verify Sanad</span>
+              <span className="hidden sm:inline">{locale === 'hi' ? 'सनद सत्यापन' : 'Verify Sanad'}</span>
             </Link>
             
             {/* Role Switcher Pill */}
@@ -178,16 +178,36 @@ export function Navbar() {
               title="Switch user role to preview role-based menu tabs"
             >
               <UserCheck className="w-3 h-3" />
-              <span>Role Switcher (मेन्यू बदलें)</span>
+              <span>{locale === 'hi' ? 'Role Switcher (मेन्यू बदलें)' : 'Role Switcher'}</span>
             </button>
 
-            <button
-              onClick={() => setLocale(locale === 'hi' ? 'en' : 'hi')}
-              className="flex items-center space-x-1 text-xs text-white hover:text-amber-300 transition font-medium"
-            >
-              <Globe className="w-3.5 h-3.5" />
-              <span>{locale === 'hi' ? 'English' : 'हिंदी'}</span>
-            </button>
+            {/* Bilingual Segmented Switcher */}
+            <div className="inline-flex items-center bg-slate-900/90 rounded-md p-0.5 border border-amber-500/40 text-[11px] font-semibold shadow-inner">
+              <button
+                type="button"
+                onClick={() => setLocale('hi')}
+                className={`px-2 py-0.5 rounded transition ${
+                  locale === 'hi'
+                    ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-300 hover:text-white'
+                }`}
+                title="हिंदी में वेबसाइट देखें"
+              >
+                🇮🇳 हिंदी
+              </button>
+              <button
+                type="button"
+                onClick={() => setLocale('en')}
+                className={`px-2 py-0.5 rounded transition ${
+                  locale === 'en'
+                    ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-slate-300 hover:text-white'
+                }`}
+                title="Switch website to English"
+              >
+                English
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -197,7 +217,7 @@ export function Navbar() {
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className="text-slate-400 text-[10px] uppercase tracking-wider font-semibold">
-              सक्रिय यूज़र मेन्यू (Active Menu):
+              {locale === 'hi' ? 'सक्रिय यूज़र मेन्यू (Active Menu):' : 'Active Role Menu:'}
             </span>
             <span className={`text-[11px] font-semibold px-2 py-0.5 rounded border flex items-center space-x-1 ${roleBadgeClass}`}>
               <span>{roleTitle}</span>
@@ -211,7 +231,9 @@ export function Navbar() {
               </span>
             ) : (
               <span className="text-amber-300/80 hidden sm:inline">
-                ℹ️ विभिन्न भूमिकाओं के मेन्यू देखने के लिए ऊपर Role Switcher पर क्लिक करें
+                {locale === 'hi' 
+                  ? 'ℹ️ विभिन्न भूमिकाओं के मेन्यू देखने के लिए ऊपर Role Switcher पर क्लिक करें' 
+                  : 'ℹ️ Click Role Switcher above to test menus for Advocates and Admins'}
               </span>
             )}
           </div>
@@ -303,10 +325,10 @@ export function Navbar() {
                 <Link
                   href="/auth/change-password"
                   className="text-xs text-amber-300 hover:text-amber-200 transition flex items-center space-x-0.5 bg-amber-500/10 px-2 py-1 rounded border border-amber-400/20 font-medium"
-                  title="Change Password / पासवर्ड बदलें"
+                  title="Change Password"
                 >
                   <KeyRound className="w-3 h-3 text-amber-400" />
-                  <span>पासवर्ड</span>
+                  <span>{locale === 'hi' ? 'पासवर्ड' : 'Password'}</span>
                 </Link>
 
                 {/* Role specific quick action */}
@@ -337,14 +359,14 @@ export function Navbar() {
                   className="px-3.5 py-1.5 rounded-md text-xs font-semibold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 transition shadow-sm flex items-center space-x-1.5 border border-amber-300/40"
                 >
                   <Lock className="w-3 h-3" />
-                  <span>अधिवक्ता लॉगिन</span>
+                  <span>{locale === 'hi' ? 'अधिवक्ता लॉगिन' : 'Advocate Login'}</span>
                 </Link>
                 <Link
                   href="/public-admin/login"
                   className="px-2.5 py-1.5 rounded-md text-xs text-slate-300 hover:text-white hover:bg-white/10 border border-slate-700 transition"
                   title="Bar Admin Portal"
                 >
-                  🏛️ एडमिन
+                  {locale === 'hi' ? '🏛️ एडमिन' : '🏛️ Admin'}
                 </Link>
               </div>
             )}
@@ -357,15 +379,48 @@ export function Navbar() {
               className="p-1.5 rounded text-slate-300 hover:text-white hover:bg-white/10 flex items-center space-x-1 border border-white/20"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              <span className="text-xs font-medium">मेन्यू</span>
+              <span className="text-xs font-medium">{locale === 'hi' ? 'मेन्यू' : 'Menu'}</span>
             </button>
           </div>
         </div>
 
         {/* Mobile Dropdown (Role Specific) */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-legal-navyDark px-4 py-3 border-t border-white/10 space-y-1">
-            <div className="pb-2 mb-2 border-b border-white/10 flex items-center justify-between">
+          <div className="lg:hidden bg-legal-navyDark px-4 py-3 border-t border-white/10 space-y-2">
+            
+            {/* Language Switcher in Mobile Drawer */}
+            <div className="flex items-center justify-between pb-2 border-b border-white/10">
+              <span className="text-xs text-slate-300 font-medium flex items-center space-x-1">
+                <Globe className="w-3.5 h-3.5 text-amber-400" />
+                <span>{locale === 'hi' ? 'भाषा (Language):' : 'Language:'}</span>
+              </span>
+              <div className="inline-flex items-center bg-slate-900 rounded-md p-0.5 border border-amber-500/40 text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setLocale('hi')}
+                  className={`px-3 py-1 rounded transition ${
+                    locale === 'hi'
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
+                      : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  🇮🇳 हिंदी
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLocale('en')}
+                  className={`px-3 py-1 rounded transition ${
+                    locale === 'en'
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
+                      : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  English
+                </button>
+              </div>
+            </div>
+
+            <div className="pb-2 border-b border-white/10 flex items-center justify-between">
               <span className="text-xs font-semibold text-amber-300">
                 {roleTitle}
               </span>
@@ -373,7 +428,7 @@ export function Navbar() {
                 onClick={() => { setPersonaModalOpen(true); setMobileMenuOpen(false); }}
                 className="text-[11px] text-amber-300 underline"
               >
-                रोल बदलें →
+                {locale === 'hi' ? 'रोल बदलें →' : 'Switch Role →'}
               </button>
             </div>
 
@@ -399,7 +454,7 @@ export function Navbar() {
                 className="text-xs text-amber-300 hover:text-white py-1.5 flex items-center space-x-2 px-2 rounded hover:bg-white/5"
               >
                 <KeyRound className="w-4 h-4 text-amber-400" />
-                <span>🔐 पासवर्ड बदलें (Change Password)</span>
+                <span>{locale === 'hi' ? '🔑 पासवर्ड बदलें (Change Password)' : '🔑 Change Password'}</span>
               </Link>
               
               {currentUser ? (
@@ -408,7 +463,7 @@ export function Navbar() {
                   className="text-xs text-red-300 hover:text-red-200 py-1.5 flex items-center space-x-2 px-2 text-left"
                 >
                   <LogOut className="w-4 h-4" />
-                  <span>लॉगआउट करें ({currentUser.full_name})</span>
+                  <span>{locale === 'hi' ? `लॉगआउट करें (${currentUser.full_name})` : `Logout (${currentUser.full_name})`}</span>
                 </button>
               ) : (
                 <Link
@@ -416,7 +471,7 @@ export function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-xs bg-amber-500 text-slate-950 font-bold py-2 rounded text-center"
                 >
-                  लॉगिन करें (Sign In)
+                  {locale === 'hi' ? 'लॉगिन करें (Sign In)' : 'Advocate Sign In'}
                 </Link>
               )}
             </div>

@@ -2,18 +2,41 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { localDb } from '@/lib/db';
 import { verifySession, COOKIE_NAME, hashPassword, verifyPassword } from '@/lib/auth/session';
-import { supabase, supabaseAdmin, isSupabaseConfigured } from '@/lib/db';
+import { supabase, supabaseAdmin } from '@/lib/db';
+import { changePasswordSchema } from '@/lib/validation/schemas';
+import { rateLimiter, getClientIp } from '@/lib/security/rate-limit';
 
 export async function POST(req: Request) {
   try {
+    const ip = getClientIp(req);
+    const rateLimitKey = `auth_change_pwd_${ip}`;
+
+    const limitCheck = rateLimiter.check(rateLimitKey, 5, 900);
+    if (!limitCheck.allowed) {
+      return NextResponse.json(
+        { 
+          error: `अत्यधिक प्रयास। कृपया ${Math.ceil(limitCheck.resetSeconds / 60)} मिनट बाद पुनः प्रयास करें।` 
+        },
+        { status: 429, headers: { 'Retry-After': String(limitCheck.resetSeconds) } }
+      );
+    }
+
     const body = await req.json();
-    const { currentPassword, newPassword } = body;
-    let { email } = body;
+    const parseResult = changePasswordSchema.safeParse(body);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { error: parseResult.error.errors[0]?.message || 'Invalid input data' },
+        { status: 400 }
+      );
+    }
+
+    const { currentPassword, newPassword } = parseResult.data;
+    let email = typeof body.email === 'string' ? body.email.trim() : '';
 
     // Check if user is logged in via session cookie
     const cookieStore = await cookies();
     const sessionCookie = cookieStore.get(COOKIE_NAME)?.value;
-    let sessionUser = sessionCookie ? verifySession(sessionCookie) : null;
+    const sessionUser = sessionCookie ? verifySession(sessionCookie) : null;
 
     if (sessionUser) {
       email = sessionUser.email;
@@ -26,22 +49,8 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!currentPassword || !newPassword) {
-      return NextResponse.json(
-        { error: 'वर्तमान पासवर्ड एवं नया पासवर्ड दोनों दर्ज करना अनिवार्य है।' },
-        { status: 400 }
-      );
-    }
-
-    if (typeof newPassword !== 'string' || newPassword.trim().length < 6) {
-      return NextResponse.json(
-        { error: 'नया पासवर्ड कम से कम 6 अक्षरों का होना चाहिए (Minimum 6 characters required)।' },
-        { status: 400 }
-      );
-    }
-
     // Lookup user in database
-    const user = localDb.getUserByEmail(email.trim());
+    const user = localDb.getUserByEmail(email);
     if (!user) {
       return NextResponse.json(
         { error: 'इस ईमेल से पंजीकृत कोई खाता नहीं मिला।' },
@@ -49,16 +58,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify current password (with alias tolerance for Password@1234 / Password@r1234)
-    let isMatch = verifyPassword(currentPassword, user.password_hash);
-    if (!isMatch) {
-      if (currentPassword === 'Password@1234' && verifyPassword('Password@r1234', user.password_hash)) {
-        isMatch = true;
-      } else if (currentPassword === 'Password@r1234' && verifyPassword('Password@1234', user.password_hash)) {
-        isMatch = true;
-      }
-    }
-
+    // STRICT CRYPTOGRAPHIC VERIFICATION ONLY
+    const isMatch = verifyPassword(currentPassword, user.password_hash);
     if (!isMatch) {
       return NextResponse.json(
         { error: 'वर्तमान पासवर्ड गलत है। कृपया पुनः जांचें।' },
@@ -73,7 +74,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Compute new hash and update in local-db
+    // Compute new bcrypt hash (12 rounds) and update in local-db
     const newHash = hashPassword(newPassword.trim());
     const updated = localDb.updateUserPassword(user.id, newHash);
 
@@ -88,19 +89,16 @@ export async function POST(req: Request) {
     const client = supabaseAdmin || supabase;
     if (client) {
       try {
-        const { error: sbErr } = await client
+        await client
           .from('users')
           .update({ password_hash: newHash, updated_at: new Date().toISOString() })
           .eq('email', user.email);
-        if (sbErr) {
-          console.warn('Supabase password sync warning:', sbErr);
-        } else {
-          console.log('Supabase auto-updated password successfully for:', user.email);
-        }
-      } catch (sbErr) {
-        console.warn('Supabase password sync warning:', sbErr);
+      } catch {
+        // Graceful non-blocking fallback if remote Supabase is unreachable
       }
     }
+
+    rateLimiter.reset(rateLimitKey);
 
     return NextResponse.json({
       success: true,

@@ -5,11 +5,30 @@ import type {
   User, AdvocateProfile, WelfareScheme, WelfareBulletin, LegalUpdate, LegalForm, NoticeEvent, AuditLog 
 } from '@/types/database';
 import type { 
-  CaseRecord, CaseDocument, CaseHearing, CaseTask, Client, Invoice, LegalDraft, PersonalLibraryItem 
+  CaseRecord, CaseDocument, CaseHearing, CaseTask, Client, Invoice, LegalDraft, PersonalLibraryItem,
+  AIChatSession, AIChatMessage,
+  NotificationPreferences, NotificationDeliveryRecord, ClientCommunication, AutomationJob, CauseListEntry,
+  AdvocateSubscription, SubscriptionInvoice, Chamber, ChamberMember, ChamberInvitation, ChamberMemberRole, ChamberMemberStatus
 } from '@/types/mycase';
 import type { 
   ForumCategory, ForumPost, ForumReply, ForumReport 
 } from '@/types/forum';
+import type {
+  LegalDocument,
+  LegalDocumentChunk,
+  LegalResearchHistory,
+  SavedResearch,
+  LegalDocumentSource,
+  LegalDocumentProcessing,
+  LegalIngestionJob,
+  LegalDocumentCitation,
+  LegalSearchResult,
+  SearchFilters,
+  JudgmentAuditLog
+} from '@/types/legal-research';
+import type { StorageUsageHistoryRecord } from '@/types/storage-monitor';
+import { generateDeterministicEmbedding, cosineSimilarity } from '../ai/embeddings';
+import { JUDGMENT_REGISTRY } from '../precedents/judgment-store';
 
 interface DatabaseState {
   users: User[];
@@ -31,7 +50,29 @@ interface DatabaseState {
   invoices: Invoice[];
   drafts: LegalDraft[];
   personal_library: PersonalLibraryItem[];
+  chat_sessions: AIChatSession[];
+  notification_preferences: NotificationPreferences[];
+  notification_delivery_history: NotificationDeliveryRecord[];
+  client_communications: ClientCommunication[];
+  automation_jobs: AutomationJob[];
+  cause_list_entries: CauseListEntry[];
+  subscriptions: AdvocateSubscription[];
+  subscription_invoices: SubscriptionInvoice[];
+  chambers: Chamber[];
+  chamber_members: ChamberMember[];
+  chamber_invitations: ChamberInvitation[];
   audit_logs: AuditLog[];
+  // AI Legal Research & pgvector Engine
+  legal_documents: LegalDocument[];
+  legal_document_chunks: LegalDocumentChunk[];
+  legal_research_history: LegalResearchHistory[];
+  saved_research: SavedResearch[];
+  legal_document_sources: LegalDocumentSource[];
+  legal_document_processing?: LegalDocumentProcessing[];
+  legal_ingestion_jobs?: LegalIngestionJob[];
+  legal_document_citations?: LegalDocumentCitation[];
+  storage_usage_history?: StorageUsageHistoryRecord[];
+  judgment_audit_logs?: JudgmentAuditLog[];
 }
 
 const DB_FILE = path.join(process.cwd(), 'data', 'local-db.json');
@@ -40,12 +81,218 @@ function hashPassword(password: string): string {
   return crypto.createHash('sha256').update(password + '_alwar_salt_2026').digest('hex');
 }
 
+function getInitialLegalDocumentsAndChunks(): {
+  documents: LegalDocument[];
+  chunks: LegalDocumentChunk[];
+  sources: LegalDocumentSource[];
+  processing: LegalDocumentProcessing[];
+  citations: LegalDocumentCitation[];
+  jobs: LegalIngestionJob[];
+} {
+  const documents: LegalDocument[] = [];
+  const chunks: LegalDocumentChunk[] = [];
+  const processing: LegalDocumentProcessing[] = [];
+  const citations: LegalDocumentCitation[] = [];
+  
+  const sources: LegalDocumentSource[] = [
+    {
+      id: 'src-escr-sci',
+      source_name: 'Supreme Court of India (e-SCR Digital Repository)',
+      source_url: 'https://escr.sci.gov.in',
+      publication_details: 'Electronic Supreme Court Reports (e-SCR), Official Digital Law Reports of India',
+      verification_details: 'Certified by Supreme Court of India Registry',
+      created_at: '2026-01-01T00:00:00.000Z'
+    },
+    {
+      id: 'src-hcraj-gazette',
+      source_name: 'High Court of Rajasthan (Jodhpur & Jaipur)',
+      source_url: 'https://hcraj.nic.in',
+      publication_details: 'Rajasthan High Court Official Precedent & Judgment Bank',
+      verification_details: 'Certified by Registrar General, Rajasthan High Court',
+      created_at: '2026-01-01T00:00:00.000Z'
+    },
+    {
+      id: 'src-indiacode',
+      source_name: 'India Code Digital Legislative Repository',
+      source_url: 'https://www.indiacode.nic.in',
+      publication_details: 'Ministry of Law and Justice, Government of India',
+      verification_details: 'Official Statutory Gazette Enactments',
+      created_at: '2026-01-01T00:00:00.000Z'
+    }
+  ];
+
+  for (const [key, rec] of Object.entries(JUDGMENT_REGISTRY)) {
+    const docId = `doc-${rec.id}`;
+    const isSC = rec.court.toLowerCase().includes('supreme');
+    const isRaj = rec.court.toLowerCase().includes('rajasthan');
+
+    const doc: LegalDocument = {
+      id: docId,
+      title: rec.case_title,
+      case_number: rec.citation,
+      citation: rec.citation,
+      court_name: rec.court,
+      court_level: isSC ? 'Supreme Court' : (isRaj ? 'High Court' : 'High Court'),
+      state: isRaj ? 'Rajasthan' : 'National',
+      judge_names: rec.bench,
+      judgment_date: '2022-07-11',
+      case_type: rec.category === 'bail' ? 'Criminal Appeal / Bail' : 'Civil Appeal / Writ',
+      legal_subject: rec.statute_subject,
+      statutes: rec.statute_subject,
+      source_name: isSC ? 'Supreme Court of India (e-SCR)' : 'High Court of Rajasthan',
+      source_url: rec.official_kanoon_url || 'https://escr.sci.gov.in',
+      document_url: `/api/public/judgments/download?id=${rec.id}&format=pdf`,
+      language: 'en',
+      full_text: rec.full_judgment_text,
+      verification_status: 'verified',
+      created_at: '2026-01-01T00:00:00.000Z',
+      updated_at: '2026-01-01T00:00:00.000Z'
+    };
+    documents.push(doc);
+
+    // Chunk 1: Headnotes & Ratio Decidendi
+    const chunk1Content = `CASE TITLE: ${rec.case_title}\nCITATION: ${rec.citation}\nCOURT: ${rec.court}\nBENCH: ${rec.bench}\n\nHEADNOTES:\n${rec.headnotes?.map(h => '* ' + h).join('\n')}\n\nLEGAL RATIO DECIDENDI (HELD):\n${rec.held_proposition}`;
+    chunks.push({
+      id: `chk-${rec.id}-0`,
+      document_id: docId,
+      chunk_index: 0,
+      content: chunk1Content,
+      page_number: 1,
+      paragraph_number: 1,
+      embedding: generateDeterministicEmbedding(chunk1Content),
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Chunk 2: Full Judgment Excerpt & Facts
+    const chunk2Content = `JUDGMENT EXCERPT & FACTUAL BACKGROUND:\n${rec.full_judgment_text.slice(0, 1400)}\n\nSTATUTORY SUBJECT:\n${rec.statute_subject}`;
+    chunks.push({
+      id: `chk-${rec.id}-1`,
+      document_id: docId,
+      chunk_index: 1,
+      content: chunk2Content,
+      page_number: 2,
+      paragraph_number: 2,
+      embedding: generateDeterministicEmbedding(chunk2Content),
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Provenance source record conforming to 003_legal_sources_processing.sql
+    sources.push({
+      id: `src-${rec.id}`,
+      document_id: docId,
+      source_url: rec.official_kanoon_url || 'https://escr.sci.gov.in',
+      storage_path: `legal_vault/${docId}.pdf`,
+      original_filename: `${rec.case_title.slice(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.pdf`,
+      mime_type: 'application/pdf',
+      file_size: 154200,
+      checksum: crypto.createHash('sha256').update(docId).digest('hex'),
+      source_name: isSC ? 'Supreme Court of India (e-SCR)' : 'High Court of Rajasthan',
+      access_permission_status: 'permitted',
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Ingestion processing telemetry conforming to 003_legal_sources_processing.sql
+    processing.push({
+      id: `proc-${rec.id}`,
+      document_id: docId,
+      extraction_status: 'completed',
+      ocr_status: 'not_needed',
+      metadata_status: 'completed',
+      embedding_status: 'completed',
+      total_pages: 5,
+      processed_pages: 5,
+      total_chunks: 2,
+      error_message: null,
+      retry_count: 0,
+      started_at: '2026-01-01T00:00:00.000Z',
+      completed_at: '2026-01-01T00:00:05.000Z',
+      created_at: '2026-01-01T00:00:00.000Z'
+    });
+
+    // Seed precedent graph citations conforming to 004_legal_ingestion_jobs.sql
+    if (rec.id === 'satender-antil-2022') {
+      citations.push({
+        id: `cit-${rec.id}-1`,
+        document_id: docId,
+        cited_document_id: 'doc-arnesh-kumar-2014',
+        cited_case_name: 'Arnesh Kumar v. State of Bihar & Another',
+        citation_text: '(2014) 8 SCC 273',
+        relation_type: 'followed',
+        verification_status: 'verified',
+        created_at: '2026-01-01T00:00:00.000Z'
+      });
+    } else if (rec.id === 'arjun-khotkar-2020') {
+      citations.push({
+        id: `cit-${rec.id}-1`,
+        document_id: docId,
+        cited_document_id: null,
+        cited_case_name: 'Shafhi Mohammad v. State of Himachal Pradesh',
+        citation_text: '(2018) 2 SCC 801',
+        relation_type: 'overruled',
+        verification_status: 'verified',
+        created_at: '2026-01-01T00:00:00.000Z'
+      });
+      citations.push({
+        id: `cit-${rec.id}-2`,
+        document_id: docId,
+        cited_document_id: null,
+        cited_case_name: 'Anvar P.V. v. P.K. Basheer & Others',
+        citation_text: '(2014) 10 SCC 473',
+        relation_type: 'affirmed',
+        verification_status: 'verified',
+        created_at: '2026-01-01T00:00:00.000Z'
+      });
+    }
+  }
+
+  // Pre-seeded batch ingestion job conforming to 004_legal_ingestion_jobs.sql
+  const jobs: LegalIngestionJob[] = [
+    {
+      id: 'job-init-batch-001',
+      collection_method: 'automatic',
+      source_name: 'Rajasthan High Court & Supreme Court Precedent Bank',
+      source_url: 'https://hcraj.nic.in',
+      status: 'completed',
+      total_documents: documents.length,
+      successful_documents: documents.length,
+      failed_documents: 0,
+      started_at: '2026-01-01T00:00:00.000Z',
+      completed_at: '2026-01-01T00:00:15.000Z',
+      error_message: null,
+      created_by: null,
+      created_at: '2026-01-01T00:00:00.000Z'
+    }
+  ];
+
+  return { documents, chunks, sources, processing, citations, jobs };
+}
+
+function getInitialStorageUsageHistory(): StorageUsageHistoryRecord[] {
+  const records: StorageUsageHistoryRecord[] = [];
+  const now = Date.now();
+  for (let i = 6; i >= 0; i--) {
+    const timestamp = new Date(now - i * 24 * 60 * 60 * 1000).toISOString();
+    records.push({
+      id: `suh-seed-${i}`,
+      createdAt: timestamp,
+      storageBytes: 15400000 + (6 - i) * 1250000,
+      databaseBytes: 4200000 + (6 - i) * 350000,
+      physicalDiskBytes: 85000000 + (6 - i) * 2000000,
+      pdfCount: 8 + (6 - i),
+      chunkCount: 16 + (6 - i) * 2,
+      metadata: { seed: true }
+    });
+  }
+  return records;
+}
+
 function getInitialState(): DatabaseState {
   const initialAdminId = 'admin-user-alwar-0001';
   const demoAdvocateId = 'advocate-user-alwar-0002';
   const demoAdvocate2Id = 'advocate-user-alwar-0003';
   const demoClientId = 'client-alwar-0001';
   const demoCaseId = 'case-alwar-0001';
+  const initialLegalDocs = getInitialLegalDocumentsAndChunks();
 
   return {
     users: [
@@ -92,9 +339,36 @@ function getInitialState(): DatabaseState {
         is_active: true,
         created_at: '2026-02-01T10:00:00.000Z',
         updated_at: '2026-02-01T10:00:00.000Z'
+      },
+      {
+        id: 'usr-rohitashwa-sain-331-1977',
+        email: 'rohitashwa.adv@alwarbar.in',
+        password_hash: hashPassword('Password@r1234'),
+        full_name: 'Sh. Rohitashwa Sain',
+        role: 'registered_advocate',
+        phone: '0144-2334455',
+        is_active: true,
+        created_at: '2026-01-01T10:00:00.000Z',
+        updated_at: '2026-01-01T10:00:00.000Z'
       }
     ],
     advocate_profiles: [
+      {
+        id: 'prof-rohitashwa-sain-331',
+        user_id: 'usr-rohitashwa-sain-331-1977',
+        bar_council_enrollment_no: 'R/331/1977',
+        bar_association_name: 'District & Sessions Bar Association, Alwar (Judgeship: ALWAR)',
+        chamber_address: 'Chamber No. 15, Senior Advocates Wing, District Court Campus, Alwar - 301001',
+        court_practice_complex: 'District & Sessions Court, ADJ Courts, POCSO & Subordinate Courts, Alwar',
+        practice_areas: ['Civil Original Suits & Appeals', 'Criminal Defense & Sessions Trials', 'Revenue Litigation (RTA/RLRA)', 'MACT Claims & Consumer Law'],
+        experience_years: 49,
+        bio_hindi: 'अलवर जिला एवं सत्र न्यायालय तथा अधीनस्थ न्यायालयों में वर्ष 1977 से निरंतर 49 वर्षों से वरिष्ठतम विधिक व्यवसाय। बार काउंसिल ऑफ राजस्थान एवं अधिवक्ता कल्याण कोष के सम्मानित सदस्य।',
+        bio_english: 'Senior practicing advocate at District & Sessions Court Alwar since 1977 (49 years of esteemed legal standing). Specializing in Civil Suits, Sessions Criminal Defense, Revenue Land Law, and Appellate Practice.',
+        is_verified: true,
+        verified_by: initialAdminId,
+        verified_at: '2026-01-10T10:00:00.000Z',
+        is_publicly_listed: true
+      },
       {
         id: 'prof-001',
         user_id: demoAdvocateId,
@@ -816,6 +1090,46 @@ function getInitialState(): DatabaseState {
         address: 'Ward No. 12, Shivaji Park, Alwar, Rajasthan',
         confidential_notes: 'Client is an agricultural landowner. Retained for partition suit before SDO Alwar.',
         created_at: '2026-02-10T10:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Smt. Bhagwati Devi',
+        phone: '9829112233',
+        email: 'bhagwati.alwar@gmail.com',
+        address: 'Ward No. 8, Scheme No. 2, Alwar, Rajasthan',
+        confidential_notes: 'Retained for Civil Suit against Nagar Parishad Alwar regarding ancestral house boundary.',
+        created_at: '2026-01-10T10:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Dharmendra Singh',
+        phone: '9414223344',
+        email: 'dharmendra.singh@alwarmail.com',
+        address: 'Village Malakhera, Tehsil Malakhera, Alwar',
+        confidential_notes: 'Sessions trial defense matter before Sessions Judge Alwar.',
+        created_at: '2026-02-05T11:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Ramji Lal Gurjar',
+        phone: '9829334455',
+        email: 'ramjilal.gurjar@alwarmail.com',
+        address: 'Village Toda, Tehsil Laxmangarh, Alwar',
+        confidential_notes: 'Revenue appeal regarding agricultural land mutation before RAA Alwar.',
+        created_at: '2026-03-01T10:00:00.000Z'
+      },
+      {
+        id: 'client-rohitashwa-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        full_name: 'Smt. Sunita Devi',
+        phone: '9414445566',
+        email: 'sunita.devi.mact@gmail.com',
+        address: 'Kala Kuan, Housing Board Colony, Alwar',
+        confidential_notes: 'Fatal highway accident compensation claim petition before MACT Alwar.',
+        created_at: '2026-03-15T12:00:00.000Z'
       }
     ],
     cases: [
@@ -837,6 +1151,336 @@ function getInitialState(): DatabaseState {
         private_notes: 'Respondents filed reply. Need to emphasize revenue jamabandi showing undivided co-sharer status.',
         created_at: '2026-02-10T11:00:00.000Z',
         updated_at: '2026-10-15T09:30:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-001',
+        case_title: 'Smt. Bhagwati Devi & Ors. v. Nagar Parishad Alwar & Anr.',
+        case_number: 'Civil Suit No. 142/2023',
+        cnr_number: 'RJAL01-003412-2023',
+        court_name: 'Court of Additional District & Sessions Judge No. 1, Alwar',
+        case_type: 'Civil Suit for Declaration & Permanent Injunction',
+        petitioner_parties: 'Smt. Bhagwati Devi w/o Late Rameshwar Dayal',
+        respondent_parties: 'Nagar Parishad Alwar through Commissioner & State of Rajasthan',
+        filing_date: '2023-03-15',
+        next_hearing_date: '2026-11-18',
+        stage_of_case: 'Plaintiff Evidence (P.W. Statements)',
+        status: 'active',
+        private_notes: 'Plaint admitted. Interim stay granted under Order 39 CPC. Next date fixed for cross-examination of Plaintiff Witness No. 1.',
+        created_at: '2023-03-15T11:00:00.000Z',
+        updated_at: '2026-10-20T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-002',
+        case_title: 'State of Rajasthan v. Dharmendra Singh & 3 Ors.',
+        case_number: 'Sessions Case No. 89/2024 (FIR 412/2023 PS Kotwali)',
+        cnr_number: 'RJAL01-001844-2024',
+        court_name: 'District & Sessions Court, Alwar',
+        case_type: 'Sessions Trial (U/s 302, 307, 149 IPC / 103, 109 BNS)',
+        petitioner_parties: 'State of Rajasthan through Public Prosecutor',
+        respondent_parties: 'Dharmendra Singh s/o Ram Singh & 3 Ors.',
+        filing_date: '2024-02-10',
+        next_hearing_date: '2026-11-24',
+        stage_of_case: 'Final Arguments on Charge (Sec 251 BNSS)',
+        status: 'active',
+        private_notes: 'Appeared for accused No. 1 & 2. Raised objection regarding delayed FIR and contradictory medical report.',
+        created_at: '2024-02-10T10:00:00.000Z',
+        updated_at: '2026-10-22T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-003',
+        case_title: 'Ramji Lal & 4 Ors. v. Tehsildar Laxmangarh & 6 Ors.',
+        case_number: 'Revenue Appeal No. 45/2024',
+        cnr_number: 'RJAL01-007821-2024',
+        court_name: 'Court of Revenue Appellate Authority (RAA), Alwar',
+        case_type: 'Revenue Appeal under Sec 75 Rajasthan Land Revenue Act, 1956',
+        petitioner_parties: 'Ramji Lal s/o Hardev Gurjar & 4 Ors.',
+        respondent_parties: 'Tehsildar Laxmangarh & Prabhu Dayal & Ors.',
+        filing_date: '2024-05-19',
+        next_hearing_date: '2026-11-28',
+        stage_of_case: 'Arguments on Interim Injunction (Sec 212 Rajasthan Tenancy Act)',
+        status: 'active',
+        private_notes: 'Challenged mutation entry No. 512. Status quo ordered on possession of agricultural Khasra No. 340.',
+        created_at: '2024-05-19T10:00:00.000Z',
+        updated_at: '2026-10-25T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        client_id: 'client-rohitashwa-004',
+        case_title: 'Smt. Sunita Devi & 3 Minor Children v. New India Assurance Co. Ltd. & Ors.',
+        case_number: 'MACT Claim Petition No. 210/2023',
+        cnr_number: 'RJAL01-004590-2023',
+        court_name: 'Motor Accident Claims Tribunal (MACT), Alwar',
+        case_type: 'Fatal Accident Compensation Claim (Sec 166 Motor Vehicles Act)',
+        petitioner_parties: 'Smt. Sunita Devi w/o Late Rajesh Kumar & 3 Minors',
+        respondent_parties: 'Driver, Owner (Truck RJ-02-GB-4112) & The New India Assurance Co. Ltd.',
+        filing_date: '2023-07-22',
+        next_hearing_date: '2026-12-02',
+        stage_of_case: 'Cross Examination of NA No. 3 Insurance Investigator',
+        status: 'active',
+        private_notes: 'Income of deceased established via Sarpanch certificate & salary register. Claim prayed: ₹48,50,000.',
+        created_at: '2023-07-22T10:00:00.000Z',
+        updated_at: '2026-10-25T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-005',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Harish Chandra Sharma v. Kailash Chand Sharma & Ors.',
+        case_number: 'Civil Regular First Appeal (RFA) No. 18/2022',
+        cnr_number: 'RJAL01-000912-2022',
+        court_name: 'Court of District Judge, Alwar',
+        case_type: 'First Appeal against Decree in Ancestral Partition Suit (Order 41 CPC)',
+        petitioner_parties: 'Harish Chandra Sharma s/o Lt. Pandit Madan Lal',
+        respondent_parties: 'Kailash Chand Sharma & 5 Ors.',
+        filing_date: '2022-04-08',
+        next_hearing_date: '2026-12-05',
+        stage_of_case: 'Final Arguments on Appeal (Order 41 Rule 1 CPC)',
+        status: 'active',
+        private_notes: 'Trial court judgment challenged on improper preliminary decree division. Lower court records summoned.',
+        created_at: '2022-04-08T10:00:00.000Z',
+        updated_at: '2026-10-26T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-006',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Mohan Lal v. State of Rajasthan',
+        case_number: 'Bail Application No. 1840/2026 (FIR 312/2026 PS Aravali Vihar)',
+        cnr_number: 'RJAL01-009144-2026',
+        court_name: 'Special Court (POCSO Act Cases No. 1), Alwar',
+        case_type: 'Regular Bail Application under Section 483 BNSS (Old Sec 439 CrPC)',
+        petitioner_parties: 'Mohan Lal s/o Chhaju Ram Meena',
+        respondent_parties: 'State of Rajasthan through Public Prosecutor',
+        filing_date: '2026-10-25',
+        next_hearing_date: '2026-11-15',
+        stage_of_case: 'Perusal of Case Diary & Arguments on Bail',
+        status: 'active',
+        private_notes: 'Applicant in judicial custody since 45 days. Statement of prosecutrix under Sec 183 BNSS reveals mutual dispute.',
+        created_at: '2026-10-25T10:00:00.000Z',
+        updated_at: '2026-10-28T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-007',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Girraj Prasad Saini v. Alwar Urban Improvement Trust (UIT)',
+        case_number: 'Civil Original Suit No. 67/2025',
+        cnr_number: 'RJAL01-005118-2025',
+        court_name: 'Court of Civil Judge & Senior Division, Alwar',
+        case_type: 'Specific Performance of Contract & Patta Title Declaration',
+        petitioner_parties: 'Girraj Prasad Saini s/o Narayan Lal Saini',
+        respondent_parties: 'Alwar Urban Improvement Trust (UIT) through Secretary',
+        filing_date: '2025-06-14',
+        next_hearing_date: '2026-12-10',
+        stage_of_case: 'Framing of Issues (Order 14 Rule 1 CPC)',
+        status: 'active',
+        private_notes: 'Written statement submitted by UIT. Proposed issues drafted and filed before Honble Bench.',
+        created_at: '2025-06-14T10:00:00.000Z',
+        updated_at: '2026-10-28T10:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-008',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Radhey Shyam Yadav v. Smt. Kanta Devi',
+        case_number: 'Criminal Revision No. 34/2025',
+        cnr_number: 'RJAL01-002305-2025',
+        court_name: 'Court of Additional Sessions Judge No. 2, Alwar',
+        case_type: 'Criminal Revision against Interim Maintenance (Sec 438/442 BNSS)',
+        petitioner_parties: 'Radhey Shyam Yadav s/o Ramotar Yadav',
+        respondent_parties: 'Smt. Kanta Devi w/o Radhey Shyam Yadav',
+        filing_date: '2025-03-11',
+        next_hearing_date: '2026-12-12',
+        stage_of_case: 'Arguments on Revision & Record Call',
+        status: 'active',
+        private_notes: 'Challenged exorbitant ex-parte interim maintenance award passed without assessing actual agricultural income.',
+        created_at: '2025-03-11T10:00:00.000Z',
+        updated_at: '2026-10-28T10:00:00.000Z'
+      },
+      // --- DISPOSED CASES (निस्तारित वाद) ---
+      {
+        id: 'case-rohitashwa-disp-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Mool Chand Saini & Ors. v. State of Rajasthan & PWD Alwar',
+        case_number: 'Civil Suit No. 84/2019',
+        cnr_number: 'RJAL01-001923-2019',
+        court_name: 'Court of Additional District Judge No. 2, Alwar',
+        case_type: 'Civil Suit for Permanent Injunction & Compensation',
+        petitioner_parties: 'Mool Chand Saini s/o Lt. Kalyan Sahai & 2 Ors.',
+        respondent_parties: 'State of Rajasthan through Collector Alwar & Executive Engineer PWD',
+        filing_date: '2019-04-18',
+        next_hearing_date: undefined,
+        stage_of_case: 'Suit Decreed in Favour of Plaintiff (Final Judgment Passed)',
+        status: 'disposed',
+        private_notes: 'Judgment & Decree passed on 12-09-2024. PWD restrained from demolishing roadside shops without statutory acquisition. Decree sheet prepared.',
+        created_at: '2019-04-18T10:00:00.000Z',
+        updated_at: '2024-09-12T15:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'State of Rajasthan v. Satish Kumar & 2 Ors.',
+        case_number: 'Sessions Case No. 42/2021 (FIR 180/2020 PS Sadar Alwar)',
+        cnr_number: 'RJAL01-000845-2021',
+        court_name: 'District & Sessions Court, Alwar',
+        case_type: 'Sessions Trial (U/s 307, 326, 34 IPC)',
+        petitioner_parties: 'State of Rajasthan through Public Prosecutor',
+        respondent_parties: 'Satish Kumar s/o Prabhu Dayal & 2 Ors.',
+        filing_date: '2021-02-14',
+        next_hearing_date: undefined,
+        stage_of_case: 'Acquitted from all charges (Full Acquittal)',
+        status: 'disposed',
+        private_notes: 'Final judgment dated 05-08-2025. Prosecution witnesses turned hostile; medical evidence did not corroborate eyewitness version. Accused honorably acquitted.',
+        created_at: '2021-02-14T10:00:00.000Z',
+        updated_at: '2025-08-05T14:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Smt. Kamlesh Devi & 4 Ors. v. National Insurance Co. Ltd.',
+        case_number: 'MACT Claim Petition No. 115/2022',
+        cnr_number: 'RJAL01-003112-2022',
+        court_name: 'Motor Accident Claims Tribunal (MACT), Alwar',
+        case_type: 'Motor Accident Compensation Claim (Sec 166 MV Act)',
+        petitioner_parties: 'Smt. Kamlesh Devi w/o Late Jagdish Prasad & 4 Ors.',
+        respondent_parties: 'Owner, Driver (Truck RJ-14-GA-8821) & National Insurance Co.',
+        filing_date: '2022-06-10',
+        next_hearing_date: undefined,
+        stage_of_case: 'Claim Awarded with 7.5% Interest (Disposed)',
+        status: 'disposed',
+        private_notes: 'Award passed on 20-03-2025 for ₹34,75,000/- with 7.5% interest per annum. Insurance company deposited voucher in court.',
+        created_at: '2022-06-10T10:00:00.000Z',
+        updated_at: '2025-03-20T16:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Babulal Meena & Ors. v. Ramkaran & Tehsildar Rajgarh',
+        case_number: 'Revenue Suit No. 29/2020',
+        cnr_number: 'RJAL01-004210-2020',
+        court_name: 'Court of Sub-Divisional Officer (SDO), Rajgarh (Camp Alwar)',
+        case_type: 'Agricultural Land Partition under Sec 53 Rajasthan Tenancy Act',
+        petitioner_parties: 'Babulal Meena s/o Lt. Gopi Ram & 2 Ors.',
+        respondent_parties: 'Ramkaran s/o Gopi Ram & Tehsildar Rajgarh',
+        filing_date: '2020-01-25',
+        next_hearing_date: undefined,
+        stage_of_case: 'Final Decree of Partition Passed (Kurra Prepared)',
+        status: 'disposed',
+        private_notes: 'Patwari report and Kurra approved by SDO on 15-11-2024. Revenue boundaries permanently demarcated.',
+        created_at: '2020-01-25T10:00:00.000Z',
+        updated_at: '2024-11-15T12:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-005',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Vikash Yadav v. State of Rajasthan',
+        case_number: 'Bail Application No. 640/2025 (FIR 95/2025 PS Shivaji Park Alwar)',
+        cnr_number: 'RJAL01-005890-2025',
+        court_name: 'Court of Additional Sessions Judge No. 1, Alwar',
+        case_type: 'Regular Bail Application (Sec 480 BNSS)',
+        petitioner_parties: 'Vikash Yadav s/o Surendra Yadav',
+        respondent_parties: 'State of Rajasthan through Public Prosecutor',
+        filing_date: '2025-05-12',
+        next_hearing_date: undefined,
+        stage_of_case: 'Bail Application Allowed & Prisoner Released',
+        status: 'disposed',
+        private_notes: 'Bail granted on 28-05-2025 upon furnishing bail bond of ₹50,000/- with two solvent sureties. Release warrant executed.',
+        created_at: '2025-05-12T10:00:00.000Z',
+        updated_at: '2025-05-28T14:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-disp-006',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Kailash Chand Gupta v. Mohan Swaroop',
+        case_number: 'Criminal Complaint No. 512/2023 (Sec 138 NI Act)',
+        cnr_number: 'RJAL01-002677-2023',
+        court_name: 'Court of Special Judicial Magistrate (NI Act Cases), Alwar',
+        case_type: 'Cheque Dishonour Complaint under Section 138 NI Act',
+        petitioner_parties: 'Kailash Chand Gupta s/o Lt. Brij Mohan Gupta',
+        respondent_parties: 'Mohan Swaroop s/o Nathu Lal',
+        filing_date: '2023-08-04',
+        next_hearing_date: undefined,
+        stage_of_case: 'Settled in National Lok Adalat (Compromised & Disposed)',
+        status: 'disposed',
+        private_notes: 'Matter settled amicably in National Lok Adalat on 14-09-2025 for ₹4,50,000/- full and final settlement. Full payment received by complainant.',
+        created_at: '2023-08-04T10:00:00.000Z',
+        updated_at: '2025-09-14T17:00:00.000Z'
+      },
+      // --- ARCHIVED HISTORIC CASES (अभिलेखागार वाद) ---
+      {
+        id: 'case-rohitashwa-arch-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Thakur Madan Singh & Ors. v. State of Rajasthan (Land Ceiling Reference)',
+        case_number: 'Revenue Reference Case No. 12/1984',
+        cnr_number: 'RJAL01-000102-1984',
+        court_name: 'Court of District Collector & District Magistrate, Alwar',
+        case_type: 'Agricultural Land Ceiling Re-opening under Sec 15 Ceiling Act',
+        petitioner_parties: 'Thakur Madan Singh & Legal Heirs',
+        respondent_parties: 'State of Rajasthan & Authorized Officer Ceiling Alwar',
+        filing_date: '1984-07-11',
+        next_hearing_date: undefined,
+        stage_of_case: 'Reference Dropped in Favour of Khatedars (Archived Record)',
+        status: 'archived',
+        private_notes: 'Historic 1984 litigation handled by Senior Advocate Sh. Rohitashwa Sain. Surplus declaration quashed; land retained by family. Preserved in chamber archive bundle #A-14.',
+        created_at: '1984-07-11T10:00:00.000Z',
+        updated_at: '1989-11-20T11:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-arch-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Prabhu Dayal Sharma v. Municipal Board Alwar & Mandir Committee',
+        case_number: 'Civil Original Suit No. 104/1996',
+        cnr_number: 'RJAL01-000455-1996',
+        court_name: 'Court of Senior Civil Judge, Alwar',
+        case_type: 'Declaration of Ownership & Trust Property Injunction',
+        petitioner_parties: 'Prabhu Dayal Sharma & Ors.',
+        respondent_parties: 'Municipal Board Alwar through Chairman & Anr.',
+        filing_date: '1996-03-20',
+        next_hearing_date: undefined,
+        stage_of_case: 'Suit Decreed with Permanent Injunction (Archived)',
+        status: 'archived',
+        private_notes: 'Decreed on 18-12-2002. Upheld by High Court in 2008. Certified judgment copy and site map preserved in record room.',
+        created_at: '1996-03-20T10:00:00.000Z',
+        updated_at: '2002-12-18T16:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-arch-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'State of Rajasthan v. Hoshiyar Singh & 4 Ors. (FIR 88/2004 PS Behror)',
+        case_number: 'Sessions Case No. 56/2005',
+        cnr_number: 'RJAL01-000789-2005',
+        court_name: 'Court of Additional Sessions Judge, Behror (Alwar Judgeship)',
+        case_type: 'Sessions Trial U/s 302/149 IPC',
+        petitioner_parties: 'State of Rajasthan',
+        respondent_parties: 'Hoshiyar Singh & 4 Ors.',
+        filing_date: '2005-02-18',
+        next_hearing_date: undefined,
+        stage_of_case: 'Honorable Acquittal (Archived Case Record)',
+        status: 'archived',
+        private_notes: 'Lead defense conducted by Sh. Rohitashwa Sain. Established defense alibi and non-recovery of alleged weapons. Acquittal dated 14-09-2009.',
+        created_at: '2005-02-18T10:00:00.000Z',
+        updated_at: '2009-09-14T15:00:00.000Z'
+      },
+      {
+        id: 'case-rohitashwa-arch-004',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_title: 'Matsya Industrial Workers Union v. M/s Alwar Textile Mills Ltd.',
+        case_number: 'Labour Reference No. 19/2012',
+        cnr_number: 'RJAL01-001240-2012',
+        court_name: 'Labour Court & Industrial Tribunal, Alwar',
+        case_type: 'Industrial Dispute under Section 10 Industrial Disputes Act',
+        petitioner_parties: 'Matsya Industrial Workers Union through General Secretary',
+        respondent_parties: 'M/s Alwar Textile Mills Ltd. Management',
+        filing_date: '2012-05-14',
+        next_hearing_date: undefined,
+        stage_of_case: 'Settlement Award Passed & Implemented (Archived)',
+        status: 'archived',
+        private_notes: 'Tripartite agreement signed before Conciliation Officer. Gratuity and retrenchment compensation disbursed to 48 workers.',
+        created_at: '2012-05-14T10:00:00.000Z',
+        updated_at: '2014-08-30T14:00:00.000Z'
       }
     ],
     case_documents: [
@@ -870,6 +1514,66 @@ function getInitialState(): DatabaseState {
         attended: true,
         case_title: 'Mukesh Kumar Saini v. Rameshwar Dayal & Ors.',
         created_at: '2026-10-10T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-001',
+        case_id: 'case-rohitashwa-006',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-15',
+        court_room: 'Special Court (POCSO Cases No. 1), Sessions Wing Alwar',
+        judge_name: 'Special Judge (POCSO Act), Alwar',
+        business_recorded: 'Case diary summoned from Investigating Officer, PS Aravali Vihar. Bail arguments listed.',
+        previous_order_summary: 'Notices issued to complainant. Case diary called.',
+        next_action: 'Advance arguments on Section 483 BNSS citing bail precedents.',
+        next_hearing_date: '2026-11-15',
+        attended: true,
+        case_title: 'Mohan Lal v. State of Rajasthan (Bail App 1840/2026)',
+        created_at: '2026-10-26T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-002',
+        case_id: 'case-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-18',
+        court_room: 'Court No. 3, ADJ No. 1, Alwar',
+        judge_name: 'Additional District & Sessions Judge No. 1, Alwar',
+        business_recorded: 'Plaintiff Witness No. 1 (Bhagwati Devi) in attendance. Cross-examination by Municipal Council counsel.',
+        previous_order_summary: 'Affidavit of examination-in-chief filed. Adjourned for cross-examination.',
+        next_action: 'Conduct re-examination if necessary; tender documentary site receipts.',
+        next_hearing_date: '2026-11-18',
+        attended: true,
+        case_title: 'Smt. Bhagwati Devi & Ors. v. Nagar Parishad Alwar & Anr.',
+        created_at: '2026-10-20T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-003',
+        case_id: 'case-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-24',
+        court_room: 'Court No. 1, District & Sessions Judge, Alwar',
+        judge_name: 'District & Sessions Judge, Alwar',
+        business_recorded: 'Arguments on charge heard in part. Remaining co-accused defense counsel to conclude.',
+        previous_order_summary: 'Accused produced through VC. Police charge-sheet verified.',
+        next_action: 'Conclude discharge submissions under Sec 250 BNSS.',
+        next_hearing_date: '2026-11-24',
+        attended: true,
+        case_title: 'State of Rajasthan v. Dharmendra Singh & 3 Ors.',
+        created_at: '2026-10-22T10:00:00.000Z'
+      },
+      {
+        id: 'hearing-rohitashwa-004',
+        case_id: 'case-rohitashwa-003',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        hearing_date: '2026-11-28',
+        court_room: 'Court of Revenue Appellate Authority, Collectorate, Alwar',
+        judge_name: 'Revenue Appellate Authority (RAA), Alwar',
+        business_recorded: 'Record of Tehsildar Laxmangarh perused. Stay application under Sec 212 RTA for consideration.',
+        previous_order_summary: 'Status quo ordered on possession till next date.',
+        next_action: 'Argue on confirmation of status quo pending final appeal decision.',
+        next_hearing_date: '2026-11-28',
+        attended: true,
+        case_title: 'Ramji Lal & 4 Ors. v. Tehsildar Laxmangarh & 6 Ors.',
+        created_at: '2026-10-25T10:00:00.000Z'
       }
     ],
     tasks: [
@@ -883,6 +1587,28 @@ function getInitialState(): DatabaseState {
         status: 'pending',
         case_title: 'Mukesh Kumar Saini v. Rameshwar Dayal & Ors.',
         created_at: '2026-10-15T10:00:00.000Z'
+      },
+      {
+        id: 'task-rohitashwa-001',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_id: 'case-rohitashwa-002',
+        title: 'Obtain certified copies of injured MLC and supplementary statement in Sessions Case 89/2024',
+        due_date: '2026-11-20',
+        priority: 'urgent',
+        status: 'pending',
+        case_title: 'State of Rajasthan v. Dharmendra Singh & 3 Ors.',
+        created_at: '2026-10-26T10:00:00.000Z'
+      },
+      {
+        id: 'task-rohitashwa-002',
+        advocate_id: 'usr-rohitashwa-sain-331-1977',
+        case_id: 'case-rohitashwa-001',
+        title: 'Prepare cross-examination points on Nagar Parishad master plan map in Civil Suit 142/2023',
+        due_date: '2026-11-17',
+        priority: 'high',
+        status: 'pending',
+        case_title: 'Smt. Bhagwati Devi & Ors. v. Nagar Parishad Alwar & Anr.',
+        created_at: '2026-10-27T10:00:00.000Z'
       }
     ],
     invoices: [
@@ -929,6 +1655,17 @@ function getInitialState(): DatabaseState {
         created_at: '2026-03-01T10:00:00.000Z'
       }
     ],
+    chat_sessions: [],
+    notification_preferences: [],
+    notification_delivery_history: [],
+    client_communications: [],
+    automation_jobs: [],
+    cause_list_entries: [],
+    subscriptions: [],
+    subscription_invoices: [],
+    chambers: [],
+    chamber_members: [],
+    chamber_invitations: [],
     audit_logs: [
       {
         id: 'audit-001',
@@ -942,7 +1679,16 @@ function getInitialState(): DatabaseState {
         details: { enrollment_no: 'R/1420/2012', status: 'verified' },
         created_at: '2026-01-10T12:00:00.000Z'
       }
-    ]
+    ],
+    legal_documents: initialLegalDocs.documents,
+    legal_document_chunks: initialLegalDocs.chunks,
+    legal_research_history: [],
+    saved_research: [],
+    legal_document_sources: initialLegalDocs.sources,
+    legal_document_processing: initialLegalDocs.processing,
+    legal_ingestion_jobs: initialLegalDocs.jobs,
+    legal_document_citations: initialLegalDocs.citations,
+    storage_usage_history: getInitialStorageUsageHistory()
   };
 }
 
@@ -1059,7 +1805,27 @@ class LocalDatabase {
         invoices: Array.isArray(loaded.invoices) && loaded.invoices.length > 0 ? loaded.invoices : initial.invoices,
         drafts: Array.isArray(loaded.drafts) && loaded.drafts.length > 0 ? loaded.drafts : initial.drafts,
         personal_library: Array.isArray(loaded.personal_library) && loaded.personal_library.length > 0 ? loaded.personal_library : initial.personal_library,
+        chat_sessions: Array.isArray(loaded.chat_sessions) ? loaded.chat_sessions : [],
+        notification_preferences: Array.isArray(loaded.notification_preferences) ? loaded.notification_preferences : [],
+        notification_delivery_history: Array.isArray(loaded.notification_delivery_history) ? loaded.notification_delivery_history : [],
+        client_communications: Array.isArray(loaded.client_communications) ? loaded.client_communications : [],
+        automation_jobs: Array.isArray(loaded.automation_jobs) ? loaded.automation_jobs : [],
+        cause_list_entries: Array.isArray(loaded.cause_list_entries) ? loaded.cause_list_entries : [],
+        subscriptions: Array.isArray(loaded.subscriptions) ? loaded.subscriptions : [],
+        subscription_invoices: Array.isArray(loaded.subscription_invoices) ? loaded.subscription_invoices : [],
+        chambers: Array.isArray(loaded.chambers) ? loaded.chambers : [],
+        chamber_members: Array.isArray(loaded.chamber_members) ? loaded.chamber_members : [],
+        chamber_invitations: Array.isArray(loaded.chamber_invitations) ? loaded.chamber_invitations : [],
         audit_logs: Array.isArray(loaded.audit_logs) && loaded.audit_logs.length > 0 ? loaded.audit_logs : initial.audit_logs,
+        legal_documents: Array.isArray(loaded.legal_documents) && loaded.legal_documents.length > 0 ? loaded.legal_documents : initial.legal_documents,
+        legal_document_chunks: Array.isArray(loaded.legal_document_chunks) && loaded.legal_document_chunks.length > 0 ? loaded.legal_document_chunks : initial.legal_document_chunks,
+        legal_research_history: Array.isArray(loaded.legal_research_history) ? loaded.legal_research_history : [],
+        saved_research: Array.isArray(loaded.saved_research) ? loaded.saved_research : [],
+        legal_document_sources: Array.isArray(loaded.legal_document_sources) && loaded.legal_document_sources.length > 0 ? loaded.legal_document_sources : initial.legal_document_sources,
+        legal_document_processing: Array.isArray(loaded.legal_document_processing) && loaded.legal_document_processing.length > 0 ? loaded.legal_document_processing : initial.legal_document_processing || [],
+        legal_ingestion_jobs: Array.isArray(loaded.legal_ingestion_jobs) && loaded.legal_ingestion_jobs.length > 0 ? loaded.legal_ingestion_jobs : initial.legal_ingestion_jobs || [],
+        legal_document_citations: Array.isArray(loaded.legal_document_citations) && loaded.legal_document_citations.length > 0 ? loaded.legal_document_citations : initial.legal_document_citations || [],
+        storage_usage_history: Array.isArray(loaded.storage_usage_history) && loaded.storage_usage_history.length > 0 ? loaded.storage_usage_history : initial.storage_usage_history || [],
       };
 
       // Ensure preset users exist with valid password hashes
@@ -1080,8 +1846,34 @@ class LocalDatabase {
         }
       }
 
+      // Ensure initial cases exist
+      for (const defaultCase of initial.cases) {
+        if (!merged.cases.some(c => c.id === defaultCase.id)) {
+          merged.cases.push(defaultCase);
+          changed = true;
+        }
+      }
+      for (const defaultClient of initial.clients) {
+        if (!merged.clients.some(c => c.id === defaultClient.id)) {
+          merged.clients.push(defaultClient);
+          changed = true;
+        }
+      }
+      for (const defaultHearing of initial.case_hearings) {
+        if (!merged.case_hearings.some(h => h.id === defaultHearing.id)) {
+          merged.case_hearings.push(defaultHearing);
+          changed = true;
+        }
+      }
+      for (const defaultTask of initial.tasks) {
+        if (!merged.tasks.some(t => t.id === defaultTask.id)) {
+          merged.tasks.push(defaultTask);
+          changed = true;
+        }
+      }
+
       this.state = merged;
-      if (changed || !loaded.advocate_profiles) {
+      if (changed || !loaded.advocate_profiles || !loaded.legal_documents) {
         this.save();
       }
       return this.state;
@@ -1112,7 +1904,39 @@ class LocalDatabase {
   }
 
   getUserByEmail(email: string): User | undefined {
-    return this.ensureLoaded().users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    return this.getUserByIdentifier(email);
+  }
+
+  getUserByIdentifier(identifier: string): User | undefined {
+    const s = this.ensureLoaded();
+    const clean = (identifier || '').trim().toLowerCase();
+    if (!clean) return undefined;
+
+    // 1. Direct email match
+    const byEmail = s.users.find(u => u.email.toLowerCase() === clean);
+    if (byEmail) return byEmail;
+
+    // 2. Bar Council enrollment match (e.g. R/331/1977, 331/1977, R-331-1977)
+    const norm = clean.replace(/[\s\-_]/g, '/').replace(/^r\//, '');
+    const profile = s.advocate_profiles.find(p => {
+      if (!p.bar_council_enrollment_no) return false;
+      const pNorm = p.bar_council_enrollment_no.toLowerCase().replace(/[\s\-_]/g, '/').replace(/^r\//, '');
+      return pNorm === norm || pNorm === clean;
+    });
+    if (profile) {
+      const u = s.users.find(x => x.id === profile.user_id);
+      if (u) return u;
+    }
+
+    // 3. Username prefix (e.g. 'rohitashwa')
+    const byPrefix = s.users.find(u => u.email.toLowerCase().startsWith(clean));
+    if (byPrefix) return byPrefix;
+
+    // 4. Name match
+    const byName = s.users.find(u => u.full_name.toLowerCase().includes(clean));
+    if (byName) return byName;
+
+    return undefined;
   }
 
   createUser(user: Omit<User, 'id' | 'created_at' | 'updated_at'>): User {
@@ -1167,6 +1991,17 @@ class LocalDatabase {
     };
   }
 
+  createAdvocateProfile(profile: Omit<AdvocateProfile, 'id'>): AdvocateProfile {
+    const s = this.ensureLoaded();
+    const newProfile: AdvocateProfile = {
+      ...profile,
+      id: 'prof-' + crypto.randomUUID()
+    };
+    s.advocate_profiles.push(newProfile);
+    this.save();
+    return newProfile;
+  }
+
   updateAdvocateVerification(profileId: string, isVerified: boolean, verifiedBy: string): boolean {
     const s = this.ensureLoaded();
     const p = s.advocate_profiles.find(prof => prof.id === profileId);
@@ -1176,6 +2011,54 @@ class LocalDatabase {
     p.verified_at = new Date().toISOString();
     this.save();
     return true;
+  }
+
+  updateAdvocateProfile(userId: string, updates: Partial<AdvocateProfile>, userUpdates?: { full_name?: string; phone?: string }): AdvocateProfile | null {
+    const s = this.ensureLoaded();
+    let p = s.advocate_profiles.find(prof => prof.user_id === userId);
+    if (!p) {
+      // Auto-create profile if missing
+      p = {
+        id: 'prof-' + crypto.randomUUID(),
+        user_id: userId,
+        bar_council_enrollment_no: updates.bar_council_enrollment_no || 'PENDING',
+        bar_association_name: updates.bar_association_name || 'District Bar Association, Alwar',
+        court_practice_complex: updates.court_practice_complex || 'District & Sessions Court, Alwar',
+        chamber_address: updates.chamber_address || '',
+        experience_years: updates.experience_years ?? 1,
+        practice_areas: updates.practice_areas || ['Civil', 'Criminal'],
+        bio_hindi: updates.bio_hindi || '',
+        bio_english: updates.bio_english || '',
+        is_verified: false,
+        is_publicly_listed: updates.is_publicly_listed ?? true
+      };
+      s.advocate_profiles.push(p);
+    } else {
+      if (updates.bar_council_enrollment_no !== undefined) p.bar_council_enrollment_no = updates.bar_council_enrollment_no;
+      if (updates.bar_association_name !== undefined) p.bar_association_name = updates.bar_association_name;
+      if (updates.court_practice_complex !== undefined) p.court_practice_complex = updates.court_practice_complex;
+      if (updates.chamber_address !== undefined) p.chamber_address = updates.chamber_address;
+      if (updates.experience_years !== undefined) p.experience_years = updates.experience_years;
+      if (updates.practice_areas !== undefined) p.practice_areas = updates.practice_areas;
+      if (updates.bio_hindi !== undefined) p.bio_hindi = updates.bio_hindi;
+      if (updates.bio_english !== undefined) p.bio_english = updates.bio_english;
+      if (updates.is_publicly_listed !== undefined) p.is_publicly_listed = updates.is_publicly_listed;
+    }
+
+    if (userUpdates) {
+      const u = s.users.find(usr => usr.id === userId);
+      if (u) {
+        if (userUpdates.full_name) u.full_name = userUpdates.full_name;
+        if (userUpdates.phone !== undefined) u.phone = userUpdates.phone;
+        u.updated_at = new Date().toISOString();
+      }
+    }
+
+    this.save();
+    return {
+      ...p,
+      user: s.users.find(u => u.id === userId)
+    };
   }
 
   bulkUpsertAdvocates(
@@ -1526,10 +2409,23 @@ class LocalDatabase {
 
   // --- MY CASE: STRICT TENANT-ISOLATED DATA ACCESS ---
 
-  getCases(advocateId: string): CaseRecord[] {
+  getCases(advocateId?: string): CaseRecord[] {
     const s = this.ensureLoaded();
+    const list = advocateId ? s.cases.filter(c => c.advocate_id === advocateId) : s.cases;
+    return list.map(c => ({
+      ...c,
+      client: s.clients.find(cl => cl.id === c.client_id)
+    }));
+  }
+
+  getCasesByEnrollment(enrollment: string): CaseRecord[] {
+    const s = this.ensureLoaded();
+    const normalize = (e: string) => e.toLowerCase().replace(/[\s\-_]/g, '/');
+    const target = normalize(enrollment);
+    const profile = s.advocate_profiles.find(p => p.bar_council_enrollment_no && normalize(p.bar_council_enrollment_no) === target);
+    if (!profile) return [];
     return s.cases
-      .filter(c => c.advocate_id === advocateId)
+      .filter(c => c.advocate_id === profile.user_id)
       .map(c => ({
         ...c,
         client: s.clients.find(cl => cl.id === c.client_id)
@@ -1595,6 +2491,11 @@ class LocalDatabase {
     });
   }
 
+  getCaseDocumentById(advocateId: string, docId: string): CaseDocument | undefined {
+    const s = this.ensureLoaded();
+    return s.case_documents.find(d => d.id === docId && d.advocate_id === advocateId);
+  }
+
   createCaseDocument(advocateId: string, doc: Omit<CaseDocument, 'id' | 'advocate_id' | 'created_at'>): CaseDocument {
     const s = this.ensureLoaded();
     const newDoc: CaseDocument = {
@@ -1640,6 +2541,45 @@ class LocalDatabase {
     return newHearing;
   }
 
+  getHearingById(advocateId: string, hearingId: string): CaseHearing | undefined {
+    const s = this.ensureLoaded();
+    return s.case_hearings.find(h => h.id === hearingId && h.advocate_id === advocateId);
+  }
+
+  updateHearing(advocateId: string, hearingId: string, updates: Partial<CaseHearing>): CaseHearing | null {
+    const s = this.ensureLoaded();
+    const h = s.case_hearings.find(x => x.id === hearingId && x.advocate_id === advocateId);
+    if (!h) return null;
+
+    if (updates.hearing_date !== undefined) h.hearing_date = updates.hearing_date;
+    if (updates.court_room !== undefined) h.court_room = updates.court_room;
+    if (updates.judge_name !== undefined) h.judge_name = updates.judge_name;
+    if (updates.business_recorded !== undefined) h.business_recorded = updates.business_recorded;
+    if (updates.next_action !== undefined) h.next_action = updates.next_action;
+    if (updates.next_hearing_date !== undefined) h.next_hearing_date = updates.next_hearing_date;
+    if (updates.attended !== undefined) h.attended = updates.attended;
+
+    // Synchronize case next_hearing_date if updated
+    if (updates.next_hearing_date && h.case_id) {
+      const c = s.cases.find(caseRec => caseRec.id === h.case_id && caseRec.advocate_id === advocateId);
+      if (c) {
+        c.next_hearing_date = updates.next_hearing_date;
+        c.updated_at = new Date().toISOString();
+      }
+    }
+
+    this.save();
+    return h;
+  }
+
+  deleteHearing(advocateId: string, hearingId: string): boolean {
+    const s = this.ensureLoaded();
+    const before = s.case_hearings.length;
+    s.case_hearings = s.case_hearings.filter(h => !(h.id === hearingId && h.advocate_id === advocateId));
+    this.save();
+    return s.case_hearings.length < before;
+  }
+
   getTasks(advocateId: string): CaseTask[] {
     const s = this.ensureLoaded();
     return s.tasks.filter(t => t.advocate_id === advocateId);
@@ -1669,9 +2609,18 @@ class LocalDatabase {
     return true;
   }
 
-  getClients(advocateId: string): Client[] {
+  getClients(advocateId?: string): Client[] {
     const s = this.ensureLoaded();
-    return s.clients.filter(c => c.advocate_id === advocateId);
+    const list = s.clients || [];
+    if (advocateId) {
+      return list.filter(c => c.advocate_id === advocateId);
+    }
+    return list;
+  }
+
+  getClientById(advocateId: string, clientId: string): Client | undefined {
+    const s = this.ensureLoaded();
+    return s.clients.find(c => c.id === clientId && c.advocate_id === advocateId);
   }
 
   createClient(advocateId: string, client: Omit<Client, 'id' | 'advocate_id' | 'created_at'>): Client {
@@ -1685,6 +2634,36 @@ class LocalDatabase {
     s.clients.push(newClient);
     this.save();
     return newClient;
+  }
+
+  updateClient(advocateId: string, clientId: string, updates: Partial<Client>): Client | null {
+    const s = this.ensureLoaded();
+    const cl = s.clients.find(c => c.id === clientId && c.advocate_id === advocateId);
+    if (!cl) return null;
+
+    if (updates.full_name !== undefined) cl.full_name = updates.full_name.trim();
+    if (updates.phone !== undefined) cl.phone = updates.phone.trim();
+    if (updates.email !== undefined) cl.email = updates.email.trim();
+    if (updates.address !== undefined) cl.address = updates.address.trim();
+    if (updates.confidential_notes !== undefined) cl.confidential_notes = updates.confidential_notes.trim();
+
+    this.save();
+    return cl;
+  }
+
+  deleteClient(advocateId: string, clientId: string): boolean {
+    const s = this.ensureLoaded();
+    const before = s.clients.length;
+    s.clients = s.clients.filter(c => !(c.id === clientId && c.advocate_id === advocateId));
+    // Nullify client_id on any cases that belonged to this client
+    s.cases.forEach(c => {
+      if (c.advocate_id === advocateId && c.client_id === clientId) {
+        c.client_id = undefined;
+        c.updated_at = new Date().toISOString();
+      }
+    });
+    this.save();
+    return s.clients.length < before;
   }
 
   getInvoices(advocateId: string): Invoice[] {
@@ -1796,6 +2775,1146 @@ class LocalDatabase {
     s.audit_logs.unshift(newLog);
     this.save();
     return newLog;
+  }
+
+  // --- AI CHAT SESSIONS & USAGE LIMITS ---
+  getChatSessions(advocateId: string, caseId?: string): AIChatSession[] {
+    const s = this.ensureLoaded();
+    return s.chat_sessions
+      .filter(cs => cs.advocate_id === advocateId && (!caseId || cs.case_id === caseId))
+      .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  }
+
+  getChatSessionById(advocateId: string, sessionId: string): AIChatSession | undefined {
+    const s = this.ensureLoaded();
+    return s.chat_sessions.find(cs => cs.id === sessionId && cs.advocate_id === advocateId);
+  }
+
+  createChatSession(
+    advocateId: string,
+    data: { case_id?: string; title?: string; initialMessage?: AIChatMessage }
+  ): AIChatSession {
+    const s = this.ensureLoaded();
+    const newSession: AIChatSession = {
+      id: 'session-' + crypto.randomUUID(),
+      advocate_id: advocateId,
+      case_id: data.case_id,
+      title: data.title || 'Legal Consultation',
+      messages: data.initialMessage ? [data.initialMessage] : [],
+      total_tokens: data.initialMessage?.tokens || 0,
+      total_cost_inr: data.initialMessage?.costEstimateINR || 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.chat_sessions.unshift(newSession);
+    this.save();
+    return newSession;
+  }
+
+  appendChatMessage(advocateId: string, sessionId: string, message: AIChatMessage): AIChatSession | null {
+    const s = this.ensureLoaded();
+    const session = s.chat_sessions.find(cs => cs.id === sessionId && cs.advocate_id === advocateId);
+    if (!session) return null;
+
+    session.messages.push(message);
+    session.total_tokens = (session.total_tokens || 0) + (message.tokens || 0);
+    session.total_cost_inr = Number(((session.total_cost_inr || 0) + (message.costEstimateINR || 0)).toFixed(4));
+    session.updated_at = new Date().toISOString();
+    this.save();
+    return session;
+  }
+
+  deleteChatSession(advocateId: string, sessionId: string): boolean {
+    const s = this.ensureLoaded();
+    const before = s.chat_sessions.length;
+    s.chat_sessions = s.chat_sessions.filter(cs => !(cs.id === sessionId && cs.advocate_id === advocateId));
+    if (s.chat_sessions.length < before) {
+      this.save();
+      return true;
+    }
+    return false;
+  }
+
+  getAdvocateAIUsage(advocateId: string): { totalTokens: number; totalCostINR: number; queryCount: number } {
+    const s = this.ensureLoaded();
+    const sessions = s.chat_sessions.filter(cs => cs.advocate_id === advocateId);
+    let totalTokens = 0;
+    let totalCostINR = 0;
+    let queryCount = 0;
+
+    for (const session of sessions) {
+      totalTokens += session.total_tokens || 0;
+      totalCostINR += session.total_cost_inr || 0;
+      queryCount += session.messages.filter(m => m.role === 'user').length;
+    }
+
+    return {
+      totalTokens,
+      totalCostINR: Number(totalCostINR.toFixed(4)),
+      queryCount
+    };
+  }
+
+  // --- NOTIFICATION PREFERENCES (P4) ---
+  getNotificationPreferences(advocateId: string): NotificationPreferences {
+    const s = this.ensureLoaded();
+    let pref = s.notification_preferences.find(p => p.advocate_id === advocateId);
+    if (!pref) {
+      pref = {
+        id: 'np-' + crypto.randomUUID(),
+        advocate_id: advocateId,
+        email_enabled: true,
+        whatsapp_enabled: false,
+        in_app_enabled: true,
+        daily_digest_enabled: true,
+        daily_digest_time: '08:00',
+        reminder_lead_days: [1, 2],
+        client_reminders_enabled: true,
+        client_reminder_lead_days: 1,
+        preferred_language: 'en',
+        quiet_hours_enabled: false,
+        quiet_hours_start: '21:00',
+        quiet_hours_end: '07:00',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      s.notification_preferences.push(pref);
+      this.save();
+    }
+    return pref;
+  }
+
+  updateNotificationPreferences(advocateId: string, updates: Partial<NotificationPreferences>): NotificationPreferences {
+    const s = this.ensureLoaded();
+    let pref = s.notification_preferences.find(p => p.advocate_id === advocateId);
+    if (!pref) {
+      pref = this.getNotificationPreferences(advocateId);
+    }
+    Object.assign(pref, updates, { updated_at: new Date().toISOString() });
+    this.save();
+    return pref;
+  }
+
+  // --- NOTIFICATION DELIVERY HISTORY & DEDUPLICATION (P4) ---
+  getNotificationHistory(
+    advocateId: string, 
+    options?: { limit?: number; channel?: string; status?: string }
+  ): NotificationDeliveryRecord[] {
+    const s = this.ensureLoaded();
+    let list = s.notification_delivery_history.filter(n => n.advocate_id === advocateId);
+    if (options?.channel) {
+      list = list.filter(n => n.channel === options.channel);
+    }
+    if (options?.status) {
+      list = list.filter(n => n.status === options.status);
+    }
+    list.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    return list.slice(0, options?.limit || 50);
+  }
+
+  hasSentIdempotentNotification(advocateId: string, idempotencyKey: string): boolean {
+    const s = this.ensureLoaded();
+    return s.notification_delivery_history.some(
+      n => n.advocate_id === advocateId && n.idempotency_key === idempotencyKey && (n.status === 'sent' || n.status === 'delivered' || n.status === 'simulated')
+    );
+  }
+
+  createNotificationRecord(
+    advocateId: string, 
+    record: Omit<NotificationDeliveryRecord, 'id' | 'advocate_id' | 'created_at'>
+  ): NotificationDeliveryRecord {
+    const s = this.ensureLoaded();
+    const newRecord: NotificationDeliveryRecord = {
+      ...record,
+      id: 'notif-' + crypto.randomUUID(),
+      advocate_id: advocateId,
+      created_at: new Date().toISOString()
+    };
+    s.notification_delivery_history.unshift(newRecord);
+    this.save();
+    return newRecord;
+  }
+
+  // --- CLIENT COMMUNICATIONS (P4) ---
+  getClientCommunications(advocateId: string, clientId?: string): ClientCommunication[] {
+    const s = this.ensureLoaded();
+    return s.client_communications
+      .filter(c => c.advocate_id === advocateId && (!clientId || c.client_id === clientId))
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+
+  createClientCommunication(
+    advocateId: string,
+    comm: Omit<ClientCommunication, 'id' | 'advocate_id' | 'created_at'>
+  ): ClientCommunication {
+    const s = this.ensureLoaded();
+    const newComm: ClientCommunication = {
+      ...comm,
+      id: 'comm-' + crypto.randomUUID(),
+      advocate_id: advocateId,
+      created_at: new Date().toISOString()
+    };
+    s.client_communications.unshift(newComm);
+    this.save();
+    return newComm;
+  }
+
+  // --- AUTOMATION BACKGROUND JOBS (P4) ---
+  getAutomationJobs(advocateId?: string, status?: string): AutomationJob[] {
+    const s = this.ensureLoaded();
+    let jobs = s.automation_jobs;
+    if (advocateId) jobs = jobs.filter(j => j.advocate_id === advocateId);
+    if (status) jobs = jobs.filter(j => j.status === status);
+    return jobs.sort((a, b) => new Date(a.run_at).getTime() - new Date(b.run_at).getTime());
+  }
+
+  createAutomationJob(
+    job: Omit<AutomationJob, 'id' | 'attempts' | 'status' | 'created_at' | 'updated_at'>
+  ): AutomationJob {
+    const s = this.ensureLoaded();
+    const newJob: AutomationJob = {
+      ...job,
+      id: 'job-' + crypto.randomUUID(),
+      attempts: 0,
+      status: 'pending',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.automation_jobs.push(newJob);
+    this.save();
+    return newJob;
+  }
+
+  updateAutomationJob(id: string, updates: Partial<AutomationJob>): AutomationJob | null {
+    const s = this.ensureLoaded();
+    const job = s.automation_jobs.find(j => j.id === id);
+    if (!job) return null;
+    Object.assign(job, updates, { updated_at: new Date().toISOString() });
+    this.save();
+    return job;
+  }
+
+  // --- CAUSE LIST ENTRIES (P4) ---
+  getCauseListEntries(advocateId?: string, date?: string): CauseListEntry[] {
+    const s = this.ensureLoaded();
+    let entries = s.cause_list_entries;
+    if (date) entries = entries.filter(e => e.cause_list_date === date);
+    if (advocateId) entries = entries.filter(e => e.advocate_id === advocateId || !e.advocate_id);
+    return entries.sort((a, b) => a.item_number - b.item_number);
+  }
+
+  saveCauseListEntries(entries: Omit<CauseListEntry, 'id' | 'created_at'>[]): CauseListEntry[] {
+    const s = this.ensureLoaded();
+    const created: CauseListEntry[] = [];
+    for (const e of entries) {
+      const entry: CauseListEntry = {
+        ...e,
+        id: 'cl-' + crypto.randomUUID(),
+        created_at: new Date().toISOString()
+      };
+      s.cause_list_entries.push(entry);
+      created.push(entry);
+    }
+    this.save();
+    return created;
+  }
+
+  matchCauseListToDocket(advocateId: string, date: string): { matched: number; matches: { entry: CauseListEntry; caseRecord: CaseRecord }[] } {
+    const s = this.ensureLoaded();
+    const advocateCases = s.cases.filter(c => c.advocate_id === advocateId && c.status === 'active');
+    const dayEntries = s.cause_list_entries.filter(e => e.cause_list_date === date);
+
+    const matches: { entry: CauseListEntry; caseRecord: CaseRecord }[] = [];
+    const norm = (str?: string) => (str || '').toLowerCase().replace(/[\s\-_/]/g, '');
+
+    for (const entry of dayEntries) {
+      const match = advocateCases.find(c => {
+        if (c.cnr_number && entry.cnr_number && norm(c.cnr_number) === norm(entry.cnr_number)) return true;
+        if (c.case_number && entry.case_number && norm(c.case_number) === norm(entry.case_number)) return true;
+        return false;
+      });
+
+      if (match) {
+        entry.matched_case_id = match.id;
+        entry.advocate_id = advocateId;
+        matches.push({ entry, caseRecord: match });
+      }
+    }
+
+    if (matches.length > 0) this.save();
+    return { matched: matches.length, matches };
+  }
+
+  // ==========================================
+  // SUBSCRIPTIONS & INVOICES (P5)
+  // ==========================================
+
+  getSubscription(advocateId: string): AdvocateSubscription {
+    const s = this.ensureLoaded();
+    const sub = s.subscriptions.find(
+      (sub: any) => sub.advocate_id === advocateId && (sub.status === 'active' || sub.status === 'trialing')
+    );
+    if (sub) return sub;
+
+    // Default starter plan
+    return {
+      id: `sub-starter-${advocateId}`,
+      advocate_id: advocateId,
+      plan_id: 'starter',
+      billing_cycle: 'monthly',
+      status: 'active',
+      amount_inr: 0,
+      currency: 'INR',
+      current_period_start: new Date().toISOString(),
+      current_period_end: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+      cancel_at_period_end: false,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+  }
+
+  saveSubscription(subData: AdvocateSubscription): AdvocateSubscription {
+    const s = this.ensureLoaded();
+    const idx = s.subscriptions.findIndex((sub: any) => sub.advocate_id === subData.advocate_id);
+    if (idx >= 0) {
+      s.subscriptions[idx] = { ...subData, updated_at: new Date().toISOString() };
+    } else {
+      s.subscriptions.push(subData);
+    }
+    this.save();
+    return subData;
+  }
+
+  createSubscriptionInvoice(inv: Omit<SubscriptionInvoice, 'id' | 'created_at'>): SubscriptionInvoice {
+    const s = this.ensureLoaded();
+    const newInv: SubscriptionInvoice = {
+      ...inv,
+      id: 'sub-inv-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.subscription_invoices.unshift(newInv);
+    this.save();
+    return newInv;
+  }
+
+  getSubscriptionInvoices(advocateId: string): SubscriptionInvoice[] {
+    const s = this.ensureLoaded();
+    return s.subscription_invoices.filter((inv: any) => inv.advocate_id === advocateId);
+  }
+
+  // ==========================================
+  // CHAMBERS & TEAM MEMBERS (P5)
+  // ==========================================
+
+  getChamberForAdvocate(advocateId: string): { chamber: Chamber | null; membership: ChamberMember | null } {
+    const s = this.ensureLoaded();
+    // 1. Is owner of a chamber
+    const ownedChamber = s.chambers.find((ch: any) => ch.owner_advocate_id === advocateId);
+    if (ownedChamber) {
+      const ownerMember = s.chamber_members.find((m: any) => m.chamber_id === ownedChamber.id && m.user_id === advocateId);
+      return { chamber: ownedChamber, membership: ownerMember || null };
+    }
+
+    // 2. Is member of another chamber
+    const membership = s.chamber_members.find((m: any) => m.user_id === advocateId && m.status === 'active');
+    if (membership) {
+      const parentChamber = s.chambers.find((ch: any) => ch.id === membership.chamber_id);
+      return { chamber: parentChamber || null, membership };
+    }
+
+    return { chamber: null, membership: null };
+  }
+
+  createChamber(advocateId: string, data: { name: string; court_complex?: string; chamber_number?: string }): Chamber {
+    const s = this.ensureLoaded();
+    const existing = s.chambers.find((ch: any) => ch.owner_advocate_id === advocateId);
+    if (existing) {
+      existing.name = data.name;
+      if (data.court_complex) existing.court_complex = data.court_complex;
+      if (data.chamber_number) existing.chamber_number = data.chamber_number;
+      existing.updated_at = new Date().toISOString();
+      this.save();
+      return existing;
+    }
+
+    const newChamber: Chamber = {
+      id: 'ch-' + crypto.randomUUID(),
+      name: data.name,
+      court_complex: data.court_complex || 'District & Sessions Court, Alwar',
+      chamber_number: data.chamber_number,
+      owner_advocate_id: advocateId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.chambers.push(newChamber);
+
+    // Also register owner as Senior Advocate member
+    const user = this.getUserById(advocateId);
+    const profile = this.getAdvocateProfileByUserId(advocateId);
+    const ownerMember: ChamberMember = {
+      id: 'cm-' + crypto.randomUUID(),
+      chamber_id: newChamber.id,
+      user_id: advocateId,
+      full_name: profile?.user?.full_name || user?.full_name || 'Senior Advocate',
+      email: user?.email || '',
+      phone: user?.phone,
+      bar_enrollment_no: profile?.bar_council_enrollment_no,
+      role: 'senior_advocate',
+      status: 'active',
+      invited_by: advocateId,
+      joined_at: new Date().toISOString(),
+      created_at: new Date().toISOString()
+    };
+    s.chamber_members.push(ownerMember);
+
+    this.save();
+    return newChamber;
+  }
+
+  getChamberMembers(chamberId: string): ChamberMember[] {
+    const s = this.ensureLoaded();
+    return s.chamber_members.filter((m: any) => m.chamber_id === chamberId);
+  }
+
+  addChamberMember(chamberId: string, member: Omit<ChamberMember, 'id' | 'joined_at' | 'created_at'>): ChamberMember {
+    const s = this.ensureLoaded();
+    const newMember: ChamberMember = {
+      ...member,
+      id: 'cm-' + crypto.randomUUID(),
+      chamber_id: chamberId,
+      joined_at: new Date().toISOString(),
+      created_at: new Date().toISOString()
+    };
+    s.chamber_members.push(newMember);
+    this.save();
+    return newMember;
+  }
+
+  updateChamberMemberRole(chamberId: string, memberId: string, role: ChamberMemberRole, status?: ChamberMemberStatus): ChamberMember | null {
+    const s = this.ensureLoaded();
+    const m = s.chamber_members.find((mem: any) => mem.chamber_id === chamberId && mem.id === memberId);
+    if (!m) return null;
+    m.role = role;
+    if (status) m.status = status;
+    this.save();
+    return m;
+  }
+
+  removeChamberMember(chamberId: string, memberId: string): boolean {
+    const s = this.ensureLoaded();
+    const idx = s.chamber_members.findIndex((mem: any) => mem.chamber_id === chamberId && mem.id === memberId);
+    if (idx < 0) return false;
+    // Do not remove owner/senior advocate
+    if (s.chamber_members[idx].role === 'senior_advocate') return false;
+    s.chamber_members.splice(idx, 1);
+    this.save();
+    return true;
+  }
+
+  createChamberInvitation(data: {
+    chamber_id: string;
+    chamber_name: string;
+    invited_by_advocate_id: string;
+    invitee_email: string;
+    role: ChamberMemberRole;
+  }): ChamberInvitation {
+    const s = this.ensureLoaded();
+    const token = crypto.randomBytes(24).toString('hex');
+    const invitation: ChamberInvitation = {
+      id: 'cinv-' + crypto.randomUUID(),
+      chamber_id: data.chamber_id,
+      chamber_name: data.chamber_name,
+      invited_by_advocate_id: data.invited_by_advocate_id,
+      invitee_email: data.invitee_email.toLowerCase().trim(),
+      role: data.role,
+      token,
+      status: 'pending',
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days validity
+      created_at: new Date().toISOString()
+    };
+    s.chamber_invitations.push(invitation);
+    this.save();
+    return invitation;
+  }
+
+  getChamberInvitations(chamberId: string): ChamberInvitation[] {
+    const s = this.ensureLoaded();
+    return s.chamber_invitations.filter((i: any) => i.chamber_id === chamberId);
+  }
+
+  getInvitationByToken(token: string): ChamberInvitation | null {
+    const s = this.ensureLoaded();
+    return s.chamber_invitations.find((i: any) => i.token === token && i.status === 'pending') || null;
+  }
+
+  acceptChamberInvitation(token: string, userId: string, fullName: string, email: string): ChamberMember | null {
+    const s = this.ensureLoaded();
+    const inv = s.chamber_invitations.find((i: any) => i.token === token && i.status === 'pending');
+    if (!inv) return null;
+
+    inv.status = 'accepted';
+
+    const member: ChamberMember = {
+      id: 'cm-' + crypto.randomUUID(),
+      chamber_id: inv.chamber_id,
+      user_id: userId,
+      full_name: fullName,
+      email: email.toLowerCase().trim(),
+      role: inv.role,
+      status: 'active',
+      invited_by: inv.invited_by_advocate_id,
+      joined_at: new Date().toISOString(),
+      created_at: new Date().toISOString()
+    };
+    s.chamber_members.push(member);
+    this.save();
+    return member;
+  }
+
+  revokeChamberInvitation(chamberId: string, invitationId: string): boolean {
+    const s = this.ensureLoaded();
+    const inv = s.chamber_invitations.find((i: any) => i.chamber_id === chamberId && i.id === invitationId);
+    if (!inv) return false;
+    inv.status = 'revoked';
+    this.save();
+    return true;
+  }
+
+  // ==============================================================================
+  // AI LEGAL RESEARCH & PGVECTOR LOCAL REPOSITORY METHODS
+  // ==============================================================================
+
+  getLegalDocuments(filter?: { 
+    status?: string; 
+    court_level?: string; 
+    limit?: number;
+    approval_status?: string;
+    publication_status?: string;
+    court_code?: string;
+  }): LegalDocument[] {
+    const s = this.ensureLoaded();
+    let docs = s.legal_documents || [];
+    
+    // Ensure legacy docs have approval_status & court_code backfilled
+    docs.forEach(d => {
+      if (!d.approval_status) {
+        d.approval_status = (d.verification_status === 'verified' ? 'approved' : d.verification_status === 'rejected' ? 'rejected' : 'pending');
+      }
+      if (!d.court_code) {
+        d.court_code = (d.court_name || '').toLowerCase().includes('supreme') 
+          ? 'INSC' 
+          : (d.court_name || '').toLowerCase().includes('jaipur') 
+            ? 'HCRAJ-JP' 
+            : 'HCRAJ-JD';
+      }
+    });
+
+    if (filter?.status) docs = docs.filter(d => d.verification_status === filter.status);
+    if (filter?.approval_status && filter.approval_status !== 'ALL') {
+      docs = docs.filter(d => d.approval_status === filter.approval_status);
+    }
+    if (filter?.publication_status && filter.publication_status !== 'ALL') {
+      docs = docs.filter(d => d.publication_status === filter.publication_status);
+    }
+    if (filter?.court_code && filter.court_code !== 'ALL') {
+      docs = docs.filter(d => d.court_code === filter.court_code);
+    }
+    if (filter?.court_level && filter.court_level !== 'ALL') {
+      docs = docs.filter(d => d.court_level === filter.court_level);
+    }
+    if (filter?.limit && filter.limit > 0) docs = docs.slice(0, filter.limit);
+    return docs;
+  }
+
+  getJudgmentAuditLogs(documentId?: string): JudgmentAuditLog[] {
+    const s = this.ensureLoaded();
+    const logs = s.judgment_audit_logs || [];
+    if (documentId) return logs.filter(l => l.document_id === documentId);
+    return logs;
+  }
+
+  addJudgmentAuditLog(log: Omit<JudgmentAuditLog, 'id' | 'created_at'>): JudgmentAuditLog {
+    const s = this.ensureLoaded();
+    if (!s.judgment_audit_logs) s.judgment_audit_logs = [];
+    const newLog: JudgmentAuditLog = {
+      ...log,
+      id: 'aud-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.judgment_audit_logs.unshift(newLog);
+    this.save();
+    return newLog;
+  }
+
+  getLegalDocumentById(id: string): LegalDocument | undefined {
+    const s = this.ensureLoaded();
+    return (s.legal_documents || []).find(d => d.id === id);
+  }
+
+  updateLegalDocument(id: string, updates: Partial<LegalDocument>): LegalDocument | null {
+    const s = this.ensureLoaded();
+    const doc = (s.legal_documents || []).find(d => d.id === id);
+    if (!doc) return null;
+    Object.assign(doc, updates, { updated_at: new Date().toISOString() });
+    this.save();
+    return doc;
+  }
+
+  deleteLegalDocument(id: string): boolean {
+    const s = this.ensureLoaded();
+    if (!s.legal_documents) return false;
+    const idx = s.legal_documents.findIndex(d => d.id === id);
+    if (idx === -1) return false;
+    s.legal_documents.splice(idx, 1);
+    if (s.legal_document_chunks) {
+      s.legal_document_chunks = s.legal_document_chunks.filter(c => c.document_id !== id);
+    }
+    if (s.saved_research) {
+      s.saved_research = s.saved_research.filter(sr => sr.document_id !== id);
+    }
+    if (s.legal_document_sources) {
+      s.legal_document_sources = s.legal_document_sources.filter(src => src.document_id !== id);
+    }
+    if (s.legal_document_processing) {
+      s.legal_document_processing = s.legal_document_processing.filter(p => p.document_id !== id);
+    }
+    if (s.legal_document_citations) {
+      // ON DELETE CASCADE for citing document
+      s.legal_document_citations = s.legal_document_citations.filter(c => c.document_id !== id);
+      // ON DELETE SET NULL for cited document
+      for (const cit of s.legal_document_citations) {
+        if (cit.cited_document_id === id) {
+          cit.cited_document_id = null;
+        }
+      }
+    }
+    this.save();
+    return true;
+  }
+
+  getLegalDocumentChunks(docId?: string): LegalDocumentChunk[] {
+    const s = this.ensureLoaded();
+    const chunks = s.legal_document_chunks || [];
+    if (docId) return chunks.filter(c => c.document_id === docId);
+    return chunks;
+  }
+
+  createLegalDocument(
+    doc: Omit<LegalDocument, 'id' | 'created_at' | 'updated_at'>,
+    chunks: Omit<LegalDocumentChunk, 'id' | 'document_id' | 'created_at'>[]
+  ): LegalDocument {
+    const s = this.ensureLoaded();
+    if (!s.legal_documents) s.legal_documents = [];
+    if (!s.legal_document_chunks) s.legal_document_chunks = [];
+
+    const docId = 'doc-' + crypto.randomUUID();
+    const newDoc: LegalDocument = {
+      ...doc,
+      id: docId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    s.legal_documents.push(newDoc);
+
+    const chunkRows: LegalDocumentChunk[] = chunks.map((c, idx) => ({
+      ...c,
+      id: `chk-${docId}-${c.chunk_index !== undefined ? c.chunk_index : idx}`,
+      document_id: docId,
+      chunk_index: c.chunk_index !== undefined ? c.chunk_index : idx,
+      paragraph_number: c.paragraph_number != null ? String(c.paragraph_number) : undefined,
+      created_at: new Date().toISOString()
+    }));
+    s.legal_document_chunks.push(...chunkRows);
+
+    this.save();
+    return newDoc;
+  }
+
+  searchChunksByVector(
+    queryEmbedding: number[],
+    limit = 10,
+    threshold = 0.60,
+    filters: SearchFilters = {}
+  ): LegalSearchResult[] {
+    const s = this.ensureLoaded();
+    const verifiedDocs = new Map((s.legal_documents || []).filter(d => d.verification_status === 'verified').map(d => [d.id, d]));
+    const results: LegalSearchResult[] = [];
+
+    for (const chunk of s.legal_document_chunks || []) {
+      const doc = verifiedDocs.get(chunk.document_id);
+      if (!doc) continue;
+
+      if (filters.court_level && filters.court_level !== 'ALL' && doc.court_level !== filters.court_level) continue;
+      if (filters.court_name && !doc.court_name.toLowerCase().includes(filters.court_name.toLowerCase())) continue;
+      if (filters.legal_subject && (!doc.legal_subject || !doc.legal_subject.toLowerCase().includes(filters.legal_subject.toLowerCase()))) continue;
+      if (filters.year && doc.judgment_date && !doc.judgment_date.startsWith(filters.year)) continue;
+
+      const sim = chunk.embedding ? cosineSimilarity(queryEmbedding, chunk.embedding) : 0;
+      if (sim >= threshold) {
+        results.push({
+          document_id: doc.id,
+          chunk_id: chunk.id,
+          title: doc.title,
+          citation: doc.citation,
+          court_name: doc.court_name,
+          court_level: doc.court_level || 'High Court',
+          judgment_date: doc.judgment_date,
+          judge_names: Array.isArray(doc.judge_names) ? doc.judge_names.join(', ') : doc.judge_names,
+          legal_subject: doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(', ') : undefined),
+          statutes: Array.isArray(doc.statutes) ? doc.statutes.join(', ') : doc.statutes,
+          snippet: chunk.content.slice(0, 450),
+          page_number: chunk.page_number,
+          paragraph_number: chunk.paragraph_number,
+          semantic_score: Number(sim.toFixed(4)),
+          hybrid_score: Number(sim.toFixed(4)),
+          document_url: doc.document_url,
+          verification_status: doc.verification_status
+        });
+      }
+    }
+
+    results.sort((a, b) => b.hybrid_score - a.hybrid_score);
+    return results.slice(0, limit);
+  }
+
+  hybridSearchLegalDocuments(
+    query: string,
+    queryEmbedding: number[],
+    limit = 15,
+    filters: SearchFilters = {}
+  ): LegalSearchResult[] {
+    const s = this.ensureLoaded();
+    const cleanQuery = query.toLowerCase().trim();
+    const queryTokens = cleanQuery.split(/[\s,.;:()\[\]{}"'\-]+/).filter(t => t.length > 2);
+    // Double-Lock: Only retrieve approved and published documents
+    const verifiedDocs = (s.legal_documents || []).filter(d => 
+      (d.publication_status === 'published' || !d.publication_status) && 
+      (d.approval_status === 'approved' || d.verification_status === 'verified')
+    );
+    
+    // 1. Semantic match on chunks
+    const chunkScores = new Map<string, { docId: string; chunk: LegalDocumentChunk; sim: number }>();
+    for (const chunk of s.legal_document_chunks || []) {
+      if (!chunk.embedding) continue;
+      const sim = cosineSimilarity(queryEmbedding, chunk.embedding);
+      const existing = chunkScores.get(chunk.document_id);
+      if (!existing || sim > existing.sim) {
+        chunkScores.set(chunk.document_id, { docId: chunk.document_id, chunk, sim });
+      }
+    }
+
+    // 2. Keyword & Citation match on documents
+    const docScores: LegalSearchResult[] = [];
+    for (const doc of verifiedDocs) {
+      if (filters.court_level && filters.court_level !== 'ALL' && doc.court_level !== filters.court_level) continue;
+      if (filters.court_name && !doc.court_name.toLowerCase().includes(filters.court_name.toLowerCase())) continue;
+      if (filters.legal_subject && (!doc.legal_subject || !doc.legal_subject.toLowerCase().includes(filters.legal_subject.toLowerCase()))) continue;
+      if (filters.year && doc.judgment_date && !doc.judgment_date.startsWith(filters.year)) continue;
+
+      let kwScore = 0;
+      const statuteStr = Array.isArray(doc.statutes) ? doc.statutes.join(' ') : (doc.statutes || '');
+      const subjectStr = doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(' ') : '');
+      const judgeStr = Array.isArray(doc.judge_names) ? doc.judge_names.join(' ') : (doc.judge_names || '');
+      const docCaseNo = (doc.case_number || '').toLowerCase();
+      const partiesStr = Array.isArray(doc.parties) ? doc.parties.join(' ').toLowerCase() : '';
+      const docText = `${doc.title} ${doc.citation} ${docCaseNo} ${partiesStr} ${doc.court_name} ${doc.bench || ''} ${statuteStr} ${subjectStr} ${judgeStr}`.toLowerCase();
+      
+      // Exact citation boost (+0.85)
+      const citationMatch = doc.citation.toLowerCase().includes(cleanQuery) || cleanQuery.includes(doc.citation.toLowerCase());
+      if (citationMatch) kwScore += 0.85;
+
+      // Case number boost (+0.75)
+      if (docCaseNo && (docCaseNo.includes(cleanQuery) || cleanQuery.includes(docCaseNo))) {
+        kwScore += 0.75;
+      }
+
+      // Parties boost (+0.60)
+      if (partiesStr && (partiesStr.includes(cleanQuery) || cleanQuery.includes(partiesStr))) {
+        kwScore += 0.60;
+      }
+
+      for (const tok of queryTokens) {
+        if (docText.includes(tok)) kwScore += 0.15;
+      }
+
+      const chunkMatch = chunkScores.get(doc.id);
+      const semScore = chunkMatch ? chunkMatch.sim : 0;
+      
+      const hybridScore = Number((semScore * 0.55 + Math.min(kwScore, 1.0) * 0.45).toFixed(4));
+      if (hybridScore <= 0.05 && kwScore <= 0) continue;
+
+      const snippet = chunkMatch 
+        ? chunkMatch.chunk.content.slice(0, 450)
+        : doc.full_text.slice(0, 450);
+
+      const result: LegalSearchResult = {
+        document_id: doc.id,
+        chunk_id: chunkMatch ? chunkMatch.chunk.id : undefined,
+        title: doc.title,
+        citation: doc.citation,
+        court_name: doc.court_name,
+        court_level: doc.court_level || 'High Court',
+        judgment_date: doc.judgment_date,
+        judge_names: Array.isArray(doc.judge_names) ? doc.judge_names.join(', ') : doc.judge_names,
+        legal_subject: doc.legal_subject || (Array.isArray(doc.legal_subjects) ? doc.legal_subjects.join(', ') : undefined),
+        statutes: Array.isArray(doc.statutes) ? doc.statutes.join(', ') : doc.statutes,
+        snippet,
+        page_number: chunkMatch?.chunk.page_number || 1,
+        paragraph_number: chunkMatch?.chunk.paragraph_number || 1,
+        semantic_score: Number(semScore.toFixed(4)),
+        keyword_score: Number(Math.min(kwScore, 1.0).toFixed(4)),
+        hybrid_score: hybridScore,
+        document_url: doc.document_url,
+        verification_status: doc.verification_status
+      };
+      docScores.push(result);
+    }
+
+    docScores.sort((a, b) => b.hybrid_score - a.hybrid_score);
+    return docScores.slice(0, limit);
+  }
+
+  /**
+   * Reciprocal Rank Fusion Chunk Search (006_legal_hybrid_search.sql)
+   */
+  searchLegalChunks(
+    queryEmbedding: number[],
+    queryText: string,
+    matchCount = 10,
+    courtFilter?: string | null,
+    benchFilter?: string | null,
+    yearFilter?: number | null
+  ): LegalSearchResult[] {
+    const s = this.ensureLoaded();
+    const cleanQuery = (queryText || '').toLowerCase().trim();
+    const queryTokens = cleanQuery.split(/[\s,.;:()\[\]{}"'\-]+/).filter(t => t.length > 2);
+    const docsMap = new Map((s.legal_documents || []).map(d => [d.id, d]));
+
+    // Eligible chunks belonging to verified & published documents
+    const eligibleChunks = (s.legal_document_chunks || []).filter(c => {
+      const doc = docsMap.get(c.document_id);
+      if (!doc) return false;
+      const isApproved = doc.approval_status === 'approved' || doc.verification_status === 'verified';
+      const isPublished = doc.publication_status === 'published' || !doc.publication_status;
+      if (!isApproved || !isPublished) return false;
+      if (courtFilter && doc.court_name !== courtFilter) return false;
+      if (benchFilter && doc.bench !== benchFilter) return false;
+      if (yearFilter && doc.judgment_date) {
+        const docYear = parseInt(doc.judgment_date.slice(0, 4), 10);
+        if (docYear !== yearFilter) return false;
+      }
+      return true;
+    });
+
+    // 1. Vector Results with rank_number
+    const vectorScored = eligibleChunks
+      .filter(c => Array.isArray(c.embedding) && c.embedding.length > 0)
+      .map(c => ({
+        chunk: c,
+        sim: cosineSimilarity(queryEmbedding, c.embedding!)
+      }))
+      .sort((a, b) => b.sim - a.sim)
+      .slice(0, Math.min(Math.max(matchCount * 5, 20), 200));
+
+    const vectorRanks = new Map<string, number>();
+    vectorScored.forEach((item, idx) => {
+      vectorRanks.set(item.chunk.id, idx + 1);
+    });
+
+    // 2. Text Results with rank_number
+    const textScored = eligibleChunks
+      .map(c => {
+        let hits = 0;
+        const contentLower = c.content.toLowerCase();
+        for (const tok of queryTokens) {
+          if (contentLower.includes(tok)) hits++;
+        }
+        return { chunk: c, hits };
+      })
+      .filter(item => item.hits > 0)
+      .sort((a, b) => b.hits - a.hits)
+      .slice(0, Math.min(Math.max(matchCount * 5, 20), 200));
+
+    const textRanks = new Map<string, number>();
+    textScored.forEach((item, idx) => {
+      textRanks.set(item.chunk.id, idx + 1);
+    });
+
+    // 3. Combined Reciprocal Rank Fusion (RRF: 1.0 / (60 + rank))
+    const chunkScores = new Map<string, { chunk: LegalDocumentChunk; score: number }>();
+    
+    for (const [chunkId, rank] of vectorRanks.entries()) {
+      const chunk = eligibleChunks.find(c => c.id === chunkId)!;
+      const rrf = 1.0 / (60 + rank);
+      chunkScores.set(chunkId, { chunk, score: rrf });
+    }
+
+    for (const [chunkId, rank] of textRanks.entries()) {
+      const rrf = 1.0 / (60 + rank);
+      const existing = chunkScores.get(chunkId);
+      if (existing) {
+        existing.score += rrf;
+      } else {
+        const chunk = eligibleChunks.find(c => c.id === chunkId)!;
+        chunkScores.set(chunkId, { chunk, score: rrf });
+      }
+    }
+
+    const sorted = Array.from(chunkScores.values())
+      .sort((a, b) => b.score - a.score)
+      .slice(0, Math.min(Math.max(matchCount, 1), 50));
+
+    return sorted.map(({ chunk, score }) => {
+      const doc = docsMap.get(chunk.document_id)!;
+      return {
+        chunk_id: chunk.id,
+        document_id: doc.id,
+        title: doc.title,
+        citation: doc.citation,
+        court_name: doc.court_name,
+        court_level: doc.court_level || 'High Court',
+        bench: doc.bench,
+        judgment_date: doc.judgment_date,
+        page_number: chunk.page_number,
+        paragraph_number: chunk.paragraph_number,
+        snippet: chunk.content,
+        hybrid_score: Number(score.toFixed(6))
+      };
+    });
+  }
+
+  getLegalResearchHistory(userId: string, limit = 20): LegalResearchHistory[] {
+    const s = this.ensureLoaded();
+    const history = s.legal_research_history || [];
+    return history
+      .filter(h => h.user_id === userId)
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .slice(0, limit);
+  }
+
+  createLegalResearchHistory(
+    userId: string,
+    query: string,
+    aiResponse: any,
+    retrievedDocumentIds: string[] = [],
+    modelName = 'gpt-4o'
+  ): LegalResearchHistory {
+    const s = this.ensureLoaded();
+    if (!s.legal_research_history) s.legal_research_history = [];
+    const entry: LegalResearchHistory = {
+      id: 'lrh-' + crypto.randomUUID(),
+      user_id: userId,
+      query,
+      ai_response: aiResponse,
+      retrieved_document_ids: retrievedDocumentIds,
+      model_name: modelName,
+      created_at: new Date().toISOString()
+    };
+    s.legal_research_history.push(entry);
+    this.save();
+    return entry;
+  }
+
+  getSavedResearch(userId: string, caseId?: string | null): SavedResearch[] {
+    const s = this.ensureLoaded();
+    const saved = s.saved_research || [];
+    const docsMap = new Map((s.legal_documents || []).map(d => [d.id, d]));
+    
+    return saved
+      .filter(sr => sr.user_id === userId && (caseId === undefined || sr.case_id === caseId))
+      .map(sr => ({
+        ...sr,
+        document: docsMap.get(sr.document_id)
+      }))
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+
+  createSavedResearch(userId: string, documentId: string, caseId?: string | null, notes?: string): SavedResearch {
+    const s = this.ensureLoaded();
+    if (!s.saved_research) s.saved_research = [];
+
+    // Enforce UNIQUE(user_id, document_id, case_id) constraint from 005_legal_research.sql
+    const existingIdx = s.saved_research.findIndex(
+      sr => sr.user_id === userId && sr.document_id === documentId && (sr.case_id || null) === (caseId || null)
+    );
+    if (existingIdx !== -1) {
+      if (notes !== undefined) {
+        s.saved_research[existingIdx].notes = notes;
+        this.save();
+      }
+      const doc = (s.legal_documents || []).find(d => d.id === documentId);
+      return { ...s.saved_research[existingIdx], document: doc };
+    }
+
+    const entry: SavedResearch = {
+      id: 'sr-' + crypto.randomUUID(),
+      user_id: userId,
+      document_id: documentId,
+      case_id: caseId || null,
+      notes: notes || '',
+      created_at: new Date().toISOString()
+    };
+    s.saved_research.push(entry);
+    this.save();
+
+    const doc = (s.legal_documents || []).find(d => d.id === documentId);
+    return { ...entry, document: doc };
+  }
+
+  deleteSavedResearch(userId: string, id: string): boolean {
+    const s = this.ensureLoaded();
+    if (!s.saved_research) return false;
+    const idx = s.saved_research.findIndex(sr => sr.id === id && sr.user_id === userId);
+    if (idx === -1) return false;
+    s.saved_research.splice(idx, 1);
+    this.save();
+    return true;
+  }
+
+  getLegalDocumentSources(docId?: string): LegalDocumentSource[] {
+    const s = this.ensureLoaded();
+    const sources = s.legal_document_sources || [];
+    if (docId) {
+      return sources.filter(src => src.document_id === docId);
+    }
+    return sources;
+  }
+
+  addLegalDocumentSource(src: Omit<LegalDocumentSource, 'id' | 'created_at'>): LegalDocumentSource {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_sources) s.legal_document_sources = [];
+    const newSource: LegalDocumentSource = {
+      ...src,
+      id: 'src-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.legal_document_sources.push(newSource);
+    this.save();
+    return newSource;
+  }
+
+  getLegalChunks(docId?: string): LegalDocumentChunk[] {
+    const s = this.ensureLoaded();
+    const chunks = s.legal_document_chunks || [];
+    if (docId) {
+      return chunks.filter(c => c.document_id === docId);
+    }
+    return chunks;
+  }
+
+  getAllLegalDocumentProcessing(): LegalDocumentProcessing[] {
+    const s = this.ensureLoaded();
+    return s.legal_document_processing || [];
+  }
+
+  getLegalDocumentProcessing(docId: string): LegalDocumentProcessing | null {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_processing) return null;
+    return s.legal_document_processing.find(p => p.document_id === docId) || null;
+  }
+
+  updateLegalDocumentProcessing(
+    docId: string,
+    updates: Partial<LegalDocumentProcessing>
+  ): LegalDocumentProcessing {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_processing) s.legal_document_processing = [];
+    let p = s.legal_document_processing.find(item => item.document_id === docId);
+    if (!p) {
+      p = {
+        id: 'proc-' + crypto.randomUUID(),
+        document_id: docId,
+        extraction_status: 'pending',
+        ocr_status: 'pending',
+        metadata_status: 'pending',
+        embedding_status: 'pending',
+        total_pages: 0,
+        processed_pages: 0,
+        total_chunks: 0,
+        retry_count: 0,
+        created_at: new Date().toISOString(),
+        ...updates
+      };
+      s.legal_document_processing.push(p);
+    } else {
+      Object.assign(p, updates);
+    }
+    this.save();
+    return p;
+  }
+
+  getLegalDocumentCitations(docId?: string): LegalDocumentCitation[] {
+    const s = this.ensureLoaded();
+    const citations = s.legal_document_citations || [];
+    if (docId) {
+      return citations.filter(c => c.document_id === docId || c.cited_document_id === docId);
+    }
+    return citations;
+  }
+
+  addLegalDocumentCitation(cit: Omit<LegalDocumentCitation, 'id' | 'created_at'>): LegalDocumentCitation {
+    const s = this.ensureLoaded();
+    if (!s.legal_document_citations) s.legal_document_citations = [];
+    const newCitation: LegalDocumentCitation = {
+      ...cit,
+      id: 'cit-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.legal_document_citations.push(newCitation);
+    this.save();
+    return newCitation;
+  }
+
+  getIngestionJobs(): LegalIngestionJob[] {
+    const s = this.ensureLoaded();
+    return s.legal_ingestion_jobs || [];
+  }
+
+  createIngestionJob(job: Omit<LegalIngestionJob, 'id' | 'created_at'>): LegalIngestionJob {
+    const s = this.ensureLoaded();
+    if (!s.legal_ingestion_jobs) s.legal_ingestion_jobs = [];
+    const newJob: LegalIngestionJob = {
+      ...job,
+      id: 'job-' + crypto.randomUUID(),
+      created_at: new Date().toISOString()
+    };
+    s.legal_ingestion_jobs.unshift(newJob);
+    this.save();
+    return newJob;
+  }
+
+  updateIngestionJob(id: string, updates: Partial<LegalIngestionJob>): LegalIngestionJob | null {
+    const s = this.ensureLoaded();
+    if (!s.legal_ingestion_jobs) return null;
+    const job = s.legal_ingestion_jobs.find(j => j.id === id);
+    if (!job) return null;
+    Object.assign(job, updates);
+    this.save();
+    return job;
+  }
+
+  getStorageUsageHistory(limit = 60): StorageUsageHistoryRecord[] {
+    const s = this.ensureLoaded();
+    const history = s.storage_usage_history || [];
+    return [...history].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, limit);
+  }
+
+  recordStorageSnapshot(snapshot: Omit<StorageUsageHistoryRecord, 'id' | 'createdAt'> & { id?: string; createdAt?: string }): StorageUsageHistoryRecord {
+    const s = this.ensureLoaded();
+    if (!s.storage_usage_history) s.storage_usage_history = [];
+    const newRecord: StorageUsageHistoryRecord = {
+      id: snapshot.id || 'suh-' + crypto.randomUUID(),
+      createdAt: snapshot.createdAt || new Date().toISOString(),
+      storageBytes: snapshot.storageBytes,
+      databaseBytes: snapshot.databaseBytes,
+      physicalDiskBytes: snapshot.physicalDiskBytes !== undefined ? snapshot.physicalDiskBytes : null,
+      pdfCount: snapshot.pdfCount,
+      chunkCount: snapshot.chunkCount,
+      metadata: snapshot.metadata || {}
+    };
+    s.storage_usage_history.unshift(newRecord);
+    this.save();
+    return newRecord;
   }
 }
 

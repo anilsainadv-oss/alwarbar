@@ -1,23 +1,67 @@
 import { NextResponse } from 'next/server';
 import { localDb } from '@/lib/db';
 import { signSession, COOKIE_NAME, verifyPassword } from '@/lib/auth/session';
+import { loginSchema } from '@/lib/validation/schemas';
+import { rateLimiter, getClientIp } from '@/lib/security/rate-limit';
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
-
-    if (!email || !password) {
-      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
+    const ip = getClientIp(req);
+    const rateLimitKey = `auth_login_${ip}`;
+    
+    // Strict rate limiting: 5 attempts per 15 minutes
+    const limitCheck = rateLimiter.check(rateLimitKey, 5, 900);
+    if (!limitCheck.allowed) {
+      return NextResponse.json(
+        { 
+          error: `अत्यधिक असफल प्रयास। कृपया ${Math.ceil(limitCheck.resetSeconds / 60)} मिनट बाद पुनः प्रयास करें (Too many attempts. Please try again later).` 
+        },
+        { 
+          status: 429,
+          headers: {
+            'Retry-After': String(limitCheck.resetSeconds)
+          }
+        }
+      );
     }
 
-    const user = localDb.getUserByEmail(email);
+    const json = await req.json();
+    const parseResult = loginSchema.safeParse(json);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { error: parseResult.error.errors[0]?.message || 'Invalid input data' },
+        { status: 400 }
+      );
+    }
+
+    const { email: rawIdentifier, password: rawPassword } = parseResult.data;
+
+    const user = localDb.getUserByEmail(rawIdentifier.trim());
     if (!user) {
-      return NextResponse.json({ error: 'Invalid credentials or user not found' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'अमान्य क्रेडेंशियल (Invalid email, enrollment, or password).' },
+        { status: 401 }
+      );
     }
 
-    if (!verifyPassword(password, user.password_hash)) {
-      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
+    // STRICT CRYPTOGRAPHIC VERIFICATION ONLY (Zero backdoor bypasses)
+    const isValid = verifyPassword(rawPassword.trim(), user.password_hash);
+    if (!isValid) {
+      return NextResponse.json(
+        { error: 'अमान्य क्रेडेंशियल (Invalid email, enrollment, or password).' },
+        { status: 401 }
+      );
     }
+
+    if (!user.is_active) {
+      return NextResponse.json(
+        { error: 'यह खाता निष्क्रिय है। कृपया बार एसोसिएशन या सिस्टम एडमिनिस्ट्रेटर से संपर्क करें।' },
+        { status: 403 }
+      );
+    }
+
+    // Successful login: reset rate limit for this IP
+    rateLimiter.reset(rateLimitKey);
 
     const sessionUser = {
       id: user.id,

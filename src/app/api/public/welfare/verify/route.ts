@@ -5,7 +5,7 @@ import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
-let cachedDuesRecords: Array<{
+interface OfficialDuesRecord {
   s_no: number;
   enrol_no: string;
   elc_no: string;
@@ -13,9 +13,11 @@ let cachedDuesRecords: Array<{
   due_subs: string;
   ltm_subs: string;
   category: string;
-}> | null = null;
+}
 
-function getOfficialDuesRecords() {
+let cachedDuesRecords: OfficialDuesRecord[] | null = null;
+
+function getOfficialDuesRecords(): OfficialDuesRecord[] {
   if (cachedDuesRecords) return cachedDuesRecords;
   const candidatePaths = [
     path.join(process.cwd(), 'data', 'bcr-alwar-dues.json'),
@@ -26,14 +28,15 @@ function getOfficialDuesRecords() {
       try {
         const raw = fs.readFileSync(p, 'utf-8');
         const parsed = JSON.parse(raw);
-        cachedDuesRecords = parsed.records || [];
+        cachedDuesRecords = (parsed.records || []) as OfficialDuesRecord[];
         return cachedDuesRecords;
       } catch (e) {
         console.error('Failed to parse bcr-alwar-dues in verify route:', e);
       }
     }
   }
-  return [];
+  cachedDuesRecords = [];
+  return cachedDuesRecords;
 }
 
 function calculateBenefitSlab(years: number): string {
@@ -103,6 +106,7 @@ export async function GET(req: Request) {
     // Found in local directory!
     if (matched) {
       const expYears = matched.experience_years || 10;
+      const ecourtsCases = localDb.getCasesByEnrollment(matched.bar_council_enrollment_no);
       return NextResponse.json({
         found: true,
         source: 'local_directory',
@@ -121,13 +125,14 @@ export async function GET(req: Request) {
         accidental_cover: '₹10,00,000 Round-the-Clock Cover',
         nominee_status: 'Nominee Declaration Form A Active on File',
         bcr_dues_link: 'https://barcouncilofrajasthan.org/rawf/dues-list',
-        bcr_portal_link: 'https://barcouncilofrajasthan.org/Advocate/'
+        bcr_portal_link: 'https://barcouncilofrajasthan.org/Advocate/',
+        ecourts_cases: ecourtsCases
       });
     }
 
     // 2. Check in official BCR Alwar Judgeship Dues Register (3,120 Advocates)
-    const officialRecords = getOfficialDuesRecords();
-    const bcrMatch = officialRecords.find((r) => {
+    const officialRecords: OfficialDuesRecord[] = getOfficialDuesRecords() || [];
+    const bcrMatch = (officialRecords || []).find((r) => {
       const rNorm = normalizeEnrollment(r.enrol_no);
       if (rNorm === targetNorm) return true;
       const rDigits = rNorm.replace(/^r\//, '');
@@ -174,6 +179,7 @@ export async function GET(req: Request) {
         nominee_status: 'Nominee Protection under RAWF Act, 1987 Sections 16 & 17',
         bcr_dues_link: '/welfare?tab=dues',
         bcr_portal_link: 'https://barcouncilofrajasthan.org/rawf/dues-list',
+        ecourts_cases: localDb.getCasesByEnrollment(bcrMatch.enrol_no),
         sync_note: 'Verified from official Bar Council of Rajasthan Complete List of Advocates Due Subscription of R.A.W.F. (Alwar Judgeship Register, Record #' + bcrMatch.s_no + ', Electoral Roll #' + bcrMatch.elc_no + ').'
       });
     }

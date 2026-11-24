@@ -6,13 +6,18 @@ import { Lock, ShieldAlert, ArrowRight, AlertCircle } from 'lucide-react';
 
 export default function CaseAdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('case.admin@alwaradvocates.org');
-  const [password, setPassword] = useState('CaseAdmin@2026');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      setError('Please provide both operator email and password.');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
@@ -20,7 +25,7 @@ export default function CaseAdminLoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email: email.trim(), password: password.trim() })
       });
 
       const data = await res.json();
@@ -74,7 +79,8 @@ export default function CaseAdminLoginPage() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full p-2.5 border rounded-lg"
+              className="w-full p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500/50"
+              placeholder="operator@alwaradvocates.org"
               required
             />
           </div>
@@ -85,7 +91,8 @@ export default function CaseAdminLoginPage() {
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full p-2.5 border rounded-lg"
+              className="w-full p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500/50"
+              placeholder="••••••••••••"
               required
             />
           </div>
@@ -99,10 +106,6 @@ export default function CaseAdminLoginPage() {
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
-
-        <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-[11px] text-slate-500 font-mono">
-          Preset: case.admin@alwaradvocates.org / CaseAdmin@2026
-        </div>
       </div>
     </div>
   );

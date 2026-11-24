@@ -9,7 +9,7 @@ export default function BootstrapAdminPage() {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('setup-alwar-admin-token-2026');
+  const [token, setToken] = useState('');
   const [role, setRole] = useState<'public_admin' | 'case_admin'>('public_admin');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');

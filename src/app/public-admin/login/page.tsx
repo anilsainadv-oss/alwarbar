@@ -2,17 +2,22 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Scale, Shield, Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { Shield, ArrowRight, AlertCircle, Lock } from 'lucide-react';
 
 export default function PublicAdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('public.admin@alwaradvocates.org');
-  const [password, setPassword] = useState('AdminPass@2026');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      setError('Please provide both administrator email and password.');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
@@ -20,7 +25,7 @@ export default function PublicAdminLoginPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email: email.trim(), password: password.trim() })
       });
 
       const data = await res.json();
@@ -67,7 +72,8 @@ export default function PublicAdminLoginPage() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full p-2.5 border rounded-lg"
+              className="w-full p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              placeholder="admin@alwaradvocates.org"
               required
             />
           </div>
@@ -78,7 +84,8 @@ export default function PublicAdminLoginPage() {
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full p-2.5 border rounded-lg"
+              className="w-full p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              placeholder="••••••••••••"
               required
             />
           </div>
@@ -92,10 +99,6 @@ export default function PublicAdminLoginPage() {
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
-
-        <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-[11px] text-slate-500 font-mono">
-          Preset: public.admin@alwaradvocates.org / AdminPass@2026
-        </div>
       </div>
     </div>
   );

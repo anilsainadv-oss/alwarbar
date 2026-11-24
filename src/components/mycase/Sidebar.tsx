@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/lib/i18n/context';
 import { 
   Briefcase, Folder, FileText, Sparkles, Search, Calendar, 
-  CheckSquare, Users, CreditCard, Bookmark, Settings, Scale, Lock, ShieldCheck, ChevronRight
+  CheckSquare, Users, CreditCard, Bookmark, Settings, Scale, Lock, ShieldCheck, ChevronRight, ExternalLink,
+  Building2
 } from 'lucide-react';
 
 export function MyCaseSidebar() {
@@ -23,7 +24,8 @@ export function MyCaseSidebar() {
     { href: '/my-case/ai-assistant', label: 'Case File Analyzer', icon: Scale },
     { href: '/my-case/tasks', label: 'Deadlines & Tasks', icon: CheckSquare },
     { href: '/my-case/clients', label: 'Client Directory', icon: Users },
-    { href: '/my-case/billing', label: 'Fee & Billing Ledger', icon: CreditCard },
+    { href: '/my-case/team', label: 'Chamber & Team', icon: Building2 },
+    { href: '/my-case/billing', label: 'Billing & SaaS Plans', icon: CreditCard },
     { href: '/my-case/library', label: 'Personal Library', icon: Bookmark },
     { href: '/my-case/settings', label: 'Office Settings', icon: Settings },
   ];
@@ -72,6 +74,39 @@ export function MyCaseSidebar() {
           );
         })}
       </nav>
+
+      {/* Official Portals Quick Links */}
+      <div className="px-3 py-2 border-t border-white/10 space-y-1">
+        <div className="text-[10px] uppercase font-bold tracking-wider text-slate-400 px-1 mb-1">
+          {locale === 'hi' ? 'आधिकारिक कोर्ट लिंक' : 'Official Court Links'}
+        </div>
+        <a
+          href="https://alwar.dcourts.gov.in/case-status-search-by-advocate/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-blue-300 hover:text-white hover:bg-blue-900/40 transition border border-blue-500/30"
+          title="Search case status by advocate name on official Alwar e-Courts"
+        >
+          <div className="flex items-center space-x-2">
+            <Search className="w-3.5 h-3.5 text-blue-400" />
+            <span className="truncate">e-Courts Case Search</span>
+          </div>
+          <ExternalLink className="w-3 h-3 text-blue-400 shrink-0" />
+        </a>
+        <a
+          href="https://barcouncilofrajasthan.org/Advocate/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-amber-300 hover:text-white hover:bg-amber-900/40 transition border border-amber-500/30"
+          title="Bar Council of Rajasthan Official Advocate Portal"
+        >
+          <div className="flex items-center space-x-2">
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+            <span className="truncate">BCR Advocate Login</span>
+          </div>
+          <ExternalLink className="w-3 h-3 text-amber-400 shrink-0" />
+        </a>
+      </div>
 
       {/* Honest AI Status Badge */}
       <div className="p-3 border-t border-white/10">

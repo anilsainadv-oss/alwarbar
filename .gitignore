@@ -20,6 +20,12 @@ yarn-error.log*
 .env*.local
 .env
 
+# Confidential uploads vault & database backup snapshots
+data/vault/
+data/backups/
+*.backup.json
+
+
 # TypeScript
 *.tsbuildinfo
 

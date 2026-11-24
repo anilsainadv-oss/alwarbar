@@ -1,0 +1,12 @@
+const fs = require('fs');
+const db = JSON.parse(fs.readFileSync('data/local-db.json', 'utf8'));
+const docs = db.legal_documents || [];
+console.log('Total documents in local-db.json:', docs.length);
+const published = docs.filter(d => d.publication_status === 'published');
+const drafts = docs.filter(d => d.publication_status === 'draft');
+console.log('Published:', published.length);
+console.log('Drafts:', drafts.length);
+console.log('\nPublished records:');
+published.forEach((d, i) => console.log(`  ${i+1}. ${d.citation} (${d.court_code || d.court_name}) - approved_by: ${d.approved_by || 'NONE'}`));
+console.log('\nDraft records:');
+drafts.forEach((d, i) => console.log(`  ${i+1}. ${d.citation} (${d.court_code || d.court_name}) - approved_by: ${d.approved_by || 'NONE'}`));

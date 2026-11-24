@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/lib/i18n/context';
-import { Bookmark, Plus, Search, BookOpen, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Bookmark, Plus, Search, BookOpen, ExternalLink, ShieldCheck, Download } from 'lucide-react';
 import type { PersonalLibraryItem } from '@/types/mycase';
 
 export default function PersonalLibraryPage() {
@@ -118,19 +118,33 @@ export default function PersonalLibraryPage() {
               </p>
             )}
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
               <span>Saved on: {new Date(item.created_at).toLocaleDateString()}</span>
-              {item.source_url && (
-                <a
-                  href={item.source_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-700 hover:underline flex items-center space-x-1 font-medium"
-                >
-                  <span>Law Report Link</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
+              <div className="flex items-center gap-2">
+                {item.citation && (
+                  <a
+                    href={`/api/public/judgments/download?title=${encodeURIComponent(item.title)}&citation=${encodeURIComponent(item.citation)}&format=pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold flex items-center space-x-1 transition shadow-sm"
+                    title="Download Original Certified Court Judgment (PDF)"
+                  >
+                    <Download className="w-3 h-3 text-emerald-600" />
+                    <span>मूल फैसला PDF</span>
+                  </a>
+                )}
+                {item.source_url && (
+                  <a
+                    href={item.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 hover:underline flex items-center space-x-1 font-medium"
+                  >
+                    <span>Law Report Link</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}

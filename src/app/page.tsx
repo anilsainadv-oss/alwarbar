@@ -142,7 +142,7 @@ export default function HomePage() {
               className="px-4 py-2 bg-legal-navy hover:bg-slate-800 text-amber-300 font-bold rounded-xl text-xs transition shadow flex items-center space-x-1.5 shrink-0 self-start md:self-auto"
             >
               <Landmark className="w-3.5 h-3.5" />
-              <span>बार एसोसिएशन पूरा पोर्टल खोलें →</span>
+              <span>{locale === 'hi' ? 'बार एसोसिएशन पूरा पोर्टल खोलें →' : 'Open Bar Association Portal →'}</span>
             </Link>
           </div>
 
@@ -216,13 +216,13 @@ export default function HomePage() {
                 href="/advocates"
                 className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-xs font-semibold transition"
               >
-                सदस्य डायरेक्टरी
+                {locale === 'hi' ? 'सदस्य डायरेक्टरी' : 'Member Directory'}
               </Link>
               <Link
                 href="/bar-association"
                 className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-xs font-bold transition shadow"
               >
-                विस्तृत जानकारी
+                {locale === 'hi' ? 'विस्तृत जानकारी' : 'Explore Details'}
               </Link>
             </div>
           </div>

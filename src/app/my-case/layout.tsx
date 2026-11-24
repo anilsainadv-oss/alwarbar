@@ -1,7 +1,21 @@
-'use client';
-
+import type { Metadata } from 'next';
 import React from 'react';
 import { MyCaseSidebar } from '@/components/mycase/Sidebar';
+
+export const metadata: Metadata = {
+  title: 'My Case AI Legal Office',
+  description: 'Privileged Advocate Practice Management & AI Legal Assistant',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
+};
 
 export default function MyCaseLayout({ children }: { children: React.ReactNode }) {
   return (
