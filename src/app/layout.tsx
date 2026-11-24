@@ -3,9 +3,12 @@ import './globals.css';
 import { LanguageProvider } from '@/lib/i18n/context';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { getAppBaseUrl, getMetadataBaseUrl } from '@/lib/config/app-url';
+
+const appBaseUrl = getAppBaseUrl();
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://alwaradvocates.org'),
+  metadataBase: getMetadataBaseUrl(),
   title: {
     default: 'Alwar Advocates Portal & My Case AI Legal Office | बार एसोसिएशन अलवर',
     template: '%s | Alwar Advocates Portal'
@@ -25,17 +28,17 @@ export const metadata: Metadata = {
     'वकील अलवर',
     'अलवर जिला न्यायालय'
   ],
-  authors: [{ name: 'District & Sessions Bar Association Alwar', url: 'https://alwaradvocates.org' }],
+  authors: [{ name: 'District & Sessions Bar Association Alwar', url: appBaseUrl }],
   creator: 'District & Sessions Bar Association Alwar',
   publisher: 'Alwar Advocates Portal Legal IT Initiative',
   alternates: {
-    canonical: 'https://alwaradvocates.org'
+    canonical: appBaseUrl
   },
   openGraph: {
     type: 'website',
     locale: 'hi_IN',
     alternateLocale: ['en_IN'],
-    url: 'https://alwaradvocates.org',
+    url: appBaseUrl,
     siteName: 'Alwar Advocates Legal Portal',
     title: 'Alwar Advocates Portal & My Case AI Legal Office',
     description: 'Bilingual legal practice management, e-Courts cause list matching, statutory precedents, and welfare verification for advocates in Alwar, Rajasthan.'
@@ -63,15 +66,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const currentBaseUrl = getAppBaseUrl();
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'LegalService',
-        '@id': 'https://alwaradvocates.org/#organization',
+        '@id': `${currentBaseUrl}/#organization`,
         name: 'District & Sessions Bar Association Alwar',
         alternateName: 'बार एसोसिएशन अलवर',
-        url: 'https://alwaradvocates.org',
+        url: currentBaseUrl,
         description: 'Official digital practice platform for advocates in Alwar, Rajasthan. e-Courts cause list auto-matching, BNSS statutory research, and advocate welfare.',
         address: {
           '@type': 'PostalAddress',
@@ -100,13 +104,13 @@ export default function RootLayout({
       },
       {
         '@type': 'WebSite',
-        '@id': 'https://alwaradvocates.org/#website',
-        url: 'https://alwaradvocates.org',
+        '@id': `${currentBaseUrl}/#website`,
+        url: currentBaseUrl,
         name: 'Alwar Advocates Portal',
-        publisher: { '@id': 'https://alwaradvocates.org/#organization' },
+        publisher: { '@id': `${currentBaseUrl}/#organization` },
         potentialAction: {
           '@type': 'SearchAction',
-          target: 'https://alwaradvocates.org/advocates?q={search_term_string}',
+          target: `${currentBaseUrl}/advocates?q={search_term_string}`,
           'query-input': 'required name=search_term_string'
         }
       }

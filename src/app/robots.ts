@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next';
+import { getAppBaseUrl } from '@/lib/config/app-url';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://alwaradvocates.org';
+  const baseUrl = getAppBaseUrl();
 
   return {
     rules: [
