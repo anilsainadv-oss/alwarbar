@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { localDb } from '@/lib/db';
+import { getAppBaseUrl } from '@/lib/config/app-url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://alwaradvocates.org';
+  const baseUrl = getAppBaseUrl();
   const now = new Date();
 
   // Core public static pages
