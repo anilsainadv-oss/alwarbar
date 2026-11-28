@@ -14,6 +14,7 @@ import { runCaseResearchIntegrationTests } from './case-research-integration.tes
 import { runAdminLegalLibraryTests } from './admin-legal-library.test.mjs';
 import { runStorageDatabaseMonitorTests } from './storage-database-monitor.test.mjs';
 import { runProductionReadinessTests } from './production-readiness.test.mjs';
+import { runScDiscoveryPipelineTests } from './sc-discovery-pipeline.test.mjs';
 
 async function main() {
   console.log('===============================================================');
@@ -52,6 +53,8 @@ async function main() {
     await runStorageDatabaseMonitorTests();
     console.log('');
     await runProductionReadinessTests();
+    console.log('');
+    await runScDiscoveryPipelineTests();
 
     console.log('\n===============================================================');
     console.log('ALL TESTS PASSED SUCCESSFULLY (0 ERRORS)');

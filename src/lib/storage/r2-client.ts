@@ -91,10 +91,11 @@ export function getR2Client(): S3Client {
     return cachedClient;
   }
 
-  // Cloudflare R2 is fully S3-compatible
+  // Cloudflare R2 is fully S3-compatible (path-style avoids virtual-host DNS issues)
   cachedClient = new S3Client({
     region: 'auto',
     endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+    forcePathStyle: true,
     credentials: {
       accessKeyId: config.accessKeyId,
       secretAccessKey: config.secretAccessKey
@@ -226,6 +227,17 @@ export async function uploadPdfToR2(params: {
   });
 
   const response = await client.send(command);
+
+  // Post-upload HEAD verification: confirm object exists and size matches
+  const verifyHead = await client.send(new HeadObjectCommand({
+    Bucket: config.bucketName,
+    Key: params.key
+  }));
+  if (!verifyHead || verifyHead.ContentLength !== integrity.sizeBytes) {
+    throw new Error(
+      `R2 post-upload verification failed for key "${params.key}": expected ${integrity.sizeBytes} bytes, got ${verifyHead?.ContentLength ?? 'missing'}`
+    );
+  }
 
   return {
     key: params.key,

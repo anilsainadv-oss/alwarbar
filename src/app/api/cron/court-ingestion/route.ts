@@ -27,19 +27,15 @@ export async function POST(req: Request) {
     let force = false;
 
     if (!isCronAuthorized) {
-      // Check query param key fallback
-      const url = new URL(req.url);
-      const queryKey = url.searchParams.get('key') || url.searchParams.get('token');
-      if (queryKey !== cronSecret) {
-        const user = await getCurrentUser();
-        if (!user || user.role !== 'public_admin') {
-          return NextResponse.json(
-            { error: 'FORBIDDEN: Requires Public Admin privileges or valid CRON Authorization token.' },
-            { status: 403 }
-          );
-        }
-        triggeredBy = user.id;
+      // Strictly require public admin session if Cron Bearer header is absent
+      const user = await getCurrentUser();
+      if (!user || user.role !== 'public_admin') {
+        return NextResponse.json(
+          { error: 'FORBIDDEN: Requires Public Admin privileges or valid CRON Authorization token.' },
+          { status: 403 }
+        );
       }
+      triggeredBy = user.id;
     }
 
     // Parse options
@@ -79,7 +75,9 @@ export async function POST(req: Request) {
     return NextResponse.json(result);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Court sync cron failed';
-    const statusCode = message.includes('Rate limit') ? 429 : 500;
+    const statusCode = message.includes('Rate limit')
+      ? 429
+      : (message.includes('lock active') || message.includes('Another worker') ? 409 : 500);
     return NextResponse.json({ error: message }, { status: statusCode });
   }
 }

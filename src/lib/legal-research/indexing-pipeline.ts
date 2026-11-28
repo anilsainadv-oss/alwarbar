@@ -205,21 +205,18 @@ export async function ingestAndIndexLegalDocument(
     });
 
     if (isR2Configured()) {
-      try {
-        await uploadPdfToR2({
-          buffer: input.buffer,
-          key: r2StorageKey,
-          mimeType: input.mimeType || 'application/pdf',
-          metadata: {
-            citation: finalCitation,
-            court_code: courtCode,
-            sha256: integrity.sha256
-          }
-        });
-      } catch (err) {
-        console.warn('Cloudflare R2 upload deferred or failed:', err);
-        warnings.push(`R2 upload warning: ${err instanceof Error ? err.message : 'Upload failed'}`);
-      }
+      await uploadPdfToR2({
+        buffer: input.buffer,
+        key: r2StorageKey,
+        mimeType: input.mimeType || 'application/pdf',
+        metadata: {
+          citation: finalCitation,
+          court_code: courtCode,
+          sha256: integrity.sha256
+        }
+      });
+    } else if (process.env.NODE_ENV === 'production') {
+      throw new Error('Cloudflare R2 is not configured in production; cannot persist judgment PDF.');
     }
   }
 
@@ -227,6 +224,16 @@ export async function ingestAndIndexLegalDocument(
   const ocrStatus: OCRStatus = extractionResult?.isScanned 
     ? ((extractionResult.text?.trim().length || 0) > 50 ? 'completed' : 'pending')
     : 'not_required';
+
+  const safeJudgmentDate =
+    finalJudgmentDate && /^\d{4}-\d{2}-\d{2}$/.test(finalJudgmentDate.trim())
+      ? finalJudgmentDate.trim()
+      : undefined;
+  const normalizedAdvocates = Array.isArray(input.advocate_names)
+    ? input.advocate_names
+    : (typeof input.advocate_names === 'string' && input.advocate_names.trim()
+        ? input.advocate_names.split(',').map(s => s.trim()).filter(Boolean)
+        : []);
 
   const defaultParties = finalParties || 'Petitioner v. Respondent';
   const documentPayload: Omit<LegalDocument, 'id' | 'created_at' | 'updated_at'> = {
@@ -242,8 +249,8 @@ export async function ingestAndIndexLegalDocument(
     diary_number: input.diary_number,
     petitioner: input.petitioner || (Array.isArray(input.parties) ? input.parties[0] : defaultParties.split(' v. ')[0]),
     respondent: input.respondent || (Array.isArray(input.parties) ? input.parties[1] : defaultParties.split(' v. ')[1]),
-    advocate_names: input.advocate_names,
-    judgment_date: finalJudgmentDate,
+    advocate_names: normalizedAdvocates,
+    judgment_date: safeJudgmentDate,
     decision_type: input.decision_type || 'Judgment',
     judgment_type: input.judgment_type || 'Judgment',
     case_type: input.case_type || autoMeta.case_type || undefined,

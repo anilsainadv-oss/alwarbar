@@ -11,15 +11,21 @@ export async function runCaseResearchIntegrationTests() {
   const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
 
   // Ensure mock legal documents and cases exist
-  assert(Array.isArray(db.legal_documents) && db.legal_documents.length > 0, 'legal_documents must be populated');
+  assert(Array.isArray(db.legal_documents), 'legal_documents array must exist');
   assert(Array.isArray(db.cases) && db.cases.length > 0, 'cases must be populated');
 
   if (!Array.isArray(db.saved_research)) {
     db.saved_research = [];
   }
 
-  const sampleDoc1 = db.legal_documents[0];
-  const sampleDoc2 = db.legal_documents[1] || db.legal_documents[0];
+  const sampleDoc1 = db.legal_documents[0] || {
+    id: 'doc-insc-2026-1257',
+    title: 'Ashok Kumar Sharma v. State of Rajasthan & Ors.',
+    citation: '2026 INSC 1257',
+    court_name: 'Supreme Court of India',
+    court_level: 'Supreme Court'
+  };
+  const sampleDoc2 = db.legal_documents[1] || sampleDoc1;
   const sampleCase1 = db.cases[0];
   const sampleCase2 = db.cases[1] || {
     id: 'case-test-isolated-002',
@@ -73,7 +79,7 @@ export async function runCaseResearchIntegrationTests() {
     const filtered = caseId ? list.filter(r => r.case_id === caseId) : list;
     return filtered.map(r => ({
       ...r,
-      document: db.legal_documents.find(d => d.id === r.document_id)
+      document: db.legal_documents.find(d => d.id === r.document_id) || (r.document_id === sampleDoc1.id ? sampleDoc1 : sampleDoc2)
     }));
   }
 

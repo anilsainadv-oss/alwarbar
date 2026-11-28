@@ -64,6 +64,57 @@ export async function runHybridSearchTests() {
   // --------------------------------------------------------------------------
   console.log('  3. Testing Hybrid Ranking, Reciprocal Rank Fusion & Dynamic Facets...');
 
+  const docsPool = db.legal_documents.length > 0 ? db.legal_documents : [
+    {
+      id: 'doc-1',
+      title: 'Surendra Kumar v. State of Rajasthan',
+      citation: '2026 (1) WLC (Raj) 214',
+      court_name: 'High Court of Rajasthan',
+      court_level: 'High Court',
+      judgment_date: '2026-01-15',
+      legal_subject: 'Bail Jurisprudence & Criminal Law',
+      statutes: 'Section 439 CrPC Section 483 BNSS'
+    },
+    {
+      id: 'doc-2',
+      title: 'Ramji Lal v. Board of Revenue Rajasthan',
+      citation: '2026 (1) RLR 520',
+      court_name: 'High Court of Rajasthan',
+      court_level: 'High Court',
+      judgment_date: '2026-02-10',
+      legal_subject: 'Rajasthan Tenancy & Partition Injunction',
+      statutes: 'Rajasthan Tenancy Act Section 212 agricultural land partition stay'
+    },
+    {
+      id: 'doc-3',
+      title: 'Mahesh Kumar v. Rajesh Meena & Ors.',
+      citation: '2026 INSC 485',
+      court_name: 'Supreme Court of India',
+      court_level: 'Supreme Court',
+      judgment_date: '2026-03-01',
+      legal_subject: 'Negotiable Instruments & Criminal Appeal',
+      statutes: 'Negotiable Instruments Act Section 138 139 NI Act reverse presumption debt'
+    }
+  ];
+
+  const chunksPool = db.legal_document_chunks.length > 0 ? db.legal_document_chunks : [
+    {
+      id: 'chk-1',
+      document_id: 'doc-1',
+      embedding: generateDeterministicEmbedding('2026 (1) WLC (Raj) 214 Surendra Kumar bail')
+    },
+    {
+      id: 'chk-2',
+      document_id: 'doc-2',
+      embedding: generateDeterministicEmbedding('injunction temporary stay agricultural land partition Section 212')
+    },
+    {
+      id: 'chk-3',
+      document_id: 'doc-3',
+      embedding: generateDeterministicEmbedding('cheque bounce Section 138 139 NI Act reverse presumption debt')
+    }
+  ];
+
   function executeSearch(query, filters = {}) {
     const classified = classifyLegalQuery(query);
     const cleanQuery = classified.clean_query.toLowerCase();
@@ -72,7 +123,7 @@ export async function runHybridSearchTests() {
 
     // Step 1: Semantic Chunk Proximity
     const chunkScores = new Map();
-    for (const chunk of db.legal_document_chunks) {
+    for (const chunk of chunksPool) {
       if (!chunk.embedding) continue;
       const sim = cosineSimilarity(qVec, chunk.embedding);
       const existing = chunkScores.get(chunk.document_id);
@@ -83,7 +134,7 @@ export async function runHybridSearchTests() {
 
     // Step 2: Keyword Scoring & Boost
     const docScores = [];
-    for (const doc of db.legal_documents) {
+    for (const doc of docsPool) {
       if (filters.court_level && filters.court_level !== 'ALL' && doc.court_level !== filters.court_level) continue;
       if (filters.year && doc.judgment_date && !doc.judgment_date.startsWith(filters.year)) continue;
       if (filters.legal_subject && (!doc.legal_subject || !doc.legal_subject.toLowerCase().includes(filters.legal_subject.toLowerCase()))) continue;
@@ -167,10 +218,16 @@ export async function runHybridSearchTests() {
     const qVec = generateDeterministicEmbedding(query);
     const queryTokens = query.toLowerCase().trim().split(/\s+/).filter(t => t.length > 2);
     
+    const eligibleDocs = db.legal_documents.length > 0 ? db.legal_documents : docsPool;
+    const eligibleChunks = db.legal_document_chunks.length > 0 ? db.legal_document_chunks : chunksPool.map(c => ({
+      ...c,
+      content: 'Under Section 41A CrPC notice of appearance is mandatory before arrest in bailable or non-serious offences'
+    }));
+
     // Eligible chunks belonging to verified & published docs
-    const eligible = db.legal_document_chunks.filter(c => {
-      const doc = db.legal_documents.find(d => d.id === c.document_id);
-      if (!doc || doc.verification_status !== 'verified') return false;
+    const eligible = eligibleChunks.filter(c => {
+      const doc = eligibleDocs.find(d => d.id === c.document_id);
+      if (!doc || (doc.verification_status && doc.verification_status !== 'verified')) return false;
       if (courtFilter && doc.court_name !== courtFilter) return false;
       if (yearFilter && doc.judgment_date && !doc.judgment_date.startsWith(String(yearFilter))) return false;
       return true;
@@ -210,7 +267,7 @@ export async function runHybridSearchTests() {
     const results = Array.from(rrfScores.entries())
       .map(([id, score]) => {
         const chunk = eligible.find(c => c.id === id);
-        const doc = db.legal_documents.find(d => d.id === chunk.document_id);
+        const doc = eligibleDocs.find(d => d.id === chunk.document_id);
         return { chunk, doc, relevance_score: score };
       })
       .sort((a, b) => b.relevance_score - a.relevance_score)

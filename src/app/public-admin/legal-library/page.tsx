@@ -108,11 +108,14 @@ export default function AdminLegalLibraryPage() {
   // Ingest / Collection Modal State
   const [ingestModalOpen, setIngestModalOpen] = useState(false);
   const [ingestFile, setIngestFile] = useState<File | null>(null);
+  const [ingestPdfStatus, setIngestPdfStatus] = useState<{ valid: boolean; header: string; sizeBytes: number } | null>(null);
   const [ingestRawText, setIngestRawText] = useState('');
   const [ingestTitle, setIngestTitle] = useState('');
   const [ingestCitation, setIngestCitation] = useState('');
-  const [ingestCourtLevel, setIngestCourtLevel] = useState<CourtLevel>('High Court');
-  const [ingestCourtName, setIngestCourtName] = useState('High Court of Judicature for Rajasthan (Jaipur Bench)');
+  const [ingestJudgmentDate, setIngestJudgmentDate] = useState('');
+  const [ingestDiaryNumber, setIngestDiaryNumber] = useState('');
+  const [ingestCourtLevel, setIngestCourtLevel] = useState<CourtLevel>('Supreme Court');
+  const [ingestCourtName, setIngestCourtName] = useState('Supreme Court of India');
   const [ingesting, setIngesting] = useState(false);
   const [ingestSuccessMsg, setIngestSuccessMsg] = useState('');
   const [ingestError, setIngestError] = useState('');
@@ -484,11 +487,16 @@ export default function AdminLegalLibraryPage() {
     setIngestError('');
 
     try {
+      if (ingestFile && ingestPdfStatus && !ingestPdfStatus.valid) {
+        throw new Error('Selected file is not a valid PDF binary (missing %PDF- signature).');
+      }
       const formData = new FormData();
       if (ingestFile) formData.append('file', ingestFile);
       if (ingestRawText) formData.append('raw_text', ingestRawText);
       if (ingestTitle) formData.append('title', ingestTitle);
       if (ingestCitation) formData.append('citation', ingestCitation);
+      if (ingestJudgmentDate) formData.append('judgment_date', ingestJudgmentDate);
+      if (ingestDiaryNumber) formData.append('diary_number', ingestDiaryNumber);
       formData.append('court_level', ingestCourtLevel);
       formData.append('court_name', ingestCourtName);
 
@@ -499,13 +507,18 @@ export default function AdminLegalLibraryPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Ingestion failed');
 
-      setIngestSuccessMsg('Judgment uploaded, SHA-256 verified, indexed, and queued in Pending Approval.');
+      setIngestSuccessMsg(
+        `Judgment uploaded (ID: ${data.document?.id || 'created'}), SHA-256 verified, indexed (${data.chunksIndexed ?? 0} chunks), and queued in Pending Approval.`
+      );
       setTimeout(() => {
         setIngestModalOpen(false);
         setIngestFile(null);
+        setIngestPdfStatus(null);
         setIngestRawText('');
         setIngestTitle('');
         setIngestCitation('');
+        setIngestJudgmentDate('');
+        setIngestDiaryNumber('');
         loadData();
       }, 1500);
     } catch (err: unknown) {
@@ -1977,11 +1990,39 @@ export default function AdminLegalLibraryPage() {
                 <label className="block font-semibold mb-1">Select Official Court Copy (PDF)</label>
                 <input
                   type="file"
-                  accept=".pdf"
+                  accept=".pdf,application/pdf"
                   required={!ingestRawText}
-                  onChange={e => setIngestFile(e.target.files?.[0] || null)}
+                  onChange={async (e) => {
+                    const selected = e.target.files?.[0] || null;
+                    setIngestFile(selected);
+                    setIngestError('');
+                    if (!selected) {
+                      setIngestPdfStatus(null);
+                      return;
+                    }
+                    const headSlice = await selected.slice(0, 1024).text();
+                    const trimmed = headSlice.replace(/^\s+/, '');
+                    const isPdf = trimmed.startsWith('%PDF-') && selected.size > 0;
+                    setIngestPdfStatus({
+                      valid: isPdf,
+                      header: trimmed.slice(0, 12),
+                      sizeBytes: selected.size
+                    });
+                    if (!isPdf) {
+                      setIngestError('Invalid file: missing %PDF- binary signature (HTML error pages are rejected).');
+                    }
+                  }}
                   className="w-full text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
                 />
+                {ingestFile && ingestPdfStatus && (
+                  <div className={`mt-2 p-2.5 rounded-lg border text-[11px] flex items-center justify-between ${ingestPdfStatus.valid ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-red-50 border-red-200 text-red-900'}`}>
+                    <div>
+                      <span className="font-bold">{ingestPdfStatus.valid ? 'PDF Verified (%PDF-)' : 'Invalid PDF'}</span>
+                      <span className="ml-2 font-mono">{ingestFile.name} ({(ingestPdfStatus.sizeBytes / 1024).toFixed(1)} KB)</span>
+                    </div>
+                    <span className="font-mono text-[10px] opacity-75">Header: {ingestPdfStatus.header}</span>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -2001,7 +2042,29 @@ export default function AdminLegalLibraryPage() {
                     type="text"
                     value={ingestCitation}
                     onChange={e => setIngestCitation(e.target.value)}
-                    placeholder="e.g. 2026 INSC 485 or 2026:RJ-JP:44204"
+                    placeholder="e.g. 2026 INSC 957 or 2026:RJ-JP:44204"
+                    className="w-full p-2 border rounded-lg font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1">Judgment Date (YYYY-MM-DD)</label>
+                  <input
+                    type="date"
+                    value={ingestJudgmentDate}
+                    onChange={e => setIngestJudgmentDate(e.target.value)}
+                    className="w-full p-2 border rounded-lg font-mono"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1">Diary Number (Optional)</label>
+                  <input
+                    type="text"
+                    value={ingestDiaryNumber}
+                    onChange={e => setIngestDiaryNumber(e.target.value)}
+                    placeholder="e.g. 133492019"
                     className="w-full p-2 border rounded-lg font-mono"
                   />
                 </div>
@@ -2034,6 +2097,15 @@ export default function AdminLegalLibraryPage() {
                 </div>
               </div>
 
+              {(ingestFile || ingestTitle || ingestCitation || ingestDiaryNumber) && (
+                <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-slate-800 text-[11px] space-y-1">
+                  <div className="font-bold text-slate-900">Metadata Preview Before Submission</div>
+                  <div><strong>Court:</strong> {ingestCourtName} ({ingestCourtLevel})</div>
+                  <div><strong>Title:</strong> {ingestTitle || '(Auto-extract from PDF)'}</div>
+                  <div><strong>Citation:</strong> {ingestCitation || '(Auto-extract)'} | <strong>Date:</strong> {ingestJudgmentDate || '(Auto-extract)'} | <strong>Diary No:</strong> {ingestDiaryNumber || 'N/A'}</div>
+                </div>
+              )}
+
               <div className="p-3 bg-amber-50 rounded-lg border border-amber-200 text-amber-900 text-[11px]">
                 <strong>Mandatory Approval Guarantee:</strong> Newly uploaded judgments are placed in <strong>Pending Admin Approval</strong> and will NOT be visible publicly until reviewed and approved.
               </div>
@@ -2048,7 +2120,7 @@ export default function AdminLegalLibraryPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={ingesting}
+                  disabled={ingesting || Boolean(ingestFile && ingestPdfStatus && !ingestPdfStatus.valid)}
                   className="px-5 py-2 bg-indigo-700 hover:bg-indigo-800 disabled:opacity-50 text-white font-bold rounded-lg flex items-center space-x-1.5 shadow"
                 >
                   {ingesting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}

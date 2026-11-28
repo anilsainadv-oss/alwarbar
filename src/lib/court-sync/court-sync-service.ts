@@ -12,6 +12,7 @@ import {
   DAILY_RAJASTHAN_HIGH_COURT_FEED, 
   type CourtFeedCandidate 
 } from '@/lib/legal-research/court-crawler';
+import { SupremeCourtDiscoveryEngine } from './sc-discovery-engine';
 import crypto from 'crypto';
 import http from 'http';
 import https from 'https';
@@ -367,123 +368,191 @@ export class CourtSyncService {
     const failedDownloads: Array<{ citation: string; reason: string }> = [];
 
     // -------------------------------------------------------------------------
-    // SYNC SUPREME COURT OF INDIA (INSC)
+    // SYNC SUPREME COURT OF INDIA (INSC) — Dynamic Discovery & Queue Worker
     // -------------------------------------------------------------------------
     if (courtChoice === 'all' || courtChoice === 'supreme_court') {
       scSyncState.status = 'running';
       scSyncState.lastSyncAttemptAt = nowIso;
 
+      const workerId = crypto.randomUUID();
+      const leaseSeconds = 300;
+      let lockGeneration = 0;
+      let lockAcquired = false;
+
       try {
-        // Probe official Supreme Court portal
-        const scProbe = await probeHttps('https://www.sci.gov.in');
-        
-        // Candidates for Supreme Court
-        const scCandidates: CourtFeedCandidate[] = DAILY_SUPREME_COURT_FEED;
-        scSyncState.newJudgmentsFound = scCandidates.length;
+        // Step 1: Atomic Lock Acquisition with Monotonic Fencing Token
+        const lock = await legalResearchRepository.acquireCourtSyncLock(
+          'INSC',
+          'Supreme Court of India',
+          workerId,
+          leaseSeconds
+        );
 
-        for (const candidate of scCandidates) {
-          const cleanCitation = candidate.citation.toLowerCase().trim();
-          const cleanCaseKey = `${candidate.court_code}:${candidate.case_number.toLowerCase().trim()}`;
-          const cleanUrl = (candidate.official_pdf_url || candidate.source_url).toLowerCase().trim();
+        if (!lock.acquired) {
+          scSyncState.status = 'idle';
+          throw new Error(`Court sync lock active: Another worker (${lock.locked_by}) is executing Supreme Court sync.`);
+        }
 
-          // Quadruple Deduplication Check (Citation, Case Number, Source URL)
-          if (
-            existingCitations.has(cleanCitation) ||
-            existingCaseNumbers.has(cleanCaseKey) ||
-            existingSourceUrls.has(cleanUrl)
-          ) {
-            skippedDuplicates.push(candidate.citation);
-            continue;
-          }
+        lockAcquired = true;
+        lockGeneration = lock.lock_generation;
 
-          // Production Rule: Must have official_pdf_url and download genuine PDF binary
-          const targetPdfUrl = candidate.official_pdf_url;
-          if (!targetPdfUrl) {
-            failedDownloads.push({
-              citation: candidate.citation,
-              reason: 'Official PDF URL not provided. Synthetic PDF generation is strictly prohibited.'
+        // Step 2: Dynamic Live Discovery Scan
+        const discoveryResult = await SupremeCourtDiscoveryEngine.scanAndEnqueue({
+          maxPages: 2,
+          workerId
+        });
+        scSyncState.newJudgmentsFound = discoveryResult.totalDiscovered;
+
+        // Step 3: Claim Batch from Persistent Discovery Queue
+        const batch = await legalResearchRepository.claimDiscoveryQueueBatch(
+          'INSC',
+          workerId,
+          lockGeneration,
+          5,
+          leaseSeconds
+        );
+
+        let latestProcessedDate: string | null = null;
+        let latestProcessedDiary: string | null = null;
+
+        // Step 4: Process Claimed Batch with Active Heartbeat
+        for (const queueItem of batch) {
+          const raw = queueItem.raw_metadata || {};
+          const cleanCitation = (queueItem.citation || '').toLowerCase().trim();
+          const cleanCaseKey = `INSC:${(queueItem.case_number || '').toLowerCase().trim()}`;
+          const cleanUrl = queueItem.official_pdf_url.toLowerCase().trim();
+
+          // Active Heartbeat Timer (every 15s) for current item + checkpoint
+          const heartbeatTimer = setInterval(async () => {
+            try {
+              await legalResearchRepository.renewQueueItemLease(queueItem.id, 'INSC', workerId, lockGeneration);
+              await legalResearchRepository.renewCourtSyncLock('INSC', workerId, lockGeneration, leaseSeconds);
+            } catch {
+              // Ignore background lease heartbeat failures
+            }
+          }, 15000);
+
+          try {
+            // Deduplication Check
+            if (
+              (cleanCitation && existingCitations.has(cleanCitation)) ||
+              (cleanCaseKey && existingCaseNumbers.has(cleanCaseKey)) ||
+              (cleanUrl && existingSourceUrls.has(cleanUrl))
+            ) {
+              skippedDuplicates.push(queueItem.citation || queueItem.diary_number);
+              await legalResearchRepository.completeQueueItem(queueItem.id, 'INSC', workerId, lockGeneration, '');
+              continue;
+            }
+
+            // Download authentic court PDF binary
+            const downloadResult = await downloadOfficialCourtPdf(queueItem.official_pdf_url);
+            if (!downloadResult.ok || !downloadResult.buffer) {
+              const errStr = downloadResult.error || 'Failed to download official court PDF binary';
+              failedDownloads.push({
+                citation: queueItem.citation || queueItem.diary_number,
+                reason: errStr
+              });
+              await legalResearchRepository.failQueueItem(queueItem.id, 'INSC', workerId, lockGeneration, errStr);
+              continue;
+            }
+
+            const pdfBuffer = downloadResult.buffer;
+            const integrity = validatePdfIntegrity(pdfBuffer);
+            if (!integrity.valid) {
+              const errStr = integrity.error || 'Invalid PDF binary';
+              failedDownloads.push({
+                citation: queueItem.citation || queueItem.diary_number,
+                reason: errStr
+              });
+              await legalResearchRepository.failQueueItem(queueItem.id, 'INSC', workerId, lockGeneration, errStr);
+              continue;
+            }
+
+            // Deduplication Check on binary SHA-256
+            if (existingSha256.has(integrity.sha256.toLowerCase())) {
+              skippedDuplicates.push(queueItem.citation || queueItem.diary_number);
+              await legalResearchRepository.completeQueueItem(queueItem.id, 'INSC', workerId, lockGeneration, '');
+              continue;
+            }
+
+            if (isDryRun) {
+              newlyIngested.push({
+                id: `dry-run-${queueItem.citation || queueItem.diary_number}`,
+                title: raw.title || queueItem.case_number || 'Dry Run Supreme Court Doc',
+                citation: queueItem.citation || `2026 INSC ${queueItem.diary_number}`,
+                court: 'Supreme Court of India'
+              });
+              await legalResearchRepository.completeQueueItem(queueItem.id, 'INSC', workerId, lockGeneration, 'dry-run');
+              continue;
+            }
+
+            // Ingest with MANDATORY PENDING APPROVAL and DRAFT PUBLICATION STATUS
+            const result = await ingestAndIndexLegalDocument({
+              buffer: pdfBuffer,
+              filename: `${(queueItem.citation || queueItem.diary_number).replace(/[^a-zA-Z0-9]/g, '_')}.pdf`,
+              rawText: raw.full_text || '',
+              title: raw.title || queueItem.case_number || `Supreme Court Judgment ${queueItem.citation || queueItem.diary_number}`,
+              citation: queueItem.citation || `2026 INSC ${queueItem.diary_number}`,
+              case_number: queueItem.case_number || `Diary No. ${queueItem.diary_number}`,
+              court_level: 'Supreme Court',
+              court_name: 'Supreme Court of India',
+              court_code: 'INSC',
+              bench: raw.bench || null,
+              judgment_date: queueItem.judgment_date,
+              judge_names: raw.judge_names || [],
+              parties: raw.parties || [],
+              legal_subjects: raw.legal_subjects || [],
+              statutes: raw.statutes || [],
+              summary: raw.summary || '',
+              reportable_status: raw.reportable_status ?? true,
+              source_type: 'automatic',
+              document_url: queueItem.official_pdf_url,
+              approval_status: 'pending',
+              verification_status: 'pending',
+              publication_status: 'draft',
+              userId: triggeredBy
             });
-            continue;
-          }
 
-          // Download authentic court PDF binary
-          const downloadResult = await downloadOfficialCourtPdf(targetPdfUrl);
-          if (!downloadResult.ok || !downloadResult.buffer) {
-            failedDownloads.push({
-              citation: candidate.citation,
-              reason: downloadResult.error || 'Failed to download official court PDF binary'
-            });
-            continue;
-          }
+            if (result && result.document) {
+              newlyIngested.push({
+                id: result.document.id,
+                title: result.document.title,
+                citation: result.document.citation,
+                court: result.document.court_name
+              });
+              if (cleanCitation) existingCitations.add(cleanCitation);
+              if (cleanCaseKey) existingCaseNumbers.add(cleanCaseKey);
+              if (cleanUrl) existingSourceUrls.add(cleanUrl);
+              existingSha256.add(integrity.sha256.toLowerCase());
 
-          const pdfBuffer = downloadResult.buffer;
-          const integrity = validatePdfIntegrity(pdfBuffer);
-          if (!integrity.valid) {
-            failedDownloads.push({
-              citation: candidate.citation,
-              reason: integrity.error || 'Invalid PDF binary'
-            });
-            continue;
-          }
+              await legalResearchRepository.completeQueueItem(
+                queueItem.id,
+                'INSC',
+                workerId,
+                lockGeneration,
+                result.document.id
+              );
 
-          // Deduplication Check on binary SHA-256
-          if (existingSha256.has(integrity.sha256.toLowerCase())) {
-            skippedDuplicates.push(candidate.citation);
-            continue;
-          }
-
-          if (isDryRun) {
-            // Dry run: Do not write to Supabase or Cloudflare R2
-            newlyIngested.push({
-              id: `dry-run-${candidate.citation}`,
-              title: candidate.title,
-              citation: candidate.citation,
-              court: candidate.court_name
-            });
-            continue;
-          }
-
-          // Ingest with MANDATORY PENDING APPROVAL and DRAFT PUBLICATION STATUS
-          const result = await ingestAndIndexLegalDocument({
-            buffer: pdfBuffer,
-            filename: `${candidate.citation.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`,
-            rawText: candidate.full_text,
-            title: candidate.title,
-            citation: candidate.citation,
-            case_number: candidate.case_number,
-            court_level: candidate.court_level,
-            court_name: candidate.court_name,
-            court_code: candidate.court_code,
-            bench: candidate.bench,
-            judgment_date: candidate.judgment_date,
-            judge_names: candidate.judge_names,
-            parties: candidate.parties,
-            legal_subjects: candidate.legal_subjects,
-            statutes: candidate.statutes,
-            summary: candidate.summary,
-            reportable_status: candidate.reportable_status ?? true,
-            source_type: 'automatic',
-            document_url: targetPdfUrl,
-            // STRICT GUARANTEE: Never automatically publish
-            approval_status: 'pending',
-            verification_status: 'pending',
-            publication_status: 'draft',
-            userId: triggeredBy
-          });
-
-          if (result && result.document) {
-            newlyIngested.push({
-              id: result.document.id,
-              title: result.document.title,
-              citation: result.document.citation,
-              court: result.document.court_name
-            });
-            existingCitations.add(cleanCitation);
-            existingCaseNumbers.add(cleanCaseKey);
-            existingSourceUrls.add(cleanUrl);
-            existingSha256.add(integrity.sha256.toLowerCase());
+              latestProcessedDate = queueItem.judgment_date;
+              latestProcessedDiary = queueItem.diary_number;
+            }
+          } catch (itemErr: any) {
+            const errStr = itemErr?.message || 'Ingestion failure';
+            await legalResearchRepository.failQueueItem(queueItem.id, 'INSC', workerId, lockGeneration, errStr);
+          } finally {
+            clearInterval(heartbeatTimer);
           }
         }
+
+        // Step 5: Release Court Sync Lock with cursor advancement
+        await legalResearchRepository.releaseCourtSyncLock(
+          'INSC',
+          workerId,
+          lockGeneration,
+          true,
+          latestProcessedDate,
+          latestProcessedDiary
+        );
 
         scSyncState.status = 'completed';
         scSyncState.lastSuccessfulSyncAt = nowIso;
@@ -492,6 +561,17 @@ export class CourtSyncService {
         scSyncState.failedDownloads = failedDownloads.length;
         scSyncState.lastErrorMessage = null;
       } catch (scErr: any) {
+        if (lockAcquired) {
+          await legalResearchRepository.releaseCourtSyncLock(
+            'INSC',
+            workerId,
+            lockGeneration,
+            false,
+            null,
+            null,
+            scErr?.message || 'Supreme Court sync failed'
+          );
+        }
         scSyncState.status = 'failed';
         scSyncState.lastErrorMessage = scErr?.message || 'Supreme Court sync failed';
       }

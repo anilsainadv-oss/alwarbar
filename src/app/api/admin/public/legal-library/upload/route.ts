@@ -3,7 +3,8 @@ import { getCurrentUser, assertPublicAdmin } from '@/lib/auth/guards';
 import { rateLimiter } from '@/lib/security/rate-limit';
 import { ingestAndIndexLegalDocument, type IngestionInput } from '@/lib/legal-research/indexing-pipeline';
 import { indexLegalDocumentSchema } from '@/lib/validation/schemas';
-import { localDb } from '@/lib/db';
+import { legalResearchRepository } from '@/lib/db/repositories/legal-research';
+import { validatePdfIntegrity } from '@/lib/storage/r2-client';
 import { monitorService } from '@/lib/system/monitor-service';
 import type { CourtLevel } from '@/types/legal-research';
 
@@ -39,7 +40,16 @@ export async function POST(req: Request) {
         );
       }
 
+      let uploadedPdfSha256: string | undefined;
+
       if (file) {
+        if (file.size <= 0) {
+          return NextResponse.json(
+            { error: 'अपलोड की गई फ़ाइल खाली है (0 bytes)।' },
+            { status: 400 }
+          );
+        }
+
         if (file.size > MAX_FILE_SIZE_BYTES) {
           return NextResponse.json(
             { error: 'फ़ाइल आकार 30 MB सीमा से अधिक है।' },
@@ -47,23 +57,28 @@ export async function POST(req: Request) {
           );
         }
 
-        // Storage Quota Safeguard: Prevent uploads when storage is full or reaches emergency limit (95%+)
-        const quotaCheck = await monitorService.isUploadAllowed(file.size);
-        if (!quotaCheck.allowed) {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        // Strict PDF signature & HTML-rejection check
+        const pdfCheck = validatePdfIntegrity(buffer, MAX_FILE_SIZE_BYTES);
+        if (!pdfCheck.valid) {
           return NextResponse.json(
-            { error: quotaCheck.reason || 'भंडारण कोटा पूर्ण हो गया है (Storage quota exceeded). नया दस्तावेज़ अपलोड करने से पूर्व अतिरिक्त कोटा आवंटित करें।' },
-            { status: 507 }
+            { error: `अमान्य PDF फ़ाइल: ${pdfCheck.error || 'फ़ाइल %PDF- हस्ताक्षर से शुरू नहीं होती (HTML त्रुटि पृष्ठ अस्वीकृत)।'}` },
+            { status: 400 }
           );
         }
 
-        const arrayBuffer = await file.arrayBuffer();
-        ingestionInput.buffer = Buffer.from(arrayBuffer);
+        uploadedPdfSha256 = pdfCheck.sha256;
+        ingestionInput.buffer = buffer;
         ingestionInput.filename = file.name;
-        ingestionInput.mimeType = file.type;
+        ingestionInput.mimeType = file.type || 'application/pdf';
       }
 
       if (formData.get('title')) ingestionInput.title = String(formData.get('title'));
       if (formData.get('citation')) ingestionInput.citation = String(formData.get('citation'));
+      if (formData.get('diary_number')) ingestionInput.diary_number = String(formData.get('diary_number')).trim();
+      if (formData.get('case_number')) ingestionInput.case_number = String(formData.get('case_number')).trim();
       if (formData.get('court_name')) ingestionInput.court_name = String(formData.get('court_name'));
       if (formData.get('court_level')) ingestionInput.court_level = String(formData.get('court_level')) as CourtLevel;
       if (formData.get('judgment_date')) ingestionInput.judgment_date = String(formData.get('judgment_date'));
@@ -74,6 +89,43 @@ export async function POST(req: Request) {
       if (formData.get('raw_text')) ingestionInput.rawText = String(formData.get('raw_text'));
       if (formData.get('summary')) ingestionInput.summary = String(formData.get('summary'));
       if (formData.get('document_url')) ingestionInput.document_url = String(formData.get('document_url'));
+
+      // Enforce Duplicate Detection (SHA-256, Citation, Diary Number) before quota/R2/Supabase writes
+      const existingDocs = await legalResearchRepository.getDocuments({});
+      const normCitation = (ingestionInput.citation || '').toLowerCase().trim();
+      const normDiary = (ingestionInput.diary_number || '').toLowerCase().trim();
+      const duplicate = existingDocs.find(d => {
+        if (uploadedPdfSha256 && d.pdf_sha256 && d.pdf_sha256.toLowerCase() === uploadedPdfSha256.toLowerCase()) {
+          return true;
+        }
+        if (normCitation && d.citation && d.citation.toLowerCase().trim() === normCitation) {
+          return true;
+        }
+        if (normDiary && d.diary_number && d.diary_number.toLowerCase().trim() === normDiary) {
+          return true;
+        }
+        return false;
+      });
+      if (duplicate) {
+        return NextResponse.json(
+          {
+            error: `Duplicate judgment detected: already exists in repository (ID: ${duplicate.id}, Citation: ${duplicate.citation}).`,
+            existingDocumentId: duplicate.id
+          },
+          { status: 409 }
+        );
+      }
+
+      if (file) {
+        // Storage Quota Safeguard: Prevent uploads when storage is full or reaches emergency limit (95%+)
+        const quotaCheck = await monitorService.isUploadAllowed(file.size);
+        if (!quotaCheck.allowed) {
+          return NextResponse.json(
+            { error: quotaCheck.reason || 'भंडारण कोटा पूर्ण हो गया है (Storage quota exceeded). नया दस्तावेज़ अपलोड करने से पूर्व अतिरिक्त कोटा आवंटित करें।' },
+            { status: 507 }
+          );
+        }
+      }
     } else {
       const json = await req.json();
       const parseResult = indexLegalDocumentSchema.safeParse(json);
@@ -109,17 +161,20 @@ export async function POST(req: Request) {
 
     const result = await ingestAndIndexLegalDocument(ingestionInput);
 
-    // Audit log
-    localDb.createAuditLog({
+    // Audit log (persisted in Supabase judgment_audit_logs)
+    await legalResearchRepository.recordAuditLog({
+      document_id: result.document.id,
       actor_id: user.id,
-      actor_name: user.full_name,
+      actor_name: user.full_name || user.email,
       actor_role: user.role,
       action: 'INGEST_LEGAL_DOCUMENT',
-      entity_type: 'legal_document',
-      entity_id: result.document.id,
+      performed_by: user.id,
       details: {
         title: result.document.title,
         citation: result.document.citation,
+        diary_number: result.document.diary_number || null,
+        r2_storage_key: result.document.r2_storage_key || null,
+        pdf_sha256: result.document.pdf_sha256 || null,
         chunksIndexed: result.chunksIndexed,
         totalTokens: result.totalTokens
       }

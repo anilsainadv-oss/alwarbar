@@ -24,7 +24,10 @@ import type {
   LegalDocumentCitation,
   LegalSearchResult,
   SearchFilters,
-  JudgmentAuditLog
+  JudgmentAuditLog,
+  CourtDiscoveryQueueItem,
+  CourtDiscoveryQueueStatus,
+  CourtSyncCheckpoint
 } from '@/types/legal-research';
 import type { StorageUsageHistoryRecord } from '@/types/storage-monitor';
 import { generateDeterministicEmbedding, cosineSimilarity } from '../ai/embeddings';
@@ -73,6 +76,8 @@ interface DatabaseState {
   legal_document_citations?: LegalDocumentCitation[];
   storage_usage_history?: StorageUsageHistoryRecord[];
   judgment_audit_logs?: JudgmentAuditLog[];
+  court_discovery_queue?: CourtDiscoveryQueueItem[];
+  court_sync_checkpoints?: CourtSyncCheckpoint[];
 }
 
 const DB_FILE = path.join(process.cwd(), 'data', 'local-db.json');
@@ -1688,7 +1693,32 @@ function getInitialState(): DatabaseState {
     legal_document_processing: initialLegalDocs.processing,
     legal_ingestion_jobs: initialLegalDocs.jobs,
     legal_document_citations: initialLegalDocs.citations,
-    storage_usage_history: getInitialStorageUsageHistory()
+    storage_usage_history: getInitialStorageUsageHistory(),
+    court_discovery_queue: [],
+    court_sync_checkpoints: [
+      {
+        court_code: 'INSC',
+        court_name: 'Supreme Court of India',
+        last_sync_attempt_at: null,
+        last_successful_sync_at: null,
+        last_scanned_judgment_date: null,
+        last_scanned_diary_number: null,
+        is_locked: false,
+        locked_at: null,
+        locked_by: null,
+        lock_generation: 0,
+        lease_duration_seconds: 300,
+        consecutive_failures: 0,
+        last_error_message: null,
+        metadata: {
+          source_url: 'https://www.sci.gov.in/judgments/',
+          cron_frequency: '6h',
+          batch_limit: 5
+        },
+        created_at: '2026-01-01T00:00:00.000Z',
+        updated_at: '2026-01-01T00:00:00.000Z'
+      }
+    ]
   };
 }
 
@@ -1826,6 +1856,8 @@ class LocalDatabase {
         legal_ingestion_jobs: Array.isArray(loaded.legal_ingestion_jobs) && loaded.legal_ingestion_jobs.length > 0 ? loaded.legal_ingestion_jobs : initial.legal_ingestion_jobs || [],
         legal_document_citations: Array.isArray(loaded.legal_document_citations) && loaded.legal_document_citations.length > 0 ? loaded.legal_document_citations : initial.legal_document_citations || [],
         storage_usage_history: Array.isArray(loaded.storage_usage_history) && loaded.storage_usage_history.length > 0 ? loaded.storage_usage_history : initial.storage_usage_history || [],
+        court_discovery_queue: Array.isArray(loaded.court_discovery_queue) ? loaded.court_discovery_queue : initial.court_discovery_queue || [],
+        court_sync_checkpoints: Array.isArray(loaded.court_sync_checkpoints) && loaded.court_sync_checkpoints.length > 0 ? loaded.court_sync_checkpoints : initial.court_sync_checkpoints || [],
       };
 
       // Ensure preset users exist with valid password hashes
@@ -3915,6 +3947,378 @@ class LocalDatabase {
     s.storage_usage_history.unshift(newRecord);
     this.save();
     return newRecord;
+  }
+
+  // --- COURT SYNC CHECKPOINTS & DISCOVERY QUEUE (011) ---
+
+  getCourtSyncCheckpoint(courtCode: string): CourtSyncCheckpoint | null {
+    const s = this.ensureLoaded();
+    if (!s.court_sync_checkpoints) s.court_sync_checkpoints = [];
+    return s.court_sync_checkpoints.find(c => c.court_code === courtCode) || null;
+  }
+
+  acquireCourtSyncLock(
+    courtCode: string,
+    courtName: string,
+    workerId: string,
+    leaseSeconds: number = 300
+  ): {
+    acquired: boolean;
+    court_code: string;
+    locked_at: string | null;
+    locked_by: string | null;
+    lock_generation: number;
+    last_scanned_date: string | null;
+  } {
+    if (!courtCode || !courtCode.trim()) throw new Error('court_code cannot be null or blank');
+    if (!workerId) throw new Error('worker_id cannot be null');
+    if (leaseSeconds < 30 || leaseSeconds > 1800) throw new Error('lease_seconds must be between 30 and 1800');
+
+    const s = this.ensureLoaded();
+    if (!s.court_sync_checkpoints) s.court_sync_checkpoints = [];
+    let cp = s.court_sync_checkpoints.find(c => c.court_code === courtCode);
+    const now = new Date();
+    const nowIso = now.toISOString();
+
+    if (!cp) {
+      cp = {
+        court_code: courtCode,
+        court_name: courtName || courtCode,
+        last_sync_attempt_at: null,
+        last_successful_sync_at: null,
+        last_scanned_judgment_date: null,
+        last_scanned_diary_number: null,
+        is_locked: false,
+        locked_at: null,
+        locked_by: null,
+        lock_generation: 0,
+        lease_duration_seconds: leaseSeconds,
+        consecutive_failures: 0,
+        last_error_message: null,
+        metadata: {},
+        created_at: nowIso,
+        updated_at: nowIso
+      };
+      s.court_sync_checkpoints.push(cp);
+    }
+
+    const isExpired = cp.locked_at ? (now.getTime() - new Date(cp.locked_at).getTime()) > (cp.lease_duration_seconds * 1000) : true;
+    const canAcquire = !cp.is_locked || isExpired || !cp.locked_at;
+
+    if (canAcquire) {
+      cp.is_locked = true;
+      cp.locked_at = nowIso;
+      cp.locked_by = workerId;
+      cp.lock_generation = (cp.lock_generation || 0) + 1;
+      cp.lease_duration_seconds = leaseSeconds;
+      cp.updated_at = nowIso;
+      this.save();
+      return {
+        acquired: true,
+        court_code: cp.court_code,
+        locked_at: cp.locked_at ?? null,
+        locked_by: cp.locked_by ?? null,
+        lock_generation: cp.lock_generation,
+        last_scanned_date: cp.last_scanned_judgment_date ?? null
+      };
+    }
+
+    return {
+      acquired: false,
+      court_code: cp.court_code,
+      locked_at: cp.locked_at ?? null,
+      locked_by: cp.locked_by ?? null,
+      lock_generation: cp.lock_generation,
+      last_scanned_date: cp.last_scanned_judgment_date ?? null
+    };
+  }
+
+  renewCourtSyncLock(
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    additionalSeconds: number = 300
+  ): boolean {
+    if (!courtCode || !courtCode.trim()) throw new Error('court_code cannot be null or blank');
+    if (!workerId) throw new Error('worker_id cannot be null');
+    if (!lockGeneration || lockGeneration <= 0) throw new Error('lock_generation must be a positive integer');
+    if (additionalSeconds < 30 || additionalSeconds > 1800) throw new Error('additional lease seconds must be between 30 and 1800');
+
+    const s = this.ensureLoaded();
+    if (!s.court_sync_checkpoints) return false;
+    const cp = s.court_sync_checkpoints.find(c => c.court_code === courtCode);
+    if (!cp) return false;
+
+    const now = new Date();
+    const isUnexpired = cp.locked_at && (now.getTime() - new Date(cp.locked_at).getTime()) <= (cp.lease_duration_seconds * 1000);
+
+    if (
+      cp.locked_by === workerId &&
+      cp.lock_generation === lockGeneration &&
+      cp.is_locked &&
+      isUnexpired
+    ) {
+      cp.locked_at = now.toISOString();
+      cp.lease_duration_seconds = additionalSeconds;
+      cp.updated_at = now.toISOString();
+      this.save();
+      return true;
+    }
+
+    return false;
+  }
+
+  claimDiscoveryQueueBatch(
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    batchSize: number = 5,
+    leaseSeconds: number = 300
+  ): CourtDiscoveryQueueItem[] {
+    if (!courtCode || !courtCode.trim()) throw new Error('court_code cannot be null or blank');
+    if (!workerId) throw new Error('worker_id cannot be null');
+    if (!lockGeneration || lockGeneration <= 0) throw new Error('lock_generation must be a positive integer');
+    if (batchSize < 1 || batchSize > 50) throw new Error('batch_size must be between 1 and 50');
+    if (leaseSeconds < 30 || leaseSeconds > 1800) throw new Error('lease_seconds must be between 30 and 1800');
+
+    const s = this.ensureLoaded();
+    if (!s.court_sync_checkpoints) throw new Error('Worker does not hold the active unexpired court lock');
+    const cp = s.court_sync_checkpoints.find(c => c.court_code === courtCode);
+    const now = new Date();
+    const nowIso = now.toISOString();
+    const isUnexpired = cp && cp.locked_at && (now.getTime() - new Date(cp.locked_at).getTime()) <= (cp.lease_duration_seconds * 1000);
+
+    if (!cp || cp.locked_by !== workerId || cp.lock_generation !== lockGeneration || !cp.is_locked || !isUnexpired) {
+      throw new Error('Worker does not hold the active unexpired court lock');
+    }
+
+    if (!s.court_discovery_queue) s.court_discovery_queue = [];
+    const staleThresholdMs = now.getTime() - (leaseSeconds * 1000);
+
+    const candidates = s.court_discovery_queue.filter(q => {
+      if (q.court_code !== courtCode) return false;
+      if (q.status === 'pending') return true;
+      if (q.status === 'processing') {
+        const isStale = q.locked_at ? new Date(q.locked_at).getTime() < staleThresholdMs : true;
+        const isOldGen = (q.lock_generation || 0) < lockGeneration;
+        return isStale || isOldGen;
+      }
+      return false;
+    });
+
+    candidates.sort((a, b) => {
+      const dateCmp = (a.judgment_date || '').localeCompare(b.judgment_date || '');
+      if (dateCmp !== 0) return dateCmp;
+      return (a.diary_number || '').localeCompare(b.diary_number || '');
+    });
+
+    const claimed = candidates.slice(0, batchSize);
+    for (const item of claimed) {
+      item.status = 'processing';
+      item.locked_by = workerId;
+      item.lock_generation = lockGeneration;
+      item.locked_at = nowIso;
+      item.updated_at = nowIso;
+    }
+
+    if (claimed.length > 0) {
+      this.save();
+    }
+
+    return claimed;
+  }
+
+  renewQueueItemLease(
+    queueId: string,
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number
+  ): boolean {
+    if (!queueId || !courtCode || !workerId || !lockGeneration) throw new Error('Required parameter is null');
+    const s = this.ensureLoaded();
+    const cp = s.court_sync_checkpoints?.find(c => c.court_code === courtCode);
+    const now = new Date();
+    const isCpUnexpired = cp && cp.locked_at && (now.getTime() - new Date(cp.locked_at).getTime()) <= (cp.lease_duration_seconds * 1000);
+
+    if (!cp || cp.locked_by !== workerId || cp.lock_generation !== lockGeneration || !cp.is_locked || !isCpUnexpired) {
+      return false;
+    }
+
+    const item = s.court_discovery_queue?.find(q => q.id === queueId);
+    if (!item || item.status !== 'processing' || item.locked_by !== workerId || item.lock_generation !== lockGeneration) {
+      return false;
+    }
+
+    item.locked_at = now.toISOString();
+    item.updated_at = now.toISOString();
+    this.save();
+    return true;
+  }
+
+  completeQueueItem(
+    queueId: string,
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    documentId: string
+  ): boolean {
+    if (!queueId || !courtCode || !workerId || !lockGeneration || !documentId) throw new Error('Required parameter is null');
+    const s = this.ensureLoaded();
+    const cp = s.court_sync_checkpoints?.find(c => c.court_code === courtCode);
+    const now = new Date();
+    const isCpUnexpired = cp && cp.locked_at && (now.getTime() - new Date(cp.locked_at).getTime()) <= (cp.lease_duration_seconds * 1000);
+
+    if (!cp || cp.locked_by !== workerId || cp.lock_generation !== lockGeneration || !cp.is_locked || !isCpUnexpired) {
+      return false;
+    }
+
+    const item = s.court_discovery_queue?.find(q => q.id === queueId);
+    if (!item || item.status !== 'processing' || item.locked_by !== workerId || item.lock_generation !== lockGeneration) {
+      return false;
+    }
+
+    item.status = 'completed';
+    item.document_id = documentId;
+    item.locked_by = null;
+    item.lock_generation = null;
+    item.locked_at = null;
+    item.updated_at = now.toISOString();
+    this.save();
+    return true;
+  }
+
+  failQueueItem(
+    queueId: string,
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    error: string
+  ): string {
+    if (!queueId || !courtCode || !workerId || !lockGeneration) throw new Error('Required parameter is null');
+    const s = this.ensureLoaded();
+    const cp = s.court_sync_checkpoints?.find(c => c.court_code === courtCode);
+    const now = new Date();
+    const isCpUnexpired = cp && cp.locked_at && (now.getTime() - new Date(cp.locked_at).getTime()) <= (cp.lease_duration_seconds * 1000);
+
+    if (!cp || cp.locked_by !== workerId || cp.lock_generation !== lockGeneration || !cp.is_locked || !isCpUnexpired) {
+      return 'lease_expired';
+    }
+
+    const item = s.court_discovery_queue?.find(q => q.id === queueId);
+    if (!item || item.status !== 'processing' || item.locked_by !== workerId || item.lock_generation !== lockGeneration) {
+      return 'not_found';
+    }
+
+    item.retry_count = (item.retry_count || 0) + 1;
+    item.status = item.retry_count >= item.max_retries ? 'failed_needs_review' : 'failed';
+    item.last_error = error;
+    item.locked_by = null;
+    item.lock_generation = null;
+    item.locked_at = null;
+    item.updated_at = now.toISOString();
+    this.save();
+    return item.status;
+  }
+
+  releaseCourtSyncLock(
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    success: boolean,
+    newJudgmentDate?: string | null,
+    newDiaryNo?: string | null,
+    error?: string | null
+  ): boolean {
+    if (!courtCode || !workerId || !lockGeneration || success === undefined) throw new Error('Required parameter is null');
+    const s = this.ensureLoaded();
+    const cp = s.court_sync_checkpoints?.find(c => c.court_code === courtCode);
+    const now = new Date();
+    const isCpUnexpired = cp && cp.locked_at && (now.getTime() - new Date(cp.locked_at).getTime()) <= (cp.lease_duration_seconds * 1000);
+
+    if (!cp || cp.locked_by !== workerId || cp.lock_generation !== lockGeneration || !cp.is_locked || !isCpUnexpired) {
+      return false;
+    }
+
+    const nowIso = now.toISOString();
+    cp.is_locked = false;
+    cp.locked_at = null;
+    cp.locked_by = null;
+    cp.last_sync_attempt_at = nowIso;
+    if (success) {
+      cp.last_successful_sync_at = nowIso;
+      if (newJudgmentDate) cp.last_scanned_judgment_date = newJudgmentDate;
+      if (newDiaryNo) cp.last_scanned_diary_number = newDiaryNo;
+      cp.consecutive_failures = 0;
+    } else {
+      cp.consecutive_failures = (cp.consecutive_failures || 0) + 1;
+      cp.last_error_message = error || null;
+    }
+    cp.updated_at = nowIso;
+    this.save();
+    return true;
+  }
+
+  enqueueDiscoveryCandidates(
+    items: Array<Omit<CourtDiscoveryQueueItem, 'id' | 'status' | 'retry_count' | 'max_retries' | 'created_at' | 'updated_at'>>
+  ): { enqueued: number; duplicates: number } {
+    const s = this.ensureLoaded();
+    if (!s.court_discovery_queue) s.court_discovery_queue = [];
+
+    const existingKeySet = new Set(
+      s.court_discovery_queue.map(q => `${q.court_code}:${q.diary_number}:${q.judgment_date}`)
+    );
+
+    let enqueued = 0;
+    let duplicates = 0;
+    const nowIso = new Date().toISOString();
+
+    for (const item of items) {
+      const key = `${item.court_code}:${item.diary_number}:${item.judgment_date}`;
+      if (existingKeySet.has(key)) {
+        duplicates++;
+        continue;
+      }
+
+      existingKeySet.add(key);
+      const queueItem: CourtDiscoveryQueueItem = {
+        id: crypto.randomUUID(),
+        court_code: item.court_code,
+        diary_number: item.diary_number,
+        judgment_date: item.judgment_date,
+        case_number: item.case_number || null,
+        citation: item.citation || null,
+        official_pdf_url: item.official_pdf_url,
+        official_viewer_url: item.official_viewer_url || null,
+        raw_metadata: item.raw_metadata || {},
+        status: 'pending',
+        retry_count: 0,
+        max_retries: 3,
+        last_error: null,
+        locked_by: null,
+        lock_generation: null,
+        locked_at: null,
+        document_id: null,
+        job_id: null,
+        created_at: nowIso,
+        updated_at: nowIso
+      };
+      s.court_discovery_queue.push(queueItem);
+      enqueued++;
+    }
+
+    if (enqueued > 0) {
+      this.save();
+    }
+
+    return { enqueued, duplicates };
+  }
+
+  getDiscoveryQueue(courtCode?: string, status?: CourtDiscoveryQueueStatus): CourtDiscoveryQueueItem[] {
+    const s = this.ensureLoaded();
+    let q = s.court_discovery_queue || [];
+    if (courtCode) q = q.filter(i => i.court_code === courtCode);
+    if (status) q = q.filter(i => i.status === status);
+    return [...q];
   }
 }
 

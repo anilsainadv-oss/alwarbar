@@ -15,10 +15,23 @@ import type {
   SearchFilters,
   RAGLegalResponse,
   JudgmentAuditAction,
-  JudgmentAuditLog
+  JudgmentAuditLog,
+  CourtDiscoveryQueueItem,
+  CourtDiscoveryQueueStatus,
+  CourtSyncCheckpoint
 } from '@/types/legal-research';
 
 export const legalResearchRepository = {
+  /**
+   * Guard against silent localDb fallback when Supabase is configured or in production.
+   */
+  _throwIfSupabaseRequired(operation: string, err: unknown): void {
+    const msg = err instanceof Error ? err.message : (typeof err === 'object' && err && 'message' in err ? String((err as any).message) : String(err));
+    if (process.env.NODE_ENV === 'production' || isSupabaseConfigured) {
+      throw new Error(`Supabase ${operation} failed: ${msg}`);
+    }
+  },
+
   /**
    * Hybrid Search: Combines vector semantic similarity + full-text keyword matching
    * using Reciprocal Rank Fusion (RRF) with exact citation boosting.
@@ -355,13 +368,14 @@ export const legalResearchRepository = {
       created_at: new Date().toISOString()
     };
     if (isSupabaseConfigured && client) {
-      try {
-        const { data, error } = await client.from('judgment_audit_logs').insert(auditRow).select().single();
-        if (!error && data) return data;
-        if (error) console.error('Supabase recordAuditLog insert error:', error.message);
-      } catch (err) {
-        console.warn('Supabase recordAuditLog exception:', err);
+      const { data, error } = await client.from('judgment_audit_logs').insert(auditRow).select().single();
+      if (error) {
+        console.error('Supabase recordAuditLog insert error:', error.message);
+        this._throwIfSupabaseRequired('recordAuditLog', error);
       }
+      if (data) return data;
+    } else {
+      this._throwIfSupabaseRequired('recordAuditLog', 'Supabase client not configured');
     }
     return localDb.addJudgmentAuditLog(auditRow);
   },
@@ -370,31 +384,47 @@ export const legalResearchRepository = {
    * Ingest and create a new legal document with semantic chunks
    */
   async createDocument(
-    doc: Omit<LegalDocument, 'id' | 'created_at' | 'updated_at'>,
-    chunks: Omit<LegalDocumentChunk, 'id' | 'document_id' | 'created_at'>[]
+    doc: Omit<LegalDocument, 'id' | 'created_at' | 'updated_at'> & { id?: string },
+    chunks: (Omit<LegalDocumentChunk, 'id' | 'document_id' | 'created_at'> & { id?: string })[]
   ): Promise<LegalDocument> {
     const client = supabaseAdmin || supabase;
     if (isSupabaseConfigured && client) {
-      try {
-        const { data: newDoc, error: docErr } = await client
-          .from('legal_documents')
-          .insert(doc)
-          .select()
-          .single();
+      const generatedId =
+        doc.id ||
+        `doc-${(doc.court_code || 'legal').toLowerCase().replace(/[^a-z0-9]/g, '-')}-${crypto.randomUUID().slice(0, 12)}`;
+      const docRow = {
+        ...doc,
+        id: generatedId
+      };
 
-        if (!docErr && newDoc) {
-          if (chunks.length > 0) {
-            const chunkRows = chunks.map(c => ({
-              ...c,
-              document_id: newDoc.id
-            }));
-            await client.from('legal_document_chunks').insert(chunkRows);
-          }
-          return newDoc as LegalDocument;
-        }
-      } catch (err) {
-        console.warn('Supabase insert failed, persisting to local storage:', err);
+      const { data: newDoc, error: docErr } = await client
+        .from('legal_documents')
+        .insert(docRow)
+        .select()
+        .single();
+
+      if (docErr || !newDoc) {
+        this._throwIfSupabaseRequired('createDocument', docErr || 'Empty insert response');
       }
+
+      if (newDoc) {
+        if (chunks.length > 0) {
+          const chunkRows = chunks.map(c => ({
+            ...c,
+            id: c.id || `chk-${newDoc.id}-${c.chunk_index}`,
+            document_id: newDoc.id
+          }));
+          const { error: chunkErr } = await client.from('legal_document_chunks').insert(chunkRows);
+          if (chunkErr) {
+            // Compensating cleanup: remove orphan legal_documents row if chunk insertion failed
+            await client.from('legal_documents').delete().eq('id', newDoc.id);
+            this._throwIfSupabaseRequired('createDocument.chunks', chunkErr);
+          }
+        }
+        return newDoc as LegalDocument;
+      }
+    } else {
+      this._throwIfSupabaseRequired('createDocument', 'Supabase client not configured');
     }
 
     return localDb.createLegalDocument(doc, chunks);
@@ -406,17 +436,19 @@ export const legalResearchRepository = {
   async updateDocument(id: string, updates: Partial<LegalDocument>): Promise<LegalDocument | null> {
     const client = supabaseAdmin || supabase;
     if (isSupabaseConfigured && client) {
-      try {
-        const { data, error } = await client
-          .from('legal_documents')
-          .update(updates)
-          .eq('id', id)
-          .select()
-          .single();
-        if (!error && data) return data as LegalDocument;
-      } catch {
-        // Fallback
+      const { data, error } = await client
+        .from('legal_documents')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) {
+        this._throwIfSupabaseRequired('updateDocument', error);
       }
+      if (data) return data as LegalDocument;
+      return null;
+    } else {
+      this._throwIfSupabaseRequired('updateDocument', 'Supabase client not configured');
     }
 
     return localDb.updateLegalDocument(id, updates);
@@ -428,15 +460,16 @@ export const legalResearchRepository = {
   async deleteDocument(id: string): Promise<boolean> {
     const client = supabaseAdmin || supabase;
     if (isSupabaseConfigured && client) {
-      try {
-        const { error } = await client
-          .from('legal_documents')
-          .delete()
-          .eq('id', id);
-        if (!error) return true;
-      } catch {
-        // Fallback
+      const { error } = await client
+        .from('legal_documents')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        this._throwIfSupabaseRequired('deleteDocument', error);
       }
+      return true;
+    } else {
+      this._throwIfSupabaseRequired('deleteDocument', 'Supabase client not configured');
     }
 
     return localDb.deleteLegalDocument(id);
@@ -785,5 +818,250 @@ export const legalResearchRepository = {
     }
 
     return localDb.updateIngestionJob(id, updates);
+  },
+
+  /**
+   * Court Sync Checkpoints & Persistent Discovery Queue (011)
+   */
+  async getCourtSyncCheckpoint(courtCode: string): Promise<CourtSyncCheckpoint | null> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error } = await supabaseAdmin
+        .from('court_sync_checkpoints')
+        .select('*')
+        .eq('court_code', courtCode)
+        .maybeSingle();
+      if (error) this._throwIfSupabaseRequired('getCourtSyncCheckpoint', error);
+      return (data as CourtSyncCheckpoint) || null;
+    }
+    this._throwIfSupabaseRequired('getCourtSyncCheckpoint', 'Supabase client not configured');
+    return localDb.getCourtSyncCheckpoint(courtCode);
+  },
+
+  async acquireCourtSyncLock(
+    courtCode: string,
+    courtName: string,
+    workerId: string,
+    leaseSeconds: number = 300
+  ): Promise<{
+    acquired: boolean;
+    court_code: string;
+    locked_at: string | null;
+    locked_by: string | null;
+    lock_generation: number;
+    last_scanned_date: string | null;
+  }> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error } = await supabaseAdmin.rpc('acquire_court_sync_lock', {
+        p_court_code: courtCode,
+        p_court_name: courtName,
+        p_worker_id: workerId,
+        p_lease_seconds: leaseSeconds
+      });
+      if (error) this._throwIfSupabaseRequired('acquire_court_sync_lock', error);
+      if (Array.isArray(data) && data.length > 0) {
+        return {
+          acquired: true,
+          court_code: data[0].court_code,
+          locked_at: data[0].locked_at,
+          locked_by: data[0].locked_by,
+          lock_generation: Number(data[0].lock_generation),
+          last_scanned_date: data[0].last_scanned_date
+        };
+      }
+      return {
+        acquired: false,
+        court_code: courtCode,
+        locked_at: null,
+        locked_by: null,
+        lock_generation: 0,
+        last_scanned_date: null
+      };
+    }
+    this._throwIfSupabaseRequired('acquire_court_sync_lock', 'Supabase client not configured');
+    return localDb.acquireCourtSyncLock(courtCode, courtName, workerId, leaseSeconds);
+  },
+
+  async renewCourtSyncLock(
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    additionalSeconds: number = 300
+  ): Promise<boolean> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error } = await supabaseAdmin.rpc('renew_court_sync_lock', {
+        p_court_code: courtCode,
+        p_worker_id: workerId,
+        p_lock_generation: lockGeneration,
+        p_additional_seconds: additionalSeconds
+      });
+      if (error) this._throwIfSupabaseRequired('renew_court_sync_lock', error);
+      return Boolean(data);
+    }
+    this._throwIfSupabaseRequired('renew_court_sync_lock', 'Supabase client not configured');
+    return localDb.renewCourtSyncLock(courtCode, workerId, lockGeneration, additionalSeconds);
+  },
+
+  async claimDiscoveryQueueBatch(
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    batchSize: number = 5,
+    leaseSeconds: number = 300
+  ): Promise<CourtDiscoveryQueueItem[]> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error } = await supabaseAdmin.rpc('claim_discovery_queue_batch', {
+        p_court_code: courtCode,
+        p_worker_id: workerId,
+        p_lock_generation: lockGeneration,
+        p_batch_size: batchSize,
+        p_lease_seconds: leaseSeconds
+      });
+      if (error) this._throwIfSupabaseRequired('claim_discovery_queue_batch', error);
+      return (Array.isArray(data) ? data : []) as CourtDiscoveryQueueItem[];
+    }
+    this._throwIfSupabaseRequired('claim_discovery_queue_batch', 'Supabase client not configured');
+    return localDb.claimDiscoveryQueueBatch(courtCode, workerId, lockGeneration, batchSize, leaseSeconds);
+  },
+
+  async renewQueueItemLease(
+    queueId: string,
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number
+  ): Promise<boolean> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error } = await supabaseAdmin.rpc('renew_queue_item_lease', {
+        p_queue_id: queueId,
+        p_court_code: courtCode,
+        p_worker_id: workerId,
+        p_lock_generation: lockGeneration
+      });
+      if (error) this._throwIfSupabaseRequired('renew_queue_item_lease', error);
+      return Boolean(data);
+    }
+    this._throwIfSupabaseRequired('renew_queue_item_lease', 'Supabase client not configured');
+    return localDb.renewQueueItemLease(queueId, courtCode, workerId, lockGeneration);
+  },
+
+  async completeQueueItem(
+    queueId: string,
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    documentId: string
+  ): Promise<boolean> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error } = await supabaseAdmin.rpc('complete_queue_item', {
+        p_queue_id: queueId,
+        p_court_code: courtCode,
+        p_worker_id: workerId,
+        p_lock_generation: lockGeneration,
+        p_document_id: documentId
+      });
+      if (error) this._throwIfSupabaseRequired('complete_queue_item', error);
+      return Boolean(data);
+    }
+    this._throwIfSupabaseRequired('complete_queue_item', 'Supabase client not configured');
+    return localDb.completeQueueItem(queueId, courtCode, workerId, lockGeneration, documentId);
+  },
+
+  async failQueueItem(
+    queueId: string,
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    error: string
+  ): Promise<string> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error: rpcErr } = await supabaseAdmin.rpc('fail_queue_item', {
+        p_queue_id: queueId,
+        p_court_code: courtCode,
+        p_worker_id: workerId,
+        p_lock_generation: lockGeneration,
+        p_error: error
+      });
+      if (rpcErr) this._throwIfSupabaseRequired('fail_queue_item', rpcErr);
+      return typeof data === 'string' ? data : 'failed';
+    }
+    this._throwIfSupabaseRequired('fail_queue_item', 'Supabase client not configured');
+    return localDb.failQueueItem(queueId, courtCode, workerId, lockGeneration, error);
+  },
+
+  async releaseCourtSyncLock(
+    courtCode: string,
+    workerId: string,
+    lockGeneration: number,
+    success: boolean,
+    newJudgmentDate?: string | null,
+    newDiaryNo?: string | null,
+    error?: string | null
+  ): Promise<boolean> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      const { data, error: rpcErr } = await supabaseAdmin.rpc('release_court_sync_lock', {
+        p_court_code: courtCode,
+        p_worker_id: workerId,
+        p_lock_generation: lockGeneration,
+        p_success: success,
+        p_new_judgment_date: newJudgmentDate || null,
+        p_new_diary_no: newDiaryNo || null,
+        p_error: error || null
+      });
+      if (rpcErr) this._throwIfSupabaseRequired('release_court_sync_lock', rpcErr);
+      return Boolean(data);
+    }
+    this._throwIfSupabaseRequired('release_court_sync_lock', 'Supabase client not configured');
+    return localDb.releaseCourtSyncLock(courtCode, workerId, lockGeneration, success, newJudgmentDate, newDiaryNo, error);
+  },
+
+  async enqueueDiscoveryCandidates(
+    items: Array<Omit<CourtDiscoveryQueueItem, 'id' | 'status' | 'retry_count' | 'max_retries' | 'created_at' | 'updated_at'>>
+  ): Promise<{ enqueued: number; duplicates: number }> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      if (items.length === 0) return { enqueued: 0, duplicates: 0 };
+      const { data, error } = await supabaseAdmin
+        .from('court_discovery_queue')
+        .upsert(
+          items.map(item => ({
+            court_code: item.court_code,
+            diary_number: item.diary_number,
+            judgment_date: item.judgment_date,
+            case_number: item.case_number || null,
+            citation: item.citation || null,
+            official_pdf_url: item.official_pdf_url,
+            official_viewer_url: item.official_viewer_url || null,
+            raw_metadata: item.raw_metadata || {},
+            status: 'pending',
+            retry_count: 0,
+            max_retries: 3
+          })),
+          {
+            onConflict: 'court_code,diary_number,judgment_date',
+            ignoreDuplicates: true
+          }
+        )
+        .select('id');
+
+      if (error) this._throwIfSupabaseRequired('enqueueDiscoveryCandidates', error);
+      const enqueuedCount = Array.isArray(data) ? data.length : 0;
+      return {
+        enqueued: enqueuedCount,
+        duplicates: items.length - enqueuedCount
+      };
+    }
+    this._throwIfSupabaseRequired('enqueueDiscoveryCandidates', 'Supabase client not configured');
+    return localDb.enqueueDiscoveryCandidates(items);
+  },
+
+  async getDiscoveryQueue(courtCode?: string, status?: CourtDiscoveryQueueStatus): Promise<CourtDiscoveryQueueItem[]> {
+    if (isSupabaseConfigured && supabaseAdmin) {
+      let q = supabaseAdmin.from('court_discovery_queue').select('*');
+      if (courtCode) q = q.eq('court_code', courtCode);
+      if (status) q = q.eq('status', status);
+      const { data, error } = await q.order('judgment_date', { ascending: false });
+      if (error) this._throwIfSupabaseRequired('getDiscoveryQueue', error);
+      return (Array.isArray(data) ? data : []) as CourtDiscoveryQueueItem[];
+    }
+    this._throwIfSupabaseRequired('getDiscoveryQueue', 'Supabase client not configured');
+    return localDb.getDiscoveryQueue(courtCode, status);
   }
 };

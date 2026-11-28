@@ -64,7 +64,6 @@ export interface LegalDocument {
   created_at: string;
   updated_at: string;
 }
-
 export type JudgmentAuditAction = 
   | 'discovered'
   | 'downloaded'
@@ -295,4 +294,54 @@ export interface IngestionMetadataInput {
   source_name?: string;
   source_url?: string;
   language?: 'en' | 'hi';
+}
+
+export type CourtDiscoveryQueueStatus =
+  | 'pending'
+  | 'processing'
+  | 'completed'
+  | 'duplicate_skipped'
+  | 'failed'
+  | 'failed_needs_review'
+  | 'quarantined';
+
+export interface CourtDiscoveryQueueItem {
+  id: string;
+  court_code: string;
+  diary_number: string;
+  judgment_date: string;
+  case_number?: string | null;
+  citation?: string | null;
+  official_pdf_url: string;
+  official_viewer_url?: string | null;
+  raw_metadata: Record<string, any>;
+  status: CourtDiscoveryQueueStatus;
+  retry_count: number;
+  max_retries: number;
+  last_error?: string | null;
+  locked_by?: string | null;
+  lock_generation?: number | null;
+  locked_at?: string | null;
+  document_id?: string | null;
+  job_id?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+export interface CourtSyncCheckpoint {
+  court_code: string;
+  court_name: string;
+  last_sync_attempt_at?: string | null;
+  last_successful_sync_at?: string | null;
+  last_scanned_judgment_date?: string | null;
+  last_scanned_diary_number?: string | null;
+  is_locked: boolean;
+  locked_at?: string | null;
+  locked_by?: string | null;
+  lock_generation: number;
+  lease_duration_seconds: number;
+  consecutive_failures: number;
+  last_error_message?: string | null;
+  metadata: Record<string, any>;
+  created_at: string;
+  updated_at: string;
 }
