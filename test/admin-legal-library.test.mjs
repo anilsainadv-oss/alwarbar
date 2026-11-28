@@ -71,8 +71,8 @@ export async function runAdminLegalLibraryTests() {
   const pendingCount = allDocs.filter(d => d.verification_status === 'pending').length;
   const totalChunks = db.legal_document_chunks.length;
 
-  assert(verifiedCount >= 0, 'Verified documents count must be >= 0');
-  assert(totalChunks >= 0, 'Total chunks count must be >= 0');
+  assert(verifiedCount > 0, 'Verified documents count must be > 0');
+  assert(totalChunks > 0, 'Total chunks count must be > 0');
 
   const metrics = {
     totalDocuments: allDocs.length,
@@ -261,45 +261,33 @@ export async function runAdminLegalLibraryTests() {
   assert(fs.existsSync(crawlerPath), 'src/lib/legal-research/court-crawler.ts must exist');
   const crawlerSource = fs.readFileSync(crawlerPath, 'utf8');
 
-  // A. Verify Captcha Solver Implementation
-  assert(crawlerSource.includes('solveCourtCaptcha'), 'solveCourtCaptcha function must be exported');
-  assert(crawlerSource.includes('ai_vision_ocr') || crawlerSource.includes('algorithmic_contrast'), 'Optical captcha engine must be defined');
+  // A. Fake CAPTCHA solver must be disabled (it never solved anything)
+  assert(crawlerSource.includes('solveCourtCaptcha'), 'solveCourtCaptcha export must remain (compat)');
+  assert(crawlerSource.includes('not supported'), 'Automated CAPTCHA solving must be disabled');
+  console.log('    ✓ CAPTCHA solving disabled (High Court = manual PDF import)');
 
-  // Pure optical heuristic captcha solver check
-  function testCaptchaSolver(input) {
-    const hash = Buffer.from(input || 'test_court_captcha_token').toString('base64');
-    let checksum = 0;
-    for (let i = 0; i < hash.length; i++) {
-      checksum = (checksum * 31 + hash.charCodeAt(i)) % 90000;
-    }
-    return {
-      text: String(10000 + (checksum % 89999)),
-      confidence: 0.985,
-      method: 'ai_vision_ocr'
-    };
-  }
-  const captcha = testCaptchaSolver('hcraj_session_challenge_984');
-  assert(captcha.text && captcha.text.length >= 5, 'Solved captcha text must be at least 5 chars');
-  assert(captcha.confidence >= 0.95, 'Captcha solver confidence must be >= 0.95');
-  console.log(`    ✓ AI Captcha Solver verified (Decoded: "${captcha.text}", Confidence: ${captcha.confidence * 100}%, Method: ${captcha.method})`);
+  // B. No hardcoded sample feed / no locally generated "official" PDFs
+  assert(crawlerSource.includes('DAILY_SUPREME_COURT_FEED: CourtFeedCandidate[] = [];'), 'Supreme Court sample feed must be empty');
+  assert(crawlerSource.includes('DAILY_RAJASTHAN_HIGH_COURT_FEED: CourtFeedCandidate[] = [];'), 'High Court sample feed must be empty');
+  assert(crawlerSource.includes('Generating court PDFs locally is disabled'), 'Local PDF generation must be disabled');
+  console.log('    ✓ Hardcoded feeds removed and fake PDF generator disabled');
 
-  // B. Verify Supreme Court e-SCR Judgment Feeder & Neutral Citations
-  assert(crawlerSource.includes('fetchSupremeCourtESCRJudgments'), 'fetchSupremeCourtESCRJudgments must be exported');
-  assert(crawlerSource.includes('INSC'), 'Supreme Court crawler must extract INSC neutral citations');
-  assert(crawlerSource.includes('https://escr.sci.gov.in/'), 'Supreme Court crawler must connect to escr.sci.gov.in');
-  console.log('    ✓ Supreme Court e-SCR feed verified (Neutral citations & escr.sci.gov.in endpoint verified)');
+  // C. Live Supreme Court source (official sci.gov.in) with real PDF validation
+  const livePath = path.join(process.cwd(), 'src', 'lib', 'court-sync', 'live-sci-source.ts');
+  assert(fs.existsSync(livePath), 'src/lib/court-sync/live-sci-source.ts must exist');
+  const liveSource = fs.readFileSync(livePath, 'utf8');
+  assert(liveSource.includes('sci-get-pdf') && liveSource.includes('%PDF-'), 'Live SCI source must download and validate real PDFs');
+  const svcSource = fs.readFileSync(path.join(process.cwd(), 'src', 'lib', 'court-sync', 'court-sync-service.ts'), 'utf8');
+  assert(!svcSource.includes('generateOfficialCourtPdfBuffer'), 'Sync service must not generate PDFs locally');
+  assert(svcSource.includes('discoverLatestSciJudgments'), 'Sync service must use live SCI discovery');
+  console.log('    ✓ Live sci.gov.in source wired into CourtSyncService');
 
-  // C. Verify Rajasthan High Court Ingestion Worker with Jaipur & Jodhpur Bench Scoping
-  assert(crawlerSource.includes('fetchRajasthanHighCourtJudgments'), 'fetchRajasthanHighCourtJudgments must be exported');
-  assert(crawlerSource.includes('https://hcraj.nic.in/'), 'High Court crawler must connect to hcraj.nic.in');
-  assert(crawlerSource.includes('Jaipur') && crawlerSource.includes('Jodhpur'), 'High court crawler must support Jaipur and Jodhpur benches');
-  console.log('    ✓ Rajasthan High Court (Jaipur & Jodhpur Benches) verified (hcraj.nic.in with Captcha bypass)');
-
-  // D. Verify Ingestion Orchestrator & Live Cron Route
+  // D. Cron route uses CourtSyncService and has no hardcoded secret
   const cronRoutePath = path.join(process.cwd(), 'src', 'app', 'api', 'cron', 'court-ingestion', 'route.ts');
   assert(fs.existsSync(cronRoutePath), 'src/app/api/cron/court-ingestion/route.ts must exist');
   const cronSource = fs.readFileSync(cronRoutePath, 'utf8');
-  assert(cronSource.includes('runAutomatedCourtIngestion'), 'Cron route must invoke runAutomatedCourtIngestion');
+  assert(cronSource.includes('CourtSyncService'), 'Cron route must invoke CourtSyncService');
+  assert(!cronSource.includes('alwar-court-feed-cron-secret'), 'Cron route must not contain a hardcoded secret');
 
   // Verify Ingestion Jobs telemetry table
   if (!Array.isArray(db.legal_ingestion_jobs)) db.legal_ingestion_jobs = [];

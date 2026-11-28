@@ -3,6 +3,7 @@ import { getJudgmentById, findJudgmentByCitation, type FullJudgmentRecord } from
 import { generateJudgmentPDF } from '@/lib/pdf/judgment-pdf';
 import { getCurrentUser } from '@/lib/auth/guards';
 import { localDb } from '@/lib/db';
+import { legalResearchRepository } from '@/lib/db/repositories/legal-research';
 import { downloadPdfFromR2, isR2Configured } from '@/lib/storage/r2-client';
 
 export const dynamic = 'force-dynamic';
@@ -18,15 +19,21 @@ export async function GET(req: Request) {
     const isPrint = searchParams.get('print') === 'true';
 
     // 1. Locate judgment in live database (AI Legal Repository with Full Text Judgments)
-    const allDbDocs = localDb.getLegalDocuments();
+    // Supabase (where synced judgments are stored) first, local JSON DB as fallback
+    const repoDocs: any[] = await legalResearchRepository.getDocuments({}).catch(() => [] as any[]);
+    const localDocs: any[] = localDb.getLegalDocuments();
+    const allDbDocs: any[] = [
+      ...repoDocs,
+      ...localDocs.filter((l: any) => !repoDocs.some((r: any) => r.id === l.id))
+    ];
     let dbDoc = id ? allDbDocs.find(d => d.id === id) : undefined;
     if (!dbDoc && citation) {
       const cleanCit = citation.toLowerCase().trim();
-      dbDoc = allDbDocs.find(d => d.citation.toLowerCase().trim() === cleanCit || d.citation.toLowerCase().includes(cleanCit));
+      dbDoc = allDbDocs.find(d => (d.citation || '').toLowerCase().trim() === cleanCit || (d.citation || '').toLowerCase().includes(cleanCit));
     }
     if (!dbDoc && title) {
       const cleanTit = title.toLowerCase().trim();
-      dbDoc = allDbDocs.find(d => d.title.toLowerCase().trim() === cleanTit || d.title.toLowerCase().includes(cleanTit));
+      dbDoc = allDbDocs.find(d => (d.title || '').toLowerCase().trim() === cleanTit || (d.title || '').toLowerCase().includes(cleanTit));
     }
 
     // Access Control: Block public download of pending, rejected, or unapproved records
@@ -51,7 +58,7 @@ export async function GET(req: Request) {
       const hasDevanagari = Boolean(cleanSummary && /[\u0900-\u097F]/.test(cleanSummary));
       if (!cleanSummary || hasDevanagari) {
         // Intelligently extract substantive English legal proposition from full_text for ASCII PDF Type-1 fonts
-        const heldMatch = dbDoc.full_text.match(/(?:Held|RATIO DECIDENDI|OPERATIVE ORDER)[:\s]+([\s\S]{80,450}?)(?:\n\n|\.\s+[A-Z]|\n\d+\.)/i);
+        const heldMatch = (dbDoc.full_text || '').match(/(?:Held|RATIO DECIDENDI|OPERATIVE ORDER)[:\s]+([\s\S]{80,450}?)(?:\n\n|\.\s+[A-Z]|\n\d+\.)/i);
         if (heldMatch && heldMatch[1]) {
           cleanSummary = heldMatch[1].replace(/\n+/g, ' ').trim();
         } else {
@@ -83,7 +90,7 @@ export async function GET(req: Request) {
         held_proposition_hi: hindiHeld,
         official_kanoon_url: dbDoc.document_url || `https://indiankanoon.org/search/?formInput=${encodeURIComponent(dbDoc.title)}`,
         official_escr_url: dbDoc.document_url || undefined,
-        full_judgment_text: dbDoc.full_text
+        full_judgment_text: dbDoc.full_text || ''
       };
     } else {
       // 2. Fall back to static registry if not in database
@@ -132,31 +139,12 @@ export async function GET(req: Request) {
       }
     }
 
-    // If not found in static registry, construct a dynamic legal precedent certified dossier
+    // Never fabricate a judgment: if nothing real matches, say so.
     if (!judgment) {
-      const displayTitle = title || citation || 'Verified Judicial Precedent';
-      const displayCite = citation || 'Law Report Citation Pending';
-      judgment = {
-        id: 'dynamic-precedent',
-        case_title: displayTitle,
-        citation: displayCite,
-        court: 'Supreme Court of India / High Court of Judicature',
-        court_hi: 'माननीय उच्चतम न्यायालय / उच्च न्यायालय',
-        bench: 'Appellate Judicial Bench',
-        decision_date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
-        statute_subject: 'Bharatiya Nagarik Suraksha Sanhita, 2023 / Indian Penal Code / Civil Procedure Code',
-        statute_subject_hi: 'भारतीय नागरिक सुरक्षा संहिता / सिविल प्रक्रिया संहिता के प्रमुख विधिक सिद्धांत',
-        category: 'criminal',
-        headnotes: [
-          'Settled Judicial Precedent — Authoritative principle of law enunciated by superior constitutional courts.',
-          'Binding Authority under Article 141 of the Constitution of India.',
-          'Relief must be adjudicated strictly according to statutory criteria and precedents.'
-        ],
-        held_proposition: `The judicial authority in ${displayTitle} firmly reiterated that procedural statutory protections must be strictly observed by trial courts and subordinate tribunals.`,
-        held_proposition_hi: 'न्यायिक सिद्धांत: वैधानिक प्रक्रियात्मक अधिकारों एवं व्यक्तिगत स्वतंत्रता का अधीनस्थ न्यायालयों द्वारा अक्षरशः पालन अनिवार्य है।',
-        official_kanoon_url: `https://indiankanoon.org/search/?formInput=${encodeURIComponent(displayTitle)}`,
-        full_judgment_text: `IN THE SUPREME COURT OF INDIA / HIGH COURT OF JUDICATURE\nAPPELLATE JURISDICTION\n\n${displayTitle.toUpperCase()}\n[REPORTED AT: ${displayCite}]\n\nJUDICIAL RATIO & CERTIFIED SUMMARY:\n1. The authoritative proposition of law laid down in this landmark precedent mandates that courts must exercise sound judicial discretion grounded in statutory protections.\n2. Subordinate courts and investigating authorities are bound by constitutional principles to protect fair trial rights and provide reasoned orders.`
-      };
+      return NextResponse.json(
+        { error: 'Judgment not found. No record matches this id, citation or title.' },
+        { status: 404 }
+      );
     }
 
     // Return JSON if requested
@@ -169,15 +157,26 @@ export async function GET(req: Request) {
 
     if (shouldReturnBinaryPdf) {
       let pdfBuffer: Buffer;
-      if (dbDoc?.r2_storage_key && isR2Configured()) {
+      if (dbDoc) {
+        // Database judgments: serve ONLY the original court PDF stored in R2. Never generate one.
+        if (!dbDoc.r2_storage_key || !isR2Configured()) {
+          return NextResponse.json(
+            { error: 'Original court PDF is not stored for this judgment.' },
+            { status: 404 }
+          );
+        }
         try {
           const r2Result = await downloadPdfFromR2(dbDoc.r2_storage_key);
           pdfBuffer = r2Result.buffer;
         } catch (r2Err) {
-          console.warn(`Failed to fetch from R2 key ${dbDoc.r2_storage_key}, falling back to generator:`, r2Err);
-          pdfBuffer = generateJudgmentPDF(judgment);
+          console.warn(`Failed to fetch original PDF from R2 key ${dbDoc.r2_storage_key}:`, r2Err);
+          return NextResponse.json(
+            { error: 'Original court PDF could not be fetched from storage. Please try again later.' },
+            { status: 502 }
+          );
         }
       } else {
+        // Curated static-registry entries only (never a database/court judgment)
         pdfBuffer = generateJudgmentPDF(judgment);
       }
 

@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth/guards';
 import { CourtSyncService } from '@/lib/court-sync/court-sync-service';
-import { runAutomatedCourtIngestion } from '@/lib/legal-research/court-crawler';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 300;
+export const preferredRegion = 'bom1';
 
 /**
  * 6-Hour Scheduled Court Judgment Ingestion Cron Route
@@ -12,14 +13,16 @@ export const dynamic = 'force-dynamic';
  * Scheduled every 6 hours (0 * /6 * * *)
  * Protected by CRON_SECRET or Public Admin Session
  * 
- * Invokes CourtSyncService (and runAutomatedCourtIngestion pipeline) with strict
+ * Invokes CourtSyncService (live sci.gov.in fetch) with strict
  * pending approval defaults, R2 non-overwrite, and quadruple deduplication.
  */
 export async function POST(req: Request) {
   try {
     const authHeader = req.headers.get('authorization');
-    const cronSecret = process.env.CRON_SECRET || 'alwar-court-feed-cron-secret-2026';
-    const isCronAuthorized = authHeader === `Bearer ${cronSecret}`;
+    // SECURITY: no hardcoded fallback secret. If CRON_SECRET is not set, only a logged-in
+    // public_admin session can trigger sync.
+    const cronSecret = process.env.CRON_SECRET || '';
+    const isCronAuthorized = cronSecret.length >= 24 && authHeader === `Bearer ${cronSecret}`;
 
     let triggeredBy = 'system-court-cron';
     let court: 'all' | 'rajasthan_high_court' | 'supreme_court' = 'all';
@@ -27,15 +30,20 @@ export async function POST(req: Request) {
     let force = false;
 
     if (!isCronAuthorized) {
-      // Strictly require public admin session if Cron Bearer header is absent
-      const user = await getCurrentUser();
-      if (!user || user.role !== 'public_admin') {
-        return NextResponse.json(
-          { error: 'FORBIDDEN: Requires Public Admin privileges or valid CRON Authorization token.' },
-          { status: 403 }
-        );
+      // Check query param key fallback
+      const url = new URL(req.url);
+      const queryKey = url.searchParams.get('key') || url.searchParams.get('token');
+      // Prefer the Authorization header; the query-string token is only accepted if a strong secret is set.
+      if (!(cronSecret.length >= 24 && queryKey === cronSecret)) {
+        const user = await getCurrentUser();
+        if (!user || user.role !== 'public_admin') {
+          return NextResponse.json(
+            { error: 'FORBIDDEN: Requires Public Admin privileges or valid CRON Authorization token.' },
+            { status: 403 }
+          );
+        }
+        triggeredBy = user.id;
       }
-      triggeredBy = user.id;
     }
 
     // Parse options
@@ -75,9 +83,7 @@ export async function POST(req: Request) {
     return NextResponse.json(result);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Court sync cron failed';
-    const statusCode = message.includes('Rate limit')
-      ? 429
-      : (message.includes('lock active') || message.includes('Another worker') ? 409 : 500);
+    const statusCode = message.includes('Rate limit') ? 429 : 500;
     return NextResponse.json({ error: message }, { status: statusCode });
   }
 }

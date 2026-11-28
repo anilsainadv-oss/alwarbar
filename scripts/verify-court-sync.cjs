@@ -20,7 +20,8 @@ if (fs.existsSync('.env.local')) {
 
 const AUTH_SECRET = process.env.AUTH_SECRET || 'alwar-advocates-secure-dev-secret-1234567890abcdef';
 const COOKIE_NAME = process.env.SESSION_COOKIE_NAME || 'alwar_law_session';
-const CRON_SECRET = process.env.CRON_SECRET || 'alwar-court-feed-cron-secret-2026';
+const CRON_SECRET = process.env.CRON_SECRET || '';
+if (CRON_SECRET.length < 24) { console.error('Set CRON_SECRET (24+ chars) in .env.local first.'); process.exit(1); }
 const BASE_URL = 'http://localhost:3001';
 
 const supabaseAdmin = createClient(
